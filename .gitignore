@@ -1,0 +1,14 @@
+# secrets are sops-encrypted in-repo; never commit a decrypted one
+*.dec.yaml
+*.dec.env
+.env
+age.key
+
+# model files never belong in git
+*.gguf
+*.safetensors
+
+# scratch
+__pycache__/
+*.pyc
+.DS_Store

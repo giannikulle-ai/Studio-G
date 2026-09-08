@@ -1,0 +1,688 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
+<title>PW-1x Build Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --bg:        #F5F7F9;
+    --surface:   #FFFFFF;
+    --surface-2: #EDF0F3;
+    --ink:       #15181C;
+    --ink-2:     #3B434D;
+    --muted:     #5E6875;
+    --rule:      #D8DDE3;
+    --rule-soft: #E6EAEF;
+    --accent:    #A8650F;
+    --accent-bg: #FBF1E1;
+    --ok:        #2C6E4C;
+    --ok-bg:     #E4F0E9;
+    --warn:      #9A5B12;
+    --warn-bg:   #F8EEDD;
+    --stop:      #9C4438;
+    --stop-bg:   #F7E7E4;
+    --shadow:    0 1px 2px rgba(20,28,38,.06), 0 8px 24px -16px rgba(20,28,38,.30);
+
+    --sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:        #121519;
+      --surface:   #1A1E23;
+      --surface-2: #21262C;
+      --ink:       #E7EAEE;
+      --ink-2:     #BAC2CC;
+      --muted:     #8B95A2;
+      --rule:      #2B3239;
+      --rule-soft: #232930;
+      --accent:    #E0A04A;
+      --accent-bg: #2A2015;
+      --ok:        #6BBA8D;
+      --ok-bg:     #17281F;
+      --warn:      #DCA054;
+      --warn-bg:   #2A2115;
+      --stop:      #DE8375;
+      --stop-bg:   #2C1B18;
+      --shadow:    0 1px 2px rgba(0,0,0,.40), 0 10px 30px -18px rgba(0,0,0,.80);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg:        #121519;
+    --surface:   #1A1E23;
+    --surface-2: #21262C;
+    --ink:       #E7EAEE;
+    --ink-2:     #BAC2CC;
+    --muted:     #8B95A2;
+    --rule:      #2B3239;
+    --rule-soft: #232930;
+    --accent:    #E0A04A;
+    --accent-bg: #2A2015;
+    --ok:        #6BBA8D;
+    --ok-bg:     #17281F;
+    --warn:      #DCA054;
+    --warn-bg:   #2A2115;
+    --stop:      #DE8375;
+    --stop-bg:   #2C1B18;
+    --shadow:    0 1px 2px rgba(0,0,0,.40), 0 10px 30px -18px rgba(0,0,0,.80);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 40px 24px 96px;
+  }
+
+  /* ---------- masthead ---------- */
+
+  .mast {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-bottom: 26px;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .mast h1 {
+    margin: 0;
+    font-size: clamp(30px, 5.2vw, 44px);
+    line-height: 1.08;
+    letter-spacing: -0.022em;
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  .mast .sub {
+    margin: 0;
+    max-width: 62ch;
+    color: var(--ink-2);
+    font-size: 16.5px;
+  }
+
+  .stamp {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 18px;
+  }
+
+  .stamp b { color: var(--accent); font-weight: 600; }
+
+  /* ---------- sections ---------- */
+
+  section { margin-top: 52px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 10px;
+  }
+
+  h2 {
+    margin: 0 0 8px;
+    font-size: 23px;
+    font-weight: 600;
+    letter-spacing: -0.014em;
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+
+  .lede {
+    margin: 0 0 22px;
+    max-width: 68ch;
+    color: var(--ink-2);
+  }
+
+  p { max-width: 68ch; }
+
+  h3 {
+    margin: 30px 0 8px;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+  }
+
+  /* ---------- tables ---------- */
+
+  .scroll { overflow-x: auto; margin: 0 -4px; padding: 0 4px; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14.5px;
+    min-width: 560px;
+  }
+
+  thead th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0 14px 8px 0;
+    border-bottom: 1px solid var(--rule);
+    white-space: nowrap;
+  }
+
+  tbody td {
+    padding: 11px 14px 11px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    vertical-align: top;
+    color: var(--ink-2);
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+
+  td:first-child, th:first-child { padding-left: 0; }
+
+  td.name { color: var(--ink); font-weight: 500; }
+
+  td.num, th.num {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  td .pn {
+    display: block;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-top: 3px;
+    letter-spacing: -0.01em;
+  }
+
+  /* ---------- chips ---------- */
+
+  .chip {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .chip.ok   { color: var(--ok);   background: var(--ok-bg); }
+  .chip.warn { color: var(--warn); background: var(--warn-bg); }
+  .chip.stop { color: var(--stop); background: var(--stop-bg); }
+
+  /* ---------- callout ---------- */
+
+  .callout {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+    padding: 20px 22px;
+    box-shadow: var(--shadow);
+    margin: 22px 0;
+  }
+
+  .callout h3 { margin-top: 0; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  /* ---------- spec list ---------- */
+
+  .specs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1px;
+    background: var(--rule-soft);
+    border: 1px solid var(--rule-soft);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 20px 0;
+  }
+
+  .specs div {
+    background: var(--surface);
+    padding: 13px 15px;
+  }
+
+  .specs dt {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .specs dd {
+    margin: 0;
+    font-size: 14.5px;
+    font-weight: 500;
+    color: var(--ink);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .specs dd small {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 400;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  /* ---------- code ---------- */
+
+  code {
+    font-family: var(--mono);
+    font-size: .89em;
+    background: var(--surface-2);
+    padding: 1.5px 5px;
+    border-radius: 3px;
+    color: var(--ink);
+  }
+
+  pre {
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.65;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 15px 17px;
+    overflow-x: auto;
+    margin: 14px 0;
+    color: var(--ink);
+  }
+
+  pre code { background: none; padding: 0; }
+
+  /* ---------- lists ---------- */
+
+  ul { padding-left: 19px; max-width: 68ch; }
+  li { margin-bottom: 7px; }
+  li::marker { color: var(--muted); }
+
+  .rank {
+    list-style: none;
+    padding: 0;
+    max-width: 68ch;
+    counter-reset: r;
+  }
+
+  .rank li {
+    counter-increment: r;
+    display: flex;
+    gap: 14px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    margin: 0;
+  }
+
+  .rank li:last-child { border-bottom: none; }
+
+  .rank li::before {
+    content: counter(r);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-bg);
+    width: 24px;
+    height: 24px;
+    flex: none;
+    display: grid;
+    place-items: center;
+    border-radius: 3px;
+    margin-top: 1px;
+  }
+
+  .rank b { color: var(--ink); font-weight: 600; }
+
+  strong { color: var(--ink); font-weight: 600; }
+
+  .note {
+    font-size: 13.5px;
+    color: var(--muted);
+    max-width: 68ch;
+    margin-top: 12px;
+  }
+
+  footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: .04em;
+    color: var(--muted);
+  }
+
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible, :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <div class="stamp">
+      <span>Build sheet</span>
+      <span>Designation: <b>PW-1x</b></span>
+      <span>Rev. <b>Sep 2026</b></span>
+      <span>Socket <b>SP3</b> / 8-channel DDR4</span>
+    </div>
+    <h1>PW-1x Build Sheet</h1>
+    <p class="sub">Projectile William v1 — a local agent and coding rig on EPYC Rome, doubling as a host for websites and dev environments. What's bought, which models actually fit, and what to upgrade when.</p>
+  </header>
+
+  <!-- ============ DECISION ============ -->
+  <section>
+    <p class="eyebrow">Settled</p>
+    <h2>128GB — ordered</h2>
+    <p class="lede">Every US open-weight model worth running fits inside 128GB. Doubling to 256GB unlocks no new model — it buys context headroom on one option that isn't worth running anyway.</p>
+
+    <div class="callout">
+      <h3>The spec, unchanged</h3>
+      <div class="specs">
+        <div><dt>Type</dt><dd>DDR4-3200</dd></div>
+        <div><dt>Standard</dt><dd>PC4-25600</dd></div>
+        <div><dt>Form</dt><dd>RDIMM, 288-pin</dd></div>
+        <div><dt>ECC</dt><dd>Registered</dd></div>
+        <div><dt>Rank</dt><dd>2Rx8</dd></div>
+        <div><dt>Modules</dt><dd>8 × 16GB</dd></div>
+      </div>
+      <p>All eight slots filled, all eight sticks the same part number. The board is 1 DIMM per channel, so four sticks is four channels and half the bandwidth — which is the entire reason for this platform.</p>
+      <p>Kingston’s compatibility database lists 16GB DDR4-3200 2Rx8 RDIMM for this board and specifies modules be installed <em>in groups of eight</em>, max 512GB with RDIMMs. The spec is vendor-confirmed, not inferred.</p>
+      <p><strong>Hard rejects:</strong> anything slower than PC4-25600 (it downclocks the whole system, and 2933 currently costs <em>more</em> per GB than 3200 anyway); UDIMM; single-rank 1Rx4 or 1Rx8.</p>
+    </div>
+
+    <h3>What was bought</h3>
+    <div class="specs">
+      <div><dt>Vendor</dt><dd>A-Tech<small>atechmemory.com</small></dd></div>
+      <div><dt>Kit</dt><dd>8 × 16GB<small>2Rx8 PC4-25600R</small></dd></div>
+      <div><dt>Paid</dt><dd>$1,315.69</dd></div>
+      <div><dt>Warranty</dt><dd>Lifetime</dd></div>
+    </div>
+    <p class="note">Also considered and rejected: RIMLANCE 4× kits at $800 (cheapest, but ships from China with a 30-day window, no reviews, and demonstrable spec errors in their catalog — a stick failing in month four means hunting a matched replacement); NEMIX at $1,323 (identical to A-Tech, $7 more); PCSP used Hynix lot at $1,320 (used, same price as new, 90-day RMA only). Kept here as the decision trail, not as live options.</p>
+
+    <div class="callout">
+      <h3>On arrival — do this before anything else</h3>
+      <p>Run <strong>memtest86+ on all eight sticks together, full passes overnight</strong>, then again one stick at a time if anything errors. Do it inside the 30-day return window, not after.</p>
+      <p>This is what the window is actually for. A bad stick found in week one is a defective return — the vendor pays shipping and the restocking fee never comes up. The same stick failing in month four is a warranty claim: slower, and on a 1DPC board it means finding a <em>matched</em> replacement or replacing all eight.</p>
+      <p>Close out the three quote threads with a one-line "covered on 128GB, thanks." Topmemory especially — fleet pulls are where the second GPU and a Milan CPU will come from.</p>
+    </div>
+  </section>
+
+  <!-- ============ HARDWARE ============ -->
+  <section>
+    <p class="eyebrow">Hardware</p>
+    <h2>What's in the box</h2>
+
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr><th>Part</th><th>Detail</th><th>Status</th><th class="num">Cost</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="name">EPYC 7452</td>
+            <td>32c/64t Zen 2, 4 CCDs, 155W, 128MB L3</td>
+            <td><span class="chip ok">Have</span></td>
+            <td class="num">—</td>
+          </tr>
+          <tr>
+            <td class="name">ASRock Rack ROMED8-2T</td>
+            <td>ATX, 7× PCIe 4.0 x16 (112 lanes), 8 DIMM 1DPC, dual 10GbE, IPMI</td>
+            <td><span class="chip ok">Have</span></td>
+            <td class="num">—</td>
+          </tr>
+          <tr>
+            <td class="name">RTX 4060 Ti FE</td>
+            <td>16GB — holds attention, shared experts, KV cache</td>
+            <td><span class="chip ok">Have</span></td>
+            <td class="num">—</td>
+          </tr>
+          <tr>
+            <td class="name">System memory</td>
+            <td>128GB DDR4-3200 ECC RDIMM 2Rx8 — A-Tech kit, lifetime warranty</td>
+            <td><span class="chip ok">Ordered</span></td>
+            <td class="num">$1,315.69</td>
+          </tr>
+          <tr>
+            <td class="name">CPU cooler</td>
+            <td>ARCTIC Freezer 4U-M (ACFRE00133B). SP3, dual 120mm, rated to 350W. The Noctua NH-U14S TR4-SP3 is discontinued.</td>
+            <td><span class="chip ok">Ordered</span></td>
+            <td class="num">$57.92</td>
+          </tr>
+          <tr>
+            <td class="name">PSU</td>
+            <td>MSI MPG A850G PCIE5, 850W 80+ Gold, 2× EPS 4+4. Board requirement (24-pin + one 8-pin + one 4-pin) is from the ServeTheHome review only — confirm against the ASRock manual at assembly. Two EPS 4+4 covers either reading. 850W leaves headroom for a second GPU.</td>
+            <td><span class="chip ok">Ordered</span></td>
+            <td class="num">$89.99</td>
+          </tr>
+          <tr>
+            <td class="name">Case</td>
+            <td>ATX, 165mm cooler clearance — or run open-bench and skip it</td>
+            <td><span class="chip warn">Optional</span></td>
+            <td class="num">$0–150</td>
+          </tr>
+          <tr>
+            <td class="name">NVMe</td>
+            <td>Kingston NV3 1TB (SNV3S/1000G), 6,000 MB/s. OS plus 2–3 active models; archive lives on the G-DRIVE. Second M.2 slot stays free.</td>
+            <td><span class="chip ok">Ordered</span></td>
+            <td class="num">$156.99</td>
+          </tr>
+          <tr>
+            <td class="name">G-DRIVE mobile USB-C<span class="pn">0G10265 · 1TB 2.5" HDD · 140 MB/s</span></td>
+            <td>Model archive over USB. Holds ~15 GGUFs. Do not shuck — no SATA ports on this board.</td>
+            <td><span class="chip ok">Have</span></td>
+            <td class="num">—</td>
+          </tr>
+          <tr>
+            <td class="name">Chassis fans</td>
+            <td>Only if caged. Open-bench: read VRM and DIMM temps in IPMI first, add a $12 desk fan if the numbers say so.</td>
+            <td><span class="chip warn">Optional</span></td>
+            <td class="num">$0–30</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Spend</h3>
+    <div class="specs">
+      <div><dt>Already owned</dt><dd>~$620<small>CPU ~$120 + board ~$500, market estimate</small></dd></div>
+      <div><dt>Ordered</dt><dd>$1,620.59<small>RAM, cooler, PSU, NVMe</small></dd></div>
+      <div><dt>Outstanding</dt><dd>$0<small>Nothing left to procure</small></dd></div>
+      <div><dt>Total</dt><dd>$2,240.59<small>$2,230.59 if the $10 rebate lands</small></dd></div>
+    </div>
+
+    <div class="callout">
+      <h3>The board has no SATA ports</h3>
+      <p>Storage is two M.2 slots plus two OCuLink and two miniSAS HD connectors. Any SATA drive needs a breakout cable — which is why the G-DRIVE stays in its enclosure on USB rather than being shucked.</p>
+      <p><strong>Two tiers.</strong> Active models on the NVMe, where a 63GB load takes ~12 seconds. Library on the G-DRIVE, where the same copy takes ~7½ minutes — fine for something fetched occasionally, unusable as the live path. Portable USB HDDs aren’t rated for continuous duty, so let it idle between pulls.</p>
+    </div>
+  </section>
+
+  <!-- ============ MODELS ============ -->
+  <section>
+    <p class="eyebrow">Models · US open-weight</p>
+    <h2>What fits, and how fast</h2>
+    <p class="lede">Speed is set by <strong>active</strong> parameters, not total size — a 120B MoE touching 5B per token beats a 70B dense touching all 70B. This is why bigger can be faster here.</p>
+
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th class="num">Active</th>
+            <th>License</th>
+            <th class="num">Footprint</th>
+            <th class="num">Est. tok/s</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="name">gpt-oss-120b<span class="pn">OpenAI · 117B · MXFP4 native · Apache 2.0</span></td>
+            <td class="num">5.1B</td>
+            <td>Apache 2.0</td>
+            <td class="num">63GB</td>
+            <td class="num">17–25</td>
+            <td><span class="chip ok">Primary</span> Fastest, Apache 2.0, runs on stock llama.cpp. Weights are natively MXFP4, so every quant from Q2 to Q8 lands at 62.6–63.4GB — run Q8_0 and take the quality free.</td>
+          </tr>
+          <tr>
+            <td class="name">Nemotron 3 Super<span class="pn">NVIDIA · SWE-bench 60.47% · NVFP4 / modelopt quant</span></td>
+            <td class="num">12B</td>
+            <td>NVIDIA Open</td>
+            <td class="num">68GB</td>
+            <td class="num">12–16</td>
+            <td><span class="chip warn">Unresolved</span> Best US coder on paper. Published GGUF is NVFP4 and its repo points at a llama.cpp fork. Issue #20504 confirmed <code>convert_hf_to_gguf.py</code> rejected its <code>modelopt</code> quantisation — but that issue is <strong>closed</strong> via PR #20539, so stock support may have landed. Verify before planning around it.</td>
+          </tr>
+          <tr>
+            <td class="name">Llama 4 Scout<span class="pn">Meta · 109B · 16 experts · 10M ctx</span></td>
+            <td class="num">17B</td>
+            <td>Llama 4 Community</td>
+            <td class="num">65GB</td>
+            <td class="num">8–11</td>
+            <td><span class="chip ok">Alternate</span> Q4_K_M is 65.4GB, UD-Q4_K_XL 62GB. Repo-wide reading; 10M context is the differentiator. Runs on stock llama.cpp.</td>
+          </tr>
+          <tr>
+            <td class="name">gpt-oss-20b<span class="pn">OpenAI · 21B · MXFP4 native</span></td>
+            <td class="num">3.6B</td>
+            <td>Apache 2.0</td>
+            <td class="num">12.1GB</td>
+            <td class="num">50+</td>
+            <td>Volume grunt work: triage, classification, diff summaries, commit messages. Mid in isolation, correct for this job.</td>
+          </tr>
+          <tr>
+            <td class="name">Llama 4 Maverick<span class="pn">Meta · 400B · 128 experts · 1M ctx</span></td>
+            <td class="num">17B</td>
+            <td>Llama 4 Community</td>
+            <td class="num">243GB</td>
+            <td class="num">—</td>
+            <td><span class="chip stop">Does not fit</span> Q4_K_XL is 243GB; even 1.78-bit IQ1_S is 122GB. Not a close call.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="note">Model specs verified against the vendors’ own Hugging Face cards. Tok/s are estimates, not benchmarks. Raw weight-streaming math — 140 GB/s over active-parameter bytes — gives a <em>ceiling</em> of roughly 51 tok/s for gpt-oss-120b and 14 for Scout; those assume nothing but expert weights crosses the bus. The figures above discount for attention compute, KV cache traffic, MoE routing and the GPU/CPU boundary — more heavily for gpt-oss-120b, whose 5.1B active set is small enough that fixed overheads weigh proportionally more. The discount is judgement rather than measurement. Bandwidth is derived from Dell’s STREAM Triad on 7452 silicon (270–300 GB/s dual-socket, halved). Published figures for these models come from Macs at 546 GB/s and read roughly 3× higher.</p>
+
+    <h3>The pairing — one card, one model at a time</h3>
+    <p>OpenAI specs gpt-oss-20b to run <em>within</em> 16GB, which is the whole card. It cannot sit resident while a 120B MoE also uses the GPU for attention and KV cache — the two configurations compete for the same VRAM. So this is a swap, not a pairing: load the small model when you want volume and speed, the large one when you want reasoning.</p>
+    <p>Running both at once is the first thing a second GPU buys you, which is a stronger argument for that upgrade than prefill alone.</p>
+    <p><strong>The runnable set is two models, not four.</strong> Nemotron needs a fork; Maverick is a skip. That leaves gpt-oss-120b at 63GB and Llama 4 Scout at 62–65GB — both on stock llama.cpp, both comfortably inside 128GB with ~60GB left for KV cache. That headroom is the argument for 128GB, and the reason 256GB adds nothing.</p>
+  </section>
+
+  <!-- ============ RUNNING ============ -->
+  <section>
+    <p class="eyebrow">Runtime</p>
+    <h2>How the split works</h2>
+    <p class="lede">llama.cpp with <code>--n-cpu-moe</code> is the mechanism that makes this build viable: always-active weights on the GPU, routed experts in system RAM.</p>
+
+    <div class="specs">
+      <div><dt>On GPU (16GB)</dt><dd>Attention · dense FFN · shared experts · KV cache</dd></div>
+      <div><dt>In RAM (128GB)</dt><dd>Routed experts</dd></div>
+      <div><dt>Prefill runs on</dt><dd>GPU</dd></div>
+      <div><dt>Generation bound by</dt><dd>RAM bandwidth</dd></div>
+    </div>
+
+    <pre><code>llama-server -m gpt-oss-120b-Q8_0.gguf \
+  --n-cpu-moe 40 \
+  -ngl 999 \
+  -b 4096 -ub 4096 \
+  -c 32768</code></pre>
+
+    <p><code>--n-cpu-moe N</code> pushes the top N expert layers to CPU, counting down from the highest-numbered layer, overriding the <code>-ngl 999</code> that put everything on the GPU first. Start high, tune downward until VRAM is nearly full — every expert layer you claw back onto the card is free speed.</p>
+    <p>Batch size is the setting people leave on defaults and then wonder why prefill crawls. <code>-b 4096 -ub 4096</code> is the difference between usable and painful.</p>
+    <p class="note">ik_llama.cpp is the fork to try if you want to tune harder; it adds graph-split modes that help once a second GPU is in the picture.</p>
+  </section>
+
+  <!-- ============ SECOND ROLE ============ -->
+  <section>
+    <p class="eyebrow">Second role</p>
+    <h2>Also hosts websites and dev environments</h2>
+    <p class="lede">Different resources than inference wants — network and disk rather than memory bandwidth — so the two coexist without meaningfully slowing each other.</p>
+
+    <div class="callout">
+      <h3>Two things to get right</h3>
+      <p><strong>Co-location is the real risk, not performance.</strong> A public site sharing a host with your dev environments and the model stack means a compromise lands next to everything. Run anything internet-facing in rootless Podman and treat the host as exposed.</p>
+      <p><strong>Builds are the one workload that fights inference.</strong> A big parallel compile takes every core and hits memory hard, and that's when token latency spikes. Cap it — <code>-j16</code>, not <code>-j32</code>.</p>
+    </div>
+
+    <div class="specs">
+      <div><dt>Inference</dt><dd>CPUs 0–11, 32–43<small>76GB cap, GPU exclusive</small></dd></div>
+      <div><dt>Hosting + dev</dt><dd>CPUs 12–31, 44–63<small>40GB cap, containers</small></dd></div>
+      <div><dt>Host reserve</dt><dd>12GB<small>Caps must not sum past 128</small></dd></div>
+      <div><dt>Stack cost</dt><dd>$0<small>All open source</small></dd></div>
+    </div>
+
+    <p><strong>The CPU is 32 cores but 64 logical CPUs.</strong> Linux enumerates 0–63. Pinning inference to <code>0-11</code> alone leaves 32–43 — the SMT siblings of those same physical cores — open for containers, so the isolation does nothing. Pin each core with its sibling, and confirm the pairing with <code>lscpu -e=CPU,CORE</code> first: enumeration order varies by kernel and BIOS. Memory caps must sum below 128GB or the OOM killer picks a winner, and it will usually pick the 63GB process.</p>
+    <p>Debian or Ubuntu on bare metal — no hypervisor, since GPU passthrough to a guest adds real complexity and buys nothing. <strong>Podman</strong> for containers (rootless, no daemon), <strong>Caddy</strong> as reverse proxy for automatic Let's Encrypt certs, <strong>Tailscale</strong> free tier for remote access without opening ports.</p>
+    <p class="note">Put <code>/var/lib/containers</code> on its own partition. Image sprawl accumulates faster than you expect, and a runaway pull must not be able to fill the disk out from under the model files.</p>
+  </section>
+
+  <!-- ============ LIMITS ============ -->
+  <section>
+    <p class="eyebrow">Constraints</p>
+    <h2>Where this hurts</h2>
+
+    <ul>
+      <li><strong>Prefill on long context, with 16GB of VRAM.</strong> The daily annoyance once an agent is pointed at a large repo, and the first thing worth fixing.</li>
+      <li><strong>~140 GB/s is a hard wall.</strong> Dell measured 270–300 GB/s dual-socket STREAM Triad on the 7452, so roughly 135–150 per socket. No configuration gets past it, and it’s inherent to SP3 — Genoa’s ~460 GB/s needs a different socket, board, and memory.</li><li><strong>The 7452 is a 4-CCD part</strong> (inferred: 128MB L3 at 32MB per Rome CCD — no vendor doc states it outright). It is <em>not</em> one of the bandwidth-crippled SKUs; those are the 2-CCD parts — 7282, 7272, 7252, 7232P — which lose roughly half their bandwidth to fabric limits. Dell measured the 7452 in the same STREAM band as the 8-CCD 7702, so the conclusion rests on measurement rather than on the CCD count.</li>
+      <li><strong>Rome is excluded from ZenDNN.</strong> AMD's 2–4.5× llama.cpp prompt-processing speedup covers Milan, Genoa and Turin, not Zen 2. Largely academic while the GPU handles prefill; it becomes real if you ever run CPU-only.</li>
+      <li><strong>Single socket, permanently.</strong> One CPU, no second.</li>
+      <li><strong>The CPU presents 64 logical CPUs, not 32.</strong> Any core-pinning scheme that ignores SMT siblings silently fails to isolate anything. Verify with <code>lscpu -e</code>.</li>
+      <li><strong>Uptime is coupled.</strong> Anything hosted here goes down when the box reboots. Reloading a model afterwards is cheap — about twelve seconds off the NVMe — but a host reboot takes the sites with it.</li>
+      <li><strong>Local won't match frontier on the hardest work.</strong> The best US open coder lands around 60% SWE-bench. Genuinely useful, still below a lab. The win is routing volume locally and keeping a lab for the hard reasoning step — most of the cost saving, none of the pretense.</li>
+    </ul>
+  </section>
+
+  <!-- ============ UPGRADES ============ -->
+  <section>
+    <p class="eyebrow">Upgrade path · priority order</p>
+    <h2>What to buy next, and when</h2>
+
+    <ol class="rank">
+      <li><div><b>Second GPU.</b> Six x16 slots sit empty. Directly attacks prefill and context headroom, which is the actual bottleneck. Nothing you own gets replaced. Used 3090s run ~$1,000 — up from $700 two years ago, same squeeze that hit RAM.</div></li>
+      <li><div><b>Milan CPU swap.</b> The board supports EPYC 7003 including 3D V-Cache. A used 7443P or 7543P is a drop-in that lifts IPC and puts you on the supported side of the ZenDNN line. Milan pricing is falling for the same reason Rome's did — price it before buying GPUs.</div></li>
+      <li><div><b>RAM to 512GB.</b> Eight slots, 64GB modules. DDR4-3200 at 1DPC is official for Rome, but I found no vendor doc confirming 64GB dual-rank modules hold 3200 on this board — verify against the QVL before buying. Only worth it for 400B-class MoE, which this bandwidth barely supports anyway.</div></li>
+      <li><div><b>OCuLink NVMe expansion.</b> Two Gen4 x4 ports for fast external storage or a drive cage. Makes the missing SATA a non-event.</div></li>
+    </ol>
+
+    <div class="callout">
+      <h3>Do this while the parts ship</h3>
+      <p>Pull <code>gpt-oss-20b</code> onto the 4060 Ti in the desktop you already have and point your agent harness at it. It costs nothing and tells you what the small tier can and can't do — which is the question the whole RAM purchase is currently a guess about.</p>
+    </div>
+  </section>
+
+  <footer>
+    Model specs from vendor model cards · Board specs from ASRock and ServeTheHome · Bandwidth from Dell STREAM runs · Tok/s ceilings are arithmetic; published ranges are judgement. Neither is a benchmark · Prices move weekly
+  </footer>
+
+</div>
+
+</body></html>

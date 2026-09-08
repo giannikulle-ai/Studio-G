@@ -1,0 +1,559 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found]){display:none!important}</style></head><body>
+<title>PW-1x Handoff</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --bg:        #F5F7F9;
+    --surface:   #FFFFFF;
+    --surface-2: #EDF0F3;
+    --code-bg:   #1B1F24;
+    --code-ink:  #D8DEE6;
+    --ink:       #15181C;
+    --ink-2:     #3B434D;
+    --muted:     #5E6875;
+    --rule:      #D8DDE3;
+    --rule-soft: #E6EAEF;
+    --accent:    #A8650F;
+    --accent-bg: #FBF1E1;
+    --ok:        #2C6E4C;
+    --ok-bg:     #E4F0E9;
+    --warn:      #9A5B12;
+    --warn-bg:   #F8EEDD;
+    --stop:      #9C4438;
+    --stop-bg:   #F7E7E4;
+    --shadow:    0 1px 2px rgba(20,28,38,.06), 0 8px 24px -16px rgba(20,28,38,.30);
+    --sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121519; --surface: #1A1E23; --surface-2: #21262C;
+      --code-bg: #0E1114; --code-ink: #C6CED8;
+      --ink: #E7EAEE; --ink-2: #BAC2CC; --muted: #8B95A2;
+      --rule: #2B3239; --rule-soft: #232930;
+      --accent: #E0A04A; --accent-bg: #2A2015;
+      --ok: #6BBA8D; --ok-bg: #17281F;
+      --warn: #DCA054; --warn-bg: #2A2115;
+      --stop: #DE8375; --stop-bg: #2C1B18;
+      --shadow: 0 1px 2px rgba(0,0,0,.40), 0 10px 30px -18px rgba(0,0,0,.80);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121519; --surface: #1A1E23; --surface-2: #21262C;
+    --code-bg: #0E1114; --code-ink: #C6CED8;
+    --ink: #E7EAEE; --ink-2: #BAC2CC; --muted: #8B95A2;
+    --rule: #2B3239; --rule-soft: #232930;
+    --accent: #E0A04A; --accent-bg: #2A2015;
+    --ok: #6BBA8D; --ok-bg: #17281F;
+    --warn: #DCA054; --warn-bg: #2A2115;
+    --stop: #DE8375; --stop-bg: #2C1B18;
+    --shadow: 0 1px 2px rgba(0,0,0,.40), 0 10px 30px -18px rgba(0,0,0,.80);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg); color: var(--ink);
+    font-family: var(--sans); font-size: 16px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 960px; margin: 0 auto; padding: 40px 24px 96px; }
+
+  /* masthead */
+  .mast { display: flex; flex-direction: column; gap: 14px; padding-bottom: 26px; border-bottom: 2px solid var(--ink); }
+  .mast h1 { margin: 0; font-size: clamp(30px, 5.2vw, 44px); line-height: 1.08; letter-spacing: -0.022em; font-weight: 600; text-wrap: balance; }
+  .mast .sub { margin: 0; max-width: 64ch; color: var(--ink-2); font-size: 16.5px; }
+  .stamp { font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  .stamp b { color: var(--accent); font-weight: 600; }
+
+  /* audience nav */
+  .toc { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 1px; background: var(--rule-soft); border: 1px solid var(--rule-soft); border-radius: 4px; overflow: hidden; margin: 28px 0 0; }
+  .toc a { background: var(--surface); padding: 15px 17px; text-decoration: none; display: block; }
+  .toc a:hover { background: var(--surface-2); }
+  .toc .n { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+  .toc .t { display: block; margin-top: 4px; font-size: 15px; font-weight: 600; color: var(--ink); }
+  .toc .d { display: block; margin-top: 2px; font-size: 13px; color: var(--muted); }
+
+  /* layers */
+  .layer { margin-top: 60px; scroll-margin-top: 20px; }
+  .layer > .lhead { border-top: 2px solid var(--accent); padding-top: 16px; margin-bottom: 26px; }
+  .layer .who { font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; color: var(--accent); margin: 0 0 8px; }
+  .layer h2 { margin: 0 0 6px; font-size: 27px; font-weight: 600; letter-spacing: -0.018em; line-height: 1.2; }
+  .layer .lsub { margin: 0; max-width: 66ch; color: var(--muted); font-size: 14.5px; }
+
+  section { margin-top: 36px; }
+  h3 { margin: 0 0 10px; font-size: 17px; font-weight: 600; letter-spacing: -0.008em; }
+  h4 { margin: 26px 0 8px; font-size: 14px; font-weight: 600; }
+  p { max-width: 68ch; }
+  .lede { margin: 0 0 20px; max-width: 68ch; color: var(--ink-2); }
+
+  /* tables */
+  .scroll { overflow-x: auto; margin: 0 -4px; padding: 0 4px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; min-width: 560px; }
+  thead th { text-align: left; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 0 14px 8px 0; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+  tbody td { padding: 11px 14px 11px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink-2); }
+  tbody tr:last-child td { border-bottom: none; }
+  td:first-child, th:first-child { padding-left: 0; }
+  td.name { color: var(--ink); font-weight: 500; }
+  td.num, th.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tfoot td { padding: 12px 14px 0 0; font-weight: 600; color: var(--ink); border-top: 1px solid var(--rule); }
+  td .pn { display: block; font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 3px; letter-spacing: -0.01em; }
+
+  /* chips */
+  .chip { display: inline-block; font-family: var(--mono); font-size: 10.5px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; white-space: nowrap; }
+  .chip.ok { color: var(--ok); background: var(--ok-bg); }
+  .chip.warn { color: var(--warn); background: var(--warn-bg); }
+  .chip.stop { color: var(--stop); background: var(--stop-bg); }
+
+  /* callout */
+  .callout { background: var(--surface); border: 1px solid var(--rule); border-left: 3px solid var(--accent); border-radius: 4px; padding: 20px 22px; box-shadow: var(--shadow); margin: 22px 0; }
+  .callout h3, .callout h4 { margin-top: 0; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  /* stat row */
+  .specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; background: var(--rule-soft); border: 1px solid var(--rule-soft); border-radius: 4px; overflow: hidden; margin: 22px 0; }
+  .specs div { background: var(--surface); padding: 14px 16px; }
+  .specs dt { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+  .specs dd { margin: 0; font-size: 15px; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .specs dd small { display: block; font-size: 12.5px; font-weight: 400; color: var(--muted); margin-top: 3px; }
+
+  /* code */
+  code { font-family: var(--mono); font-size: .89em; background: var(--surface-2); padding: 1.5px 5px; border-radius: 3px; color: var(--ink); }
+  pre { font-family: var(--mono); font-size: 12.5px; line-height: 1.7; background: var(--code-bg); color: var(--code-ink); border-radius: 4px; padding: 18px 20px; overflow-x: auto; margin: 16px 0; }
+  pre code { background: none; padding: 0; color: inherit; }
+  pre .k { color: #8FB8DE; }
+  pre .v { color: #D9C07A; }
+  pre .c { color: #6E7A88; }
+
+  /* lists */
+  ul { padding-left: 19px; max-width: 68ch; }
+  li { margin-bottom: 7px; }
+  li::marker { color: var(--muted); }
+  ol.steps { list-style: none; padding: 0; max-width: 70ch; counter-reset: s; }
+  ol.steps li { counter-increment: s; display: flex; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  ol.steps li:last-child { border-bottom: none; }
+  ol.steps li::before { content: counter(s); font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--accent); background: var(--accent-bg); width: 24px; height: 24px; flex: none; display: grid; place-items: center; border-radius: 3px; margin-top: 1px; }
+  ol.steps b { color: var(--ink); font-weight: 600; }
+
+  strong { color: var(--ink); font-weight: 600; }
+  .note { font-size: 13.5px; color: var(--muted); max-width: 70ch; margin-top: 12px; }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible, :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+  footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--rule); font-family: var(--mono); font-size: 11.5px; letter-spacing: .04em; color: var(--muted); }
+
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <div class="stamp">
+      <span>Handoff</span>
+      <span>Rev. <b>Sep 2026</b></span>
+      <span>Designation: <b>PW-1x</b></span>
+      <span>Status: <b>awaiting delivery</b></span>
+    </div>
+    <h1>PW-1x Handoff</h1>
+    <p class="sub">Projectile William v1 — a dual-role machine. Primary role: a local large-language-model server absorbing high-volume agent workload that currently runs against a rate-limited commercial plan. Secondary role: hosting websites and development environments. Personal project; the capacity problem it solves is a working one.</p>
+  </header>
+
+  <nav class="toc">
+    <a href="#summary"><span class="n">Layer 1</span><span class="t">Summary</span><span class="d">Scope, spend, status. No hardware knowledge assumed.</span></a>
+    <a href="#technical"><span class="n">Layer 2</span><span class="t">Technical spec</span><span class="d">Full BOM, runtime config, constraints, gotchas.</span></a>
+    <a href="#state"><span class="n">Layer 3</span><span class="t">Machine state</span><span class="d">Structured project state for agent consumption.</span></a>
+  </nav>
+
+  <!-- ============================= LAYER 1 ============================= -->
+  <div class="layer" id="summary">
+    <div class="lhead">
+      <p class="who">Layer 1 · Non-technical</p>
+      <h2>What this is and where it stands</h2>
+      <p class="lsub">For anyone tracking scope, budget and timeline who will not touch the hardware.</p>
+    </div>
+
+    <section>
+      <h3>The problem</h3>
+      <p>Agent-based coding and automation work is consuming a full monthly allotment on a commercial AI plan, and hitting per-session rate limits multiple times in a single day under normal use. That is a <strong>capacity ceiling, not a cost overrun</strong> — additional spend does not buy past a rate limit.</p>
+      <p>A locally owned server has no rate limit. It is slower than the commercial service, so it does not replace it. It absorbs the high-volume, low-difficulty share of the work — file reads, summarisation, classification, tool routing — and leaves the hard reasoning to the commercial plan. The effect is to roughly double usable throughput without increasing monthly spend.</p>
+      <p><strong>The same machine also hosts websites and development environments.</strong> These workloads use different resources than language models do — network and disk rather than memory bandwidth — so they coexist without meaningfully slowing each other. One machine, two jobs, no additional hardware.</p>
+    </section>
+
+    <section>
+      <h3>Budget</h3>
+      <div class="specs">
+        <div><dt>Already owned</dt><dd>~$620<small>CPU and motherboard, bought earlier</small></dd></div>
+        <div><dt>Ordered</dt><dd>$1,620.59<small>Memory, cooler, PSU, SSD</small></dd></div>
+        <div><dt>Outstanding</dt><dd>$0<small>Everything is bought</small></dd></div>
+        <div><dt>Total</dt><dd>$2,240.59<small>$2,230.59 if the $10 rebate lands</small></dd></div>
+      </div>
+      <p>Memory is the single largest line and was bought into a rising market — DDR4 server memory has risen 30–50% since late 2025 as production winds down. The equivalent build on current-generation DDR5 memory would cost approximately $4,000 for the memory alone.</p>
+      <p class="note">Deliberately not purchased: a case (~$150) and chassis fans (~$30). The machine runs on an open bench, which is normal for a workshop server and removes those lines entirely.</p>
+    </section>
+
+    <section>
+      <h3>Status</h3>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Milestone</th><th>State</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="name">Core hardware</td><td><span class="chip ok">Complete</span></td><td>Processor, motherboard, graphics card on hand</td></tr>
+            <tr><td class="name">Memory</td><td><span class="chip ok">Ordered</span></td><td>128GB, lifetime warranty, 2–4 day shipping</td></tr>
+            <tr><td class="name">Remaining parts</td><td><span class="chip ok">Ordered</span></td><td>Cooler, power supply, storage — $304.90 of the $1,620.59 ordered</td></tr>
+            <tr><td class="name">Assembly</td><td><span class="chip warn">Awaiting delivery</span></td><td>All parts bought; nothing left to procure</td></tr>
+            <tr><td class="name">Software baseline</td><td><span class="chip warn">In progress</span></td><td>Small-model test running on existing desktop, no new hardware needed</td></tr>
+            <tr><td class="name">Hosting migration</td><td><span class="chip stop">Not started</span></td><td>Websites and dev environments move on after the machine is stable</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h3>Risks, plainly</h3>
+      <ul>
+        <li><strong>The local machine will not match the commercial service on hard problems.</strong> The best freely available model that fits this hardware scores around 60% on a standard software-engineering benchmark. Useful, not equivalent. The plan assumes a split workload, not a replacement.</li>
+        <li><strong>The performance figures are estimates, not measurements.</strong> The upper bound is arithmetic; the published range is a judgement call discounted below it. Nothing has been benchmarked on this specific machine. Figures could move ±30% in either direction.</li>
+        <li><strong>Component prices are volatile.</strong> Both memory and flash storage are in supply squeezes. Quoted prices have moved within days during this build.</li>
+        <li><strong>One assumption is untested:</strong> that a large local model is genuinely more useful here than a small fast one. A free test on existing hardware settles it before further spend.</li>
+      </ul>
+    </section>
+  </div>
+
+  <!-- ============================= LAYER 2 ============================= -->
+  <div class="layer" id="technical">
+    <div class="lhead">
+      <p class="who">Layer 2 · Technical</p>
+      <h2>Build specification</h2>
+      <p class="lsub">For whoever assembles, configures or takes over the machine.</p>
+    </div>
+
+    <section>
+      <h3>Bill of materials</h3>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Component</th><th>Specification</th><th>State</th><th class="num">Cost</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="name">Processor<span class="pn">AMD EPYC 7452</span></td>
+              <td>32C/64T Zen 2 "Rome", ~4 CCDs, 128MB L3, 155W, socket SP3</td>
+              <td><span class="chip ok">Have</span></td><td class="num">~$120</td>
+            </tr>
+            <tr>
+              <td class="name">Motherboard<span class="pn">ASRock Rack ROMED8-2T</span></td>
+              <td>ATX, single SP3. 7× PCIe 4.0 x16 (112 lanes), 8 DIMM at 1 DPC, 2× M.2 PCIe 4.0 x4, 2× OCuLink, 2× miniSAS HD, dual 10GbE (Intel X550-AT2), BMC/IPMI. Supports EPYC 7002/7003.</td>
+              <td><span class="chip ok">Have</span></td><td class="num">~$500</td>
+            </tr>
+            <tr>
+              <td class="name">Graphics<span class="pn">NVIDIA RTX 4060 Ti FE</span></td>
+              <td>16GB. Hosts attention layers, shared experts and KV cache; performs prompt processing.</td>
+              <td><span class="chip ok">Have</span></td><td class="num">—</td>
+            </tr>
+            <tr>
+              <td class="name">Memory<span class="pn">A-Tech 128GB kit</span></td>
+              <td>8 × 16GB, 2Rx8, DDR4-3200 PC4-25600R, ECC Registered, 1.2V, 288-pin. Lifetime warranty.</td>
+              <td><span class="chip ok">Ordered</span></td><td class="num">$1,315.69</td>
+            </tr>
+            <tr>
+              <td class="name">CPU cooler<span class="pn">ARCTIC Freezer 4U-M · ACFRE00133B</span></td>
+              <td>SP3-compatible, dual 120mm push-pull, rated to 350W TDP, 211×160×141mm</td>
+              <td><span class="chip ok">Ordered</span></td><td class="num">$57.92</td>
+            </tr>
+            <tr>
+              <td class="name">Power supply<span class="pn">MSI MPG A850G PCIE5</span></td>
+              <td>850W, 80+ Gold, fully modular, ATX 3.1, 2× EPS 4+4. Board requirement (one 8-pin + one 4-pin) is from the ServeTheHome review only — <strong>confirm against the ASRock manual at assembly</strong>. Two EPS 4+4 covers either reading.</td>
+              <td><span class="chip ok">Ordered</span></td><td class="num">$89.99</td>
+            </tr>
+            <tr>
+              <td class="name">System SSD<span class="pn">Kingston NV3 · SNV3S/1000G</span></td>
+              <td>1TB M.2 2280 PCIe 4.0 x4, up to 6,000 MB/s. OS plus 2–3 active models.</td>
+              <td><span class="chip ok">Ordered</span></td><td class="num">$156.99</td>
+            </tr>
+            <tr>
+              <td class="name">Model archive<span class="pn">G-DRIVE mobile USB-C · 0G10265</span></td>
+              <td>1TB 2.5" HDD in enclosure, ~140 MB/s over USB 3.1 Gen 1. Holds ~15 model files. <strong>Do not shuck</strong> — no SATA ports on this board.</td>
+              <td><span class="chip ok">Have</span></td><td class="num">—</td>
+            </tr>
+            <tr>
+              <td class="name">Case / chassis fans</td>
+              <td>Open bench. Read VRM and DIMM temperatures via IPMI under load before buying any airflow.</td>
+              <td><span class="chip stop">Not buying</span></td><td class="num">$0</td>
+            </tr>
+          </tbody>
+          <tfoot><tr><td colspan="3">Outstanding to order</td><td class="num">$0</td></tr></tfoot>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h3>Verified platform facts</h3>
+      <div class="specs">
+        <div><dt>Memory bandwidth</dt><dd>~140 GB/s<small>Dell STREAM Triad, 270–300 dual-socket on this SKU</small></dd></div>
+        <div><dt>Memory topology</dt><dd>8ch @ 1 DPC<small>DDR4-3200 official for Rome at 1 DPC</small></dd></div>
+        <div><dt>Max RDIMM</dt><dd>512GB<small>1TB with LRDIMM; never mix the two</small></dd></div>
+        <div><dt>Expansion</dt><dd>6 slots free<small>of 7 × PCIe 4.0 x16</small></dd></div>
+      </div>
+      <p class="note">Memory compatibility confirmed against Kingston's database for this board: 16GB DDR4-3200 2Rx8 RDIMM is listed, and modules must be installed in groups of eight.</p>
+    </section>
+
+    <section>
+      <h3>Model set</h3>
+      <p class="lede">Constrained to US-origin open-weight models. Throughput figures are estimates, not benchmarks.</p>
+      <p class="note"><strong>How the estimates were derived, and why they are below the naive number.</strong> Raw weight-streaming math — 140 GB/s divided by active-parameter bytes — gives a <em>ceiling</em> of roughly 51 tok/s for gpt-oss-120b and 14 for Scout. Those assume nothing but expert weights crosses the bus. Real decode also pays for attention compute, KV cache traffic, MoE routing, and the GPU/CPU boundary. The figures below discount for that — more heavily for gpt-oss-120b, whose 5.1B active set is small enough that fixed overheads weigh proportionally more. The discount is judgement rather than measurement. Treat the range as a guess bracketed by a hard ceiling, and replace it with real numbers once the machine runs.</p>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Model</th><th class="num">Active</th><th class="num">Size</th><th class="num">Est. tok/s</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="name">gpt-oss-120b<span class="pn">OpenAI · 117B · Apache 2.0</span></td>
+              <td class="num">5.1B</td><td class="num">63GB</td><td class="num">17–25</td>
+              <td><span class="chip ok">Primary</span> MXFP4 native, so every quant lands 62.6–63.4GB — run Q8_0. Strongest tool-call formatting.</td>
+            </tr>
+            <tr>
+              <td class="name">Llama 4 Scout<span class="pn">Meta · 109B · 16 experts · 10M ctx</span></td>
+              <td class="num">17B</td><td class="num">65GB</td><td class="num">8–11</td>
+              <td><span class="chip ok">Alternate</span> Q4_K_M 65.4GB. Repo-wide reading. Llama 4 Community License (restricted).</td>
+            </tr>
+            <tr>
+              <td class="name">gpt-oss-20b<span class="pn">OpenAI · 21B · Apache 2.0</span></td>
+              <td class="num">3.6B</td><td class="num">12.1GB</td><td class="num">50+</td>
+              <td><span class="chip ok">Volume tier</span> GPU-resident. 12.1GB of weights at Q8_0; OpenAI specs ~16GB total once KV cache is counted, which is the whole 16GB card. Triage, classification, diff summaries.</td>
+            </tr>
+            <tr>
+              <td class="name">Nemotron 3 Super<span class="pn">NVIDIA · 120B-A12B · SWE-bench 60.47%</span></td>
+              <td class="num">12B</td><td class="num">68GB</td><td class="num">—</td>
+              <td><span class="chip warn">Unresolved</span> The published GGUF is NVFP4 and its repo points at a llama.cpp fork. llama.cpp issue #20504 confirmed <code>convert_hf_to_gguf.py</code> rejected this model’s <code>modelopt</code> quantisation — but that issue is <strong>closed</strong>, referencing PR #20539, so stock support may have landed. Verify before planning around it either way.</td>
+            </tr>
+            <tr>
+              <td class="name">Llama 4 Maverick<span class="pn">Meta · 400B · 128 experts</span></td>
+              <td class="num">17B</td><td class="num">243GB</td><td class="num">—</td>
+              <td><span class="chip stop">Does not fit</span> Q4_K_XL is 243GB. Even 1.78-bit IQ1_S is 122GB, which fills the machine at a quantisation level that wrecks the model. Not a close call.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h3>Runtime configuration</h3>
+      <p class="lede">llama.cpp with <code>--n-cpu-moe</code>. Always-active weights on the GPU, routed experts in system memory.</p>
+      <div class="specs">
+        <div><dt>On GPU (16GB)</dt><dd>Attention<small>+ dense FFN, shared experts, KV cache</small></dd></div>
+        <div><dt>In RAM (128GB)</dt><dd>Routed experts<small>streamed per token</small></dd></div>
+        <div><dt>Prefill bound by</dt><dd>GPU compute</dd></div>
+        <div><dt>Generation bound by</dt><dd>RAM bandwidth</dd></div>
+      </div>
+      <pre><code>llama-server -m gpt-oss-120b-Q8_0.gguf \
+  --n-cpu-moe 40 \
+  -ngl 999 \
+  -b 4096 -ub 4096 \
+  -c 32768 \
+  --host 0.0.0.0 --port 8080</code></pre>
+      <p><code>--n-cpu-moe N</code> pushes the top N expert layers to CPU, counting down from the highest-numbered layer, overriding the <code>-ngl 999</code> that placed everything on the GPU. Start high and tune down until VRAM is nearly full. Batch size <code>-b 4096 -ub 4096</code> is the difference between usable and painful prompt processing — it is the setting most often left at defaults.</p>
+      <p class="note">Serves an OpenAI-compatible API at <code>/v1</code>. Any agent harness that accepts a custom base URL can point at it.</p>
+    </section>
+
+    <section>
+      <h3>Second role: web and development hosting</h3>
+      <p class="lede">Websites and dev environments are close to the ideal secondary workload here. They are network- and disk-bound, idle most of the time, and do not stream data from memory the way model inference does.</p>
+
+      <div class="callout">
+        <h4>Two things to get right</h4>
+        <p><strong>Co-location is the real risk, not performance.</strong> A public website sharing a host with development environments and the model stack means a compromised site sits next to everything else. Containers help but are not a hard security boundary. Anything internet-facing runs in rootless Podman, and the host is treated as exposed.</p>
+        <p><strong>Builds are the one workload that fights inference.</strong> A large parallel compile grabs every core and does hit memory hard — that is when token latency spikes. Cap build parallelism (<code>-j16</code>, not <code>-j32</code>) rather than letting a build take the whole machine.</p>
+      </div>
+
+      <h4>Resource split</h4>
+      <div class="scroll">
+        <table>
+          <thead><tr><th>Resource</th><th class="num">Inference</th><th class="num">Hosting + dev</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="name">Logical CPUs</td><td class="num">0–11, 32–43</td><td class="num">12–31, 44–63</td><td>32C/64T — pin each core <em>with</em> its SMT sibling or the other workload lands on the same physical core</td></tr>
+            <tr><td class="name">Memory</td><td class="num">76GB cap</td><td class="num">40GB cap</td><td>63GB model + KV vs containers; 12GB left for host and page cache</td></tr>
+            <tr><td class="name">GPU</td><td class="num">exclusive</td><td class="num">—</td><td>No contention; nothing else needs it</td></tr>
+            <tr><td class="name">Memory bandwidth</td><td class="num">dominant</td><td class="num">minimal</td><td>Only builds contend meaningfully</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h4>Isolation</h4>
+      <p>Use systemd resource control rather than hoping the scheduler sorts it out. A runaway container must not be able to starve inference, and a long prefill must not stall the web stack.</p>
+      <pre><code><span class="c"># verify enumeration FIRST — sibling order varies by kernel and BIOS</span>
+<span class="c">#   lscpu -e=CPU,CORE   → shows which logical CPUs share a physical core</span>
+
+<span class="c"># /etc/systemd/system/llama-server.service.d/limits.conf</span>
+[<span class="k">Service</span>]
+<span class="k">AllowedCPUs</span>=<span class="v">0-11,32-43</span>   <span class="c"># 12 physical cores + their SMT siblings</span>
+<span class="k">MemoryMax</span>=<span class="v">76G</span>
+<span class="k">CPUWeight</span>=<span class="v">100</span></code></pre>
+      <div class="callout">
+        <h4>Two ways to get this wrong</h4>
+        <p><strong>The CPU is 32 cores / 64 threads.</strong> Linux enumerates 0–63, not 0–31. Pinning inference to <code>0-11</code> alone leaves logical CPUs 32–43 — the SMT siblings of those same physical cores — free for containers to land on, so the isolation does nothing. Pin core and sibling together, and confirm the pairing with <code>lscpu -e</code> before trusting the ranges above.</p>
+        <p><strong>Do not over-commit memory.</strong> 128GB total: 76GB cap for inference, 40GB for containers, ~12GB left for the host and page cache. Caps that sum above 128GB mean the OOM killer decides which workload dies, and it will usually pick the 63GB process.</p>
+      </div>
+      <p>Containers get their own limits and stay off those CPUs. If NPS2 or NPS4 is ever enabled in BIOS, inference can be bound to specific NUMA domains — isolating memory bandwidth as well as cores. Only worth doing if contention is actually observed; start at NPS1.</p>
+
+      <h4>Stack</h4>
+      <ul>
+        <li><strong>Debian or Ubuntu Server</strong>, bare metal. No hypervisor — GPU passthrough to a guest adds real complexity and buys nothing here.</li>
+        <li><strong>Podman</strong> for containers. Rootless by default, no daemon, Docker-compatible CLI.</li>
+        <li><strong>Caddy</strong> as reverse proxy. Automatic Let's Encrypt certificates in roughly three lines of config.</li>
+        <li><strong>Tailscale</strong> (free tier) for reaching dev environments remotely without opening ports.</li>
+        <li><strong>llama.cpp</strong> as a systemd unit with the CPU pinning above.</li>
+      </ul>
+      <p class="note">All four are free and open source. No licensing cost in this stack.</p>
+
+      <h4>Storage</h4>
+      <p>The 1TB NVMe was sized for the OS plus two or three models. Container images and dev repositories make it tighter than that — image sprawl accumulates fast. Put <code>/var/lib/containers</code> on its own partition so a runaway pull cannot fill the disk out from under the model files. The second M.2 slot is free if more capacity is needed later.</p>
+    </section>
+
+    <section>
+      <h3>Constraints and gotchas</h3>
+      <div class="callout">
+        <h4>Read these before assembly</h4>
+        <ul>
+          <li><strong>No SATA ports on this board.</strong> Storage is 2× M.2 plus OCuLink and miniSAS HD. Any SATA device needs a breakout cable. This is why the archive drive stays in its USB enclosure.</li>
+          <li><strong>Never mix RDIMM and LRDIMM.</strong> The installed memory is RDIMM. Any future capacity change replaces all eight modules, it does not add to them.</li>
+          <li><strong>Server board on an open bench has no directed airflow</strong> over the passive VRM heatsinks or the DIMM bank. Read the IPMI sensors under sustained load before deciding whether a fan is needed.</li>
+          <li><strong>llama.cpp must be built with CUDA.</strong> A CPU-only build loads fine and runs at a crawl, which reads as "slow model" rather than "wrong build". Check the startup log for device detection.</li>
+        </ul>
+      </div>
+      <ul>
+        <li><strong>~140 GB/s is a hard ceiling</strong>, inherent to the SP3 platform. Genoa's ~460 GB/s requires a different socket, board and memory generation.</li>
+        <li><strong>16GB of VRAM is the real bottleneck.</strong> gpt-oss-20b is specified to run <em>within</em> 16GB — the whole card — so it cannot be resident while a large model also uses the GPU. The two models swap; they do not coexist.</li>
+        <li><strong>Zen 2 is excluded from AMD's ZenDNN</strong>, which gives 2–4.5× faster prompt processing on Milan and newer. Largely academic while the GPU handles prefill; it matters if the machine is ever run CPU-only.</li>
+        <li><strong>Single socket, permanently.</strong> One CPU, no second.</li>
+        <li><strong>Uptime is coupled.</strong> Anything hosted here goes down when the box reboots for a kernel update, and every experiment with the inference stack is a risk to those services. Reloading a model after a restart is cheap — about twelve seconds off the NVMe — but a host reboot takes everything with it.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h3>Upgrade path, in priority order</h3>
+      <ol class="steps">
+        <li><div><b>Second GPU.</b> Six x16 slots free. Directly attacks prefill and context headroom, and is what allows the small and large models to run concurrently. Used RTX 3090 ~$1,000. Nothing existing is replaced.</div></li>
+        <li><div><b>Milan CPU swap.</b> Board supports EPYC 7003. A 7543P (~$950, 256MB L3 implying 8 CCDs) adds ZenDNN support, Zen 3 IPC and more fabric bandwidth. Poor value against the GPU: 8× the price of the current $120 chip for a fraction of the benefit. Note Milan is still AVX2 — AVX-512 is not reachable on this socket.</div></li>
+        <li><div><b>Memory to 512GB.</b> Eight 64GB modules. Verify 64GB dual-rank at 3200 against the board QVL first — not confirmed. Only worth it for 400B-class models this bandwidth barely supports.</div></li>
+        <li><div><b>OCuLink storage expansion.</b> Two Gen4 x4 ports for external NVMe or a drive cage.</div></li>
+      </ol>
+    </section>
+
+    <section>
+      <h3>Next actions</h3>
+      <ol class="steps">
+        <li><div><b>Baseline test — do now, costs nothing.</b> Install Ollama on the existing desktop and run <code>gpt-oss:20b</code> on the 4060 Ti. Point the current agent harness at <code>localhost:11434/v1</code>. This answers whether the small tier is sufficient, which is the assumption the whole build rests on.</div></li>
+        <li><div><b>On memory arrival: memtest86+, all eight modules, full passes, overnight.</b> Inside the 30-day return window. A failure found in week one is a defective return; the same failure in month four is a warranty claim requiring a matched replacement.</div></li>
+        <li><div><b>Assemble on open bench.</b> Non-conductive surface, off carpet, out of reach of pets.</div></li>
+        <li><div><b>Load under sustained inference and read IPMI</b> VRM and DIMM temperatures. Add a ~$12 fan aimed at the DIMM bank only if the numbers call for it.</div></li>
+        <li><div><b>Build llama.cpp with CUDA, load gpt-oss-120b Q8_0, tune <code>--n-cpu-moe</code></b> downward until VRAM is nearly full. Record actual tokens/sec and replace the estimates in this document.</div></li>
+        <li><div><b>Close the three open memory quote threads</b> (Topmemory, memory.net, TechMikeNY) with a one-line note. Keep the contacts — future GPU and CPU purchases come from the same channel.</div></li>
+      </ol>
+    </section>
+  </div>
+
+  <!-- ============================= LAYER 3 ============================= -->
+  <div class="layer" id="state">
+    <div class="lhead">
+      <p class="who">Layer 3 · Machine-readable</p>
+      <h2>Project state</h2>
+      <p class="lsub">Structured for agent consumption. Facts only; estimates flagged as such.</p>
+    </div>
+
+    <pre><code><span class="c">// project state — pw-1x — rev 2026-09</span>
+<span class="k">project</span>:
+  <span class="k">id</span>: <span class="v">pw-1x</span>
+  <span class="k">name</span>: <span class="v">Projectile William v1</span>
+  <span class="k">type</span>: <span class="v">personal</span>
+  <span class="k">roles</span>: [<span class="v">llm_inference</span>, <span class="v">web_and_dev_hosting</span>]
+  <span class="k">status</span>: <span class="v">awaiting_delivery</span>
+  <span class="k">driver</span>: <span class="v">rate_limit_ceiling_on_commercial_plan</span>
+  <span class="k">strategy</span>: <span class="v">tiered_routing</span>  <span class="c"># local absorbs volume; frontier retains hard reasoning</span>
+  <span class="k">model_constraint</span>: <span class="v">us_origin_open_weight_only</span>
+
+<span class="k">budget</span>:
+  <span class="k">sunk_usd</span>: <span class="v">620</span>          <span class="c"># cpu ~120 + board ~500, estimated market</span>
+  <span class="k">ordered_usd</span>: <span class="v">1620.59</span>
+  <span class="k">pending_usd</span>: <span class="v">0</span>
+  <span class="k">total_usd</span>: <span class="v">2240.59</span>   <span class="c"># 2230.59 if the $10 psu rebate lands</span>
+  <span class="k">recurring_usd</span>: <span class="v">0</span>
+
+<span class="k">hardware</span>:
+  <span class="k">cpu</span>: { <span class="k">model</span>: <span class="v">EPYC 7452</span>, <span class="k">cores</span>: <span class="v">32</span>, <span class="k">arch</span>: <span class="v">zen2_rome</span>, <span class="k">l3_mb</span>: <span class="v">128</span>, <span class="k">ccd_est</span>: <span class="v">4</span>, <span class="k">tdp_w</span>: <span class="v">155</span>, <span class="k">socket</span>: <span class="v">SP3</span>, <span class="k">state</span>: <span class="v">owned</span> }
+  <span class="k">board</span>: { <span class="k">model</span>: <span class="v">ASRock Rack ROMED8-2T</span>, <span class="k">pcie_x16_slots</span>: <span class="v">7</span>, <span class="k">pcie_gen</span>: <span class="v">4</span>, <span class="k">lanes</span>: <span class="v">112</span>, <span class="k">dimm_slots</span>: <span class="v">8</span>, <span class="k">dpc</span>: <span class="v">1</span>, <span class="k">m2</span>: <span class="v">2</span>, <span class="k">sata_ports</span>: <span class="v">0</span>, <span class="k">oculink</span>: <span class="v">2</span>, <span class="k">minisas_hd</span>: <span class="v">2</span>, <span class="k">nic</span>: <span class="v">dual_10gbe_x550</span>, <span class="k">ipmi</span>: <span class="v">true</span>, <span class="k">cpu_support</span>: [<span class="v">7002</span>, <span class="v">7003</span>], <span class="k">state</span>: <span class="v">owned</span> }
+  <span class="k">gpu</span>: { <span class="k">model</span>: <span class="v">RTX 4060 Ti FE</span>, <span class="k">vram_gb</span>: <span class="v">16</span>, <span class="k">role</span>: <span class="v">attention_kv_prefill</span>, <span class="k">state</span>: <span class="v">owned</span> }
+  <span class="k">memory</span>: { <span class="k">kit</span>: <span class="v">A-Tech 128GB</span>, <span class="k">modules</span>: <span class="v">8</span>, <span class="k">module_gb</span>: <span class="v">16</span>, <span class="k">type</span>: <span class="v">DDR4-3200 PC4-25600R</span>, <span class="k">form</span>: <span class="v">RDIMM</span>, <span class="k">rank</span>: <span class="v">2Rx8</span>, <span class="k">ecc</span>: <span class="v">registered</span>, <span class="k">warranty</span>: <span class="v">lifetime</span>, <span class="k">cost_usd</span>: <span class="v">1315.69</span>, <span class="k">state</span>: <span class="v">ordered</span> }
+  <span class="k">cooler</span>: { <span class="k">model</span>: <span class="v">ARCTIC Freezer 4U-M</span>, <span class="k">pn</span>: <span class="v">ACFRE00133B</span>, <span class="k">socket</span>: <span class="v">SP3</span>, <span class="k">cost_usd</span>: <span class="v">57.92</span>, <span class="k">state</span>: <span class="v">ordered</span> }
+  <span class="k">psu</span>: { <span class="k">model</span>: <span class="v">MSI MPG A850G PCIE5</span>, <span class="k">watts</span>: <span class="v">850</span>, <span class="k">eps_connectors</span>: <span class="v">2</span>, <span class="k">cost_usd</span>: <span class="v">89.99</span>, <span class="k">state</span>: <span class="v">ordered</span> }
+  <span class="k">ssd</span>: { <span class="k">model</span>: <span class="v">Kingston NV3</span>, <span class="k">pn</span>: <span class="v">SNV3S/1000G</span>, <span class="k">capacity_gb</span>: <span class="v">1000</span>, <span class="k">read_mbs</span>: <span class="v">6000</span>, <span class="k">cost_usd</span>: <span class="v">156.99</span>, <span class="k">state</span>: <span class="v">ordered</span> }
+  <span class="k">archive</span>: { <span class="k">model</span>: <span class="v">G-DRIVE mobile USB-C</span>, <span class="k">pn</span>: <span class="v">0G10265</span>, <span class="k">capacity_gb</span>: <span class="v">1000</span>, <span class="k">medium</span>: <span class="v">hdd</span>, <span class="k">read_mbs</span>: <span class="v">140</span>, <span class="k">interface</span>: <span class="v">usb31gen1</span>, <span class="k">do_not_shuck</span>: <span class="v">true</span>, <span class="k">state</span>: <span class="v">owned</span> }
+  <span class="k">chassis</span>: { <span class="k">type</span>: <span class="v">open_bench</span>, <span class="k">fans</span>: <span class="v">deferred_pending_ipmi_readings</span> }
+
+<span class="k">vendor_documented</span>:   <span class="c"># NOT measured on this machine — nothing has been benchmarked here yet</span>
+  <span class="k">mem_bandwidth_gbs</span>: <span class="v">140</span>       <span class="c"># derived: Dell STREAM Triad 270-300 dual-socket on 7452, halved</span>
+  <span class="k">mem_compat_verified</span>: <span class="v">true</span>     <span class="c"># source: Kingston compatibility db, ROMED8-2T</span>
+  <span class="k">dimm_install_multiple</span>: <span class="v">8</span>       <span class="c"># source: Kingston compatibility db</span>
+
+<span class="k">models</span>:
+  - { <span class="k">id</span>: <span class="v">gpt-oss-120b</span>, <span class="k">total_b</span>: <span class="v">117</span>, <span class="k">active_b</span>: <span class="v">5.1</span>, <span class="k">size_gb</span>: <span class="v">63</span>, <span class="k">quant</span>: <span class="v">mxfp4_native</span>, <span class="k">license</span>: <span class="v">apache_2.0</span>, <span class="k">tps_est</span>: [<span class="v">17</span>,<span class="v">25</span>], <span class="k">role</span>: <span class="v">primary</span>, <span class="k">runs_on_stock_llamacpp</span>: <span class="v">true</span> }
+  - { <span class="k">id</span>: <span class="v">llama-4-scout</span>, <span class="k">total_b</span>: <span class="v">109</span>, <span class="k">active_b</span>: <span class="v">17</span>, <span class="k">size_gb</span>: <span class="v">65</span>, <span class="k">quant</span>: <span class="v">q4_k_m</span>, <span class="k">ctx</span>: <span class="v">10000000</span>, <span class="k">license</span>: <span class="v">llama4_community</span>, <span class="k">tps_est</span>: [<span class="v">8</span>,<span class="v">11</span>], <span class="k">role</span>: <span class="v">alternate</span>, <span class="k">runs_on_stock_llamacpp</span>: <span class="v">true</span> }
+  - { <span class="k">id</span>: <span class="v">gpt-oss-20b</span>, <span class="k">total_b</span>: <span class="v">21</span>, <span class="k">active_b</span>: <span class="v">3.6</span>, <span class="k">size_gb</span>: <span class="v">12.1</span>, <span class="k">vram_total_gb</span>: <span class="v">16</span>, <span class="k">quant</span>: <span class="v">mxfp4_native</span>, <span class="k">license</span>: <span class="v">apache_2.0</span>, <span class="k">tps_est</span>: [<span class="v">50</span>,<span class="v">null</span>], <span class="k">role</span>: <span class="v">volume_tier</span>, <span class="k">placement</span>: <span class="v">gpu_resident</span> }
+  - { <span class="k">id</span>: <span class="v">nemotron-3-super</span>, <span class="k">total_b</span>: <span class="v">120</span>, <span class="k">active_b</span>: <span class="v">12</span>, <span class="k">size_gb</span>: <span class="v">68</span>, <span class="k">swebench</span>: <span class="v">60.47</span>, <span class="k">status</span>: <span class="v">unresolved</span>, <span class="k">blocker</span>: <span class="v">nvfp4_modelopt_quant</span>, <span class="k">note</span>: <span class="v">llamacpp_issue_20504_closed_via_pr_20539_verify_before_relying</span> }
+  - { <span class="k">id</span>: <span class="v">llama-4-maverick</span>, <span class="k">total_b</span>: <span class="v">400</span>, <span class="k">active_b</span>: <span class="v">17</span>, <span class="k">size_gb</span>: <span class="v">243</span>, <span class="k">size_gb_iq1s</span>: <span class="v">122</span>, <span class="k">status</span>: <span class="v">rejected</span>, <span class="k">reason</span>: <span class="v">does_not_fit_128gb_at_usable_quant</span> }
+
+<span class="k">runtime</span>:
+  <span class="k">engine</span>: <span class="v">llama.cpp</span>
+  <span class="k">key_flags</span>: [<span class="v">--n-cpu-moe</span>, <span class="v">-ngl 999</span>, <span class="v">-b 4096</span>, <span class="v">-ub 4096</span>]
+  <span class="k">gpu_holds</span>: [<span class="v">attention</span>, <span class="v">dense_ffn</span>, <span class="v">shared_experts</span>, <span class="v">kv_cache</span>]
+  <span class="k">ram_holds</span>: [<span class="v">routed_experts</span>]
+  <span class="k">api</span>: <span class="v">openai_compatible_v1</span>
+  <span class="k">requires_cuda_build</span>: <span class="v">true</span>
+
+<span class="k">workloads</span>:
+  <span class="k">topology</span>: { <span class="k">physical_cores</span>: <span class="v">32</span>, <span class="k">logical_cpus</span>: <span class="v">64</span>, <span class="k">smt</span>: <span class="v">true</span>, <span class="k">verify_with</span>: <span class="v">lscpu -e=CPU,CORE</span> }
+  <span class="k">primary</span>: { <span class="k">id</span>: <span class="v">llm_inference</span>, <span class="k">cpus</span>: <span class="v">0-11,32-43</span>, <span class="k">mem_cap_gb</span>: <span class="v">76</span>, <span class="k">gpu</span>: <span class="v">exclusive</span>, <span class="k">isolation</span>: <span class="v">systemd_allowedcpus</span> }
+  <span class="k">secondary</span>: { <span class="k">id</span>: <span class="v">web_and_dev_hosting</span>, <span class="k">cpus</span>: <span class="v">12-31,44-63</span>, <span class="k">mem_cap_gb</span>: <span class="v">40</span>, <span class="k">runtime</span>: <span class="v">rootless_podman</span>, <span class="k">proxy</span>: <span class="v">caddy</span> }
+  <span class="k">host_reserve_gb</span>: <span class="v">12</span>   <span class="c"># caps must not sum above 128</span>
+  <span class="k">contention</span>: { <span class="k">resource</span>: <span class="v">memory_bandwidth</span>, <span class="k">trigger</span>: <span class="v">parallel_builds</span>, <span class="k">mitigation</span>: <span class="v">cap_build_parallelism_j16</span> }
+  <span class="k">os</span>: <span class="v">debian_or_ubuntu_bare_metal</span>   <span class="c"># no hypervisor; gpu passthrough not worth it</span>
+  <span class="k">remote_access</span>: <span class="v">tailscale_free_tier</span>
+
+<span class="k">constraints</span>:
+  - { <span class="k">id</span>: <span class="v">bandwidth_ceiling</span>, <span class="k">value_gbs</span>: <span class="v">140</span>, <span class="k">fixable</span>: <span class="v">false</span>, <span class="k">note</span>: <span class="v">inherent_to_sp3</span> }
+  - { <span class="k">id</span>: <span class="v">vram_ceiling</span>, <span class="k">value_gb</span>: <span class="v">16</span>, <span class="k">fixable</span>: <span class="v">true</span>, <span class="k">fix</span>: <span class="v">second_gpu</span>, <span class="k">effect</span>: <span class="v">blocks_concurrent_small_and_large_models</span> }
+  - { <span class="k">id</span>: <span class="v">zendnn_unsupported</span>, <span class="k">reason</span>: <span class="v">zen2</span>, <span class="k">fixable</span>: <span class="v">true</span>, <span class="k">fix</span>: <span class="v">milan_cpu</span>, <span class="k">severity</span>: <span class="v">low_while_gpu_handles_prefill</span> }
+  - { <span class="k">id</span>: <span class="v">no_sata</span>, <span class="k">fixable</span>: <span class="v">true</span>, <span class="k">fix</span>: <span class="v">oculink_or_minisas_breakout</span> }
+  - { <span class="k">id</span>: <span class="v">single_socket</span>, <span class="k">fixable</span>: <span class="v">false</span> }
+  - { <span class="k">id</span>: <span class="v">workload_colocation</span>, <span class="k">risk</span>: <span class="v">security</span>, <span class="k">note</span>: <span class="v">public_sites_share_host_with_dev_and_models</span>, <span class="k">mitigation</span>: <span class="v">rootless_podman_treat_host_as_exposed</span> }
+  - { <span class="k">id</span>: <span class="v">uptime_coupling</span>, <span class="k">note</span>: <span class="v">host_reboot_takes_down_hosted_services</span> }
+  - { <span class="k">id</span>: <span class="v">nvme_capacity</span>, <span class="k">note</span>: <span class="v">1tb_tight_with_container_images</span>, <span class="k">mitigation</span>: <span class="v">separate_partition_for_var_lib_containers</span>, <span class="k">fix</span>: <span class="v">second_m2_slot_free</span> }
+  - { <span class="k">id</span>: <span class="v">no_rdimm_lrdimm_mixing</span>, <span class="k">effect</span>: <span class="v">capacity_change_replaces_all_8_modules</span> }
+
+<span class="k">upgrades_ranked</span>:
+  - { <span class="k">rank</span>: <span class="v">1</span>, <span class="k">item</span>: <span class="v">second_gpu</span>, <span class="k">candidate</span>: <span class="v">used_rtx_3090</span>, <span class="k">cost_usd</span>: <span class="v">1000</span>, <span class="k">unlocks</span>: [<span class="v">prefill</span>, <span class="v">context_headroom</span>, <span class="v">concurrent_models</span>] }
+  - { <span class="k">rank</span>: <span class="v">2</span>, <span class="k">item</span>: <span class="v">milan_cpu</span>, <span class="k">candidate</span>: <span class="v">EPYC 7543P</span>, <span class="k">cost_usd</span>: <span class="v">950</span>, <span class="k">unlocks</span>: [<span class="v">zendnn</span>, <span class="v">zen3_ipc</span>, <span class="v">8_ccd_fabric</span>], <span class="k">value</span>: <span class="v">poor_vs_gpu</span> }
+  - { <span class="k">rank</span>: <span class="v">3</span>, <span class="k">item</span>: <span class="v">memory_512gb</span>, <span class="k">blocker</span>: <span class="v">64gb_dual_rank_at_3200_unverified_on_qvl</span> }
+  - { <span class="k">rank</span>: <span class="v">4</span>, <span class="k">item</span>: <span class="v">oculink_nvme_expansion</span> }
+
+<span class="k">open_actions</span>:
+  - { <span class="k">id</span>: <span class="v">baseline_test</span>, <span class="k">blocking</span>: <span class="v">false</span>, <span class="k">cost_usd</span>: <span class="v">0</span>, <span class="k">desc</span>: <span class="v">run gpt-oss-20b on existing 4060 Ti via ollama; point current harness at localhost:11434/v1</span> }
+  - { <span class="k">id</span>: <span class="v">memtest_on_arrival</span>, <span class="k">deadline</span>: <span class="v">within_30d_return_window</span>, <span class="k">desc</span>: <span class="v">memtest86+ all 8 modules, full passes</span> }
+  - { <span class="k">id</span>: <span class="v">ipmi_thermal_check</span>, <span class="k">desc</span>: <span class="v">read vrm and dimm temps under sustained load; add fan only if indicated</span> }
+  - { <span class="k">id</span>: <span class="v">record_actual_tps</span>, <span class="k">desc</span>: <span class="v">replace estimates in this document with measurements</span> }
+  - { <span class="k">id</span>: <span class="v">close_quote_threads</span>, <span class="k">parties</span>: [<span class="v">topmemory</span>, <span class="v">memory.net</span>, <span class="v">techmikeny</span>] }
+
+<span class="k">confidence</span>:
+  <span class="k">hardware_specs</span>: <span class="v">verified</span>        <span class="c"># vendor docs: asrock, kingston, dell, amd</span>
+  <span class="k">model_specs</span>: <span class="v">verified</span>           <span class="c"># vendor model cards on huggingface</span>
+  <span class="k">throughput</span>: <span class="v">estimated</span>           <span class="c"># ceiling is arithmetic; published range is judgement. no benchmark on this machine</span>
+  <span class="k">prices</span>: <span class="v">volatile</span>               <span class="c"># ddr4 and nand both in supply squeeze</span></code></pre>
+  </div>
+
+  <footer>
+    Hardware specs from ASRock, Kingston, Dell and AMD documentation · Model specs from vendor model cards · Throughput ceilings are arithmetic; published ranges are judgement. Neither is a benchmark · Component prices move weekly
+  </footer>
+
+</div>
+
+</body></html>
