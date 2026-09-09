@@ -217,6 +217,35 @@ Commit and push. Nothing touches hardware, the artifacts, or any external servic
 
 **Sequencing against A–D:** the MCP server (§B) can be built and tested against Ollama on the desktop *before* PW-1x exists — that's the A0 baseline with a real interface on it. The console skeleton and the `claude-code-remote` adapter need nothing from PW-1x either. Both land in D now and get real backends at A5. Screens A/B/C are hardware builds that run in parallel with A1–A4. Hooks cost nothing until used.
 
+## Second implementation step: Systems Map cleanup (all three figures)
+
+**Why.** The Systems Map — https://claude.ai/code/artifact/0d57bcf9-55a9-4eda-87c9-4807749ee677 — is correct but crowded: boxes carry four to six lines of text, two edges are diagonal and one is a bezier, and several labels sit on box borders. It should read at a glance, with the words in the captions and the tables where they belong. Content is unchanged; this is layout only. The file is `scratchpad/systems-map.html`; it is mine, not one of the PW-1x pair.
+
+**Rules, applied to every figure.**
+
+1. **A box is a title and at most two short lines.** Everything else moves to the figcaption or the table under the figure.
+2. **Every edge is orthogonal** — horizontal, vertical, or an elbow. No diagonals, no curves.
+3. **Every edge has one label, in the gap beside the line, never over a box border.** Where a label sits, the gap is at least 70px.
+4. **No crossings.** Nodes sit on a grid: fixed column x-positions, fixed row y-positions, matching widths within a column.
+5. **One accent element per figure** — the mechanism that figure is about. Everything else in `currentColor`.
+6. Same `viewBox` width (1000) and the same box widths across all three figures so they read as a set.
+
+**Figure 1 — physical.** Trim PW-1x to title + "EPYC 7452 · 128GB · GPU slot open" + "llama.cpp · Podman · Console". Replace the two diagonals (Router → Screen B, Router → printer) with elbows off a shared vertical trunk in the right column, and the storage bezier with an elbow. Align Screen A, the light and the storage hook on one row at equal heights. Internet sits directly above Router; Screens C, B and the printer stack at equal heights beside them.
+
+**Figure 2 — software.** Keep the grid; cut every box to two lines. Shorten the Remote API label to "Remote API" and move the verbs to the caption. Give the dashed batch-job return its own x so its label doesn't compete with the tool-call labels. Screens and Phone to two lines.
+
+**Figure 3 — projects and telemetry.** Make the two circuits mirror: both columns 200/200 with the same gap, wide boxes the same width on both sides. Two lines per box. Keep the "the internet" stub, labeled.
+
+**Captions.** Each figcaption absorbs the detail dropped from its boxes so nothing is lost, and each still opens with its one claim in bold.
+
+**Verification.** Render each figure alone (the `fig-only` pattern already in the scratchpad) at 1100px and look once each; fix any collision found; republish once to the same URL; confirm the page's sweep for stale-design terms still returns nothing.
+
+**Out of scope.** Any content change to the map; anything in the PW-1x artifacts; the repo (the map isn't mirrored there yet).
+
+## Third implementation step: checker docstring
+
+`tools/spec-check.py`'s module docstring still describes five checks over two files. Rewrite it to name all three documents and six checks (the map's orthogonal-edge and superseded-design pass is the sixth). The root `README.md` "Verifying the documents" paragraph says "Five checks" — same fix. Run the checker, commit, push. No behavior change.
+
 ## Verification
 
 - **A0**: Ollama serving `gpt-oss:20b`, harness pointed at it, and a written record of current rate-limit-hit frequency. Nemotron PR status and EPS requirement both answered in `notes/`.

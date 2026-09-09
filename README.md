@@ -38,7 +38,7 @@ The artifacts on claude.ai are canonical. `docs/` mirrors all three so the check
 python3 tools/spec-check.py
 ```
 
-Five checks: arithmetic, cross-document consistency, stale strings, structural validity, physics-vs-method. Exits non-zero on any failure. CI runs it on every push that touches `docs/`.
+Six checks: arithmetic, cross-document consistency, stale strings, structural validity, the Systems Map's orthogonal edges and superseded-design words, and physics-vs-method. Exits non-zero on any failure. CI runs it on every push that touches `docs/`.
 
 ## Status
 

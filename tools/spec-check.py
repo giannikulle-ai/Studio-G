@@ -1,16 +1,22 @@
 #!/usr/bin/env python3
-"""spec-check — mechanical verification of the PW-1x documents.
+"""spec-check — mechanical verification of the Studio-G documents.
 
-Reading a document back does not find its errors. This does. It runs five
-checks over docs/handoff.html and docs/build-sheet.html and exits non-zero
-on any failure, so CI catches drift the moment a price or a part changes.
+Reading a document back does not find its errors. This does. It runs six
+checks over docs/handoff.html, docs/build-sheet.html and docs/systems-map.html
+and exits non-zero on any failure, so CI catches drift the moment a price,
+a part, or a drawing changes.
 
   1. Arithmetic        every printed total equals the sum of its line items
-  2. Cross-document    facts both files carry appear in both
-  3. Stale strings     retired values are gone from every corner of both files
+                       (Handoff, Build Sheet)
+  2. Cross-document    facts the Handoff and Build Sheet share appear in both
+  3. Stale strings     retired values are gone from every corner of both
   4. Structure         tags balance; every class used has a stylesheet rule
-  5. Physics / method  sizes are physically possible; stated ceilings match
-                       the stated formula
+                       (all three documents)
+  5. Systems Map       every edge is orthogonal — no diagonal lines, no curve
+                       commands — and no words from the superseded design
+                       survive outside a sentence that names it as replaced
+  6. Physics / method  model sizes are physically possible; stated throughput
+                       ceilings match the stated formula
 
 Update the fact tables below when the documents legitimately change.
 Run:  python3 tools/spec-check.py
@@ -151,7 +157,7 @@ def main() -> int:
         print(f"[structure] {name}: {len(TAGS)} tag types checked, "
               f"{len(used)} classes used, {len(unstyled)} unstyled")
 
-    # 4b. systems map: orthogonal edges, no superseded-design words ---------
+    # 5. systems map: orthogonal edges, no superseded-design words ----------
     diag = 0
     for l in re.findall(r"<line[^>]*>", M):
         g = re.search(r'x1="(\d+)" y1="(\d+)" x2="(\d+)" y2="(\d+)"', l)
@@ -172,7 +178,7 @@ def main() -> int:
     print(f"[map]       edges: {diag} diagonal, {len(curves)} curved; "
           f"{len(MAP_STALE)} superseded terms scanned")
 
-    # 5. physics / method --------------------------------------------------
+    # 6. physics / method --------------------------------------------------
     for name, gb, bn, lo, hi in MODELS:
         bits = gb * 8.0 / bn
         if not lo <= bits <= hi:
