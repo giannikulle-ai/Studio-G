@@ -21,7 +21,7 @@ Both faces write to one work log and one `/metrics` endpoint. `llama-server` on 
 | `job_status(job_id)` | call | Queued / running / done / failed. |
 | `job_result(job_id)` | call | The output, once done. |
 
-When a batch job finishes, this server POSTs to the webhook URL the session registered, and Claude wakes and continues. That is how "have them talk to each other" works for overnight work — no queue beyond the job table.
+When a batch job finishes, this server POSTs to the webhook URL the session registered, and Claude wakes and continues. That is the overnight case of "have them talk to each other" — no queue beyond the job table. The daytime case is you, at the console, handing one adapter's output to another (`console/README.md`).
 
 ## Backends
 
@@ -33,6 +33,8 @@ The server picks. Claude never sees which.
 | llama.cpp, gpt-oss-120b / Scout | PW-1x, `/v1`, CPU-only until a GPU is bought | Reads and briefs, anything the small model shouldn't do, and the fallback for everything |
 
 Once PW-1x has a GPU, gpt-oss-20b and the 120b **swap** on that card — they don't coexist. This server owns that decision.
+
+**Any other local runtime or box is a backend here, not a connector.** vLLM, a second machine, a GPU box later: one more row in this table, reachable over Tailscale or the LAN. No new card in the console, no new verbs; the door picks it the way it picks the PC, and every call lands in the same log and the same `/metrics`. Frontier providers are the opposite — they are connectors in the console (`console/adapters/README.md`), never backends behind this door.
 
 ## Work log and metrics
 

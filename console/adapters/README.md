@@ -20,7 +20,7 @@ interface Verb {
 
 The UI renders every adapter from this alone: a card from `status`, a stream from `events`, a button per `verb`. `kind` is a hint the UI uses for layout and the work log uses for the throughput comparison — it doesn't change the shape.
 
-**A handoff is a verb whose input is another adapter's output.** "Send session 3's result to a new session" is `claude-code-remote.create({ prompt, files: fromResultOf("session-3") })`. The work log records the chain.
+**A handoff is a verb whose input is another adapter's output — and you are the one who runs it, at the console.** "Send session 3's result to a new session" is `claude-code-remote.create({ prompt, files: fromResultOf("session-3") })`; "send local's brief to Claude" is the same verb with `files: fromResultOf("local-models")`. The work log records the chain. Nothing needs to know anything else exists.
 
 ## Kinds
 
@@ -46,6 +46,18 @@ An outbound notification's `actions[]` each carry a verb on another adapter. "Ac
 | `github` | service | repos, last push, CI | webhook events | open PR |
 | `cloudflare` | service | Pages/Workers deploys, tunnel health | deploy events | redeploy |
 | `phone` | outbound | — | — | notify |
+
+## Reserved: hooks for other AIs
+
+Nothing installed; the landing spot is named so adding one is a plug-in, not a redesign.
+
+| Adapter | kind | status | events | verbs | needs |
+|---|---|---|---|---|---|
+| `agent-other` — another agent product that runs sessions | session | sessions | session output | create, send, interrupt, schedule, watch — identical to `claude-code-remote` | the product's session API; a key in the sops file |
+| `openai`, `gemini` — any request/response API | call | quota, model | call log | `ask(instruction, files)`, `batch` | an API key, one line in the sops file |
+| another local runtime or box (vLLM, a second machine) | — | — | — | none new | not an adapter: a backend behind `studio-local`, see `../../mcp/README.md` |
+
+**The rule for every frontier connector, Claude included: never a chat box.** You hand it instructions and files and watch. Its calls land in the console's work log. If it can use the local door itself — as Claude does over MCP — that is logged under its own `source`.
 
 ## The `ask` verb
 

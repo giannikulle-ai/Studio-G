@@ -92,7 +92,7 @@ Close the three memory quote threads (Topmemory, memory.net, TechMikeNY) with on
 
 Behind it, the server picks a backend and Claude never sees which: llama.cpp on PW-1x (`/v1`, CPU-only until a GPU is bought — gpt-oss-120b, Scout) or, best-effort, Ollama on the desktop's 4060 Ti (gpt-oss-20b) over 10GbE, falling back to PW-1x when the PC is busy. Claude Code connects to it over Tailscale.
 
-**"Have them talk to each other" is a tool call.** Local's output lands directly in Claude's context. For overnight batch work, `batch_job` returns immediately; when the job finishes PW-1x POSTs to the session's webhook URL and Claude wakes and continues. No bus, no queue beyond the job table.
+**"Have them talk to each other" — from your seat, not Claude's.** A handoff is a verb at the console whose input is another adapter's output: local briefs a repo → you hand the brief to the Claude connector → its result comes back → you hand that to another connector, or back to local. The work log records the chain. You route, at one place; nothing needs to know anything else exists. Separately, a connector may use the local door on its own — Claude does, over MCP, mid-task, and it lands in the same log as `source = claude`. That is a bonus, not the mechanism. For overnight work `batch_job` returns at once and PW-1x wakes the session by webhook when done. There is no bus because the console, the adapters and the one door *are* the bus. (The map's callout was written from Claude's point of view; it gets rewritten to this.)
 
 **Instrumentation lives in the MCP server.** Every call is logged — tool, backend, tokens in/out, latency, fallback — to a work log (SQLite). That log is what the dashboards read and what the before/after throughput comparison against A0 is computed from.
 
@@ -203,6 +203,16 @@ Adapters at launch, in `console/adapters/`:
 | `service` | GitHub, Cloudflare, calendar, email, Notion, Linear, registrar, billing | polled | webhooks where offered | few — open PR, redeploy, acknowledge |
 | `outbound` | phone push (ntfy self-hosted and free, or Pushover) | — | — | `notify(level, text, actions[])` |
 
+**Hooks for other AIs (decided: reserve them explicitly, the way Figure 1 reserves hardware).** Nothing is installed; the landing spot is drawn and named so adding one is a plug-in.
+
+| Hook | Lands as | Shape | Verbs it gets | Needs |
+|---|---|---|---|---|
+| Another agent product (a second Claude-like thing that runs sessions) | one connector adapter, e.g. `agent-other` | `session` | create · send · interrupt · schedule · watch — identical to `claude-code-remote` | the product's session API |
+| OpenAI, Gemini, any request/response API | one connector adapter, e.g. `openai`, `gemini` | `call` | `ask(instruction, files)` — hand it work as one call; `batch` | an API key, one line in the sops file |
+| Another local runtime or another box (vLLM, a second machine) | a **backend behind `studio-local`**, not a connector | — | none new; the door picks it like it picks the PC | reachable over Tailscale or the LAN |
+
+Rules that hold for every frontier connector: it never gets a chat box; you hand it instructions and files and watch; its calls land in the console's work log; if it can use the local door itself (as Claude does over MCP), that is logged as its `source`. In Figure 2 these appear as one dashed "Other frontier connectors" box beside Claude Code with a dashed edge to the console, and one dashed "other backends" box under the door — the same convention as the printer and storage in Figure 1. The hooks table on the map page gets a row for each.
+
 An outbound notification's `actions[]` each carry a verb on another adapter, so "act on it from the lock screen" is a round trip through the console: phone → console → the session or device. That means the console needs one inbound route reachable from the phone — over Tailscale, or Cloudflare Access if the phone isn't on the tailnet.
 
 **Tech, kept boring:** one Node/TypeScript service (the Claude Code Remote API and MCP are both easiest from TS), SSE for streams, SQLite for the work log, one plain HTML front end. Screens A/B/C are read-only routes of the same console with Grafana panels embedded. Served by Caddy, reached over Tailscale — both free, both replaceable plumbing (see the note below).
@@ -271,6 +281,14 @@ Bring the repo and the map into line with the corrected design — the console i
 - `README.md`, `console/README.md`, `console/adapters/README.md`, `mcp/README.md`: replace every "you work in Claude Code" framing; add the `/v1` face, the `source` column, `/metrics`, localhost binding, and the `ask` verb.
 - `docs/systems-map.html` Figure 2: console becomes the hub; Claude Code drawn as a connector; MCP box reads "MCP for Claude · /v1 for everyone else"; lede, caption and callout rewritten. Layout rules from step two still hold.
 - `docs/plan.md` synced. Checker clean. Republish the map. Commit, push.
+
+## Fifth implementation step: your seat, and hooks for other AIs
+
+- Rewrite the map's "have them talk to each other" callout from your point of view (the text in §B), and the matching paragraph in `console/README.md`.
+- Figure 2: add a dashed "Other frontier connectors" box beside Claude Code with a dashed edge to the console, and a dashed "other backends" box under `studio-local`. Same grid, same rules; one look, no collisions.
+- Map hooks table: rows for another agent product, an API provider, and another local runtime.
+- `console/adapters/README.md`: reserved rows `agent-other` (session), `openai` / `gemini` (call), and the never-a-chat-box rule for every frontier connector. `mcp/README.md`: other runtimes and boxes are backends behind the door.
+- `docs/plan.md` synced, checker clean, republish, commit, push.
 
 ## Verification
 

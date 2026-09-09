@@ -237,98 +237,119 @@
 
     <figure>
       <div class="fig">
-        <svg class="dg" viewBox="0 0 1000 580" role="img" aria-label="Software flow on a grid. You work in the Studio-G Console on the right, your single interface; Claude Code on the left is a frontier connector you hand work to, and can still be used directly. Claude Code calls studio-local on PW-1x, the accent box and the one door to local models, over its MCP face; the console's ask verb and any client use the same door's OpenAI-compatible face. A page comes back, and a dashed edge shows batch jobs waking a session by webhook. studio-local picks between two backends below it: PW-1x's llama.cpp as fallback, the desktop's Ollama first when idle. The console drives Claude sessions over the Remote API and renders every connected thing as one adapter shape; screens and the phone hang off the adapters.">
+        <svg class="dg" viewBox="0 0 1000 720" role="img" aria-label="Software flow on a grid. You work in the Studio-G Console on the right, your single interface. Claude Code on the left is a frontier connector you hand work to, driven by the console over the Remote API and still usable directly; beside it a dashed box reserves other frontier connectors, with the same shape and a dashed edge to the console. Claude Code calls studio-local on PW-1x, the accent box and the one door to local models, over its MCP face; the console's ask verb and any client use the same door's OpenAI-compatible face. A dashed edge shows batch jobs waking a session by webhook. Below the door a trunk fans out to its backends: PW-1x's llama.cpp as fallback, the desktop's Ollama first when idle, and a dashed box reserving other backends. The console renders every connected thing as one adapter shape; screens and the phone hang off the adapters.">
           <defs>
             <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
               <path d="M0,0 L10,5 L0,10 z" fill="currentColor" stroke="none"/>
             </marker>
           </defs>
 
-          <rect class="node" x="30" y="30" width="190" height="60" rx="3"/>
-          <text class="t" x="46" y="55">You</text>
-          <text class="s" x="46" y="75">one interface, on the right</text>
+          <!-- row 0 -->
+          <rect class="node" x="30" y="20" width="190" height="60" rx="3"/>
+          <text class="t" x="46" y="45">You</text>
+          <text class="s" x="46" y="65">one interface, on the right</text>
 
-          <rect class="node" x="30" y="140" width="420" height="80" rx="3"/>
-          <text class="t" x="48" y="166">Claude Code · frontier connector</text>
-          <text class="s" x="48" y="186">your subscription · hand it instructions + files</text>
-          <text class="s" x="48" y="204">reasons · plans · reviews · writes</text>
+          <!-- row 1 -->
+          <rect class="node" x="30" y="160" width="190" height="80" rx="3"/>
+          <text class="t" x="46" y="186">Claude Code</text>
+          <text class="s" x="46" y="206">frontier connector</text>
+          <text class="s" x="46" y="224">hand it instructions + files</text>
 
-          <rect class="node hub" x="560" y="140" width="420" height="80" rx="3"/>
-          <text class="t" x="578" y="166">Studio-G Console · your single interface</text>
-          <text class="s" x="578" y="186">watch · steer · chat with local · dispatch to frontier</text>
-          <text class="s" x="578" y="204">every connected thing is one adapter file</text>
+          <rect class="node future" x="260" y="160" width="190" height="80" rx="3"/>
+          <text class="t" x="276" y="186">Other frontier AIs</text>
+          <text class="s" x="276" y="206">OpenAI · Gemini · an agent</text>
+          <text class="s" x="276" y="224">one connector each · reserved</text>
 
-          <rect class="node acc" x="30" y="300" width="420" height="80" rx="3"/>
-          <text class="t ta" x="48" y="326">studio-local · the one door to local models</text>
-          <text class="m" x="48" y="346">MCP for Claude · /v1 for everyone else</text>
-          <text class="s" x="48" y="366">picks the backend · logs and meters every call</text>
+          <rect class="node hub" x="560" y="160" width="420" height="80" rx="3"/>
+          <text class="t" x="578" y="186">Studio-G Console · your single interface</text>
+          <text class="s" x="578" y="206">watch · steer · chat with local · dispatch to frontier</text>
+          <text class="s" x="578" y="224">every connected thing is one adapter file</text>
 
-          <rect class="node" x="560" y="300" width="420" height="80" rx="3"/>
-          <text class="t" x="578" y="326">adapters/ · one shape</text>
-          <text class="m" x="578" y="346">status() · events · verbs[] · kind</text>
-          <text class="s" x="578" y="366">session · call · device · service · outbound</text>
+          <!-- row 2 -->
+          <rect class="node acc" x="30" y="320" width="420" height="80" rx="3"/>
+          <text class="t ta" x="48" y="346">studio-local · the one door to local models</text>
+          <text class="m" x="48" y="366">MCP for Claude · /v1 for everyone else</text>
+          <text class="s" x="48" y="386">picks the backend · logs and meters every call</text>
 
-          <rect class="node" x="30" y="460" width="190" height="90" rx="3"/>
-          <text class="t" x="46" y="484">PW-1x · llama.cpp</text>
-          <text class="s" x="46" y="504">CPU-only until a GPU</text>
-          <text class="s" x="46" y="522">gpt-oss-120b · Scout</text>
+          <rect class="node" x="560" y="320" width="420" height="80" rx="3"/>
+          <text class="t" x="578" y="346">adapters/ · one shape</text>
+          <text class="m" x="578" y="366">status() · events · verbs[] · kind</text>
+          <text class="s" x="578" y="386">session · call · device · service · outbound</text>
 
-          <rect class="node" x="260" y="460" width="190" height="90" rx="3"/>
-          <text class="t" x="276" y="484">Desktop PC · Ollama</text>
-          <text class="s" x="276" y="504">4060 Ti · gpt-oss-20b</text>
-          <text class="s" x="276" y="522">best-effort, only when idle</text>
+          <!-- row 3 -->
+          <rect class="node" x="30" y="480" width="190" height="90" rx="3"/>
+          <text class="t" x="46" y="504">PW-1x · llama.cpp</text>
+          <text class="s" x="46" y="524">CPU-only until a GPU</text>
+          <text class="s" x="46" y="542">gpt-oss-120b · Scout</text>
 
-          <rect class="node" x="560" y="460" width="190" height="90" rx="3"/>
-          <text class="t" x="576" y="484">Screens A · B · C</text>
-          <text class="s" x="576" y="504">Grafana embedded</text>
-          <text class="s" x="576" y="522">swap to a "down" page</text>
+          <rect class="node" x="260" y="480" width="190" height="90" rx="3"/>
+          <text class="t" x="276" y="504">Desktop PC · Ollama</text>
+          <text class="s" x="276" y="524">4060 Ti · gpt-oss-20b</text>
+          <text class="s" x="276" y="542">best-effort, only when idle</text>
 
-          <rect class="node" x="790" y="460" width="190" height="90" rx="3"/>
-          <text class="t" x="806" y="484">Phone</text>
-          <text class="s" x="806" y="504">outbound · notify</text>
-          <text class="s" x="806" y="522">actions route to a verb</text>
+          <rect class="node" x="560" y="480" width="190" height="90" rx="3"/>
+          <text class="t" x="576" y="504">Screens A · B · C</text>
+          <text class="s" x="576" y="524">Grafana embedded</text>
+          <text class="s" x="576" y="542">swap to a "down" page</text>
+
+          <rect class="node" x="790" y="480" width="190" height="90" rx="3"/>
+          <text class="t" x="806" y="504">Phone</text>
+          <text class="s" x="806" y="524">outbound · notify</text>
+          <text class="s" x="806" y="542">actions route to a verb</text>
+
+          <!-- row 4 -->
+          <rect class="node future" x="30" y="630" width="420" height="60" rx="3"/>
+          <text class="t" x="48" y="655">Other backends · vLLM, a second box</text>
+          <text class="s" x="48" y="675">behind the door, never a card · the door picks it, as it picks the PC</text>
 
           <!-- edges -->
-          <line class="fut" x1="90" y1="90" x2="90" y2="140" marker-end="url(#ar2)"/>
-          <text class="e" x="98" y="120">direct, when you want</text>
+          <line class="fut" x1="90" y1="80" x2="90" y2="160" marker-end="url(#ar2)"/>
+          <text class="e" x="98" y="100">direct, when you want</text>
 
-          <path d="M220,60 H770 V140" marker-end="url(#ar2)"/>
-          <text class="e" x="495" y="52" text-anchor="middle">you work here</text>
+          <path d="M220,50 H770 V160" marker-end="url(#ar2)"/>
+          <text class="e" x="495" y="42" text-anchor="middle">you work here</text>
 
-          <line x1="560" y1="180" x2="450" y2="180" marker-end="url(#ar2)" marker-start="url(#ar2)"/>
-          <text class="e" x="505" y="172" text-anchor="middle">Remote API</text>
+          <path d="M700,160 V130 H190 V160" marker-end="url(#ar2)" marker-start="url(#ar2)"/>
+          <text class="e" x="495" y="122" text-anchor="middle">Remote API</text>
 
-          <line class="accl" x1="120" y1="220" x2="120" y2="300" marker-end="url(#ar2)" marker-start="url(#ar2)"/>
-          <text class="e ta" x="128" y="265">tool call · a page back</text>
+          <line class="fut" x1="450" y1="200" x2="560" y2="200" marker-end="url(#ar2)" marker-start="url(#ar2)"/>
+          <text class="e" x="505" y="192" text-anchor="middle">same shape</text>
 
-          <line class="fut" x1="330" y1="300" x2="330" y2="220" marker-end="url(#ar2)"/>
-          <text class="e" x="338" y="265">batch done → webhook wakes it</text>
+          <line class="accl" x1="60" y1="240" x2="60" y2="320" marker-end="url(#ar2)" marker-start="url(#ar2)"/>
+          <text class="e ta" x="68" y="285">tool call · page back</text>
 
-          <line x1="770" y1="220" x2="770" y2="300" marker-end="url(#ar2)"/>
-          <text class="e" x="778" y="265">one card each</text>
+          <line class="fut" x1="205" y1="320" x2="205" y2="240" marker-end="url(#ar2)"/>
+          <text class="e" x="213" y="285">batch done → webhook wakes it</text>
 
-          <line class="accl" x1="560" y1="340" x2="450" y2="340" marker-end="url(#ar2)" marker-start="url(#ar2)"/>
-          <text class="e ta" x="505" y="332" text-anchor="middle">ask · /v1 · log</text>
+          <line x1="770" y1="240" x2="770" y2="320" marker-end="url(#ar2)"/>
+          <text class="e" x="778" y="285">one card each</text>
 
-          <line x1="125" y1="380" x2="125" y2="460" marker-end="url(#ar2)"/>
-          <text class="e" x="133" y="425">fallback</text>
+          <line class="accl" x1="560" y1="360" x2="450" y2="360" marker-end="url(#ar2)" marker-start="url(#ar2)"/>
+          <text class="e ta" x="505" y="352" text-anchor="middle">ask · /v1 · log</text>
 
-          <line x1="355" y1="380" x2="355" y2="460" marker-end="url(#ar2)"/>
-          <text class="e" x="363" y="425">first, if idle</text>
+          <line x1="240" y1="400" x2="240" y2="440"/>
+          <path d="M240,440 H125 V480" marker-end="url(#ar2)"/>
+          <text class="e" x="133" y="468">fallback</text>
 
-          <line x1="655" y1="380" x2="655" y2="460" marker-end="url(#ar2)"/>
-          <text class="e" x="663" y="425">read-only routes</text>
+          <path d="M240,440 H355 V480" marker-end="url(#ar2)"/>
+          <text class="e" x="363" y="468">first, if idle</text>
 
-          <line x1="885" y1="380" x2="885" y2="460" marker-end="url(#ar2)" marker-start="url(#ar2)"/>
-          <text class="e" x="893" y="425">notify ↔ act</text>
+          <line class="fut" x1="240" y1="440" x2="240" y2="630" marker-end="url(#ar2)"/>
+          <text class="e" x="248" y="610">any other · the door picks it</text>
+
+          <line x1="655" y1="400" x2="655" y2="480" marker-end="url(#ar2)"/>
+          <text class="e" x="663" y="445">read-only routes</text>
+
+          <line x1="885" y1="400" x2="885" y2="480" marker-end="url(#ar2)" marker-start="url(#ar2)"/>
+          <text class="e" x="893" y="445">notify ↔ act</text>
         </svg>
       </div>
-      <figcaption><b>One interface for you, connectors for frontier.</b> You work in the console. Frontier providers are adapters you hand instructions and files to and watch — Claude Code is the first, over its Remote API (create, send, interrupt, title, tag, schedule, watch) — never a window you type into, though Claude Code stays available directly when you want it. Local models sit behind one amber door, <code>studio-local</code>: Claude reaches it over MCP (<code>read_and_brief</code>, <code>summarize</code>, <code>classify</code>, <code>extract</code>, <code>batch_job</code>, <code>job_status</code>, <code>job_result</code>); the console's <code>ask</code> verb, curl and any script reach it over an OpenAI-compatible <code>/v1</code>. Whoever calls, it picks the backend, logs the call with its source, and meters it. When Claude delegates, local reads the forty files and returns a page, so frontier tokens go to judgment — the "double throughput" mechanism. Behind the door, PW-1x runs gpt-oss-120b and Scout on CPU for reads, briefs and long context and is the fallback for everything; the desktop runs gpt-oss-20b on the 4060 Ti for call-shaped volume work only when idle. Screens are read-only routes with Grafana embedded whose kiosks swap to the static "down" page when PW-1x is off; phone notifications carry actions that route back to a verb on another adapter.</figcaption>
+      <figcaption><b>One interface for you, connectors for frontier.</b> You work in the console. Frontier providers are adapters you hand instructions and files to and watch — Claude Code is the first, over its Remote API (create, send, interrupt, title, tag, schedule, watch) — never a window you type into, though Claude Code stays available directly when you want it. The dashed box beside it reserves the others: another agent product lands as a <code>session</code> connector with the same verbs, OpenAI or Gemini as a <code>call</code> connector with <code>ask(instruction, files)</code> and <code>batch</code>. Same shape, same rule, one file each. Local models sit behind one amber door, <code>studio-local</code>: Claude reaches it over MCP (<code>read_and_brief</code>, <code>summarize</code>, <code>classify</code>, <code>extract</code>, <code>batch_job</code>, <code>job_status</code>, <code>job_result</code>) and gets a page back; the console's <code>ask</code> verb, curl and any script reach it over an OpenAI-compatible <code>/v1</code>. Whoever calls, it picks the backend, logs the call with its source, and meters it. When Claude delegates, local reads the forty files and returns a page, so frontier tokens go to judgment — the "double throughput" mechanism. Behind the door, PW-1x runs gpt-oss-120b and Scout on CPU for reads, briefs and long context and is the fallback for everything; the desktop runs gpt-oss-20b on the 4060 Ti for call-shaped volume work only when idle; the dashed box under them reserves any other runtime or box (vLLM, a second machine) as one more backend the door picks, never a card. Screens are read-only routes with Grafana embedded whose kiosks swap to the static "down" page when PW-1x is off; phone notifications carry actions that route back to a verb on another adapter.</figcaption>
     </figure>
 
     <div class="callout">
-      <h3>"Have them talk to each other" — what that is now</h3>
-      <p>A tool call. Claude asks <code>studio-local</code> to read a repo and brief it; the brief lands in Claude's context and Claude carries on. No model needs to know another exists. For overnight work, <code>batch_job</code> returns at once and PW-1x wakes the session by webhook when it's done. Handing one Claude session's result to another is a console verb — create a session with that result as its input — and the work log records the chain. Talking to a local model yourself is the <code>ask</code> verb on the local-models card, through the same door, in the same log. That's the whole mechanism. There's no bus, because Claude Code already speaks MCP and git.</p>
+      <h3>"Have them talk to each other" — from your seat</h3>
+      <p>A handoff is a verb at the console whose input is another adapter's output: local briefs a repo → you hand the brief to the Claude connector → its result comes back → you hand that to another connector, or back to local. The work log records the chain. You route, at one place; nothing needs to know anything else exists. Separately, a connector may use the local door on its own — Claude does, over MCP, mid-task, and it lands in the same log as <code>source = claude</code>. That is a bonus, not the mechanism. For overnight work <code>batch_job</code> returns at once and PW-1x wakes the session by webhook when done. There is no bus because the console, the adapters and the one door <em>are</em> the bus. (The first draft of this callout was written from Claude's seat; this is the same mechanism seen from yours.)</p>
     </div>
   </section>
 
@@ -449,8 +470,26 @@
             <td><span class="chip ok">Plug in</span></td>
           </tr>
           <tr>
+            <td class="name">Another agent product</td>
+            <td>Figure 2, the dashed box beside Claude Code. One connector adapter, e.g. <code>agent-other</code>, kind <code>session</code>, with the same verbs as <code>claude-code-remote</code>: create, send, interrupt, schedule, watch. Never a chat box — you hand it instructions and files and watch. Its calls land in the console's work log.</td>
+            <td>The product's session API; a key, one line in the sops file.</td>
+            <td><span class="chip warn">Hook</span></td>
+          </tr>
+          <tr>
+            <td class="name">OpenAI · Gemini · any API</td>
+            <td>The same dashed box. One connector adapter each, e.g. <code>openai</code>, <code>gemini</code>, kind <code>call</code>: <code>ask(instruction, files)</code> hands it work as one call, <code>batch</code> for volume. Same rule — never a chat box. If it can use the local door itself, as Claude does over MCP, that is logged under its own <code>source</code>.</td>
+            <td>An API key, one line in the sops file.</td>
+            <td><span class="chip warn">Hook</span></td>
+          </tr>
+          <tr>
+            <td class="name">Another local runtime or box</td>
+            <td>Figure 2, the dashed box under <code>studio-local</code>. vLLM, a second machine, a GPU box: a backend behind the door, not a connector. No new card, no new verbs; the door picks it the way it picks the PC, and every call lands in the same log and the same <code>/metrics</code>.</td>
+            <td>Reachable over Tailscale or the LAN; one entry in the door's backend list.</td>
+            <td><span class="chip warn">Hook</span></td>
+          </tr>
+          <tr>
             <td class="name">Anything else</td>
-            <td>It becomes an adapter in the console — one file with status, events, verbs and a kind. If it's a model, it's a backend behind the MCP server or a <code>call</code> adapter. If it speaks MQTT or HTTP, it's an afternoon.</td>
+            <td>It becomes an adapter in the console — one file with status, events, verbs and a kind. If it's a local model, it's a backend behind <code>studio-local</code>; if it's a frontier one, it's a <code>call</code> or <code>session</code> connector. If it speaks MQTT or HTTP, it's an afternoon.</td>
             <td>One of those interfaces, and a line in the sops secrets file if it needs a key.</td>
             <td><span class="chip warn">Hook</span></td>
           </tr>
