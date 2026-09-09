@@ -1,0 +1,505 @@
+<title>Studio-G Systems Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --bg: #F5F7F9; --surface: #FFFFFF; --surface-2: #EDF0F3;
+    --ink: #15181C; --ink-2: #3B434D; --muted: #5E6875;
+    --rule: #D8DDE3; --rule-soft: #E6EAEF;
+    --accent: #A8650F; --accent-bg: #FBF1E1;
+    --ok: #2C6E4C; --ok-bg: #E4F0E9;
+    --warn: #9A5B12; --warn-bg: #F8EEDD;
+    --stop: #9C4438; --stop-bg: #F7E7E4;
+    --shadow: 0 1px 2px rgba(20,28,38,.06), 0 8px 24px -16px rgba(20,28,38,.30);
+    --sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121519; --surface: #1A1E23; --surface-2: #21262C;
+      --ink: #E7EAEE; --ink-2: #BAC2CC; --muted: #8B95A2;
+      --rule: #2B3239; --rule-soft: #232930;
+      --accent: #E0A04A; --accent-bg: #2A2015;
+      --ok: #6BBA8D; --ok-bg: #17281F; --warn: #DCA054; --warn-bg: #2A2115;
+      --stop: #DE8375; --stop-bg: #2C1B18;
+      --shadow: 0 1px 2px rgba(0,0,0,.40), 0 10px 30px -18px rgba(0,0,0,.80);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121519; --surface: #1A1E23; --surface-2: #21262C;
+    --ink: #E7EAEE; --ink-2: #BAC2CC; --muted: #8B95A2;
+    --rule: #2B3239; --rule-soft: #232930;
+    --accent: #E0A04A; --accent-bg: #2A2015;
+    --ok: #6BBA8D; --ok-bg: #17281F; --warn: #DCA054; --warn-bg: #2A2115;
+    --stop: #DE8375; --stop-bg: #2C1B18;
+    --shadow: 0 1px 2px rgba(0,0,0,.40), 0 10px 30px -18px rgba(0,0,0,.80);
+  }
+
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 40px 24px 96px; }
+
+  .mast { display: flex; flex-direction: column; gap: 14px; padding-bottom: 26px; border-bottom: 2px solid var(--ink); }
+  .mast h1 { margin: 0; font-size: clamp(30px, 5.2vw, 44px); line-height: 1.08; letter-spacing: -0.022em; font-weight: 600; text-wrap: balance; }
+  .mast .sub { margin: 0; max-width: 66ch; color: var(--ink-2); font-size: 16.5px; }
+  .stamp { font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  .stamp b { color: var(--accent); font-weight: 600; }
+
+  section { margin-top: 56px; }
+  .eyebrow { font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; color: var(--accent); margin: 0 0 10px; }
+  h2 { margin: 0 0 8px; font-size: 25px; font-weight: 600; letter-spacing: -0.016em; line-height: 1.2; text-wrap: balance; }
+  h3 { margin: 28px 0 8px; font-size: 16px; font-weight: 600; }
+  p { max-width: 68ch; }
+  .lede { margin: 0 0 22px; max-width: 70ch; color: var(--ink-2); }
+  strong { color: var(--ink); font-weight: 600; }
+  code { font-family: var(--mono); font-size: .89em; background: var(--surface-2); padding: 1.5px 5px; border-radius: 3px; color: var(--ink); }
+  .note { font-size: 13.5px; color: var(--muted); max-width: 70ch; margin-top: 12px; }
+
+  /* figures */
+  figure { margin: 22px 0 0; }
+  .fig { background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 18px 18px 10px; overflow-x: auto; box-shadow: var(--shadow); }
+  .fig svg { display: block; width: 100%; height: auto; min-width: 720px; color: var(--ink); }
+  figcaption { font-size: 14px; color: var(--ink-2); max-width: 78ch; margin: 12px 4px 0; }
+  figcaption b { color: var(--ink); font-weight: 600; }
+
+  .dg rect.node { fill: var(--surface-2); stroke: currentColor; stroke-width: 1.1; }
+  .dg rect.hub { fill: var(--surface); stroke-width: 2; }
+  .dg rect.future { stroke-dasharray: 5 4; fill: var(--surface); }
+  .dg rect.acc { stroke: var(--accent); stroke-width: 2; fill: var(--accent-bg); }
+  .dg rect.wide { fill: var(--surface); }
+  .dg text { font-family: var(--sans); font-size: 12px; fill: currentColor; }
+  .dg text.t { font-weight: 600; font-size: 13px; }
+  .dg text.s { font-size: 11px; fill: var(--muted); }
+  .dg text.m { font-family: var(--mono); font-size: 10.5px; fill: var(--muted); }
+  .dg text.e { font-size: 10.5px; fill: var(--muted); }
+  .dg text.ta { fill: var(--accent); }
+  .dg text.warn { fill: var(--stop); font-weight: 600; }
+  .dg line, .dg path { stroke: currentColor; stroke-width: 1.2; fill: none; }
+  .dg .fut { stroke-dasharray: 5 4; }
+  .dg .accl { stroke: var(--accent); stroke-width: 1.6; }
+  .dg .ret { stroke: var(--muted); }
+
+  /* tables */
+  .scroll { overflow-x: auto; margin: 0 -4px; padding: 0 4px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; min-width: 620px; }
+  thead th { text-align: left; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 0 14px 8px 0; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+  tbody td { padding: 11px 14px 11px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink-2); }
+  tbody tr:last-child td { border-bottom: none; }
+  td:first-child, th:first-child { padding-left: 0; }
+  td.name { color: var(--ink); font-weight: 500; white-space: nowrap; }
+  .chip { display: inline-block; font-family: var(--mono); font-size: 10.5px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; white-space: nowrap; }
+  .chip.ok { color: var(--ok); background: var(--ok-bg); }
+  .chip.warn { color: var(--warn); background: var(--warn-bg); }
+  .chip.stop { color: var(--stop); background: var(--stop-bg); }
+
+  .callout { background: var(--surface); border: 1px solid var(--rule); border-left: 3px solid var(--accent); border-radius: 4px; padding: 18px 22px; box-shadow: var(--shadow); margin: 22px 0; }
+  .callout h3 { margin-top: 0; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  ol.q { list-style: none; padding: 0; max-width: 78ch; counter-reset: q; margin: 0; }
+  ol.q li { counter-increment: q; display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  ol.q li:last-child { border-bottom: none; }
+  ol.q li::before { content: "Q" counter(q); font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--accent); background: var(--accent-bg); min-width: 30px; height: 24px; flex: none; display: grid; place-items: center; border-radius: 3px; margin-top: 2px; }
+  ol.q b { color: var(--ink); font-weight: 600; }
+  ol.q .rec { display: block; margin-top: 6px; font-size: 13.5px; color: var(--muted); }
+  ol.q .rec b { color: var(--ink-2); font-weight: 500; }
+
+  footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--rule); font-family: var(--mono); font-size: 11.5px; letter-spacing: .04em; color: var(--muted); }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <div class="stamp">
+      <span>Systems map</span>
+      <span>Rev. <b>Sep 2026</b></span>
+      <span>Scope: <b>physical + software</b></span>
+      <span>Status: <b>draft for decision</b></span>
+    </div>
+    <h1>Studio-G Systems Map</h1>
+    <p class="sub">Everything on the bench, everything on the wire, and the one place it all reports to. PW-1x is the engine; this is the vehicle around it. Solid lines are bought or decided. Dashed lines are hooks left open on purpose.</p>
+  </header>
+
+  <!-- ============================ FIGURE 1 ============================ -->
+  <section>
+    <p class="eyebrow">Figure 1 · Physical layer</p>
+    <h2>What is on the bench, and what it plugs into</h2>
+    <p class="lede">One inference box, one desktop, three screens in three places, one light, and four sockets left open. Everything reaches PW-1x over the LAN except the second-location screen, which comes in over the internet.</p>
+
+    <figure>
+      <div class="fig">
+        <svg class="dg" viewBox="0 0 1000 540" role="img" aria-label="Physical topology on a grid. The desktop PC sits above PW-1x and links to it over a direct 10GbE cable, the accent edge. PW-1x links to the router; the router links up to the internet and, over Wi-Fi, to the nightstand screen and a future 3D printer. The second-location screen comes off the internet over Tailscale. Screen A, the USB light and a future storage hook hang directly off PW-1x. A projector hook hangs off the PC.">
+          <defs>
+            <marker id="ar1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="currentColor" stroke="none"/>
+            </marker>
+          </defs>
+
+          <!-- row A -->
+          <rect class="node" x="260" y="40" width="190" height="70" rx="3"/>
+          <text class="t" x="276" y="64">Desktop PC</text>
+          <text class="s" x="276" y="82">RTX 4060 Ti · stays here</text>
+          <text class="s" x="276" y="98">fast tier when idle</text>
+
+          <rect class="node" x="790" y="40" width="190" height="70" rx="3"/>
+          <text class="t" x="806" y="64">Internet</text>
+          <text class="s" x="806" y="82">Tailscale · Cloudflare</text>
+
+          <!-- row B -->
+          <rect class="node future" x="30" y="170" width="190" height="70" rx="3"/>
+          <text class="t" x="46" y="194">Projector</text>
+          <text class="s" x="46" y="212">HDMI or wireless cast</text>
+
+          <rect class="node hub" x="260" y="170" width="190" height="110" rx="3"/>
+          <text class="t" x="276" y="196">PW-1x</text>
+          <text class="s" x="276" y="218">EPYC 7452 · 128GB · no GPU</text>
+          <text class="s" x="276" y="236">llama.cpp · Podman · Console</text>
+
+          <rect class="node" x="560" y="170" width="190" height="70" rx="3"/>
+          <text class="t" x="576" y="194">Router</text>
+          <text class="s" x="576" y="212">home LAN · Wi-Fi</text>
+
+          <rect class="node" x="790" y="170" width="190" height="70" rx="3"/>
+          <text class="t" x="806" y="194">Screen C</text>
+          <text class="s" x="806" y="212">second location</text>
+          <text class="s" x="806" y="228">iPad panel + SBC</text>
+
+          <!-- row C -->
+          <rect class="node" x="30" y="320" width="190" height="70" rx="3"/>
+          <text class="t" x="46" y="344">USB light</text>
+          <text class="s" x="46" y="362">on while a model runs</text>
+
+          <rect class="node" x="260" y="320" width="190" height="70" rx="3"/>
+          <text class="t" x="276" y="344">Screen A · bench</text>
+          <text class="s" x="276" y="362">7" panel + SBC</text>
+          <text class="s" x="276" y="378">Grafana kiosk</text>
+
+          <rect class="node future" x="560" y="320" width="190" height="70" rx="3"/>
+          <text class="t" x="576" y="344">More storage</text>
+          <text class="s" x="576" y="362">OCuLink ×2 · M.2 #2</text>
+
+          <rect class="node" x="790" y="320" width="190" height="70" rx="3"/>
+          <text class="t" x="806" y="344">Screen B</text>
+          <text class="s" x="806" y="362">nightstand</text>
+          <text class="s" x="806" y="378">iPad panel + SBC</text>
+
+          <!-- row D -->
+          <rect class="node future" x="790" y="450" width="190" height="70" rx="3"/>
+          <text class="t" x="806" y="474">3D printer</text>
+          <text class="s" x="806" y="492">Bambu Lab P2S</text>
+          <text class="s" x="806" y="508">Developer Mode · MQTT</text>
+
+          <!-- edges -->
+          <line class="accl" x1="355" y1="110" x2="355" y2="170" marker-end="url(#ar1)" marker-start="url(#ar1)"/>
+          <text class="e ta" x="363" y="145">10GbE direct</text>
+
+          <path class="fut" d="M290,110 V140 H125 V170" marker-end="url(#ar1)"/>
+          <text class="e" x="207" y="132" text-anchor="middle">HDMI / cast</text>
+
+          <line x1="450" y1="205" x2="560" y2="205" marker-end="url(#ar1)" marker-start="url(#ar1)"/>
+          <text class="e" x="505" y="197" text-anchor="middle">LAN</text>
+
+          <path d="M660,170 V75 H790" marker-end="url(#ar1)" marker-start="url(#ar1)"/>
+          <text class="e" x="725" y="67" text-anchor="middle">WAN</text>
+
+          <line x1="885" y1="110" x2="885" y2="170" marker-end="url(#ar1)"/>
+          <text class="e" x="893" y="145">Tailscale</text>
+
+          <path d="M750,220 H770 V355 H790" marker-end="url(#ar1)"/>
+          <text class="e" x="764" y="300" text-anchor="end">Wi-Fi</text>
+
+          <path class="fut" d="M770,355 V485 H790" marker-end="url(#ar1)"/>
+          <text class="e" x="764" y="430" text-anchor="end">Wi-Fi · MQTT</text>
+
+          <line x1="355" y1="280" x2="355" y2="320" marker-end="url(#ar1)"/>
+          <text class="e" x="363" y="314">USB + LAN</text>
+
+          <path d="M290,280 V300 H125 V320" marker-end="url(#ar1)"/>
+          <text class="e" x="207" y="292" text-anchor="middle">USB relay</text>
+
+          <path class="fut" d="M420,280 V300 H655 V320" marker-end="url(#ar1)"/>
+          <text class="e" x="537" y="292" text-anchor="middle">OCuLink / M.2</text>
+        </svg>
+      </div>
+      <figcaption><b>Physical layer.</b> Solid is bought or on hand; dashed is a hook left open on purpose. PW-1x is an EPYC 7452 with 128GB DDR4-3200, a 1TB NVMe, the G-DRIVE archive over USB, dual 10GbE and IPMI, on an open bench — and no GPU until one is bought. The desktop keeps the 4060 Ti and is the fast tier when idle, over the amber direct link. Screen A takes USB power and LAN straight from PW-1x's second port, so it stays up when the router doesn't. Screen C at the second location comes in over Tailscale, or Cloudflare Access if it isn't on the tailnet. The P2S publishes MQTT in Developer Mode; storage lands on the two OCuLink ports or the second M.2 slot; the projector is a display off the PC and needs nothing server-side.</figcaption>
+    </figure>
+  </section>
+
+  <!-- ============================ FIGURE 2 ============================ -->
+  <section>
+    <p class="eyebrow">Figure 2 · The one place</p>
+    <h2>Claude manages local; the console watches</h2>
+    <p class="lede">You work in Claude Code. PW-1x's local models are tools it calls. The control room beside it shows what's running and hands you verbs — and never sits between you and Claude.</p>
+
+    <figure>
+      <div class="fig">
+        <svg class="dg" viewBox="0 0 1000 580" role="img" aria-label="Software flow on a grid. You work in Claude Code on the left and watch the Studio-G Console on the right. Claude Code calls the studio-local MCP server on PW-1x, the accent edge; a page comes back, and a dashed edge shows batch jobs waking the session by webhook. The MCP server picks between two backends below it: PW-1x's llama.cpp as fallback, the desktop's Ollama first when idle. The console drives Claude sessions over the Remote API and renders every connected thing as one adapter shape; screens and the phone hang off the adapters.">
+          <defs>
+            <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="currentColor" stroke="none"/>
+            </marker>
+          </defs>
+
+          <rect class="node" x="30" y="30" width="190" height="60" rx="3"/>
+          <text class="t" x="46" y="55">You</text>
+          <text class="s" x="46" y="75">work left · watch right</text>
+
+          <rect class="node hub" x="30" y="140" width="420" height="80" rx="3"/>
+          <text class="t" x="48" y="166">Claude Code · the one place</text>
+          <text class="s" x="48" y="186">your subscription · web, CLI, Remote</text>
+          <text class="s" x="48" y="204">reasons · plans · reviews · writes</text>
+
+          <rect class="node" x="560" y="140" width="420" height="80" rx="3"/>
+          <text class="t" x="578" y="166">Studio-G Console · control room</text>
+          <text class="s" x="578" y="186">watch &amp; steer · no chat box</text>
+          <text class="s" x="578" y="204">every connected thing is one adapter file</text>
+
+          <rect class="node acc" x="30" y="300" width="420" height="80" rx="3"/>
+          <text class="t ta" x="48" y="326">studio-local · MCP server on PW-1x</text>
+          <text class="m" x="48" y="346">read_and_brief · summarize · classify · batch_job</text>
+          <text class="s" x="48" y="366">picks the backend · logs every call</text>
+
+          <rect class="node" x="560" y="300" width="420" height="80" rx="3"/>
+          <text class="t" x="578" y="326">adapters/ · one shape</text>
+          <text class="m" x="578" y="346">status() · events · verbs[] · kind</text>
+          <text class="s" x="578" y="366">session · call · device · service · outbound</text>
+
+          <rect class="node" x="30" y="460" width="190" height="90" rx="3"/>
+          <text class="t" x="46" y="484">PW-1x · llama.cpp</text>
+          <text class="s" x="46" y="504">CPU-only until a GPU</text>
+          <text class="s" x="46" y="522">gpt-oss-120b · Scout</text>
+
+          <rect class="node" x="260" y="460" width="190" height="90" rx="3"/>
+          <text class="t" x="276" y="484">Desktop PC · Ollama</text>
+          <text class="s" x="276" y="504">4060 Ti · gpt-oss-20b</text>
+          <text class="s" x="276" y="522">best-effort, only when idle</text>
+
+          <rect class="node" x="560" y="460" width="190" height="90" rx="3"/>
+          <text class="t" x="576" y="484">Screens A · B · C</text>
+          <text class="s" x="576" y="504">Grafana embedded</text>
+          <text class="s" x="576" y="522">swap to a "down" page</text>
+
+          <rect class="node" x="790" y="460" width="190" height="90" rx="3"/>
+          <text class="t" x="806" y="484">Phone</text>
+          <text class="s" x="806" y="504">outbound · notify</text>
+          <text class="s" x="806" y="522">actions route to a verb</text>
+
+          <!-- edges -->
+          <line x1="90" y1="90" x2="90" y2="140" marker-end="url(#ar2)"/>
+          <text class="e" x="98" y="120">you work here</text>
+
+          <path d="M220,60 H770 V140" marker-end="url(#ar2)"/>
+          <text class="e" x="495" y="52" text-anchor="middle">you watch here</text>
+
+          <line x1="560" y1="180" x2="450" y2="180" marker-end="url(#ar2)" marker-start="url(#ar2)"/>
+          <text class="e" x="505" y="172" text-anchor="middle">Remote API</text>
+
+          <line class="accl" x1="120" y1="220" x2="120" y2="300" marker-end="url(#ar2)" marker-start="url(#ar2)"/>
+          <text class="e ta" x="128" y="265">tool call · a page back</text>
+
+          <line class="fut" x1="330" y1="300" x2="330" y2="220" marker-end="url(#ar2)"/>
+          <text class="e" x="338" y="265">batch done → webhook wakes it</text>
+
+          <line x1="770" y1="220" x2="770" y2="300" marker-end="url(#ar2)"/>
+          <text class="e" x="778" y="265">one card each</text>
+
+          <line x1="450" y1="340" x2="560" y2="340" marker-end="url(#ar2)"/>
+          <text class="e" x="505" y="332" text-anchor="middle">work log</text>
+
+          <line x1="125" y1="380" x2="125" y2="460" marker-end="url(#ar2)"/>
+          <text class="e" x="133" y="425">fallback</text>
+
+          <line x1="355" y1="380" x2="355" y2="460" marker-end="url(#ar2)"/>
+          <text class="e" x="363" y="425">first, if idle</text>
+
+          <line x1="655" y1="380" x2="655" y2="460" marker-end="url(#ar2)"/>
+          <text class="e" x="663" y="425">read-only routes</text>
+
+          <line x1="885" y1="380" x2="885" y2="460" marker-end="url(#ar2)" marker-start="url(#ar2)"/>
+          <text class="e" x="893" y="425">notify ↔ act</text>
+        </svg>
+      </div>
+      <figcaption><b>Claude manages local.</b> You work in Claude Code; Claude decides what to delegate and calls PW-1x's local models as tools through an MCP server. Local reads the forty files and returns a page, so Claude's context stays small and its rate-limited tokens go to judgment — that is the "double throughput" mechanism. The amber path is the only custom interface between Claude and the machine, and Claude Code already speaks it. The MCP server also exposes <code>extract</code>, <code>job_status</code> and <code>job_result</code>; behind it, PW-1x runs gpt-oss-120b and Scout on CPU for reads, briefs and long context and is the fallback for everything, while the desktop runs gpt-oss-20b on the 4060 Ti for call-shaped volume work only when idle. The console drives sessions through the Remote API — create, send, interrupt, title, tag, schedule, watch — and renders every connected thing as one adapter shape. Screens are read-only routes with Grafana embedded whose kiosks swap to the static "down" page when PW-1x is off; phone notifications carry actions that route back to a verb on another adapter.</figcaption>
+    </figure>
+
+    <div class="callout">
+      <h3>"Have them talk to each other" — what that is now</h3>
+      <p>A tool call. Claude asks <code>studio-local</code> to read a repo and brief it; the brief lands in Claude's context and Claude carries on. No model needs to know another exists. For overnight work, <code>batch_job</code> returns at once and PW-1x wakes the session by webhook when it's done. Handing one Claude session's result to another is a console verb — create a session with that result as its input — and the work log records the chain. That's the whole mechanism. There's no bus, because Claude Code already speaks MCP and git.</p>
+    </div>
+  </section>
+
+  <!-- ============================ FIGURE 3 ============================ -->
+  <section>
+    <p class="eyebrow">Figure 3 · Where things live, who watches</p>
+    <h2>Projects on the left, telemetry on the right</h2>
+    <p class="lede">Two independent circuits. Projects have one source and two deploy targets, and anything public leaves through Cloudflare rather than an open port. Every screen and the light read the same telemetry.</p>
+
+    <figure>
+      <div class="fig">
+        <svg class="dg" viewBox="0 0 1000 490" role="img" aria-label="Two circuits on a grid. Left: GitHub pushes deploy to Cloudflare Pages or build on PW-1x Podman; Podman exits through Caddy and the Cloudflare Tunnel, the accent box, to the public internet. Right: exporters are scraped by one Prometheus, which feeds Grafana for the kiosk screens and fires an alert rule that drives the USB light.">
+          <defs>
+            <marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="currentColor" stroke="none"/>
+            </marker>
+          </defs>
+
+          <text class="m" x="30" y="20">PROJECTS</text>
+          <rect class="node hub" x="30" y="30" width="420" height="60" rx="3"/>
+          <text class="t" x="48" y="54">GitHub</text>
+          <text class="s" x="48" y="74">source of truth for every project · CI runs spec-check</text>
+
+          <rect class="node" x="30" y="150" width="190" height="70" rx="3"/>
+          <text class="t" x="46" y="174">Cloudflare Pages</text>
+          <text class="s" x="46" y="192">+ Workers · static &amp; edge</text>
+          <text class="s" x="46" y="208">already public</text>
+
+          <rect class="node" x="260" y="150" width="190" height="70" rx="3"/>
+          <text class="t" x="276" y="174">PW-1x · Podman</text>
+          <text class="s" x="276" y="192">rootless · containers</text>
+          <text class="s" x="276" y="208">dev envs · Caddy in front</text>
+
+          <rect class="node acc" x="30" y="280" width="420" height="70" rx="3"/>
+          <text class="t ta" x="48" y="304">Cloudflare Tunnel + Access</text>
+          <text class="s" x="48" y="324">no inbound ports · auth at the edge</text>
+
+          <rect class="node" x="30" y="410" width="420" height="60" rx="3"/>
+          <text class="t" x="48" y="434">Public internet</text>
+          <text class="s" x="48" y="454">the only way anything leaves the house</text>
+
+          <text class="m" x="560" y="20">TELEMETRY</text>
+          <rect class="node hub" x="560" y="30" width="420" height="60" rx="3"/>
+          <text class="t" x="578" y="54">Exporters</text>
+          <text class="s" x="578" y="74">node · llama.cpp · IPMI on PW-1x · nvidia on the PC · P2S</text>
+
+          <rect class="node" x="560" y="150" width="420" height="70" rx="3"/>
+          <text class="t" x="578" y="174">Prometheus</text>
+          <text class="s" x="578" y="194">one scrape · alert rules</text>
+
+          <rect class="node" x="560" y="280" width="190" height="70" rx="3"/>
+          <text class="t" x="576" y="304">USB light hook</text>
+          <text class="s" x="576" y="324">active_requests &gt; 0 → on</text>
+
+          <rect class="node" x="790" y="280" width="190" height="70" rx="3"/>
+          <text class="t" x="806" y="304">Grafana</text>
+          <text class="s" x="806" y="324">kiosk dashboards</text>
+
+          <rect class="node" x="790" y="410" width="190" height="60" rx="3"/>
+          <text class="t" x="806" y="434">Screens A · B · C</text>
+          <text class="s" x="806" y="454">one kiosk URL</text>
+
+          <!-- edges -->
+          <line x1="125" y1="90" x2="125" y2="150" marker-end="url(#ar3)"/>
+          <text class="e" x="133" y="125">push → deploy</text>
+          <line x1="355" y1="90" x2="355" y2="150" marker-end="url(#ar3)"/>
+          <text class="e" x="363" y="125">push → build</text>
+          <line x1="355" y1="220" x2="355" y2="280" marker-end="url(#ar3)"/>
+          <text class="e" x="363" y="255">Caddy → tunnel</text>
+          <line x1="240" y1="350" x2="240" y2="410" marker-end="url(#ar3)"/>
+          <text class="e" x="248" y="385">HTTPS out</text>
+
+          <line x1="770" y1="90" x2="770" y2="150" marker-end="url(#ar3)"/>
+          <text class="e" x="778" y="125">scrape every 15s</text>
+          <line x1="655" y1="220" x2="655" y2="280" marker-end="url(#ar3)"/>
+          <text class="e" x="663" y="255">alert → webhook</text>
+          <line x1="885" y1="220" x2="885" y2="280" marker-end="url(#ar3)"/>
+          <text class="e" x="893" y="255">query</text>
+          <line x1="885" y1="350" x2="885" y2="410" marker-end="url(#ar3)"/>
+          <text class="e" x="893" y="385">kiosk URL</text>
+        </svg>
+      </div>
+      <figcaption><b>Where things live and who watches.</b> Left circuit: GitHub is the only source. Cloudflare Pages takes static and edge projects and is already public; PW-1x's rootless Podman takes containers and dev environments behind Caddy, and leaves the house only through the amber Cloudflare Tunnel with Access at the edge — no inbound port is ever opened on the router. Right circuit: exporters on PW-1x (node, llama.cpp <code>/metrics</code>, IPMI) and on the PC (nvidia), plus the P2S over MQTT, are scraped by one Prometheus. Grafana serves one kiosk URL to all three screens and the Console's dashboard panel. The light is driven by an alert rule rather than a script polling the model server, so it stays correct when the model server is the thing that's down.</figcaption>
+    </figure>
+  </section>
+
+  <!-- ============================ HOOKS ============================ -->
+  <section>
+    <p class="eyebrow">Hooks</p>
+    <h2>Sockets left open on purpose</h2>
+    <p class="lede">Each future add has a place it will land, so adding it later is a plug-in, not a redesign.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Add</th><th>Where it lands</th><th>What it needs</th><th>State</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="name">3D printer · P2S</td>
+            <td>Router → Wi-Fi. LAN mode + Developer Mode opens MQTT, FTP and the 1080p camera stream. A small bridge on PW-1x turns MQTT into a Prometheus exporter; progress and AI-detection events show on Screen A, "print done" alerts on B and C. It also prints the enclosures for Screens A, B and C — so it comes before they're finished.</td>
+            <td>The printer, Developer Mode on, the printer's access code, one exporter container in Podman.</td>
+            <td><span class="chip warn">Hook</span></td>
+          </tr>
+          <tr>
+            <td class="name">Projector</td>
+            <td>Off the desktop PC, not PW-1x. Wired HDMI or a wireless cast dongle. No software hook needed — it is a display, and the Console already renders in a browser.</td>
+            <td>Cable or dongle. Nothing on the server side.</td>
+            <td><span class="chip warn">Hook</span></td>
+          </tr>
+          <tr>
+            <td class="name">More storage</td>
+            <td>PW-1x board: two OCuLink Gen4 x4 ports and the second M.2 slot are free. Already reserved in the Handoff's upgrade path.</td>
+            <td>A drive, or an OCuLink cage. Mount under <code>/srv/models</code> or a second container partition.</td>
+            <td><span class="chip warn">Hook</span></td>
+          </tr>
+          <tr>
+            <td class="name">USB light</td>
+            <td>PW-1x USB → relay. Driven by a Prometheus alert on <code>llamacpp_requests_processing &gt; 0</code>, not a poller.</td>
+            <td>A ~$10 USB relay module (or a port that supports <code>uhubctl</code> power switching). You have the light.</td>
+            <td><span class="chip ok">Plug in</span></td>
+          </tr>
+          <tr>
+            <td class="name">Anything else</td>
+            <td>It becomes an adapter in the console — one file with status, events, verbs and a kind. If it's a model, it's a backend behind the MCP server or a <code>call</code> adapter. If it speaks MQTT or HTTP, it's an afternoon.</td>
+            <td>One of those interfaces, and a line in the sops secrets file if it needs a key.</td>
+            <td><span class="chip warn">Hook</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================ OPEN QUESTIONS ============================ -->
+  <section>
+    <p class="eyebrow">Before building</p>
+    <h2>Where the five questions landed</h2>
+    <ol class="q">
+      <li><div><b>Which 4060? — The 4060 Ti stays in the PC.</b> PW-1x starts CPU-only and the PC becomes a best-effort fast tier over 10GbE. Not cooked: decode is RAM-bound either way, so the 120b still runs — what you lose is prefill, which on Zen 2 without a GPU is minutes on a big repo context. Overnight batch is fine; interactive is not.
+        <span class="rec"><b>Now open:</b> the GPU path for PW-1x — run CPU-only and measure first (free), a 16GB card (~$430–450) to restore the design as drawn, or the used 3090 (~$1,000) that was already rank 1 on the Handoff's list. And whether the PC's tier is best-effort or a reserved VRAM slice.</span></div></li>
+      <li><div><b>Subscription or API? — Subscription, through Claude Code.</b> Claude manages; local models are tools it calls over MCP. Nothing needs API keys unless it must run with no Claude session at all, and nothing does at launch.
+        <span class="rec"><b>Consequence:</b> one bill, one code path. The first draft had a local Foreman dispatching to Claude as a tier — that was backwards, and it's gone.</span></div></li>
+      <li><div><b>Screen A — small board + panel.</b> Pi Zero 2 W class, 7" 1024×600 HDMI panel, USB power from PW-1x, a cable to PW-1x's second 10GbE port so it stays up when the router doesn't.
+        <span class="rec"><b>Consequence:</b> the 4060 Ti question above is unaffected — no display stack on the inference box either way.</span></div></li>
+      <li><div><b>Which Bambu? — P2S.</b> My mistake: "PS2" was a transposition, not a wrong model. 256×256×256 enclosed CoreXY, 5" touchscreen, 1080p30 camera with AI failure detection, dual-band Wi-Fi, $799 as the Combo with AMS 2 Pro. LAN mode plus Developer Mode opens MQTT, FTP and the camera stream; the ha-bambulab integration already supports it.
+        <span class="rec"><b>Consequence:</b> nothing in the hook changes. The camera stream is a bonus panel for Screen A, and AI-detection events become alerts on B and C.</span></div></li>
+      <li><div><b>Console — on PW-1x, with a static fallback.</b> Behind Caddy, next to the models. A "PW-1x is down" page on Cloudflare Pages that every kiosk swaps to when a 30-second health check fails.
+        <span class="rec"><b>Consequence:</b> six lines of shell on each Pi. The nightstand screen is never blank.</span></div></li>
+    </ol>
+    <p class="note"><b>Still open:</b> the PW-1x GPU path · whether the PC tier is best-effort or reserved · which iPad generations are on the Apple list (it decides whether the driver boards are commodity or a hunt).</p>
+  </section>
+
+  <section>
+    <p class="eyebrow">Decisions baked into the drawing</p>
+    <h2>Reversible, but named</h2>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Choice</th><th>Why this one</th><th>The alternative</th></tr></thead>
+        <tbody>
+          <tr><td class="name">Tailscale for private</td><td>Already in the PW-1x stack. Screens, phone, PC and server on one mesh with no ports open.</td><td>WireGuard by hand — same thing with more upkeep.</td></tr>
+          <tr><td class="name">Cloudflare Tunnel for public</td><td>You already have Cloudflare. Auth at the edge means a compromised site doesn't hand out the LAN.</td><td>Port-forward through the router. Works; the docs explain why not.</td></tr>
+          <tr><td class="name">GitHub as source of truth</td><td>Both tiers already read and write git. Every project, every config, the docs themselves.</td><td>A separate project registry — one more thing to keep in sync.</td></tr>
+          <tr><td class="name">MCP as the local interface</td><td>Claude Code already speaks it. Local models become tools with no custom protocol between Claude and PW-1x.</td><td>A router or bus in front of Claude. That was the first draft; it had the direction backwards.</td></tr>
+          <tr><td class="name">The console as an adapter hub</td><td>One shape for everything connected — status, events, verbs, kind. Adding a thing is one file; another AI provider is just another adapter.</td><td>A bespoke panel per thing. Faster for the first two, a maintenance bill by the fifth.</td></tr>
+          <tr><td class="name">Prometheus + Grafana</td><td>One scrape, one dashboard, kiosk mode built in. Every screen is a URL.</td><td>Home Assistant — better if the printer and light become a smart-home project rather than a server one.</td></tr>
+          <tr><td class="name">sops + age for secrets</td><td>Encrypted keys live in the repo and decrypt on PW-1x at boot. Solves "API keys all over the place" with one file.</td><td>1Password CLI, or Cloudflare secrets for Worker-side keys only.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">None of this edits the PW-1x Handoff or Build Sheet. Those describe the engine; this describes the vehicle. When a decision above is confirmed, it belongs in the Handoff's Layer 3 as state — not here.</p>
+  </section>
+
+  <footer>
+    Draws on the PW-1x Handoff and Build Sheet (Sep 2026) · Hardware facts from those documents · Software choices are proposals until confirmed · Dashed = hook, solid = decided
+  </footer>
+
+</div>

@@ -14,7 +14,7 @@ PW-1x ("Projectile William v1") is a dual-role box — a local LLM server and a 
 
 | Directory | What lands here | When |
 |---|---|---|
-| `docs/` | The PW-1x Handoff and Build Sheet as version-controlled source, plus the plan | Now — mirrored from the canonical artifacts |
+| `docs/` | The PW-1x Handoff, Build Sheet and Systems Map as version-controlled source, plus the plan | Now — mirrored from the canonical artifacts |
 | `tools/` | `spec-check.py` — the mechanical checker CI runs over `docs/` | Now |
 | `mcp/` | `studio-local` — local models as tools for Claude | Now, against Ollama on the desktop; PW-1x attaches at A5 |
 | `console/` | The control room; `adapters/` one file per connected thing | Now, skeleton + the Claude Code Remote adapter |
@@ -28,9 +28,9 @@ PW-1x ("Projectile William v1") is a dual-role box — a local LLM server and a 
 
 - **PW-1x Handoff** — three layers: non-technical summary, full technical spec, machine-readable state.
 - **PW-1x Build Sheet** — the same build, narrower and more opinionated.
-- **Studio-G Systems Map** — physical topology, how a task moves, where things live. An artifact; not mirrored here yet.
+- **Studio-G Systems Map** — physical topology, how a task moves, where things live. Three figures on one grid.
 
-The artifacts on claude.ai are canonical. `docs/` mirrors them so the checker can run in CI.
+The artifacts on claude.ai are canonical. `docs/` mirrors all three so the checker can run in CI.
 
 ## Verifying the documents
 

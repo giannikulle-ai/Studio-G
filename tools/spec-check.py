@@ -74,6 +74,11 @@ CEILINGS = [
 TAGS = ("table", "thead", "tbody", "tfoot", "section", "pre", "div",
         "ul", "ol", "tr", "td", "th", "header", "footer", "nav")
 
+# Systems Map: words from the design this replaced. A hit is fine only when
+# the surrounding text is explaining that it was replaced.
+MAP_STALE = [r"\bforeman\b", r"handoff bus", r"work item", r"three (execution )?tiers"]
+MAP_STALE_OK = ["was backwards", "first draft", "direction backwards", "is gone", "no bus"]
+
 # --------------------------------------------------------------------------
 
 
@@ -85,6 +90,7 @@ def main() -> int:
     try:
         H = (DOCS / "handoff.html").read_text(encoding="utf-8")
         B = (DOCS / "build-sheet.html").read_text(encoding="utf-8")
+        M = (DOCS / "systems-map.html").read_text(encoding="utf-8")
     except FileNotFoundError as e:
         print(f"missing document: {e.filename}")
         return 2
@@ -131,7 +137,7 @@ def main() -> int:
     print(f"[stale]     {len(STALE)} retired strings scanned in both")
 
     # 4. structure ---------------------------------------------------------
-    for name, doc in (("handoff", H), ("build-sheet", B)):
+    for name, doc in (("handoff", H), ("build-sheet", B), ("systems-map", M)):
         for tag in TAGS:
             o = len(re.findall(r"<" + tag + r"[\s>]", doc))
             c = len(re.findall(r"</" + tag + r">", doc))
@@ -144,6 +150,27 @@ def main() -> int:
             fails.append(f"{name}: .{c} used but not styled")
         print(f"[structure] {name}: {len(TAGS)} tag types checked, "
               f"{len(used)} classes used, {len(unstyled)} unstyled")
+
+    # 4b. systems map: orthogonal edges, no superseded-design words ---------
+    diag = 0
+    for l in re.findall(r"<line[^>]*>", M):
+        g = re.search(r'x1="(\d+)" y1="(\d+)" x2="(\d+)" y2="(\d+)"', l)
+        if g and g.group(1) != g.group(3) and g.group(2) != g.group(4):
+            diag += 1
+    curves = [d for d in re.findall(r'\bd="([^"]+)"', M)
+              if not d.startswith("M0,0 L10,5") and re.search(r"[CcSsQqTtAa]", d)]
+    if diag:
+        fails.append(f"systems-map: {diag} diagonal <line> edge(s)")
+    if curves:
+        fails.append(f"systems-map: {len(curves)} curved <path> edge(s)")
+    for bad in MAP_STALE:
+        for hit in re.finditer(bad, M, re.I):
+            ctx = M[max(0, hit.start() - 80): hit.end() + 40].lower()
+            if not any(ok in ctx for ok in MAP_STALE_OK):
+                fails.append(f"systems-map: superseded design word {bad!r}")
+                break
+    print(f"[map]       edges: {diag} diagonal, {len(curves)} curved; "
+          f"{len(MAP_STALE)} superseded terms scanned")
 
     # 5. physics / method --------------------------------------------------
     for name, gb, bn, lo, hi in MODELS:
