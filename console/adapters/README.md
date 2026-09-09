@@ -39,13 +39,17 @@ An outbound notification's `actions[]` each carry a verb on another adapter. "Ac
 | Adapter | kind | status | events | verbs |
 |---|---|---|---|---|
 | `claude-code-remote` | session | sessions, routines | session output | create, send, interrupt, title, tag, schedule, watch |
-| `local-models` | call | backends up/down, model loaded | MCP work log | batch job |
+| `local-models` | call | backends up/down, model loaded | work log (MCP and `/v1`) | ask, batch job |
 | `pw1x` | device | CPU/RAM/temps via Prometheus | alerts | restart llama-server |
 | `p2s` | device | print state, progress, temps | MQTT + AI-detection events, camera | pause, resume |
 | `usb-light` | device | on/off | — | on, off, auto |
 | `github` | service | repos, last push, CI | webhook events | open PR |
 | `cloudflare` | service | Pages/Workers deploys, tunnel health | deploy events | redeploy |
 | `phone` | outbound | — | — | notify |
+
+## The `ask` verb
+
+`local-models.ask({ model, text, turns })` is chat with local. The card renders a text input and a model picker; the reply streams into the card's events panel. It is one call to `studio-local`'s `/v1` with `source = console` — logged and metered like every other call. Conversation history is the work log; `turns` carries the last N. A `file` input lands as a path reference later. This is the same shape as every other verb, which is the point.
 
 ## Adding one
 

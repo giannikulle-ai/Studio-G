@@ -98,6 +98,24 @@ Behind it, the server picks a backend and Claude never sees which: llama.cpp on 
 
 **API keys are not needed for this.** Only if something must run with no Claude session at all. Nothing at launch.
 
+**Direct access to the local models, without Claude — through the same door (decided).** `studio-local` is the *only* way to reach the local models, for Claude and for you. It has two faces on one process:
+
+- **MCP** — what Claude Code connects to. The tools in the list above.
+- **OpenAI-compatible `/v1`** — what everything else connects to: the console's `ask` verb, curl, scripts, editor extensions. Same backend selection, same fallback, same swap logic.
+
+Both faces write to the **one work log** (SQLite: source = `claude` | `console` | `client`, tool or endpoint, backend, tokens in/out, latency, fallback) and the **one `/metrics` endpoint** in Prometheus format — calls by source and backend, token counters, latency histograms, `studio_active_requests`. That last gauge drives the USB light instead of llama.cpp's own metric, so the light is right whichever backend is working.
+
+Consequences:
+- `llama-server` on PW-1x and Ollama on the desktop bind to localhost and the 10GbE link only. Nothing reaches them except `studio-local`. llama.cpp's built-in chat page is therefore not exposed; it can still be used on the box itself for debugging.
+- **Chat with local is an `ask` verb on the `local-models` adapter card (decided).** The card gets a text input and a model picker; the reply streams into the card's events panel. Underneath it is one call to `studio-local`'s `/v1` with `source = console`, so it is logged and metered like everything else. No extra app, no extra container, same shape as every other card. Conversation history is the work log, which already exists; `ask` carries the last N turns. File drop is a later verb input of type `file` that lands as a path reference. **Open WebUI is not installed.** It stays documented as the upgrade if history and uploads ever outgrow the card. The console is the single interface: watch, steer, chat with local, dispatch to frontier.
+
+**The sentence this all reduces to (the original brief, restated):** *single interface for you, connectors for frontier.* The console is the interface. Frontier providers are adapters you hand instructions and files to and watch — never a chat box. Local models are one door, `studio-local`, that logs everything whoever calls it. Claude Code stays available when you want to type into it directly, but nothing depends on that.
+- The throughput comparison against A0 can now separate Claude-delegated work from your direct use, because `source` is a column.
+- The "no chat box" rule stands for Claude; the local `ask` verb doesn't conflict with it.
+- Figure 2 of the Systems Map: the console becomes the hub box (your single interface), the MCP box reads "MCP for Claude · /v1 for everyone else", and Claude Code is drawn as a connector you hand work to. Content change; goes in with this step.
+
+**On Prometheus, since it was asked:** a free metrics database. Exporters publish small pages of numbers; Prometheus scrapes them every 15s and stores the series; Grafana graphs them; Prometheus alert rules fire when a number crosses a line (the light). One place every screen reads from, instead of each thing polling the model server.
+
 **Two models, one card** still applies on PW-1x once a GPU exists — gpt-oss-20b and the 120b swap, they don't coexist. The MCP server owns that decision (which backend, whether to swap), not Claude.
 
 ---
@@ -151,7 +169,7 @@ Visualized in **Studio-G Systems Map** — https://claude.ai/code/artifact/0d57b
 
 **Physical adds beyond PW-1x.** Desktop PC (10GbE direct to PW-1x). Three screens: A on the bench (small panel + SBC, USB power and LAN from PW-1x, Grafana kiosk), B on the nightstand and C at a second location (repurposed iPad panels + driver board + SBC, over Wi-Fi / Tailscale or Cloudflare Access). USB light on a relay off PW-1x. Hooks with a reserved landing spot: Bambu 3D printer (LAN mode → MQTT → exporter), projector (off the PC, display only), more storage (OCuLink ×2, M.2 #2).
 
-**Software layer — the control room (option "a": thin remote control, decided).** A small web app on PW-1x. You *work* in Claude Code; you *watch and steer* from here. No chat box. It shows what's running and gives you verbs: send this instruction + these files to a new session, hand this session's result to that one, stop that, wake this one when the overnight job finishes. Those verbs already exist as the Claude Code Remote API (create / send / list / get / interrupt / title / tags / routines / webhooks); the console is a viewer with buttons over them. If the console is down, Claude Code still works — it never sits between you and Claude.
+**Software layer — the control room (option "a": thin remote control, decided).** A small web app on PW-1x. **It is your single interface**: you watch and steer from here, you chat with local models here (the `ask` verb on the local-models card, see §B), and you dispatch to frontier from here. No chat box *for Claude* — frontier is a connector you hand work to, not a window you type into. Claude Code itself stays available for when you want to type into it directly. It shows what's running and gives you verbs: send this instruction + these files to a new session, hand this session's result to that one, stop that, wake this one when the overnight job finishes. Those verbs already exist as the Claude Code Remote API (create / send / list / get / interrupt / title / tags / routines / webhooks); the console is a viewer with buttons over them. If the console is down, Claude Code still works — it never sits between you and Claude.
 
 **Design rule: the console is an adapter hub and knows nothing about Claude specifically.** Every connected thing is an **adapter** with one shape:
 
@@ -168,7 +186,7 @@ Adapters at launch, in `console/adapters/`:
 | Adapter | status | events | verbs |
 |---|---|---|---|
 | `claude-code-remote` | sessions, routines | session output stream | create, send, interrupt, title, tag, schedule, watch |
-| `local-models` | backends up/down, model loaded | MCP work log | run batch job |
+| `local-models` | backends up/down, model loaded | work log (MCP and `/v1`) | ask, run batch job |
 | `pw1x` | CPU/RAM/temps via Prometheus | alerts | restart llama-server |
 | `p2s` | print state, progress, temps | MQTT + AI-detection events, camera | pause, resume |
 | `usb-light` | on/off | — | on, off, auto |
@@ -245,6 +263,14 @@ Commit and push. Nothing touches hardware, the artifacts, or any external servic
 ## Third implementation step: checker docstring
 
 `tools/spec-check.py`'s module docstring still describes five checks over two files. Rewrite it to name all three documents and six checks (the map's orthogonal-edge and superseded-design pass is the sixth). The root `README.md` "Verifying the documents" paragraph says "Five checks" — same fix. Run the checker, commit, push. No behavior change.
+
+## Fourth implementation step: one interface, one door
+
+Bring the repo and the map into line with the corrected design — the console is your single interface, frontier providers are connectors, `studio-local` is the one logged door to local models, and chat-with-local is the `ask` verb. Wording only; no code yet.
+
+- `README.md`, `console/README.md`, `console/adapters/README.md`, `mcp/README.md`: replace every "you work in Claude Code" framing; add the `/v1` face, the `source` column, `/metrics`, localhost binding, and the `ask` verb.
+- `docs/systems-map.html` Figure 2: console becomes the hub; Claude Code drawn as a connector; MCP box reads "MCP for Claude · /v1 for everyone else"; lede, caption and callout rewritten. Layout rules from step two still hold.
+- `docs/plan.md` synced. Checker clean. Republish the map. Commit, push.
 
 ## Verification
 

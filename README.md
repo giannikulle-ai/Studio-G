@@ -6,9 +6,9 @@ PW-1x ("Projectile William v1") is a dual-role box — a local LLM server and a 
 
 ## The shape of it
 
-**Claude manages local.** You work in Claude Code on your subscription. PW-1x's local models are tools Claude calls through an MCP server (`mcp/`). Local reads the forty files and hands back a page; Claude spends its rate-limited tokens on judgment. That is the whole mechanism.
+**One interface for you, connectors for frontier.** The console (`console/`) is where you work: watch what's running, steer it, chat with local models, and hand instructions and files to frontier providers. Frontier is a connector — you don't type into Claude there; you dispatch work to it and watch. Everything connected to the console is an adapter with one shape, so adding a thing is one file. Claude Code stays available when you want to type into it directly; nothing depends on that.
 
-**A thin control room watches and steers** (`console/`). No chat box. It shows what's running — Claude sessions, local models, PW-1x, the printer, the light, your projects — and gives you verbs over them. Everything connected to it is an adapter with one shape, so adding a thing is one file. It never sits between you and Claude.
+**One door to local models.** `studio-local` (`mcp/`) is the only way anything reaches them: an MCP face for Claude, an OpenAI-compatible `/v1` face for you and everything else. Every call is logged and metered whoever makes it. When Claude delegates, local reads the forty files and hands back a page, so frontier tokens go to judgment. That is the whole mechanism.
 
 ## Layout
 
@@ -16,8 +16,8 @@ PW-1x ("Projectile William v1") is a dual-role box — a local LLM server and a 
 |---|---|---|
 | `docs/` | The PW-1x Handoff, Build Sheet and Systems Map as version-controlled source, plus the plan | Now — mirrored from the canonical artifacts |
 | `tools/` | `spec-check.py` — the mechanical checker CI runs over `docs/` | Now |
-| `mcp/` | `studio-local` — local models as tools for Claude | Now, against Ollama on the desktop; PW-1x attaches at A5 |
-| `console/` | The control room; `adapters/` one file per connected thing | Now, skeleton + the Claude Code Remote adapter |
+| `mcp/` | `studio-local` — the one door to local models: MCP for Claude, `/v1` for everything else | Now, against Ollama on the desktop; PW-1x attaches at A5 |
+| `console/` | Your single interface; `adapters/` one file per connected thing | Now, skeleton + the Claude Code Remote and local-models adapters |
 | `systemd/` | Units and resource-control drop-ins | After OS install (A3) |
 | `caddy/` | `Caddyfile` | After OS install (A3) |
 | `scripts/` | llama.cpp build, model fetch, kiosk scripts for the screens | Bring-up (A5) and screen builds |

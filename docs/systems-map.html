@@ -232,12 +232,12 @@
   <!-- ============================ FIGURE 2 ============================ -->
   <section>
     <p class="eyebrow">Figure 2 · The one place</p>
-    <h2>Claude manages local; the console watches</h2>
-    <p class="lede">You work in Claude Code. PW-1x's local models are tools it calls. The control room beside it shows what's running and hands you verbs — and never sits between you and Claude.</p>
+    <h2>One interface for you, connectors for frontier</h2>
+    <p class="lede">The console is where you work: watch, steer, chat with local models, hand work to frontier. Frontier is a connector you dispatch to, not a window you type into. Claude reaches the local models through the same door you do.</p>
 
     <figure>
       <div class="fig">
-        <svg class="dg" viewBox="0 0 1000 580" role="img" aria-label="Software flow on a grid. You work in Claude Code on the left and watch the Studio-G Console on the right. Claude Code calls the studio-local MCP server on PW-1x, the accent edge; a page comes back, and a dashed edge shows batch jobs waking the session by webhook. The MCP server picks between two backends below it: PW-1x's llama.cpp as fallback, the desktop's Ollama first when idle. The console drives Claude sessions over the Remote API and renders every connected thing as one adapter shape; screens and the phone hang off the adapters.">
+        <svg class="dg" viewBox="0 0 1000 580" role="img" aria-label="Software flow on a grid. You work in the Studio-G Console on the right, your single interface; Claude Code on the left is a frontier connector you hand work to, and can still be used directly. Claude Code calls studio-local on PW-1x, the accent box and the one door to local models, over its MCP face; the console's ask verb and any client use the same door's OpenAI-compatible face. A page comes back, and a dashed edge shows batch jobs waking a session by webhook. studio-local picks between two backends below it: PW-1x's llama.cpp as fallback, the desktop's Ollama first when idle. The console drives Claude sessions over the Remote API and renders every connected thing as one adapter shape; screens and the phone hang off the adapters.">
           <defs>
             <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
               <path d="M0,0 L10,5 L0,10 z" fill="currentColor" stroke="none"/>
@@ -246,22 +246,22 @@
 
           <rect class="node" x="30" y="30" width="190" height="60" rx="3"/>
           <text class="t" x="46" y="55">You</text>
-          <text class="s" x="46" y="75">work left · watch right</text>
+          <text class="s" x="46" y="75">one interface, on the right</text>
 
-          <rect class="node hub" x="30" y="140" width="420" height="80" rx="3"/>
-          <text class="t" x="48" y="166">Claude Code · the one place</text>
-          <text class="s" x="48" y="186">your subscription · web, CLI, Remote</text>
+          <rect class="node" x="30" y="140" width="420" height="80" rx="3"/>
+          <text class="t" x="48" y="166">Claude Code · frontier connector</text>
+          <text class="s" x="48" y="186">your subscription · hand it instructions + files</text>
           <text class="s" x="48" y="204">reasons · plans · reviews · writes</text>
 
-          <rect class="node" x="560" y="140" width="420" height="80" rx="3"/>
-          <text class="t" x="578" y="166">Studio-G Console · control room</text>
-          <text class="s" x="578" y="186">watch &amp; steer · no chat box</text>
+          <rect class="node hub" x="560" y="140" width="420" height="80" rx="3"/>
+          <text class="t" x="578" y="166">Studio-G Console · your single interface</text>
+          <text class="s" x="578" y="186">watch · steer · chat with local · dispatch to frontier</text>
           <text class="s" x="578" y="204">every connected thing is one adapter file</text>
 
           <rect class="node acc" x="30" y="300" width="420" height="80" rx="3"/>
-          <text class="t ta" x="48" y="326">studio-local · MCP server on PW-1x</text>
-          <text class="m" x="48" y="346">read_and_brief · summarize · classify · batch_job</text>
-          <text class="s" x="48" y="366">picks the backend · logs every call</text>
+          <text class="t ta" x="48" y="326">studio-local · the one door to local models</text>
+          <text class="m" x="48" y="346">MCP for Claude · /v1 for everyone else</text>
+          <text class="s" x="48" y="366">picks the backend · logs and meters every call</text>
 
           <rect class="node" x="560" y="300" width="420" height="80" rx="3"/>
           <text class="t" x="578" y="326">adapters/ · one shape</text>
@@ -289,11 +289,11 @@
           <text class="s" x="806" y="522">actions route to a verb</text>
 
           <!-- edges -->
-          <line x1="90" y1="90" x2="90" y2="140" marker-end="url(#ar2)"/>
-          <text class="e" x="98" y="120">you work here</text>
+          <line class="fut" x1="90" y1="90" x2="90" y2="140" marker-end="url(#ar2)"/>
+          <text class="e" x="98" y="120">direct, when you want</text>
 
           <path d="M220,60 H770 V140" marker-end="url(#ar2)"/>
-          <text class="e" x="495" y="52" text-anchor="middle">you watch here</text>
+          <text class="e" x="495" y="52" text-anchor="middle">you work here</text>
 
           <line x1="560" y1="180" x2="450" y2="180" marker-end="url(#ar2)" marker-start="url(#ar2)"/>
           <text class="e" x="505" y="172" text-anchor="middle">Remote API</text>
@@ -307,8 +307,8 @@
           <line x1="770" y1="220" x2="770" y2="300" marker-end="url(#ar2)"/>
           <text class="e" x="778" y="265">one card each</text>
 
-          <line x1="450" y1="340" x2="560" y2="340" marker-end="url(#ar2)"/>
-          <text class="e" x="505" y="332" text-anchor="middle">work log</text>
+          <line class="accl" x1="560" y1="340" x2="450" y2="340" marker-end="url(#ar2)" marker-start="url(#ar2)"/>
+          <text class="e ta" x="505" y="332" text-anchor="middle">ask · /v1 · log</text>
 
           <line x1="125" y1="380" x2="125" y2="460" marker-end="url(#ar2)"/>
           <text class="e" x="133" y="425">fallback</text>
@@ -323,12 +323,12 @@
           <text class="e" x="893" y="425">notify ↔ act</text>
         </svg>
       </div>
-      <figcaption><b>Claude manages local.</b> You work in Claude Code; Claude decides what to delegate and calls PW-1x's local models as tools through an MCP server. Local reads the forty files and returns a page, so Claude's context stays small and its rate-limited tokens go to judgment — that is the "double throughput" mechanism. The amber path is the only custom interface between Claude and the machine, and Claude Code already speaks it. The MCP server also exposes <code>extract</code>, <code>job_status</code> and <code>job_result</code>; behind it, PW-1x runs gpt-oss-120b and Scout on CPU for reads, briefs and long context and is the fallback for everything, while the desktop runs gpt-oss-20b on the 4060 Ti for call-shaped volume work only when idle. The console drives sessions through the Remote API — create, send, interrupt, title, tag, schedule, watch — and renders every connected thing as one adapter shape. Screens are read-only routes with Grafana embedded whose kiosks swap to the static "down" page when PW-1x is off; phone notifications carry actions that route back to a verb on another adapter.</figcaption>
+      <figcaption><b>One interface for you, connectors for frontier.</b> You work in the console. Frontier providers are adapters you hand instructions and files to and watch — Claude Code is the first, over its Remote API (create, send, interrupt, title, tag, schedule, watch) — never a window you type into, though Claude Code stays available directly when you want it. Local models sit behind one amber door, <code>studio-local</code>: Claude reaches it over MCP (<code>read_and_brief</code>, <code>summarize</code>, <code>classify</code>, <code>extract</code>, <code>batch_job</code>, <code>job_status</code>, <code>job_result</code>); the console's <code>ask</code> verb, curl and any script reach it over an OpenAI-compatible <code>/v1</code>. Whoever calls, it picks the backend, logs the call with its source, and meters it. When Claude delegates, local reads the forty files and returns a page, so frontier tokens go to judgment — the "double throughput" mechanism. Behind the door, PW-1x runs gpt-oss-120b and Scout on CPU for reads, briefs and long context and is the fallback for everything; the desktop runs gpt-oss-20b on the 4060 Ti for call-shaped volume work only when idle. Screens are read-only routes with Grafana embedded whose kiosks swap to the static "down" page when PW-1x is off; phone notifications carry actions that route back to a verb on another adapter.</figcaption>
     </figure>
 
     <div class="callout">
       <h3>"Have them talk to each other" — what that is now</h3>
-      <p>A tool call. Claude asks <code>studio-local</code> to read a repo and brief it; the brief lands in Claude's context and Claude carries on. No model needs to know another exists. For overnight work, <code>batch_job</code> returns at once and PW-1x wakes the session by webhook when it's done. Handing one Claude session's result to another is a console verb — create a session with that result as its input — and the work log records the chain. That's the whole mechanism. There's no bus, because Claude Code already speaks MCP and git.</p>
+      <p>A tool call. Claude asks <code>studio-local</code> to read a repo and brief it; the brief lands in Claude's context and Claude carries on. No model needs to know another exists. For overnight work, <code>batch_job</code> returns at once and PW-1x wakes the session by webhook when it's done. Handing one Claude session's result to another is a console verb — create a session with that result as its input — and the work log records the chain. Talking to a local model yourself is the <code>ask</code> verb on the local-models card, through the same door, in the same log. That's the whole mechanism. There's no bus, because Claude Code already speaks MCP and git.</p>
     </div>
   </section>
 

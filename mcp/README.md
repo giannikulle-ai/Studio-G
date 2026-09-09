@@ -1,8 +1,13 @@
 # mcp/ — `studio-local`
 
-The MCP server that makes PW-1x's local models into tools Claude calls. This is the whole "tiered routing" layer: Claude decides what to delegate, local does the bulk, and only a compact result comes back into Claude's context.
+**The one door to the local models.** Nothing reaches them except through this process. It has two faces:
 
-**Direction:** frontier manages, local works. Claude is the brain; this server is the hands. It never decides *what* to do — only *how* to do the thing it was asked, and on which backend.
+- **MCP** — what Claude Code connects to. The tools below. Claude decides what to delegate; local does the bulk; a compact result comes back into Claude's context.
+- **OpenAI-compatible `/v1`** — what everything else connects to: the console's `ask` verb, curl, scripts, editor extensions. Same backend selection, same fallback, same swap logic.
+
+Both faces write to one work log and one `/metrics` endpoint. `llama-server` on PW-1x and Ollama on the desktop bind to localhost and the 10GbE link only, so this is the only path in — llama.cpp's built-in chat page is not exposed (it still works on the box itself, for debugging).
+
+**Direction:** frontier manages, local works. Claude is the brain; this server is the hands. It never decides *what* to do — only *how* to do the thing it was asked, and on which backend. When you call `/v1` yourself, the same is true: you decide, it executes.
 
 ## Tools
 
@@ -29,9 +34,11 @@ The server picks. Claude never sees which.
 
 Once PW-1x has a GPU, gpt-oss-20b and the 120b **swap** on that card — they don't coexist. This server owns that decision.
 
-## Work log
+## Work log and metrics
 
-Every call is logged to SQLite: tool, backend, tokens in/out, latency, whether it fell back. The console's `local-models` adapter reads it. The before/after throughput comparison against the A0 baseline is computed from it. Without this log the "double throughput" claim can't be checked.
+Every call from either face is logged to SQLite: `source` (`claude` | `console` | `client`), tool or endpoint, backend, tokens in/out, latency, whether it fell back. The console's `local-models` adapter reads it. The before/after throughput comparison against the A0 baseline is computed from it, and because `source` is a column it can separate Claude-delegated work from your direct use. Without this log the "double throughput" claim can't be checked.
+
+`/metrics` exposes the same in Prometheus format: calls by source and backend, token counters, latency histograms, and `studio_active_requests`. That gauge drives the USB light — not llama.cpp's own metric — so the light is right whichever backend is working.
 
 ## Build order
 

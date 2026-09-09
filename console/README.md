@@ -1,10 +1,10 @@
-# console/ — the control room
+# console/ — your single interface
 
-A small web app on PW-1x. **You work in Claude Code; you watch and steer from here.** No chat box.
+A small web app on PW-1x. **One interface for you, connectors for frontier.** You watch what's running, steer it, chat with local models, and hand work to frontier providers — all here.
 
-It shows what's running and gives you verbs: send this instruction and these files to a new session, hand that session's result to this one, stop that, wake this one when the overnight job finishes. Those verbs already exist as the Claude Code Remote API — create, send, list, get, interrupt, title, tag, schedule, watch. The console is a viewer with buttons over them.
+**Frontier is a connector, not a chat box.** You don't type into Claude here. You give it an instruction and files, and watch: send this to a new session, hand that session's result to this one, stop that, wake this one when the overnight job finishes. Those verbs already exist as the Claude Code Remote API — create, send, list, get, interrupt, title, tag, schedule, watch. The console is a viewer with buttons over them. Claude Code itself stays available when you want to type into it directly; if the console is down, it still works.
 
-**It never sits between you and Claude.** If the console is down, Claude Code still works.
+**Chat with local is a verb on a card.** The `local-models` adapter has an `ask` verb: a text input and a model picker, with the reply streaming into the card's events panel. Underneath it is one call to `studio-local`'s `/v1`, so it is logged and metered like everything else. No separate chat app is installed; Open WebUI is the documented upgrade if history and file uploads ever outgrow the card.
 
 ## The one rule
 
