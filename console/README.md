@@ -35,6 +35,10 @@ One Node/TypeScript service. SSE for streams. SQLite for the work log. One plain
 
 Served by Caddy, reached over Tailscale. Both free, both replaceable plumbing.
 
+## Mockup
+
+`docs/console-mockup.html` (published at https://claude.ai/code/artifact/bba85142-a162-48fd-b06f-840e41162b62) draws all of the above: the cards, the screens, and the service under them. Draft for decision; nothing in it is code.
+
 ## Build order
 
 The skeleton and the `claude-code-remote` adapter need nothing from PW-1x — build and run them on the desktop first. Real backends attach at A5.

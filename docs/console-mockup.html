@@ -1,0 +1,1070 @@
+<title>Studio-G Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+  /* Dark-first: a control room. Tokens are the Systems Map's, roles swapped. */
+  :root {
+    --bg: #121519; --surface: #1A1E23; --surface-2: #21262C; --surface-3: #2A3038;
+    --ink: #E7EAEE; --ink-2: #BAC2CC; --muted: #8B95A2;
+    --rule: #2B3239; --rule-soft: #232930;
+    --accent: #E0A04A; --accent-bg: #2A2015; --accent-ink: #15181C;
+    --ok: #6BBA8D; --ok-bg: #17281F; --warn: #DCA054; --warn-bg: #2A2115;
+    --stop: #DE8375; --stop-bg: #2C1B18;
+    --shadow: 0 1px 2px rgba(0,0,0,.40), 0 10px 30px -18px rgba(0,0,0,.80);
+    --sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #F5F7F9; --surface: #FFFFFF; --surface-2: #EDF0F3; --surface-3: #E2E7EC;
+      --ink: #15181C; --ink-2: #3B434D; --muted: #5E6875;
+      --rule: #D8DDE3; --rule-soft: #E6EAEF;
+      --accent: #A8650F; --accent-bg: #FBF1E1; --accent-ink: #FFFFFF;
+      --ok: #2C6E4C; --ok-bg: #E4F0E9; --warn: #9A5B12; --warn-bg: #F8EEDD;
+      --stop: #9C4438; --stop-bg: #F7E7E4;
+      --shadow: 0 1px 2px rgba(20,28,38,.06), 0 8px 24px -16px rgba(20,28,38,.30);
+      color-scheme: light;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #F5F7F9; --surface: #FFFFFF; --surface-2: #EDF0F3; --surface-3: #E2E7EC;
+    --ink: #15181C; --ink-2: #3B434D; --muted: #5E6875;
+    --rule: #D8DDE3; --rule-soft: #E6EAEF;
+    --accent: #A8650F; --accent-bg: #FBF1E1; --accent-ink: #FFFFFF;
+    --ok: #2C6E4C; --ok-bg: #E4F0E9; --warn: #9A5B12; --warn-bg: #F8EEDD;
+    --stop: #9C4438; --stop-bg: #F7E7E4;
+    --shadow: 0 1px 2px rgba(20,28,38,.06), 0 8px 24px -16px rgba(20,28,38,.30);
+    color-scheme: light;
+  }
+
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; padding-inline: 16px; padding-block: 0 64px; }
+  .wrap { max-width: 1280px; margin: 0 auto; }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+  code { font-family: var(--mono); font-size: .9em; background: var(--surface-2); padding: 1px 5px; border-radius: 3px; }
+  pre { font-family: var(--mono); font-size: 12.5px; line-height: 1.55; background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 14px 16px; overflow-x: auto; margin: 0; color: var(--ink-2); }
+  pre b { color: var(--ink); font-weight: 600; }
+  pre i { color: var(--accent); font-style: normal; }
+  pre em { color: var(--muted); font-style: normal; }
+  .mono { font-family: var(--mono); }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* ---------- masthead ---------- */
+  .mast { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px; padding: 28px 0 18px; border-bottom: 2px solid var(--ink); }
+  .mast h1 { margin: 0; font-size: clamp(24px, 3.4vw, 32px); line-height: 1.1; letter-spacing: -.02em; font-weight: 600; text-wrap: balance; }
+  .mast .sub { margin: 6px 0 0; color: var(--ink-2); max-width: 70ch; font-size: 14.5px; }
+  .stamp { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  .stamp b { color: var(--accent); font-weight: 600; }
+
+  /* ---------- tabs ---------- */
+  .tabs { display: flex; gap: 4px; margin: 18px 0 22px; border-bottom: 1px solid var(--rule); flex-wrap: wrap; }
+  .tab { appearance: none; background: none; border: 0; border-bottom: 2px solid transparent; margin-bottom: -1px; color: var(--muted); font: 500 13px var(--sans); padding: 10px 14px; cursor: pointer; letter-spacing: .01em; }
+  .tab:hover { color: var(--ink); }
+  .tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+  .tab .k { font-family: var(--mono); font-size: 10.5px; color: var(--muted); margin-left: 8px; letter-spacing: .08em; }
+  .panel[hidden] { display: none; }
+
+  /* ---------- shared chrome ---------- */
+  .eyebrow { font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; color: var(--accent); margin: 0 0 8px; }
+  h2 { margin: 0 0 6px; font-size: 21px; font-weight: 600; letter-spacing: -.014em; line-height: 1.2; text-wrap: balance; }
+  h3 { margin: 0 0 6px; font-size: 15px; font-weight: 600; }
+  p { max-width: 68ch; margin: 0 0 12px; }
+  .lede { color: var(--ink-2); max-width: 72ch; margin-bottom: 18px; }
+  .note { font-size: 13px; color: var(--muted); max-width: 72ch; }
+  .chip { display: inline-block; font-family: var(--mono); font-size: 10.5px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; padding: 2px 7px; border-radius: 3px; white-space: nowrap; line-height: 1.5; }
+  .chip.ok { color: var(--ok); background: var(--ok-bg); }
+  .chip.warn { color: var(--warn); background: var(--warn-bg); }
+  .chip.stop { color: var(--stop); background: var(--stop-bg); }
+  .chip.idle { color: var(--muted); background: var(--surface-2); }
+  .chip.acc { color: var(--accent); background: var(--accent-bg); }
+  .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--muted); vertical-align: middle; margin-right: 6px; }
+  .dot.ok { background: var(--ok); }
+  .dot.warn { background: var(--warn); }
+  .dot.stop { background: var(--stop); }
+  .dot.live { background: var(--ok); box-shadow: 0 0 0 0 var(--ok); animation: pulse 2s infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--ok) 55%, transparent); } 70% { box-shadow: 0 0 0 7px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+
+  button.b { appearance: none; font: 500 12.5px var(--sans); color: var(--ink); background: var(--surface-2); border: 1px solid var(--rule); border-radius: 3px; padding: 5px 10px; cursor: pointer; line-height: 1.4; }
+  button.b:hover { background: var(--surface-3); border-color: var(--muted); }
+  button.b.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+  button.b.primary:hover { filter: brightness(1.06); }
+  button.b.danger { color: var(--stop); }
+  button.b[disabled] { opacity: .45; cursor: default; }
+  button.b .vk { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-left: 5px; }
+  button.b.primary .vk { color: var(--accent-ink); opacity: .7; }
+
+  /* ---------- CONSOLE tab ---------- */
+  .statusbar { display: flex; flex-wrap: wrap; gap: 8px 22px; align-items: center; background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 10px 16px; font-family: var(--mono); font-size: 12px; color: var(--ink-2); box-shadow: var(--shadow); }
+  .statusbar .sb { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+  .statusbar .sb b { color: var(--ink); font-weight: 500; }
+  .statusbar .sb .lbl { color: var(--muted); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; }
+  .statusbar .spacer { flex: 1; }
+  .gauge { display: inline-flex; align-items: center; gap: 6px; }
+  .gauge .bar { width: 80px; height: 6px; background: var(--surface-2); border-radius: 2px; overflow: hidden; }
+  .gauge .bar i { display: block; height: 100%; background: var(--accent); width: 0; transition: width .6s; }
+
+  .console { display: grid; grid-template-columns: 196px minmax(0,1fr) 340px; gap: 16px; margin-top: 16px; align-items: start; }
+  @media (max-width: 1080px) { .console { grid-template-columns: 180px minmax(0,1fr); } .console .worklog { grid-column: 1 / -1; } }
+  @media (max-width: 720px) { .console { grid-template-columns: minmax(0,1fr); } }
+
+  .rail { position: sticky; top: 12px; }
+  .rail .grp { margin-bottom: 14px; }
+  .rail .kind { font-family: var(--mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 0 8px 4px; }
+  .rail a.ad { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 6px 8px; border-radius: 3px; color: var(--ink-2); text-decoration: none; font-size: 13px; }
+  .rail a.ad:hover { background: var(--surface-2); color: var(--ink); }
+  .rail a.ad .id { font-family: var(--mono); font-size: 12px; }
+  .rail a.ad.reserved { color: var(--muted); border: 1px dashed var(--rule); margin-top: 4px; }
+  .rail .cnt { font-family: var(--mono); font-size: 10.5px; color: var(--muted); }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .card { background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; box-shadow: var(--shadow); display: flex; flex-direction: column; min-width: 0; }
+  .card.wide { grid-column: 1 / -1; }
+  .card.session { border-top: 2px solid var(--ink-2); }
+  .card.call { border-top: 2px solid var(--accent); }
+  .card.device { border-top: 2px solid var(--muted); }
+  .card.service { border-top: 2px solid var(--rule); }
+  .card.outbound { border-top: 2px dashed var(--muted); }
+  .card.reserved { border-style: dashed; box-shadow: none; opacity: .75; }
+  .card .hd { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 12px 14px 8px; border-bottom: 1px solid var(--rule-soft); }
+  .card .hd .id { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--ink); }
+  .card .hd .kind { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-left: 8px; }
+  .card .status { padding: 10px 14px; display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; font-size: 13px; }
+  .card .status .k { color: var(--muted); font-family: var(--mono); font-size: 11.5px; padding-top: 2px; }
+  .card .status .v { color: var(--ink); min-width: 0; }
+  .card .status .v small { color: var(--muted); font-size: 12px; }
+  .card .events { border-top: 1px solid var(--rule-soft); background: var(--surface-2); font-family: var(--mono); font-size: 11.5px; line-height: 1.5; color: var(--ink-2); padding: 8px 14px; max-height: 148px; overflow-y: auto; }
+  .card .events .ev { display: grid; grid-template-columns: 52px 1fr; gap: 10px; padding: 2px 0; }
+  .card .events .ev .t { color: var(--muted); }
+  .card .events .ev.warn .m { color: var(--warn); }
+  .card .events .ev.stop .m { color: var(--stop); }
+  .card .events .ev.ok .m { color: var(--ok); }
+  .card .events .ev .m .src { color: var(--accent); }
+  .card .events .stream { white-space: pre-wrap; color: var(--ink); padding: 4px 0 2px 62px; }
+  .card .verbs { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 14px 12px; border-top: 1px solid var(--rule-soft); }
+  .card .verbs .lbl { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); width: 100%; margin-bottom: 2px; }
+
+  /* verb form: rendered from the verb's JSON schema, one row per property */
+  .vform { border-top: 1px solid var(--rule-soft); padding: 10px 14px 12px; background: var(--surface); display: grid; gap: 8px; }
+  .vform[hidden] { display: none; }
+  .vform .row { display: grid; grid-template-columns: 96px 1fr; gap: 8px; align-items: center; font-size: 12.5px; }
+  .vform .row label { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+  .vform input, .vform select, .vform textarea { width: 100%; font: 13px var(--sans); color: var(--ink); background: var(--surface-2); border: 1px solid var(--rule); border-radius: 3px; padding: 5px 8px; }
+  .vform textarea { min-height: 56px; resize: vertical; font-family: var(--mono); font-size: 12px; }
+  .vform .from { font-family: var(--mono); font-size: 11.5px; color: var(--accent); }
+  .vform .act { display: flex; gap: 8px; justify-content: flex-end; }
+
+  /* sessions list inside the session card */
+  .sessions { padding: 6px 14px 10px; display: grid; gap: 6px; }
+  .sess { display: grid; grid-template-columns: 1fr max-content; gap: 6px 10px; align-items: center; padding: 8px 10px; background: var(--surface-2); border-radius: 3px; font-size: 13px; }
+  .sess .ttl { color: var(--ink); font-weight: 500; }
+  .sess .meta { font-family: var(--mono); font-size: 11px; color: var(--muted); grid-column: 1 / -1; }
+  .sess .acts { display: flex; gap: 4px; }
+  .sess .acts button.b { padding: 2px 7px; font-size: 11.5px; }
+
+  /* ask verb: a text input and a model picker on the card */
+  .ask { display: grid; grid-template-columns: 1fr max-content max-content; gap: 8px; padding: 10px 14px; border-top: 1px solid var(--rule-soft); align-items: center; }
+  .ask input { font: 13px var(--sans); color: var(--ink); background: var(--surface-2); border: 1px solid var(--rule); border-radius: 3px; padding: 6px 9px; min-width: 0; }
+  .ask select { font: 12px var(--mono); color: var(--ink); background: var(--surface-2); border: 1px solid var(--rule); border-radius: 3px; padding: 6px 8px; }
+  @media (max-width: 480px) { .ask { grid-template-columns: 1fr; } }
+
+  /* work log */
+  .worklog { background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; box-shadow: var(--shadow); position: sticky; top: 12px; max-height: calc(100vh - 24px); display: flex; flex-direction: column; min-width: 0; }
+  .worklog .hd { padding: 12px 14px 8px; border-bottom: 1px solid var(--rule-soft); display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .worklog .hd .ttl { font-weight: 600; }
+  .worklog .filters { display: flex; gap: 4px; padding: 8px 14px; border-bottom: 1px solid var(--rule-soft); flex-wrap: wrap; }
+  .worklog .filters button.b { padding: 2px 8px; font-size: 11px; font-family: var(--mono); }
+  .worklog .filters button.b[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); }
+  .chain { padding: 10px 14px; border-bottom: 1px solid var(--rule-soft); }
+  .chain .lbl { font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .chain ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; font-family: var(--mono); font-size: 11.5px; }
+  .chain li { display: grid; grid-template-columns: 14px 1fr; gap: 8px; align-items: baseline; color: var(--ink-2); }
+  .chain li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--muted); align-self: center; justify-self: center; }
+  .chain li.now::before { background: var(--accent); }
+  .chain li.done::before { background: var(--ok); }
+  .chain li .who { color: var(--ink); }
+  .chain li .verb { color: var(--accent); }
+  .rows { overflow-y: auto; font-family: var(--mono); font-size: 11.5px; }
+  .rows table { width: 100%; border-collapse: collapse; }
+  .rows th { position: sticky; top: 0; background: var(--surface); text-align: left; font-weight: 500; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 6px 6px 6px 0; border-bottom: 1px solid var(--rule); }
+  .rows th:first-child, .rows td:first-child { padding-left: 14px; }
+  .rows td { padding: 5px 6px 5px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink-2); white-space: nowrap; }
+  .rows td.r { text-align: right; }
+  .rows td .src { color: var(--accent); }
+  .rows td .fb { color: var(--warn); }
+  .rows td .be { color: var(--muted); }
+  .rows td:nth-child(3) { white-space: normal; }
+  .rows tr.new td { animation: flash 1.2s ease-out; }
+  @keyframes flash { from { background: var(--accent-bg); } to { background: transparent; } }
+  .worklog .ft { padding: 8px 14px; border-top: 1px solid var(--rule-soft); font-family: var(--mono); font-size: 11px; color: var(--muted); display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+  .worklog .ft b { color: var(--ink); font-weight: 500; }
+
+  /* toast */
+  .toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); background: var(--ink); color: var(--bg); font: 500 13px var(--sans); padding: 8px 14px; border-radius: 4px; box-shadow: var(--shadow); opacity: 0; pointer-events: none; transition: opacity .25s; z-index: 5; max-width: calc(100vw - 32px); }
+  .toast.on { opacity: 1; }
+
+  /* ---------- SCREENS tab ---------- */
+  .screens { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 22px; margin-top: 16px; }
+  .scr { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .scr .frame { border: 6px solid var(--surface-3); border-radius: 8px; background: #0B0D10; color: #E7EAEE; padding: 14px; aspect-ratio: 1024 / 600; max-width: 100%; display: grid; gap: 10px; font-family: var(--mono); overflow: hidden; }
+  .scr .frame.night { background: #07080A; color: #9AA3AE; }
+  .scr .frame .big { font-size: clamp(22px, 4vw, 40px); font-weight: 600; line-height: 1; color: #E7EAEE; letter-spacing: -.02em; }
+  .scr .frame .lbl { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: #8B95A2; }
+  .scr .frame .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .scr .frame .tile { background: #14181D; border: 1px solid #232930; border-radius: 3px; padding: 8px 10px; min-width: 0; }
+  .scr .frame .tile .v { font-size: clamp(16px, 2.6vw, 26px); font-weight: 600; color: #E7EAEE; line-height: 1.1; }
+  .scr .frame .tile .u { font-size: 10px; color: #8B95A2; }
+  .scr .frame .spark { height: 34px; width: 100%; display: block; }
+  .scr .frame .light { display: flex; align-items: center; gap: 10px; font-size: 12px; }
+  .scr .frame .light i { width: 14px; height: 14px; border-radius: 50%; background: #E0A04A; box-shadow: 0 0 12px #E0A04A; }
+  .scr .frame .print { display: grid; grid-template-columns: 1fr max-content; gap: 6px; align-items: center; font-size: 12px; }
+  .scr .frame .print .pb { grid-column: 1 / -1; height: 5px; background: #232930; border-radius: 2px; overflow: hidden; }
+  .scr .frame .print .pb i { display: block; height: 100%; width: 63%; background: #6BBA8D; }
+  .scr .frame .alerts { display: grid; gap: 4px; font-size: 11.5px; }
+  .scr .frame .alerts .a { display: grid; grid-template-columns: 44px 1fr; gap: 8px; }
+  .scr .frame .alerts .a .t { color: #5E6875; }
+  .scr .frame.down { background: #0B0D10; color: #8B95A2; place-items: center; text-align: center; }
+  .scr .frame.down .big { color: #DE8375; font-size: clamp(18px, 3vw, 30px); }
+  .scr .cap { font-size: 13px; color: var(--ink-2); max-width: 60ch; }
+  .scr .cap b { color: var(--ink); }
+  .scr .cap .mono { color: var(--muted); font-size: 12px; }
+
+  /* ---------- TECH tab ---------- */
+  .tech section { margin-top: 36px; }
+  .tech section:first-child { margin-top: 16px; }
+  .fig { background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 16px 16px 8px; overflow-x: auto; box-shadow: var(--shadow); margin-top: 14px; }
+  .fig svg { display: block; width: 100%; height: auto; min-width: 720px; color: var(--ink); }
+  figure { margin: 0; }
+  figcaption { font-size: 13.5px; color: var(--ink-2); max-width: 78ch; margin: 10px 4px 0; }
+  figcaption b { color: var(--ink); }
+  .dg rect.node { fill: var(--surface-2); stroke: currentColor; stroke-width: 1.1; }
+  .dg rect.hub { fill: var(--surface); stroke-width: 2; }
+  .dg rect.future { stroke-dasharray: 5 4; fill: var(--surface); }
+  .dg rect.acc { stroke: var(--accent); stroke-width: 2; fill: var(--accent-bg); }
+  .dg rect.lane { fill: none; stroke: var(--rule); stroke-width: 1; stroke-dasharray: 2 3; }
+  .dg text { font-family: var(--sans); font-size: 12px; fill: currentColor; }
+  .dg text.t { font-weight: 600; font-size: 13px; }
+  .dg text.s { font-size: 11px; fill: var(--muted); }
+  .dg text.m { font-family: var(--mono); font-size: 10.5px; fill: var(--muted); }
+  .dg text.e { font-size: 10.5px; fill: var(--muted); }
+  .dg text.ta { fill: var(--accent); }
+  .dg text.lane { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; fill: var(--muted); }
+  .dg line, .dg path { stroke: currentColor; stroke-width: 1.2; fill: none; }
+  .dg .fut { stroke-dasharray: 5 4; }
+  .dg .accl { stroke: var(--accent); stroke-width: 1.6; }
+  .dg .thin { stroke: var(--muted); }
+
+  .scroll { overflow-x: auto; margin-top: 12px; }
+  table.t { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 620px; }
+  table.t thead th { text-align: left; font-family: var(--mono); font-size: 10.5px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 0 14px 8px 0; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+  table.t tbody td { padding: 9px 14px 9px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink-2); }
+  table.t tbody tr:last-child td { border-bottom: none; }
+  table.t td.name { color: var(--ink); font-weight: 500; white-space: nowrap; font-family: var(--mono); font-size: 12.5px; }
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; margin-top: 12px; align-items: start; }
+  .two > div { min-width: 0; }
+  .two h3 { margin-top: 0; }
+  ol.steps { list-style: none; padding: 0; margin: 12px 0 0; counter-reset: s; max-width: 78ch; }
+  ol.steps li { counter-increment: s; display: grid; grid-template-columns: 30px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--rule-soft); }
+  ol.steps li:last-child { border-bottom: none; }
+  ol.steps li::before { content: counter(s); font-family: var(--mono); font-size: 11px; font-weight: 600; color: var(--accent); background: var(--accent-bg); height: 22px; display: grid; place-items: center; border-radius: 3px; margin-top: 1px; }
+  ol.steps b { color: var(--ink); }
+  ol.steps .m { display: block; font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 3px; }
+  .callout { background: var(--surface); border: 1px solid var(--rule); border-left: 3px solid var(--accent); border-radius: 4px; padding: 14px 18px; box-shadow: var(--shadow); margin-top: 16px; max-width: 80ch; }
+  .callout p:last-child { margin-bottom: 0; }
+  ul.plain { padding-left: 18px; margin: 8px 0 0; max-width: 72ch; color: var(--ink-2); }
+  ul.plain li { margin-bottom: 4px; }
+  ul.plain b { color: var(--ink); font-weight: 500; }
+
+  footer { margin-top: 56px; padding-top: 18px; border-top: 1px solid var(--rule); font-family: var(--mono); font-size: 11px; letter-spacing: .04em; color: var(--muted); }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <div>
+      <div class="stamp">
+        <span>Console mockup</span>
+        <span>Rev. <b>Sep 2026</b></span>
+        <span>Data: <b>example, as at A5</b></span>
+        <span>Status: <b>draft for decision</b></span>
+      </div>
+      <h1 style="margin-top:10px">Studio-G Console</h1>
+      <p class="sub">Your single interface: watch, steer, chat with local, dispatch to frontier. One card per connected thing, rendered from the adapter shape alone. Frontier is a connector you hand work to, never a window you type into.</p>
+    </div>
+    <div class="stamp"><span>reached over <b>Tailscale</b></span><span>served by <b>Caddy on PW-1x</b></span></div>
+  </header>
+
+  <div class="tabs" role="tablist" aria-label="Views">
+    <button class="tab" role="tab" id="tab-console" aria-selected="true" aria-controls="p-console">Console <span class="k">/</span></button>
+    <button class="tab" role="tab" id="tab-screens" aria-selected="false" aria-controls="p-screens">Screens <span class="k">/screens/*</span></button>
+    <button class="tab" role="tab" id="tab-tech" aria-selected="false" aria-controls="p-tech">Under the hood <span class="k">console/</span></button>
+  </div>
+
+  <!-- ================================ CONSOLE ================================ -->
+  <div class="panel" id="p-console" role="tabpanel" aria-labelledby="tab-console">
+
+    <div class="statusbar" aria-label="Status bar">
+      <div class="sb"><span class="dot live" id="sb-dot"></span><b>PW-1x</b> <span class="lbl">up</span> <span class="num" id="sb-uptime">14d 06:12</span></div>
+      <div class="sb"><span class="lbl">active</span> <span class="gauge"><span class="bar"><i id="sb-active-bar" style="width:33%"></i></span><b class="num" id="sb-active">2</b></span> <span class="lbl">studio_active_requests</span></div>
+      <div class="sb"><span class="lbl">light</span> <b id="sb-light">on</b></div>
+      <div class="sb"><span class="lbl">cpu</span> <b class="num" id="sb-cpu">61%</b> <span class="lbl">ram</span> <b class="num">98 / 128 GB</b> <span class="lbl">pkg</span> <b class="num" id="sb-temp">58°C</b></div>
+      <div class="spacer"></div>
+      <div class="sb"><span class="lbl">sessions</span> <b class="num">2 running</b></div>
+      <div class="sb"><span class="lbl">alerts</span> <b class="num">0</b></div>
+      <div class="sb"><span class="num" id="sb-clock">--:--:--</span></div>
+    </div>
+
+    <div class="console">
+
+      <!-- rail -->
+      <nav class="rail" aria-label="Adapters">
+        <div class="grp"><div class="kind">session</div>
+          <a class="ad" href="#c-ccr"><span class="id">claude-code-remote</span><span class="cnt num">2 ·1</span></a>
+          <a class="ad reserved" href="#c-reserved"><span class="id">agent-other</span><span class="cnt">hook</span></a>
+        </div>
+        <div class="grp"><div class="kind">call</div>
+          <a class="ad" href="#c-local"><span class="id">local-models</span><span class="dot ok"></span></a>
+          <a class="ad reserved" href="#c-reserved"><span class="id">openai · gemini</span><span class="cnt">hook</span></a>
+        </div>
+        <div class="grp"><div class="kind">device</div>
+          <a class="ad" href="#c-pw1x"><span class="id">pw1x</span><span class="dot ok"></span></a>
+          <a class="ad" href="#c-p2s"><span class="id">p2s</span><span class="dot warn"></span></a>
+          <a class="ad" href="#c-light"><span class="id">usb-light</span><span class="dot ok"></span></a>
+        </div>
+        <div class="grp"><div class="kind">service</div>
+          <a class="ad" href="#c-github"><span class="id">github</span><span class="dot ok"></span></a>
+          <a class="ad" href="#c-cf"><span class="id">cloudflare</span><span class="dot ok"></span></a>
+        </div>
+        <div class="grp"><div class="kind">outbound</div>
+          <a class="ad" href="#c-phone"><span class="id">phone</span><span class="cnt">ntfy</span></a>
+        </div>
+      </nav>
+
+      <!-- cards -->
+      <div class="cards" id="cards">
+
+        <!-- claude-code-remote -->
+        <article class="card session wide" id="c-ccr" data-adapter="claude-code-remote">
+          <div class="hd"><div><span class="id">claude-code-remote</span><span class="kind">session</span></div><span class="chip ok">connected · remote api</span></div>
+          <div class="status">
+            <span class="k">sessions</span><span class="v"><b class="num">2</b> running · <span class="num">1</span> idle <small>· 1 routine armed</small></span>
+            <span class="k">routines</span><span class="v">overnight brief · <span class="mono num">02:00</span> daily → <span class="mono">local-models.batch</span> then wake <span class="mono">session_falsework</span></span>
+          </div>
+          <div class="sessions">
+            <div class="sess">
+              <span class="ttl">Falsework · make the checker run in CI</span>
+              <span class="acts"><button class="b" data-verb="send" data-target="session_falsework">send</button><button class="b" data-verb="watch">watch</button><button class="b danger" data-verb="interrupt">interrupt</button></span>
+              <span class="meta num">session_falsework · running 00:41 · last: pushed 2 commits to sheepcliff/ci-checker · tag: ci</span>
+            </div>
+            <div class="sess">
+              <span class="ttl">Sheepcliff digest · rewrite the intro from local's brief</span>
+              <span class="acts"><button class="b" data-verb="send">send</button><button class="b" data-verb="watch">watch</button><button class="b danger" data-verb="interrupt">interrupt</button></span>
+              <span class="meta num">session_digest · running 00:07 · files: 1 (from local-models · brief-2026-09-10.md) · tag: writing</span>
+            </div>
+            <div class="sess">
+              <span class="ttl">Likes triage · idle, waiting on your review</span>
+              <span class="acts"><button class="b" data-verb="send">send</button><button class="b" data-verb="title">title</button><button class="b" data-verb="tag">tag</button></span>
+              <span class="meta num">session_likes · idle 3h · result: likes-triage.md (14 KB)</span>
+            </div>
+          </div>
+          <div class="events" id="ev-ccr">
+            <div class="ev"><span class="t">16:41:07</span><span class="m">session_digest · created from <span class="src">local-models.read_and_brief#9f3</span> · 1 file attached</span></div>
+            <div class="ev"><span class="t">16:40:52</span><span class="m">session_falsework · tool: Bash · pytest 61 passed</span></div>
+            <div class="ev"><span class="t">16:40:12</span><span class="m">session_falsework · pushed sheepcliff/ci-checker (+2)</span></div>
+            <div class="ev"><span class="t">16:38:30</span><span class="m">session_falsework · mcp: studio-local.read_and_brief(tools/, "what does the checker assume about paths?")</span></div>
+          </div>
+          <div class="verbs"><span class="lbl">verbs</span>
+            <button class="b primary" data-verb="create">create <span class="vk">new session</span></button>
+            <button class="b" data-verb="send">send</button>
+            <button class="b" data-verb="interrupt">interrupt</button>
+            <button class="b" data-verb="title">title</button>
+            <button class="b" data-verb="tag">tag</button>
+            <button class="b" data-verb="schedule">schedule</button>
+            <button class="b" data-verb="watch">watch</button>
+          </div>
+          <form class="vform" id="vf-ccr" hidden></form>
+        </article>
+
+        <!-- local-models -->
+        <article class="card call wide" id="c-local" data-adapter="local-models">
+          <div class="hd"><div><span class="id">local-models</span><span class="kind">call · studio-local</span></div><span class="chip ok">door open · /v1 · mcp</span></div>
+          <div class="status">
+            <span class="k">backends</span><span class="v"><span class="dot ok"></span>PW-1x · llama.cpp · <span class="mono">gpt-oss-120b</span> loaded <small>CPU, 24 threads · fallback for everything</small><br><span class="dot ok"></span>Desktop · Ollama · <span class="mono">gpt-oss-20b</span> <small>4060 Ti · first when idle · idle now</small></span>
+            <span class="k">today</span><span class="v num">137 calls · 2.1M tokens in · 84k out <small>· 3 fell back to PW-1x</small></span>
+            <span class="k">jobs</span><span class="v"><span class="mono">job_7c2</span> summarize 41 files · running <span class="num">18/41</span> <small>· wakes session_falsework on done</small></span>
+          </div>
+          <div class="ask" role="group" aria-label="Ask a local model">
+            <input id="ask-text" type="text" placeholder="Ask local… (reply streams below; logged as source = console)" value="Which three files in tools/ would a new contributor read first, and why?" autocomplete="off">
+            <select id="ask-model" aria-label="Model"><option>gpt-oss-120b · pw-1x</option><option>gpt-oss-20b · desktop</option><option>scout · pw-1x</option><option>auto · door picks</option></select>
+            <button class="b primary" id="ask-go">ask</button>
+          </div>
+          <div class="events" id="ev-local">
+            <div class="ev"><span class="t">16:41:03</span><span class="m"><span class="src">console</span> · ask · gpt-oss-120b · 1.2k → 210 · 6.4s</span></div>
+            <div class="ev"><span class="t">16:38:31</span><span class="m"><span class="src">claude</span> · read_and_brief · gpt-oss-120b · 38.2k → 0.9k · 71s</span></div>
+            <div class="ev"><span class="t">16:31:10</span><span class="m"><span class="src">claude</span> · classify ×40 · gpt-oss-20b (desktop) · 12.4k → 0.4k · 9s</span></div>
+            <div class="ev warn"><span class="t">16:30:58</span><span class="m"><span class="src">client</span> · /v1/chat · desktop busy → fell back to pw-1x · 2.0k → 0.3k · 19s</span></div>
+          </div>
+          <div class="verbs"><span class="lbl">verbs</span>
+            <button class="b" data-verb="ask">ask</button>
+            <button class="b" data-verb="batch">batch job</button>
+            <button class="b" data-verb="handoff" data-note="hand the last result to another adapter">hand result to… <span class="vk">↗</span></button>
+          </div>
+          <form class="vform" id="vf-local" hidden></form>
+        </article>
+
+        <!-- pw1x -->
+        <article class="card device" id="c-pw1x" data-adapter="pw1x">
+          <div class="hd"><div><span class="id">pw1x</span><span class="kind">device</span></div><span class="chip ok">prometheus · 15s</span></div>
+          <div class="status">
+            <span class="k">cpu</span><span class="v num">61% <small>· llama-server pinned 0–23 · containers 24–31</small></span>
+            <span class="k">ram</span><span class="v num">98 / 128 GB <small>· MemoryMax 112G on llama-server</small></span>
+            <span class="k">temps</span><span class="v num">pkg 58°C · nvme 41°C <small>· ipmi fans 1.9k rpm</small></span>
+            <span class="k">llama</span><span class="v num">2 processing · 0 queued <small>· 31.4 tok/s decode</small></span>
+          </div>
+          <div class="events" id="ev-pw1x">
+            <div class="ev ok"><span class="t">09:02:11</span><span class="m">alert resolved · NvmeTempHigh</span></div>
+            <div class="ev warn"><span class="t">08:47:40</span><span class="m">alert firing · NvmeTempHigh 63°C &gt; 60</span></div>
+          </div>
+          <div class="verbs"><span class="lbl">verbs</span><button class="b danger" data-verb="restart-llama">restart llama-server</button></div>
+          <form class="vform" id="vf-pw1x" hidden></form>
+        </article>
+
+        <!-- p2s -->
+        <article class="card device" id="c-p2s" data-adapter="p2s">
+          <div class="hd"><div><span class="id">p2s</span><span class="kind">device · mqtt</span></div><span class="chip warn">printing</span></div>
+          <div class="status">
+            <span class="k">job</span><span class="v">screen-b-enclosure-v3.3mf <small>· layer 212 / 338</small></span>
+            <span class="k">progress</span><span class="v num">63% · 1h 12m left</span>
+            <span class="k">temps</span><span class="v num">nozzle 220 · bed 60 · chamber 38</span>
+            <span class="k">camera</span><span class="v">1080p30 · <a href="#c-p2s">open stream</a> <small>· AI detection armed</small></span>
+          </div>
+          <div class="events" id="ev-p2s">
+            <div class="ev"><span class="t">16:22:04</span><span class="m">ams · slot 2 → PETG black</span></div>
+            <div class="ev"><span class="t">15:29:51</span><span class="m">print started · screen-b-enclosure-v3</span></div>
+          </div>
+          <div class="verbs"><span class="lbl">verbs</span><button class="b" data-verb="pause">pause</button><button class="b" data-verb="resume" disabled>resume</button></div>
+          <form class="vform" id="vf-p2s" hidden></form>
+        </article>
+
+        <!-- usb-light -->
+        <article class="card device" id="c-light" data-adapter="usb-light">
+          <div class="hd"><div><span class="id">usb-light</span><span class="kind">device · relay</span></div><span class="chip acc" id="light-chip">on · auto</span></div>
+          <div class="status">
+            <span class="k">rule</span><span class="v"><span class="mono">studio_active_requests &gt; 0</span> → on <small>· Prometheus alert → webhook, not a poller</small></span>
+            <span class="k">since</span><span class="v num">16:38:30 <small>· 2m 41s</small></span>
+          </div>
+          <div class="events" id="ev-light">
+            <div class="ev"><span class="t">16:38:30</span><span class="m">on · alert ModelBusy firing</span></div>
+            <div class="ev"><span class="t">16:27:12</span><span class="m">off · alert resolved</span></div>
+          </div>
+          <div class="verbs"><span class="lbl">verbs</span><button class="b" data-verb="on">on</button><button class="b" data-verb="off">off</button><button class="b" data-verb="auto">auto</button></div>
+          <form class="vform" id="vf-light" hidden></form>
+        </article>
+
+        <!-- github -->
+        <article class="card service" id="c-github" data-adapter="github">
+          <div class="hd"><div><span class="id">github</span><span class="kind">service · webhook</span></div><span class="chip ok">ci green</span></div>
+          <div class="status">
+            <span class="k">repos</span><span class="v">Studio-G · Falsework · sheepcliff-digest <small>· 3 watched</small></span>
+            <span class="k">last push</span><span class="v">Falsework <span class="mono">sheepcliff/ci-checker</span> <small>· 1m ago · by session_falsework</small></span>
+            <span class="k">ci</span><span class="v">spec-check <span class="chip ok">pass</span> <small>· Studio-G main · 2h ago</small></span>
+          </div>
+          <div class="events" id="ev-github">
+            <div class="ev"><span class="t">16:40:14</span><span class="m">push · Falsework · sheepcliff/ci-checker · +2</span></div>
+            <div class="ev ok"><span class="t">14:12:30</span><span class="m">check_suite · Studio-G · spec-check · success</span></div>
+          </div>
+          <div class="verbs"><span class="lbl">verbs</span><button class="b" data-verb="open-pr">open PR</button></div>
+          <form class="vform" id="vf-github" hidden></form>
+        </article>
+
+        <!-- cloudflare -->
+        <article class="card service" id="c-cf" data-adapter="cloudflare">
+          <div class="hd"><div><span class="id">cloudflare</span><span class="kind">service</span></div><span class="chip ok">tunnel up</span></div>
+          <div class="status">
+            <span class="k">pages</span><span class="v">pw1x-down <small>· the kiosk fallback · deployed 3d ago</small><br>sheepcliff-digest <small>· deployed 2h ago</small></span>
+            <span class="k">tunnel</span><span class="v">2 connectors · <span class="num">0</span> errors <small>· Access: 1 policy</small></span>
+          </div>
+          <div class="events" id="ev-cf">
+            <div class="ev ok"><span class="t">14:13:02</span><span class="m">deploy · sheepcliff-digest · success · 41s</span></div>
+          </div>
+          <div class="verbs"><span class="lbl">verbs</span><button class="b" data-verb="redeploy">redeploy</button></div>
+          <form class="vform" id="vf-cf" hidden></form>
+        </article>
+
+        <!-- phone -->
+        <article class="card outbound" id="c-phone" data-adapter="phone">
+          <div class="hd"><div><span class="id">phone</span><span class="kind">outbound · ntfy</span></div><span class="chip idle">no stream</span></div>
+          <div class="status">
+            <span class="k">last</span><span class="v">16:22 · "print 63%, AMS swapped to black" <small>· info</small></span>
+            <span class="k">actions</span><span class="v">each carries a verb on another adapter <small>· phone → console → verb</small></span>
+          </div>
+          <div class="verbs"><span class="lbl">verbs</span><button class="b" data-verb="notify">notify</button></div>
+          <form class="vform" id="vf-phone" hidden></form>
+        </article>
+
+        <!-- reserved -->
+        <article class="card reserved" id="c-reserved">
+          <div class="hd"><div><span class="id">agent-other · openai · gemini</span><span class="kind">reserved</span></div><span class="chip idle">hook</span></div>
+          <div class="status">
+            <span class="k">shape</span><span class="v">a <span class="mono">session</span> connector with the same verbs as <span class="mono">claude-code-remote</span>, or a <span class="mono">call</span> connector with <span class="mono">ask(instruction, files)</span> and <span class="mono">batch</span></span>
+            <span class="k">needs</span><span class="v">one adapter file, one line in the sops file</span>
+            <span class="k">rule</span><span class="v">never a chat box</span>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- work log -->
+      <aside class="worklog" aria-label="Work log">
+        <div class="hd"><span class="ttl">Work log</span><span class="mono" style="font-size:11px;color:var(--muted)">SQLite · live</span></div>
+        <div class="chain">
+          <div class="lbl">current chain · handoff #41</div>
+          <ol id="chain">
+            <li class="done"><span><span class="who">local-models</span>.<span class="verb">read_and_brief</span>(sheepcliff-digest/, "what's stale?") → brief-2026-09-10.md</span></li>
+            <li class="now"><span><span class="who">claude-code-remote</span>.<span class="verb">create</span>({ files: fromResultOf("local-models#9f3") }) → session_digest · running</span></li>
+            <li><span><span class="who">phone</span>.<span class="verb">notify</span> on result · actions: [send to local summarize, open in Claude Code]</span></li>
+          </ol>
+        </div>
+        <div class="filters" role="group" aria-label="Filter by source">
+          <button class="b" aria-pressed="true" data-src="">all</button>
+          <button class="b" aria-pressed="false" data-src="claude">claude</button>
+          <button class="b" aria-pressed="false" data-src="console">console</button>
+          <button class="b" aria-pressed="false" data-src="client">client</button>
+        </div>
+        <div class="rows">
+          <table>
+            <thead><tr><th>time</th><th>src</th><th>what · backend</th><th class="r">in→out</th><th class="r">ms</th></tr></thead>
+            <tbody id="log-rows">
+              <tr data-src="console"><td class="num">16:41:03</td><td><span class="src">console</span></td><td>ask <span class="be">pw-1x</span></td><td class="r num">1.2k→210</td><td class="r num">6400</td></tr>
+              <tr data-src="console"><td class="num">16:41:07</td><td><span class="src">console</span></td><td>ccr.create ← local#9f3</td><td class="r num">—</td><td class="r num">310</td></tr>
+              <tr data-src="claude"><td class="num">16:38:31</td><td><span class="src">claude</span></td><td>read_and_brief <span class="be">pw-1x</span></td><td class="r num">38.2k→0.9k</td><td class="r num">71020</td></tr>
+              <tr data-src="claude"><td class="num">16:31:10</td><td><span class="src">claude</span></td><td>classify ×40 <span class="be">desktop</span></td><td class="r num">12.4k→0.4k</td><td class="r num">9110</td></tr>
+              <tr data-src="client"><td class="num">16:30:58</td><td><span class="src">client</span></td><td>/v1/chat <span class="fb">fb</span> <span class="be">pw-1x</span></td><td class="r num">2.0k→0.3k</td><td class="r num">19040</td></tr>
+              <tr data-src="console"><td class="num">16:22:04</td><td><span class="src">console</span></td><td>phone.notify</td><td class="r num">—</td><td class="r num">120</td></tr>
+              <tr data-src="claude"><td class="num">16:04:20</td><td><span class="src">claude</span></td><td>batch_job job_7c2 <span class="be">pw-1x</span></td><td class="r num">—</td><td class="r num">40</td></tr>
+              <tr data-src="claude"><td class="num">15:58:02</td><td><span class="src">claude</span></td><td>extract ×12 <span class="be">desktop</span></td><td class="r num">6.1k→1.1k</td><td class="r num">4200</td></tr>
+              <tr data-src="console"><td class="num">15:29:51</td><td><span class="src">console</span></td><td>p2s.resume</td><td class="r num">—</td><td class="r num">90</td></tr>
+              <tr data-src="client"><td class="num">15:10:33</td><td><span class="src">client</span></td><td>/v1/chat <span class="be">desktop</span></td><td class="r num">0.8k→0.2k</td><td class="r num">2100</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="ft"><span>today · <b class="num">137</b> local calls</span><span>claude <b class="num">61%</b> · console <b class="num">27%</b> · client <b class="num">12%</b></span><span>vs A0 · <b class="num">×1.9</b></span></div>
+      </aside>
+
+    </div>
+    <p class="note" style="margin-top:14px">Every card above is drawn from <code>status()</code>, <code>events()</code> and <code>verbs[]</code> alone. The buttons open a form generated from the verb's JSON schema. Numbers are examples of the shape the console shows once PW-1x is up at A5; the simulated stream below the cards ticks so the page reads as it will at rest. Nothing here calls a real backend.</p>
+  </div>
+
+  <!-- ================================ SCREENS ================================ -->
+  <div class="panel" id="p-screens" role="tabpanel" aria-labelledby="tab-screens" hidden>
+    <p class="eyebrow">Read-only routes</p>
+    <h2>Three screens, one console, one kiosk URL each</h2>
+    <p class="lede">Screen routes are the same service with the chrome off and Grafana panels embedded. Each Pi's kiosk script health-checks PW-1x every 30 seconds and swaps to the static "PW-1x is down" page on Cloudflare Pages when it fails, so no screen is ever blank.</p>
+
+    <div class="screens">
+      <div class="scr">
+        <div class="frame" role="img" aria-label="Screen A on the bench: hardware truth, model throughput, print progress, and the light state">
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span class="lbl">Screen A · bench · /screens/bench</span><span class="lbl">16:41</span></div>
+          <div class="tiles">
+            <div class="tile"><div class="lbl">cpu</div><div class="v num">61%</div><div class="u">llama 0–23</div></div>
+            <div class="tile"><div class="lbl">ram</div><div class="v num">98<span style="font-size:.5em">/128</span></div><div class="u">GB</div></div>
+            <div class="tile"><div class="lbl">pkg temp</div><div class="v num">58°</div><div class="u">nvme 41°</div></div>
+          </div>
+          <div>
+            <div class="lbl">decode tok/s · last 10 min</div>
+            <svg class="spark" viewBox="0 0 300 34" preserveAspectRatio="none" aria-hidden="true"><path d="M0,30 L20,28 L40,29 L60,18 L80,16 L100,17 L120,9 L140,10 L160,8 L180,11 L200,7 L220,8 L240,6 L260,7 L280,5 L300,6 L300,34 L0,34 Z" fill="#2A2015"/><path d="M0,30 L20,28 L40,29 L60,18 L80,16 L100,17 L120,9 L140,10 L160,8 L180,11 L200,7 L220,8 L240,6 L260,7 L280,5 L300,6" stroke="#E0A04A" stroke-width="1.5" fill="none"/><circle cx="300" cy="6" r="2.5" fill="#E0A04A"/></svg>
+          </div>
+          <div class="print"><span>P2S · screen-b-enclosure-v3</span><span class="num">63% · 1h12m</span><div class="pb"><i></i></div></div>
+          <div class="light"><i></i><span>light on · 2 requests processing</span></div>
+        </div>
+        <div class="cap"><b>Screen A · bench.</b> 7" 1024×600 panel on a Pi Zero 2 W, USB power and LAN straight off PW-1x's second 10GbE port, so it stays up when the router doesn't. Hardware truth, throughput, the print, the light. <span class="mono">Tailscale or direct LAN</span></div>
+      </div>
+
+      <div class="scr">
+        <div class="frame night" role="img" aria-label="Screen B on the nightstand: overnight summary, alerts, and PW-1x up or down">
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span class="lbl">Screen B · nightstand · /screens/night</span><span class="lbl">02:14</span></div>
+          <div class="big" style="color:#6BBA8D">PW-1x up</div>
+          <div class="lbl">overnight</div>
+          <div class="alerts">
+            <div class="a"><span class="t">02:00</span><span>routine fired · overnight brief · job_7c2 41 files</span></div>
+            <div class="a"><span class="t">01:38</span><span>session_falsework · done · CI green</span></div>
+            <div class="a"><span class="t">00:52</span><span>print done · screen-b-enclosure-v3 · 3h41m</span></div>
+            <div class="a"><span class="t" style="color:#DCA054">23:47</span><span style="color:#DCA054">alert · NvmeTempHigh · resolved 23:59</span></div>
+          </div>
+          <div class="lbl" style="margin-top:auto">dimmed 22:00 – 07:00 · brightness 12%</div>
+        </div>
+        <div class="cap"><b>Screens B and C · nightstand and the second location.</b> Repurposed iPad panels on a driver board and an SBC, over Wi-Fi or Tailscale. Overnight summary, alerts, and one big word. Dimmed on a schedule. <span class="mono">Tailscale, or Cloudflare Access off the tailnet</span></div>
+      </div>
+
+      <div class="scr">
+        <div class="frame down" role="img" aria-label="The static fallback page every kiosk swaps to when PW-1x fails its health check">
+          <div>
+            <div class="big">PW-1x is down</div>
+            <div class="lbl" style="margin-top:8px">last seen 02:14 · this page is static, on Cloudflare Pages</div>
+            <div class="lbl" style="margin-top:20px">kiosk.sh retries every 30 s</div>
+          </div>
+        </div>
+        <div class="cap"><b>The fallback.</b> Six lines of shell on each Pi: curl the console's <span class="mono">/healthz</span>; on failure load the static page; on success load the kiosk URL. The nightstand screen is never blank, and "down" is a state you can read from bed.</div>
+      </div>
+    </div>
+
+    <pre style="margin-top:22px;max-width:640px"><em># scripts/kiosk.sh — runs in a loop on each Pi</em>
+<b>URL</b>=https://pw1x.tail.ts.net/screens/bench   <em># or /screens/night</em>
+<b>DOWN</b>=https://pw1x-down.pages.dev
+if curl -fsS -m 5 https://pw1x.tail.ts.net/healthz &gt;/dev/null; then <b>want</b>=$URL; else <b>want</b>=$DOWN; fi
+[ "$want" != "$(cat /run/kiosk.current)" ] &amp;&amp; { xdotool key F5; echo "$want" &gt; /run/kiosk.current; chromium --kiosk "$want" &amp; }
+sleep 30</pre>
+  </div>
+
+  <!-- ================================ TECH ================================ -->
+  <div class="panel tech" id="p-tech" role="tabpanel" aria-labelledby="tab-tech" hidden>
+
+    <section>
+      <p class="eyebrow">Figure 1 · One process</p>
+      <h2>A viewer with buttons over adapters</h2>
+      <p class="lede">One Node/TypeScript service on PW-1x. The browser gets one HTML page and one SSE stream. Everything the page shows comes from adapters; everything it does is a verb on one. The service itself has no idea what Claude is.</p>
+      <figure>
+        <div class="fig">
+          <svg class="dg" viewBox="0 0 1000 640" role="img" aria-label="Software layers on a grid. Top row: your browser, the phone, and the kiosk Pis reach Caddy over Tailscale. Caddy fronts the console service, drawn as the hub in the middle with four parts inside it: an HTTP layer serving the page and the screen routes, an SSE hub that fans adapter events out to browsers, a verb runner that validates input against the verb's schema and records it, and the work log in SQLite. Below the hub, the adapters row lists one file per connected thing. Below that, the things they connect to: the Claude Code Remote API, studio-local's /v1 and its work log, Prometheus, the P2S over MQTT, GitHub and Cloudflare webhooks, and ntfy.">
+          <defs><marker id="arT" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor" stroke="none"/></marker></defs>
+
+          <!-- row 0: clients -->
+          <rect class="node" x="30" y="20" width="190" height="56" rx="3"/><text class="t" x="46" y="43">Your browser</text><text class="s" x="46" y="61">the console · /</text>
+          <rect class="node" x="260" y="20" width="190" height="56" rx="3"/><text class="t" x="276" y="43">Phone</text><text class="s" x="276" y="61">ntfy action → /hook/phone</text>
+          <rect class="node" x="490" y="20" width="190" height="56" rx="3"/><text class="t" x="506" y="43">Kiosk Pis</text><text class="s" x="506" y="61">/screens/bench · /screens/night</text>
+          <rect class="node" x="790" y="20" width="190" height="56" rx="3"/><text class="t" x="806" y="43">Webhook senders</text><text class="s" x="806" y="61">GitHub · Cloudflare · studio-local</text>
+
+          <!-- row 1: caddy -->
+          <rect class="node" x="30" y="126" width="950" height="44" rx="3"/><text class="t" x="46" y="153">Caddy</text><text class="s" x="110" y="153">HTTPS · one address · Tailscale only for / and /screens · per-adapter secret on /hook/&lt;adapter&gt;</text>
+
+          <!-- row 2: the service (hub) -->
+          <rect class="node hub" x="30" y="220" width="950" height="150" rx="3"/>
+          <text class="t" x="48" y="246">console · one Node/TypeScript service · systemd unit</text>
+          <text class="m" x="48" y="264">console/src/</text>
+          <rect class="node" x="48" y="278" width="210" height="76" rx="3"/><text class="t" x="62" y="300">http</text><text class="s" x="62" y="318">GET / · /screens/* · /healthz</text><text class="s" x="62" y="334">GET /api/adapters</text>
+          <rect class="node" x="282" y="278" width="210" height="76" rx="3"/><text class="t" x="296" y="300">sse hub</text><text class="s" x="296" y="318">GET /api/events (one stream)</text><text class="s" x="296" y="334">merges every adapter's events()</text>
+          <rect class="node" x="516" y="278" width="210" height="76" rx="3"/><text class="t" x="530" y="300">verb runner</text><text class="s" x="530" y="318">POST /api/:adapter/:verb</text><text class="s" x="530" y="334">validate · resolve fromResultOf · run</text>
+          <rect class="node acc" x="750" y="278" width="212" height="76" rx="3"/><text class="t ta" x="764" y="300">work log · SQLite</text><text class="s" x="764" y="318">runs · results · chains</text><text class="s" x="764" y="334">+ reads studio-local's log</text>
+
+          <!-- row 3: adapters -->
+          <rect class="node" x="30" y="420" width="950" height="60" rx="3"/>
+          <text class="t" x="48" y="444">adapters/ · one file each · { id, kind, status(), events(), verbs[] }</text>
+          <text class="m" x="48" y="464">claude-code-remote · local-models · pw1x · p2s · usb-light · github · cloudflare · phone   ·   reserved: agent-other · openai · gemini</text>
+
+          <!-- row 4: the things -->
+          <rect class="node" x="30" y="540" width="150" height="76" rx="3"/><text class="t" x="44" y="562">Claude Code</text><text class="s" x="44" y="580">Remote API</text><text class="s" x="44" y="596">create · send · watch</text>
+          <rect class="node acc" x="200" y="540" width="180" height="76" rx="3"/><text class="t ta" x="214" y="562">studio-local</text><text class="s" x="214" y="580">/v1 · /metrics · webhook</text><text class="s" x="214" y="596">work_log.sqlite (read)</text>
+          <rect class="node" x="400" y="540" width="150" height="76" rx="3"/><text class="t" x="414" y="562">Prometheus</text><text class="s" x="414" y="580">query API</text><text class="s" x="414" y="596">alertmanager → hook</text>
+          <rect class="node" x="570" y="540" width="130" height="76" rx="3"/><text class="t" x="584" y="562">P2S</text><text class="s" x="584" y="580">MQTT · FTP</text><text class="s" x="584" y="596">RTSP camera</text>
+          <rect class="node" x="720" y="540" width="120" height="76" rx="3"/><text class="t" x="734" y="562">USB relay</text><text class="s" x="734" y="580">uhubctl</text>
+          <rect class="node" x="860" y="540" width="120" height="76" rx="3"/><text class="t" x="874" y="562">ntfy</text><text class="s" x="874" y="580">push + actions</text>
+
+          <!-- edges: clients → caddy -->
+          <line x1="125" y1="76" x2="125" y2="126" marker-end="url(#arT)"/><text class="e" x="133" y="106">page + SSE</text>
+          <line x1="355" y1="76" x2="355" y2="126" marker-end="url(#arT)"/><text class="e" x="363" y="106">tailscale</text>
+          <line x1="585" y1="76" x2="585" y2="126" marker-end="url(#arT)"/><text class="e" x="593" y="106">kiosk URL</text>
+          <line x1="885" y1="76" x2="885" y2="126" marker-end="url(#arT)"/><text class="e" x="893" y="106">POST /hook/…</text>
+          <!-- caddy → service -->
+          <line x1="505" y1="170" x2="505" y2="220" marker-end="url(#arT)"/><text class="e" x="513" y="200">reverse_proxy :8787</text>
+          <!-- inside -->
+          <line class="thin" x1="258" y1="316" x2="282" y2="316" marker-end="url(#arT)"/>
+          <line class="thin" x1="492" y1="316" x2="516" y2="316" marker-end="url(#arT)"/>
+          <line class="accl" x1="726" y1="316" x2="750" y2="316" marker-end="url(#arT)"/>
+          <!-- service ↔ adapters -->
+          <line x1="387" y1="354" x2="387" y2="420" marker-end="url(#arT)" marker-start="url(#arT)"/><text class="e" x="395" y="392">events() · status()</text>
+          <line x1="621" y1="354" x2="621" y2="420" marker-end="url(#arT)"/><text class="e" x="629" y="392">verb.run(input)</text>
+          <!-- adapters → things -->
+          <line x1="105" y1="480" x2="105" y2="540" marker-end="url(#arT)" marker-start="url(#arT)"/>
+          <line class="accl" x1="290" y1="480" x2="290" y2="540" marker-end="url(#arT)" marker-start="url(#arT)"/><text class="e ta" x="298" y="514">ask · source=console</text>
+          <line x1="475" y1="480" x2="475" y2="540" marker-end="url(#arT)" marker-start="url(#arT)"/>
+          <line x1="635" y1="480" x2="635" y2="540" marker-end="url(#arT)" marker-start="url(#arT)"/>
+          <line x1="780" y1="480" x2="780" y2="540" marker-end="url(#arT)"/>
+          <line x1="920" y1="480" x2="920" y2="540" marker-end="url(#arT)"/>
+          </svg>
+        </div>
+        <figcaption><b>One process, four parts, no framework.</b> Caddy terminates TLS and keeps the console on the tailnet; only <code>/hook/&lt;adapter&gt;</code> is reachable from outside, each with its own secret. Inside, <code>http</code> serves one static page and the screen routes; the <code>sse hub</code> merges every adapter's <code>events()</code> into one stream per browser; the <code>verb runner</code> validates input against the verb's JSON schema, resolves any <code>fromResultOf()</code> reference against the work log, runs the verb and records it; the <code>work log</code> is SQLite. Adapters are the only code that knows anything about the things below them. The amber edge is the console's own use of the local door: the <code>ask</code> verb is one call to <code>studio-local</code>'s <code>/v1</code> with <code>source = console</code>, so it lands in the same log as Claude's calls.</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <p class="eyebrow">Stack</p>
+      <h2>Kept boring on purpose</h2>
+      <div class="scroll">
+        <table class="t">
+          <thead><tr><th>Layer</th><th>Choice</th><th>Why this and not more</th></tr></thead>
+          <tbody>
+            <tr><td class="name">runtime</td><td>Node 22 · TypeScript · one <code>systemd</code> unit, <code>console.service</code>, in the container slice</td><td>The Claude Code Remote API and the MCP SDK are both easiest from TS; <code>studio-local</code> is TS already, so one toolchain.</td></tr>
+            <tr><td class="name">http</td><td>Fastify (or Node's <code>http</code> if it stays under ten routes) · one static <code>index.html</code></td><td>Small enough to rewrite in a weekend. No SPA framework: the page is a few hundred lines of DOM code driven by one JSON list of adapters.</td></tr>
+            <tr><td class="name">streams</td><td>Server-Sent Events · one <code>GET /api/events</code> per browser · <code>Last-Event-ID</code> replay from a ring buffer</td><td>One direction is enough; every action is a POST. Reconnects are free in the browser; no WebSocket library, no fan-out server.</td></tr>
+            <tr><td class="name">store</td><td>SQLite via <code>better-sqlite3</code> · <code>console.sqlite</code> for runs and chains · read-only attach of <code>studio-local</code>'s <code>work_log.sqlite</code></td><td>Two writers, two files, one <code>ATTACH</code> for the joined view. WAL mode so readers never block the door.</td></tr>
+            <tr><td class="name">validation</td><td>JSON Schema (Ajv) · one schema per verb, shipped to the browser as-is</td><td>The same schema renders the form and validates the POST. A verb is a schema plus a function; nothing else to keep in sync.</td></tr>
+            <tr><td class="name">secrets</td><td><code>sops</code> + <code>age</code> · decrypted to <code>/run/studio/secrets.env</code> at boot · adapters read <code>process.env</code></td><td>Keys live in the repo encrypted; adapter source never contains one.</td></tr>
+            <tr><td class="name">front door</td><td>Caddy · <code>pw1x.tail.ts.net</code> · <code>reverse_proxy localhost:8787</code></td><td>Tailscale identity is the login. No user table, no session cookie, no password page.</td></tr>
+            <tr><td class="name">metrics</td><td><code>/metrics</code> from the console itself: verb runs, SSE clients, adapter status age</td><td>Prometheus already scrapes the box; the console is one more target, so its own health lands on Screen A.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow">Routes</p>
+      <h2>What the service answers</h2>
+      <div class="scroll">
+        <table class="t">
+          <thead><tr><th>Route</th><th>Returns</th><th>Auth</th><th>Note</th></tr></thead>
+          <tbody>
+            <tr><td class="name">GET /</td><td>the console page</td><td>tailnet</td><td>one HTML file; it then calls the two routes below</td></tr>
+            <tr><td class="name">GET /api/adapters</td><td><code>[{ id, kind, status, verbs:[{ name, schema }] }]</code></td><td>tailnet</td><td>the whole UI is rendered from this; status is the last cached <code>status()</code></td></tr>
+            <tr><td class="name">GET /api/events</td><td>SSE · every adapter's events, tagged</td><td>tailnet</td><td><code>id:</code> is monotonic; <code>Last-Event-ID</code> replays the last 500 from memory</td></tr>
+            <tr><td class="name">POST /api/:adapter/:verb</td><td><code>{ run_id, result }</code> or <code>{ run_id, stream: true }</code></td><td>tailnet</td><td>body validated against the verb schema; a streaming verb (<code>ask</code>) answers on the SSE stream under its <code>run_id</code></td></tr>
+            <tr><td class="name">GET /api/log?src=&amp;since=</td><td>joined work log rows</td><td>tailnet</td><td>console runs ∪ studio-local calls, newest first</td></tr>
+            <tr><td class="name">GET /api/results/:run_id</td><td>the stored result of a run</td><td>tailnet</td><td>what <code>fromResultOf()</code> resolves to; files come back as path references under <code>/srv/studio/results/</code></td></tr>
+            <tr><td class="name">GET /screens/bench · /screens/night</td><td>read-only pages with Grafana panels embedded</td><td>tailnet or direct LAN</td><td>no verbs rendered; a kiosk never has a button</td></tr>
+            <tr><td class="name">GET /healthz</td><td><code>200 ok</code> when the SSE hub and SQLite answer</td><td>none</td><td>what <code>kiosk.sh</code> curls every 30 s</td></tr>
+            <tr><td class="name">POST /hook/:adapter</td><td><code>204</code></td><td>per-adapter secret · HMAC or bearer</td><td>GitHub, Cloudflare, Alertmanager, studio-local job-done, ntfy actions; the adapter turns the body into events or a verb</td></tr>
+            <tr><td class="name">GET /metrics</td><td>Prometheus text</td><td>LAN</td><td>console's own counters</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow">Shape</p>
+      <h2>The adapter, the event, the run</h2>
+      <p class="lede">Three types carry the whole thing. The first is from <code>adapters/README.md</code>; the other two are what the service adds around it.</p>
+      <div class="two">
+        <div>
+          <h3>adapters/_template.ts</h3>
+<pre><b>export interface</b> Adapter {
+  id: <i>string</i>;                        <em>// "usb-light"</em>
+  kind: <i>"session" | "call" | "device" | "service" | "outbound"</i>;
+  status(): <i>Promise&lt;Status&gt;</i>;         <em>// cached; polled on an interval the adapter sets</em>
+  events(): <i>AsyncIterable&lt;Event&gt;</i>;    <em>// long-lived; the hub re-subscribes on throw</em>
+  verbs: <i>Verb[]</i>;
+}
+<b>export interface</b> Verb {
+  name: <i>string</i>;
+  schema: <i>JSONSchema</i>;                 <em>// renders the form, validates the POST</em>
+  stream?: <i>boolean</i>;                   <em>// true: result arrives as events under run_id</em>
+  run(input: <i>unknown</i>, ctx: <i>Ctx</i>): <i>Promise&lt;Result&gt;</i>;
+}
+<b>export interface</b> Status {
+  state: <i>"ok" | "warn" | "stop" | "idle"</i>;
+  summary: <i>string</i>;                    <em>// the chip</em>
+  fields: <i>Record&lt;string, string&gt;</i>;   <em>// the k/v grid on the card</em>
+  items?: <i>Item[]</i>;                     <em>// sessions, jobs: rows with their own verbs</em>
+}</pre>
+        </div>
+        <div>
+          <h3>the SSE envelope and the run row</h3>
+<pre><em>// one line per event on GET /api/events</em>
+<b>id:</b> 48113
+<b>event:</b> adapter
+<b>data:</b> { "adapter": "local-models", "ts": "2026-09-10T16:41:03Z",
+        "level": "info", "text": "console · ask · gpt-oss-120b · 1.2k → 210 · 6.4s",
+        "run_id": "run_41b", "source": "console" }
+
+<em>// a streaming verb answers in chunks under its run_id</em>
+<b>event:</b> chunk
+<b>data:</b> { "run_id": "run_41b", "delta": "Start with tools/spec-check.py, " }
+
+<em>-- console.sqlite</em>
+<b>CREATE TABLE</b> runs (
+  run_id     TEXT PRIMARY KEY,
+  ts         TEXT NOT NULL,
+  adapter    TEXT NOT NULL,   verb TEXT NOT NULL,
+  input      TEXT NOT NULL,   <em>-- JSON, after fromResultOf() was resolved</em>
+  parent_run TEXT,            <em>-- the run whose result fed this one: the chain</em>
+  status     TEXT NOT NULL,   <em>-- queued | running | done | failed</em>
+  result     TEXT,            <em>-- JSON; files as path refs</em>
+  ms         INTEGER
+);
+<b>CREATE VIEW</b> work_log <b>AS</b>            <em>-- what the panel shows</em>
+  SELECT ts, 'console' src, adapter||'.'||verb what, NULL backend, NULL tok_in, NULL tok_out, ms FROM runs
+  UNION ALL
+  SELECT ts, source, tool, backend, tokens_in, tokens_out, latency_ms FROM local.calls;</pre>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow">Sequence</p>
+      <h2>A handoff, from your seat</h2>
+      <p class="lede">The chain in the work log panel, step by step. Nothing here is a bus; it is one verb whose input names another verb's result, run by you.</p>
+      <ol class="steps">
+        <li><div><b>You click <code>ask</code> on the local-models card</b> and type the question. The browser POSTs to <code>/api/local-models/ask</code>; the verb runner validates against the schema and writes <code>runs</code> row <code>run_9f3</code>.
+          <span class="m">POST /api/local-models/ask { model:"auto", text:"…", turns:6 }</span></div></li>
+        <li><div><b>The adapter calls the door.</b> One request to <code>studio-local</code>'s <code>/v1/chat/completions</code> with <code>source: console</code>, streaming. Chunks come back as <code>chunk</code> events under <code>run_9f3</code>; the card appends them. The door logs the call to its own <code>calls</code> table.
+          <span class="m">studio-local picks the backend: desktop if idle, else PW-1x · logged · metered · light on</span></div></li>
+        <li><div><b>The result is stored</b> as <code>runs.result</code>, a path under <code>/srv/studio/results/run_9f3/brief.md</code>. The card's "hand result to…" button now offers every adapter with a verb that takes <code>files</code>.
+          <span class="m">GET /api/results/run_9f3 → { files:["…/brief.md"] }</span></div></li>
+        <li><div><b>You click <code>create</code> on claude-code-remote</b> and pick "files: from local-models #9f3". The form fills <code>files: fromResultOf("run_9f3")</code>. The verb runner resolves it to the path list, sets <code>parent_run = run_9f3</code>, and the adapter calls the Remote API's create with the prompt and files.
+          <span class="m">POST /api/claude-code-remote/create { prompt:"…", files: fromResultOf("run_9f3") } → session_digest</span></div></li>
+        <li><div><b>The session streams back</b> through the adapter's <code>events()</code>, which polls the Remote API's events for every live session and tags each line with its session id. It shows on the card and in the log. If the session itself calls <code>studio-local</code> over MCP mid-task, that lands in the same <code>work_log</code> view as <code>source = claude</code>; a bonus, not the mechanism.</div></li>
+        <li><div><b>Overnight, the same shape without you.</b> A <code>schedule</code> verb arms a routine; <code>batch_job</code> returns at once; when it finishes, <code>studio-local</code> POSTs to <code>/hook/local-models</code>, the adapter emits a <code>done</code> event, and the routine's <code>watch</code> fires <code>claude-code-remote.send</code> to wake the session. <code>parent_run</code> still links the chain.
+          <span class="m">POST /hook/local-models { job_id:"job_7c2", status:"done" } · secret checked · → send(session_falsework, "job_7c2 is done")</span></div></li>
+      </ol>
+      <div class="callout">
+        <p><b>Why the UI can stay dumb.</b> The page never special-cases an adapter. It renders <code>status.fields</code> as a grid, <code>status.items</code> as rows with their own verb buttons, <code>events</code> as a tail, and each <code>verb.schema</code> as a form. A schema property named <code>files</code> gets the "from another adapter's result" picker; a property with <code>enum</code> gets a select; a <code>stream: true</code> verb renders its chunks inline. That is the entire rendering vocabulary, and it is why the Claude card and the printer card are the same component.</p>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow">Layout on disk</p>
+      <h2>console/</h2>
+      <div class="two">
+        <div>
+<pre>console/
+  README.md
+  package.json            <em>node 22 · tsx · better-sqlite3 · ajv · fastify</em>
+  src/
+    server.ts             <em>routes · static · healthz · metrics</em>
+    sse.ts                <em>hub · ring buffer · Last-Event-ID replay</em>
+    runner.ts             <em>validate · fromResultOf · runs table</em>
+    log.ts                <em>console.sqlite · ATTACH work_log.sqlite</em>
+    registry.ts           <em>loads adapters/index.ts · polls status()</em>
+  adapters/
+    README.md
+    _template.ts
+    index.ts              <em>export default [ccr, local, pw1x, p2s, light, github, cf, phone]</em>
+    claude-code-remote.ts
+    local-models.ts
+    pw1x.ts  p2s.ts  usb-light.ts
+    github.ts  cloudflare.ts  phone.ts
+  web/
+    index.html            <em>the console · one file</em>
+    screens.html          <em>bench + night · same file, ?screen=</em>
+    console.js            <em>render(adapters) · subscribe(events) · form(schema)</em>
+    console.css
+  test/
+    adapter-shape.test.ts <em>every adapter satisfies Adapter · every schema compiles</em>
+    runner.test.ts        <em>fromResultOf resolves · parent_run links</em></pre>
+        </div>
+        <div>
+          <h3>Build order</h3>
+          <ol class="steps">
+            <li><div><b>Skeleton on the desktop.</b> Server, SSE hub, runner, one fake adapter with a <code>tick</code> verb. Page renders one card from the shape. Nothing from PW-1x.</div></li>
+            <li><div><b><code>claude-code-remote</code>.</b> Sessions list, create and send, events polling. Testable today against the Remote API with your key in the sops file.</div></li>
+            <li><div><b><code>local-models</code> against Ollama.</b> The <code>ask</code> verb streams; the work log view joins <code>studio-local</code>'s table. This is the A0 baseline with an interface on it.</div></li>
+            <li><div><b>First handoff.</b> <code>fromResultOf()</code> end to end: ask → create. The chain shows in the panel.</div></li>
+            <li><div><b>A5, on PW-1x.</b> <code>pw1x</code> from Prometheus, <code>usb-light</code> from Alertmanager, the screen routes, <code>kiosk.sh</code>. Then <code>p2s</code>, <code>github</code>, <code>cloudflare</code>, <code>phone</code> as their afternoons come.</div></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="eyebrow">Decisions in the mockup</p>
+      <h2>Reversible, but named</h2>
+      <div class="scroll">
+        <table class="t">
+          <thead><tr><th>Choice</th><th>Why</th><th>The alternative</th></tr></thead>
+          <tbody>
+            <tr><td class="name">one SSE stream, not one per card</td><td>One connection per browser; the page filters by <code>adapter</code>. Reconnect replays from one ring buffer.</td><td>A stream per adapter. Simpler server, eight connections per tab, eight reconnects.</td></tr>
+            <tr><td class="name">schema-rendered forms</td><td>A verb is a schema and a function. The form, the validation and the docs are one artefact.</td><td>Hand-written forms per verb. Nicer for two verbs, a drift bill by the twentieth.</td></tr>
+            <tr><td class="name">results as path references</td><td>Files stay on PW-1x under <code>/srv/studio/results/</code>; a handoff passes paths, so a 40-file brief costs nothing to hand on.</td><td>Inline results in SQLite. Fine for text, wrong for files.</td></tr>
+            <tr><td class="name">Tailscale identity is the login</td><td>No user table, no password page. The phone and the screens are on the tailnet already.</td><td>Cloudflare Access in front of everything. Needed only for the second-location screen off the tailnet, so it stays a per-route choice.</td></tr>
+            <tr><td class="name">dark-first, amber</td><td>It is a control room; the screens are on all night. The Systems Map's tokens, roles swapped, so the docs and the tool read as one family.</td><td>Light-first like the documents. Correct for reading, wrong at 02:00.</td></tr>
+            <tr><td class="name">the console has its own <code>/metrics</code></td><td>Its health lands on Screen A next to the model's, so "the console is down" is visible where you'd look.</td><td>Trust <code>/healthz</code> alone. Enough for the kiosks, blind for you.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note" style="margin-top:14px">None of this edits the Systems Map or the READMEs. It draws what they already say and names the few choices they left to the first code. When a choice here is confirmed it belongs in <code>console/README.md</code>, not here.</p>
+    </section>
+
+  </div>
+
+  <footer>Draws on console/README.md, console/adapters/README.md, mcp/README.md and the Systems Map (Sep 2026) · Data on the Console tab is example data as at A5 · Dashed = reserved hook</footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  const $ = (s, r) => (r || document).querySelector(s);
+  const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- tabs ---------- */
+  const tabs = $$('.tab');
+  function showTab(id) {
+    tabs.forEach(t => { const on = t.id === id; t.setAttribute('aria-selected', on); $('#' + t.getAttribute('aria-controls')).hidden = !on; });
+    try { localStorage.setItem('sg-console-tab', id); } catch (e) {}
+  }
+  tabs.forEach(t => t.addEventListener('click', () => showTab(t.id)));
+  try { const s = localStorage.getItem('sg-console-tab'); if (s && $('#' + s)) showTab(s); } catch (e) {}
+
+  /* ---------- toast ---------- */
+  let toastT;
+  function toast(msg) { const el = $('#toast'); el.textContent = msg; el.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('on'), 2600); }
+
+  /* ---------- clock ---------- */
+  const pad = n => String(n).padStart(2, '0');
+  function now() { const d = new Date(); return pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()); }
+  function hm() { return now().slice(0, 8); }
+  const clock = $('#sb-clock'); clock.textContent = now(); setInterval(() => clock.textContent = now(), 1000);
+
+  /* ---------- verb schemas: what /api/adapters would ship ---------- */
+  const resultSources = ['local-models #9f3 · brief-2026-09-10.md', 'claude-code-remote · session_likes · likes-triage.md', 'local-models · job_7c2 (running)', 'none · type or drop files'];
+  const schemas = {
+    'claude-code-remote': {
+      create:    { prompt: { type: 'text', label: 'prompt', value: 'Rewrite the intro of the digest from the attached brief. Keep the voice.' }, files: { type: 'files', label: 'files' }, title: { type: 'string', label: 'title', value: 'Sheepcliff digest · intro' }, tags: { type: 'string', label: 'tags', value: 'writing' } },
+      send:      { session: { type: 'enum', label: 'session', options: ['session_falsework', 'session_digest', 'session_likes'] }, text: { type: 'text', label: 'text', value: '' }, files: { type: 'files', label: 'files' } },
+      interrupt: { session: { type: 'enum', label: 'session', options: ['session_falsework', 'session_digest'] } },
+      title:     { session: { type: 'enum', label: 'session', options: ['session_falsework', 'session_digest', 'session_likes'] }, title: { type: 'string', label: 'title', value: '' } },
+      tag:       { session: { type: 'enum', label: 'session', options: ['session_falsework', 'session_digest', 'session_likes'] }, tags: { type: 'string', label: 'tags', value: 'ci' } },
+      schedule:  { session: { type: 'enum', label: 'session', options: ['session_falsework', 'session_digest', 'session_likes', 'new session'] }, cron: { type: 'string', label: 'cron (UTC)', value: '0 2 * * *' }, prompt: { type: 'text', label: 'prompt', value: 'Read the overnight batch result and summarise what changed.' } },
+      watch:     { session: { type: 'enum', label: 'session', options: ['session_falsework', 'session_digest', 'session_likes'] }, on: { type: 'enum', label: 'wake on', options: ['local-models job done', 'github push', 'p2s print done'] } }
+    },
+    'local-models': {
+      ask:     { model: { type: 'enum', label: 'model', options: ['auto · door picks', 'gpt-oss-120b · pw-1x', 'gpt-oss-20b · desktop', 'scout · pw-1x'] }, text: { type: 'text', label: 'text', value: '' }, turns: { type: 'string', label: 'turns', value: '6' } },
+      batch:   { tool: { type: 'enum', label: 'tool', options: ['summarize', 'classify', 'extract', 'read_and_brief'] }, paths: { type: 'files', label: 'paths' }, wake: { type: 'enum', label: 'wake', options: ['session_falsework', 'session_digest', 'none'] } },
+      handoff: { result: { type: 'enum', label: 'result', options: ['run_9f3 · brief-2026-09-10.md', 'run_41b · ask reply'] }, to: { type: 'enum', label: 'to', options: ['claude-code-remote.create', 'claude-code-remote.send', 'phone.notify', 'local-models.batch'] } }
+    },
+    'pw1x':      { 'restart-llama': { confirm: { type: 'enum', label: 'confirm', options: ['no', 'yes, drop 2 in-flight requests'] } } },
+    'p2s':       { pause: { reason: { type: 'string', label: 'note', value: '' } }, resume: {} },
+    'usb-light': { on: {}, off: {}, auto: {} },
+    'github':    { 'open-pr': { repo: { type: 'enum', label: 'repo', options: ['Falsework', 'Studio-G', 'sheepcliff-digest'] }, head: { type: 'string', label: 'head', value: 'sheepcliff/ci-checker' }, title: { type: 'string', label: 'title', value: 'Run the checker in CI' } } },
+    'cloudflare':{ redeploy: { project: { type: 'enum', label: 'project', options: ['sheepcliff-digest', 'pw1x-down'] } } },
+    'phone':     { notify: { level: { type: 'enum', label: 'level', options: ['info', 'warn', 'stop'] }, text: { type: 'string', label: 'text', value: '' }, actions: { type: 'enum', label: 'actions', options: ['none', 'send to local summarize', 'open in Claude Code', 'p2s.pause'] } } }
+  };
+  const formIds = { 'claude-code-remote': 'vf-ccr', 'local-models': 'vf-local', 'pw1x': 'vf-pw1x', 'p2s': 'vf-p2s', 'usb-light': 'vf-light', 'github': 'vf-github', 'cloudflare': 'vf-cf', 'phone': 'vf-phone' };
+
+  /* render a form from a schema: the whole rendering vocabulary is here */
+  function renderForm(adapter, verb, preset) {
+    const form = $('#' + formIds[adapter]); if (!form) return;
+    const schema = (schemas[adapter] || {})[verb] || {};
+    form.innerHTML = '';
+    form.dataset.verb = verb;
+    const head = document.createElement('div'); head.className = 'row';
+    head.innerHTML = '<label>verb</label><span class="mono" style="font-size:12px"><b>' + adapter + '.' + verb + '</b> <span style="color:var(--muted)">· POST /api/' + adapter + '/' + verb + '</span></span>';
+    form.appendChild(head);
+    Object.entries(schema).forEach(([key, p], i) => {
+      const row = document.createElement('div'); row.className = 'row';
+      const id = 'f-' + adapter + '-' + verb + '-' + key;
+      const lab = document.createElement('label'); lab.htmlFor = id; lab.textContent = p.label || key; row.appendChild(lab);
+      let ctl;
+      if (p.type === 'text') { ctl = document.createElement('textarea'); ctl.value = p.value || ''; }
+      else if (p.type === 'enum' || p.type === 'files') {
+        ctl = document.createElement('select');
+        (p.type === 'files' ? resultSources : p.options).forEach(o => { const op = document.createElement('option'); op.textContent = (p.type === 'files' ? 'from result of · ' : '') + o; ctl.appendChild(op); });
+        if (p.type === 'files') ctl.className = 'from';
+      } else { ctl = document.createElement('input'); ctl.type = 'text'; ctl.value = p.value || ''; }
+      ctl.id = id; ctl.name = key;
+      if (preset && preset[key] != null) ctl.value = preset[key];
+      row.appendChild(ctl); form.appendChild(row);
+    });
+    const act = document.createElement('div'); act.className = 'act';
+    act.innerHTML = '<button type="button" class="b" data-cancel>cancel</button><button type="submit" class="b primary">run ' + verb + '</button>';
+    form.appendChild(act);
+    form.hidden = false;
+    $('[data-cancel]', form).addEventListener('click', () => { form.hidden = true; });
+    const first = $('textarea, input, select', form); if (first) first.focus();
+  }
+
+  /* ---------- events + work log ---------- */
+  let seq = 48113;
+  function addEvent(cardId, text, level) {
+    const box = $('#ev-' + cardId); if (!box) return;
+    const ev = document.createElement('div'); ev.className = 'ev' + (level ? ' ' + level : '');
+    ev.innerHTML = '<span class="t">' + hm() + '</span><span class="m">' + text + '</span>';
+    box.insertBefore(ev, box.firstChild);
+    while (box.children.length > 8) box.removeChild(box.lastChild);
+    seq++;
+  }
+  function addLog(src, what, backend, tok, ms) {
+    const tb = $('#log-rows');
+    const tr = document.createElement('tr'); tr.dataset.src = src; tr.className = reduced ? '' : 'new';
+    tr.innerHTML = '<td class="num">' + hm() + '</td><td><span class="src">' + src + '</span></td><td>' + what + '</td><td>' + backend + '</td><td class="r num">' + tok + '</td><td class="r num">' + ms + '</td>';
+    tb.insertBefore(tr, tb.firstChild);
+    applyFilter();
+  }
+  let filter = '';
+  function applyFilter() { $$('#log-rows tr').forEach(tr => { tr.hidden = !!filter && tr.dataset.src !== filter; }); }
+  $$('.filters button').forEach(b => b.addEventListener('click', () => { filter = b.dataset.src; $$('.filters button').forEach(x => x.setAttribute('aria-pressed', x === b)); applyFilter(); }));
+
+  /* ---------- verb buttons ---------- */
+  $$('[data-verb]').forEach(btn => btn.addEventListener('click', () => {
+    const card = btn.closest('.card'); const adapter = card.dataset.adapter; const verb = btn.dataset.verb;
+    const schema = (schemas[adapter] || {})[verb] || {};
+    if (Object.keys(schema).length === 0) { runVerb(adapter, verb, {}); return; }
+    const preset = {}; if (btn.dataset.target) preset.session = btn.dataset.target;
+    renderForm(adapter, verb, preset);
+  }));
+  $$('.vform').forEach(form => form.addEventListener('submit', e => {
+    e.preventDefault();
+    const adapter = form.closest('.card').dataset.adapter; const verb = form.dataset.verb;
+    const input = {}; $$('input, select, textarea', form).forEach(c => input[c.name] = c.value);
+    form.hidden = true; runVerb(adapter, verb, input);
+  }));
+
+  function runVerb(adapter, verb, input) {
+    const runId = 'run_' + (Math.random().toString(16).slice(2, 5));
+    const card = { 'claude-code-remote': 'ccr', 'local-models': 'local', 'pw1x': 'pw1x', 'p2s': 'p2s', 'usb-light': 'light', 'github': 'github', 'cloudflare': 'cf', 'phone': 'phone' }[adapter];
+    const ms = 60 + Math.round(Math.random() * 400);
+    if (adapter === 'local-models' && verb === 'ask') { streamAsk(input.text, input.model); return; }
+    if (adapter === 'local-models' && verb === 'handoff') {
+      const [to, tverb] = input.to.split('.'); const preset = { files: 'from result of · ' + resultSources[0] };
+      showTab('tab-console'); renderForm(to, tverb, preset); $('#' + formIds[to]).scrollIntoView({ block: 'nearest', behavior: reduced ? 'auto' : 'smooth' });
+      toast('Handing ' + input.result.split(' · ')[0] + ' to ' + input.to + ' — review and run'); return;
+    }
+    if (adapter === 'usb-light') { $('#light-chip').textContent = verb === 'auto' ? 'on · auto' : verb + ' · manual'; $('#sb-light').textContent = verb === 'auto' ? 'on' : verb; }
+    if (adapter === 'p2s') { $('[data-verb=pause]').disabled = verb === 'pause'; $('[data-verb=resume]').disabled = verb !== 'pause'; $('#c-p2s .chip').textContent = verb === 'pause' ? 'paused' : 'printing'; $('#c-p2s .chip').className = 'chip ' + (verb === 'pause' ? 'idle' : 'warn'); }
+    const detail = input.session ? input.session + ' · ' : (input.project || input.repo ? (input.project || input.repo) + ' · ' : '');
+    addEvent(card, verb + ' · ' + detail + runId + (verb === 'create' ? ' · from <span class="src">' + (input.files || '').replace('from result of · ', '') + '</span>' : ''), verb === 'interrupt' || verb === 'restart-llama' ? 'stop' : 'ok');
+    addLog('console', adapter.replace('claude-code-remote', 'ccr') + '.' + verb + (input.files ? ' ← ' + input.files.replace('from result of · ', '').split(' ')[0] : ''), '—', '—', ms);
+    if (verb === 'create') {
+      const li = document.createElement('li'); li.className = 'now';
+      li.innerHTML = '<span><span class="who">claude-code-remote</span>.<span class="verb">create</span>({ files: fromResultOf("' + (input.files || '').replace('from result of · ', '').split(' ')[0] + '") }) → ' + runId + ' · queued</span>';
+      $$('#chain li').forEach(l => l.className = l.className.replace('now', 'done')); $('#chain').appendChild(li);
+    }
+    toast('Ran ' + adapter + '.' + verb + ' · ' + runId + ' · ' + ms + ' ms');
+  }
+
+  /* ---------- ask: streams into the card ---------- */
+  const reply = 'Start with tools/spec-check.py: it is the only code, and its docstring says what the three documents promise each other. Then docs/README.md, which explains why the HTML in docs/ is a mirror and not the source. Third, .github/workflows/spec-check.yml, so they can see the checker is the gate and not a suggestion. Everything else in tools/ is empty on purpose.';
+  let streaming = false;
+  function streamAsk(text, model) {
+    if (streaming) return; streaming = true;
+    const box = $('#ev-local'); const q = text || $('#ask-text').value; const m = (model || $('#ask-model').value).split(' ·')[0];
+    const backend = /20b/.test(m) ? 'desktop' : 'pw-1x';
+    const runId = 'run_' + Math.random().toString(16).slice(2, 5);
+    addEvent('local', '<span class="src">console</span> · ask · ' + m + ' · ' + runId + ' · "' + q.slice(0, 48) + (q.length > 48 ? '…' : '') + '"');
+    const out = document.createElement('div'); out.className = 'stream'; box.insertBefore(out, box.children[1]);
+    bumpActive(1);
+    const words = reply.split(' '); let i = 0; const t0 = Date.now();
+    const tick = () => {
+      out.textContent += (i ? ' ' : '') + words[i++];
+      if (i < words.length) setTimeout(tick, reduced ? 0 : 38 + Math.random() * 50);
+      else { const ms = Date.now() - t0; bumpActive(-1); streaming = false; addLog('console', 'ask', backend, '1.1k→' + (words.length + 12), reduced ? 6400 : ms); addEvent('local', '<span class="src">console</span> · ask · ' + m + ' · 1.1k → ' + (words.length + 12) + ' · ' + (ms / 1000).toFixed(1) + 's · ' + runId + ' · done', 'ok'); }
+    };
+    tick();
+  }
+  $('#ask-go').addEventListener('click', () => streamAsk());
+  $('#ask-text').addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); streamAsk(); } });
+
+  /* ---------- simulated status: the SSE tail ticking ---------- */
+  let active = 2;
+  function bumpActive(d) {
+    active = Math.max(0, active + d);
+    $('#sb-active').textContent = active; $('#sb-active-bar').style.width = Math.min(100, active * 16.6) + '%';
+    const on = active > 0; $('#sb-light').textContent = on ? 'on' : 'off';
+    const chip = $('#light-chip'); if (/auto/.test(chip.textContent)) chip.textContent = (on ? 'on' : 'off') + ' · auto';
+  }
+  const ticks = [
+    () => addEvent('ccr', 'session_falsework · tool: Read · tools/spec-check.py'),
+    () => { addEvent('local', '<span class="src">claude</span> · job_7c2 · ' + (19 + Math.floor(Math.random() * 3)) + '/41 summarised'); },
+    () => addEvent('pw1x', 'scrape · cpu ' + (58 + Math.floor(Math.random() * 8)) + '% · pkg ' + (57 + Math.floor(Math.random() * 3)) + '°C'),
+    () => addEvent('p2s', 'layer ' + (213 + Math.floor(Math.random() * 3)) + ' / 338 · chamber 38'),
+    () => addEvent('ccr', 'session_digest · reading brief-2026-09-10.md'),
+    () => { addEvent('local', '<span class="src">claude</span> · classify ×8 · gpt-oss-20b (desktop) · 2.3k → 0.1k · 2.1s'); addLog('claude', 'classify ×8', 'desktop', '2.3k→0.1k', 2100); },
+    () => addEvent('github', 'check_run · Falsework · pytest · in_progress'),
+    () => addEvent('ccr', 'session_falsework · tool: Bash · git status')
+  ];
+  let ti = 0;
+  function loop() { ticks[ti++ % ticks.length](); $('#sb-cpu').textContent = (58 + Math.floor(Math.random() * 8)) + '%'; setTimeout(loop, reduced ? 8000 : 3500 + Math.random() * 2500); }
+  setTimeout(loop, 2500);
+})();
+</script>
