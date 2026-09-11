@@ -14,7 +14,7 @@ PW-1x ("Projectile William v1") is a dual-role box — a local LLM server and a 
 
 | Directory | What lands here | When |
 |---|---|---|
-| `docs/` | The PW-1x Handoff, Build Sheet and Systems Map as version-controlled source, plus the plan | Now — mirrored from the canonical artifacts |
+| `docs/` | The PW-1x Handoff, Build Sheet, Systems Map and Assembly Guide as version-controlled source, plus the plan | Now — mirrored from the canonical artifacts |
 | `tools/` | `spec-check.py` — the mechanical checker CI runs over `docs/` | Now |
 | `mcp/` | `studio-local` — the one door to local models: MCP for Claude, `/v1` for everything else | Now, against Ollama on the desktop; PW-1x attaches at A5 |
 | `console/` | Your single interface; `adapters/` one file per connected thing | Now, skeleton + the Claude Code Remote and local-models adapters |
@@ -29,6 +29,7 @@ PW-1x ("Projectile William v1") is a dual-role box — a local LLM server and a 
 - **PW-1x Handoff** — three layers: non-technical summary, full technical spec, machine-readable state.
 - **PW-1x Build Sheet** — the same build, narrower and more opinionated.
 - **Studio-G Systems Map** — physical topology, how a task moves, where things live. Three figures on one grid.
+- **PW-1x Assembly Guide** — inventory checklist and the twelve-step open-bench build, CPU-only, written for a first server build.
 
 The artifacts on claude.ai are canonical. `docs/` mirrors all three so the checker can run in CI.
 
@@ -38,7 +39,7 @@ The artifacts on claude.ai are canonical. `docs/` mirrors all three so the check
 python3 tools/spec-check.py
 ```
 
-Six checks: arithmetic, cross-document consistency, stale strings, structural validity, the Systems Map's orthogonal edges and superseded-design words, and physics-vs-method. Exits non-zero on any failure. CI runs it on every push that touches `docs/`.
+Six checks over four documents: arithmetic, cross-document consistency (Handoff against Build Sheet, Assembly Guide against Build Sheet), stale strings (including GPU-build language in the guide), structural validity, the Systems Map's orthogonal edges and superseded-design words, and physics-vs-method. Exits non-zero on any failure. CI runs it on every push that touches `docs/`.
 
 ## Status
 

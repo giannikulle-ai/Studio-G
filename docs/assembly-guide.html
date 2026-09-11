@@ -1,0 +1,612 @@
+<title>PW-1x Assembly Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+  :root {
+    --bg: #F5F7F9; --surface: #FFFFFF; --surface-2: #EDF0F3;
+    --ink: #15181C; --ink-2: #3B434D; --muted: #5E6875;
+    --rule: #D8DDE3; --rule-soft: #E6EAEF;
+    --accent: #A8650F; --accent-bg: #FBF1E1;
+    --ok: #2C6E4C; --ok-bg: #E4F0E9;
+    --warn: #9A5B12; --warn-bg: #F8EEDD;
+    --stop: #9C4438; --stop-bg: #F7E7E4;
+    --shadow: 0 1px 2px rgba(20,28,38,.06), 0 8px 24px -16px rgba(20,28,38,.30);
+    --sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121519; --surface: #1A1E23; --surface-2: #21262C;
+      --ink: #E7EAEE; --ink-2: #BAC2CC; --muted: #8B95A2;
+      --rule: #2B3239; --rule-soft: #232930;
+      --accent: #E0A04A; --accent-bg: #2A2015;
+      --ok: #6BBA8D; --ok-bg: #17281F; --warn: #DCA054; --warn-bg: #2A2115;
+      --stop: #DE8375; --stop-bg: #2C1B18;
+      --shadow: 0 1px 2px rgba(0,0,0,.40), 0 10px 30px -18px rgba(0,0,0,.80);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121519; --surface: #1A1E23; --surface-2: #21262C;
+    --ink: #E7EAEE; --ink-2: #BAC2CC; --muted: #8B95A2;
+    --rule: #2B3239; --rule-soft: #232930;
+    --accent: #E0A04A; --accent-bg: #2A2015;
+    --ok: #6BBA8D; --ok-bg: #17281F; --warn: #DCA054; --warn-bg: #2A2115;
+    --stop: #DE8375; --stop-bg: #2C1B18;
+    --shadow: 0 1px 2px rgba(0,0,0,.40), 0 10px 30px -18px rgba(0,0,0,.80);
+  }
+
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding-inline: 24px; padding-block: 40px 96px; }
+  @media (max-width: 480px) { .wrap { padding-inline: 16px; } }
+
+  .mast { display: flex; flex-direction: column; gap: 14px; padding-bottom: 26px; border-bottom: 2px solid var(--ink); }
+  .mast h1 { margin: 0; font-size: clamp(30px, 5.2vw, 44px); line-height: 1.08; letter-spacing: -0.022em; font-weight: 600; text-wrap: balance; }
+  .mast .sub { margin: 0; max-width: 66ch; color: var(--ink-2); font-size: 16.5px; }
+  .stamp { font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  .stamp b { color: var(--accent); font-weight: 600; }
+
+  section { margin-top: 56px; }
+  .eyebrow { font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; color: var(--accent); margin: 0 0 10px; }
+  h2 { margin: 0 0 8px; font-size: 25px; font-weight: 600; letter-spacing: -0.016em; line-height: 1.2; text-wrap: balance; }
+  h3 { margin: 28px 0 8px; font-size: 16px; font-weight: 600; }
+  p { max-width: 68ch; }
+  .lede { margin: 0 0 22px; max-width: 70ch; color: var(--ink-2); }
+  strong { color: var(--ink); font-weight: 600; }
+  code { font-family: var(--mono); font-size: .89em; background: var(--surface-2); padding: 1.5px 5px; border-radius: 3px; color: var(--ink); }
+  .note { font-size: 13.5px; color: var(--muted); max-width: 70ch; margin-top: 12px; }
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+  /* progress */
+  .progress { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 22px; margin: 0 0 18px; font-family: var(--mono); font-size: 12px; letter-spacing: .05em; color: var(--muted); }
+  .progress b { font-size: 22px; font-weight: 600; color: var(--ink); letter-spacing: 0; font-variant-numeric: tabular-nums; }
+  .progress .bar { flex: 1 1 160px; height: 4px; background: var(--rule-soft); border-radius: 2px; overflow: hidden; }
+  .progress .bar i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .2s; }
+  .progress .sync { color: var(--muted); }
+
+  /* tables */
+  .scroll { overflow-x: auto; margin: 0 -4px; padding: 0 4px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; min-width: 640px; }
+  thead th { text-align: left; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding: 0 14px 8px 0; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+  tbody td { padding: 11px 14px 11px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; color: var(--ink-2); }
+  tbody tr:last-child td { border-bottom: none; }
+  td:first-child, th:first-child { padding-left: 0; }
+  td.name { color: var(--ink); font-weight: 500; }
+  td.name small { display: block; font-family: var(--mono); font-size: 11px; color: var(--muted); font-weight: 400; margin-top: 2px; }
+  td.tick { width: 44px; padding-right: 8px; }
+  td.tick input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--accent); cursor: pointer; }
+  tr.done td { color: var(--muted); }
+  tr.done td.name { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--rule); }
+  .chip { display: inline-block; font-family: var(--mono); font-size: 10.5px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; white-space: nowrap; }
+  .chip.ok { color: var(--ok); background: var(--ok-bg); }
+  .chip.warn { color: var(--warn); background: var(--warn-bg); }
+  .chip.stop { color: var(--stop); background: var(--stop-bg); }
+  .chip.neutral { color: var(--ink-2); background: var(--surface-2); }
+
+  /* steps */
+  ol.steps { list-style: none; padding: 0; margin: 0; counter-reset: s -1; }
+  ol.steps > li { counter-increment: s; display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 0 18px; padding: 26px 0; border-bottom: 1px solid var(--rule-soft); margin: 0; }
+  ol.steps > li:last-child { border-bottom: none; }
+  ol.steps > li::before { content: counter(s, decimal-leading-zero); font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--accent); background: var(--accent-bg); width: 44px; height: 30px; display: grid; place-items: center; border-radius: 3px; margin-top: 2px; }
+  ol.steps h3 { margin: 4px 0 8px; font-size: 18px; }
+  ol.steps .body { grid-column: 2; min-width: 0; }
+  ol.steps .body p { margin: 0 0 12px; }
+  @media (max-width: 560px) {
+    ol.steps > li { grid-template-columns: minmax(0, 1fr); }
+    ol.steps > li::before { margin-bottom: 8px; }
+    ol.steps .body { grid-column: 1; }
+  }
+  .pair { display: grid; min-width: 0; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 12px; margin: 14px 0 6px; max-width: 78ch; }
+  .pair > div { background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 12px 14px; font-size: 14px; color: var(--ink-2); }
+  .pair > div b { display: block; font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 4px; }
+  .pair .look b { color: var(--ok); }
+  .pair .stop b { color: var(--stop); }
+  .pair p { margin: 0; max-width: none; }
+  aside.term { background: var(--surface-2); border-radius: 4px; padding: 10px 14px; font-size: 13.5px; color: var(--ink-2); max-width: 78ch; margin: 12px 0; }
+  aside.term b { color: var(--ink); font-weight: 600; }
+  aside.term b::after { content: " — "; color: var(--muted); font-weight: 400; }
+  ul.tight { margin: 0 0 12px; padding-left: 20px; max-width: 70ch; }
+  ul.tight li { margin: 4px 0; }
+  pre { font-family: var(--mono); font-size: 13px; background: var(--surface-2); border-radius: 4px; padding: 12px 14px; overflow-x: auto; max-width: 78ch; color: var(--ink); }
+
+  .callout { background: var(--surface); border: 1px solid var(--rule); border-left: 3px solid var(--accent); border-radius: 4px; padding: 18px 22px; box-shadow: var(--shadow); margin: 22px 0; max-width: 84ch; }
+  .callout h3 { margin-top: 0; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout.stop { border-left-color: var(--stop); }
+
+  footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--rule); font-family: var(--mono); font-size: 11.5px; letter-spacing: .04em; color: var(--muted); }
+  footer p { max-width: none; margin: 0 0 8px; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <div class="stamp">
+      <span>Assembly guide</span>
+      <span>Rev. <b>Sep 2026</b></span>
+      <span>Designation: <b>PW-1x</b></span>
+      <span>Build: <b>open bench · CPU-only</b></span>
+    </div>
+    <h1>PW-1x Assembly Guide</h1>
+    <p class="sub">Every part is bought. This is the order to put them together, what each step should look and feel like, and where to stop and check. Written for a first server build: nothing is assumed, every term is explained the first time it appears. The graphics card stays in the desktop; PW-1x runs on its processor alone until a card is bought.</p>
+  </header>
+
+  <!-- ============================ INVENTORY ============================ -->
+  <section id="inventory">
+    <p class="eyebrow">Part 1 · Inventory</p>
+    <h2>Do you actually have everything?</h2>
+    <p class="lede">Tick each row as you confirm it. The first table is what the Build Sheet says was bought or owned. The second is what the Build Sheet does not mention because it was never a purchase, and it is where builds usually stall on day one. The third is two decisions to make before the boxes are open.</p>
+
+    <div class="progress" aria-live="polite">
+      <span><b id="count-done">0</b> / <b id="count-all">0</b> confirmed</span>
+      <span class="bar"><i id="bar"></i></span>
+      <span class="sync" id="sync">saved on this device</span>
+    </div>
+
+    <h3>Bought or owned, per the Build Sheet</h3>
+    <div class="scroll">
+      <table>
+        <thead><tr><th></th><th>Part</th><th>What should be in the box</th><th>State</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="tick"><input type="checkbox" id="i-cpu" aria-label="Confirm EPYC 7452"></td>
+            <td class="name">AMD EPYC 7452<small>32 cores · socket SP3</small></td>
+            <td>The processor, still clipped into its orange or blue plastic <strong>carrier frame</strong>. Do not take it out of the carrier. Underside has thousands of flat gold pads, no pins. If it came loose with no frame, stop and read step 1 twice before touching it.</td>
+            <td><span class="chip ok">Have</span></td>
+          </tr>
+          <tr>
+            <td class="tick"><input type="checkbox" id="i-board" aria-label="Confirm ROMED8-2T"></td>
+            <td class="name">ASRock Rack ROMED8-2T<small>ATX · 8 DIMM · dual 10GbE · IPMI</small></td>
+            <td>The board, its printed manual, an I/O shield (the metal plate for a case; not needed on a bench), and a small bag with M.2 screws and standoffs. Keep the box: it is the work surface.</td>
+            <td><span class="chip ok">Have</span></td>
+          </tr>
+          <tr>
+            <td class="tick"><input type="checkbox" id="i-gdrive" aria-label="Confirm G-DRIVE"></td>
+            <td class="name">G-DRIVE mobile USB-C<small>0G10265 · 1TB HDD</small></td>
+            <td>Stays in its enclosure, plugged in over USB later. It is the model archive, not part of assembly. The board has no SATA ports, so it must never be shucked.</td>
+            <td><span class="chip ok">Have</span></td>
+          </tr>
+          <tr>
+            <td class="tick"><input type="checkbox" id="i-ram" aria-label="Confirm memory kit"></td>
+            <td class="name">A-Tech 128GB kit<small>8 × 16GB DDR4-3200 ECC RDIMM 2Rx8 · $1,315.69</small></td>
+            <td>Eight sticks, all with the same part number on the label. Count them. Photograph every label before they go in. This is the one part with a 30-day clock: the return window runs from delivery, and step 10 has to finish inside it.</td>
+            <td><span class="chip warn">Bought</span></td>
+          </tr>
+          <tr>
+            <td class="tick"><input type="checkbox" id="i-cooler" aria-label="Confirm cooler"></td>
+            <td class="name">ARCTIC Freezer 4U-M Rev. 2<small>ACFRE00133B · $57.92</small></td>
+            <td>The tower heatsink, two 120mm fans with clips, mounting hardware for several sockets (you want the SP3 / TR4 set), and a 0.8g syringe of MX-6 thermal paste. Check the box for the fan cable: ARCTIC ships either two leads or one lead with a splitter; note which.</td>
+            <td><span class="chip warn">Bought</span></td>
+          </tr>
+          <tr>
+            <td class="tick"><input type="checkbox" id="i-psu" aria-label="Confirm PSU"></td>
+            <td class="name">MSI MPG A850G PCIE5<small>850W · fully modular · $89.99</small></td>
+            <td>The supply, a bag of modular cables, and an AC power cord. The cables you need: one 24-pin motherboard cable and <strong>two</strong> CPU cables marked EPS or CPU, each ending in an 8-pin plug that splits into 4+4. Confirm the AC cord is in the box; it is the item most often missing.</td>
+            <td><span class="chip warn">Bought</span></td>
+          </tr>
+          <tr>
+            <td class="tick"><input type="checkbox" id="i-nvme" aria-label="Confirm NVMe"></td>
+            <td class="name">Kingston NV3 1TB<small>SNV3S/1000G · M.2 2280 · $156.99</small></td>
+            <td>A bare stick the size of a piece of gum, chips on one side only. No screw in the box; the board's bag has it.</td>
+            <td><span class="chip warn">Bought</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Not in the Build Sheet, needed to assemble</h3>
+    <p class="note">None of these were purchases, so nobody has checked they exist. Each is small; a missing one costs a day.</p>
+    <div class="scroll">
+      <table>
+        <thead><tr><th></th><th>Item</th><th>Why</th><th>State</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="tick"><input type="checkbox" id="n-t20" aria-label="Confirm T20 Torx driver"></td>
+            <td class="name">T20 Torx driver<small>star-shaped tip, size 20</small></td>
+            <td>The only tool that opens and closes the processor socket. AMD's specification is a torque driver set to 1.58 N·m; a plain T20 works because the socket screws stop turning when they are seated, and you stop when they stop. A Phillips will not fit and will strip the heads. Some cooler and board bundles include a T20 key; check before buying.</td>
+            <td><span class="chip stop">Confirm</span></td>
+          </tr>
+          <tr>
+            <td class="tick"><input type="checkbox" id="n-ph1" aria-label="Confirm PH1 Phillips"></td>
+            <td class="name">PH1 Phillips screwdriver<small>small cross-head</small></td>
+            <td>ARCTIC's manual lists it as the one tool the cooler needs. Also fits the M.2 screw.</td>
+            <td><span class="chip stop">Confirm</span></td>
+          </tr>
+          <tr>
+            <td class="tick"><input type="checkbox" id="n-monitor" aria-label="Confirm VGA monitor"></td>
+            <td class="name">A monitor with a VGA input<small>or a VGA-to-HDMI adapter</small></td>
+            <td>There is no graphics card in this build. The only video output is the blue 15-pin <strong>VGA</strong> port on the board's rear panel, driven by the management chip. A modern monitor may have no VGA input; then you need an active VGA-to-HDMI adapter, not a passive cable. Once the management page works (step 9) you can watch the screen from the desktop instead.</td>
+            <td><span class="chip stop">Confirm</span></td>
+          </tr>
+          <tr>
+            <td class="tick"><input type="checkbox" id="n-kbd" aria-label="Confirm USB keyboard"></td>
+            <td class="name">A USB keyboard<small>wired</small></td>
+            <td>To press Del at the first boot and to drive memtest. Wireless dongles usually work but wired removes a variable.</td>
+            <td><span class="chip stop">Confirm</span></td>
+          </tr>
+          <tr>
+            <td class="tick"><input type="checkbox" id="n-eth" aria-label="Confirm two Ethernet cables"></td>
+            <td class="name">Two Ethernet cables<small>any length that reaches the router</small></td>
+            <td>One for the board's dedicated management port, one for its first 10GbE port. The management port is how you power the machine on and off and read its temperatures from the desktop; it is worth the cable.</td>
+            <td><span class="chip stop">Confirm</span></td>
+          </tr>
+          <tr>
+            <td class="tick"><input type="checkbox" id="n-usb" aria-label="Confirm USB stick"></td>
+            <td class="name">A USB stick, 2GB or more<small>it will be erased</small></td>
+            <td>memtest86+ boots from it (step 10). A second stick of 4GB or more, or the same one re-written later, carries the operating-system installer.</td>
+            <td><span class="chip stop">Confirm</span></td>
+          </tr>
+          <tr>
+            <td class="tick"><input type="checkbox" id="n-power" aria-label="Confirm a way to press power"></td>
+            <td class="name">A way to press "power"<small>no case means no button</small></td>
+            <td>Three options, any one is enough: (a) power on from the management web page, which works once step 9 is done; (b) touch a screwdriver tip across the two power-button pins on the board's front-panel header for one second, the pinout is in the manual; (c) a power-switch pigtail, a $5 button on a lead that plugs onto those pins. Some ASRock Rack boards carry an onboard button; the manual's layout page says whether this one does.</td>
+            <td><span class="chip stop">Confirm</span></td>
+          </tr>
+          <tr>
+            <td class="tick"><input type="checkbox" id="n-surface" aria-label="Confirm work surface"></td>
+            <td class="name">A non-conductive surface<small>the board's own box</small></td>
+            <td>The board sits on its cardboard box, on a table, off carpet, away from pets. Not on the anti-static bag: its outside can conduct.</td>
+            <td><span class="chip stop">Confirm</span></td>
+          </tr>
+          <tr>
+            <td class="tick"><input type="checkbox" id="n-misc" aria-label="Confirm small things"></td>
+            <td class="name">Small things<small>flashlight · zip ties · a phone</small></td>
+            <td>A flashlight for reading tiny header labels; zip ties for the four PSU cables once they are routed; the phone to photograph every label and every connector before it is covered.</td>
+            <td><span class="chip stop">Confirm</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Decide before delivery</h3>
+    <div class="scroll">
+      <table>
+        <thead><tr><th></th><th>Decision</th><th>What it changes</th><th>State</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="tick"><input type="checkbox" id="d-nic" aria-label="Decide desktop NIC"></td>
+            <td class="name">Does the desktop have a 10GbE port?</td>
+            <td>The Systems Map draws a direct 10GbE cable between the desktop and PW-1x. If the desktop's Ethernet is 1GbE or 2.5GbE, the same cable still works, just slower: the link negotiates down. It is fine to start that way. A 10GbE card for the desktop is a later purchase, not a blocker.</td>
+            <td><span class="chip neutral">You decide</span></td>
+          </tr>
+          <tr>
+            <td class="tick"><input type="checkbox" id="d-bench" aria-label="Decide where the bench lives"></td>
+            <td class="name">Where the bench lives</td>
+            <td>Near the router (two cables), near a wall outlet, on a table that will not be bumped, with a hand's width of open air on every side of the board. The cooler is 16cm tall and the fans move air front to back; nothing should sit against either end.</td>
+            <td><span class="chip neutral">You decide</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============================ THE BUILD ============================ -->
+  <section id="build">
+    <p class="eyebrow">Part 2 · The build</p>
+    <h2>Twelve steps, in this order</h2>
+    <p class="lede">Each step says what you are doing, what it should look or feel like when it is right, and the one condition where you stop instead of pushing on. Steps 1 to 5 are the board on the bench with nothing plugged into the wall. Step 7 is the first time power is applied.</p>
+
+    <ol class="steps">
+
+      <li>
+        <div class="body">
+          <h3>Before opening anything</h3>
+          <p><strong>Open bench</strong> means the board lies flat on its box with the parts mounted on it and the power supply beside it, no case. Workshop servers run like this for years. What it costs you is that nothing pushes air across the board except the cooler's own fans; step 9 reads the temperatures that tell you whether that matters.</p>
+          <p><strong>Static.</strong> Before you touch any part, touch something metal that is plugged into the wall, such as the power supply's steel shell once its cord is in (with its switch off). Do that again whenever you have walked away and come back. Leave every part in its bag until the step that uses it.</p>
+          <p><strong>Find these on the real board</strong> with the manual's layout page open (it is near the front of the printed manual). You will need every one of them:</p>
+          <ul class="tight">
+            <li>The processor socket: a large square with a hinged metal frame and three screws.</li>
+            <li>The eight memory slots, four on each side of the socket, labelled A1 through H1.</li>
+            <li>The first M.2 slot, a short horizontal connector with a screw post along its length.</li>
+            <li><code>ATXPWR1</code>, the wide 24-pin power connector along one edge.</li>
+            <li><code>ATX12V1</code>, an 8-pin power connector, and <code>ATX12V2</code>, a 4-pin one. Both feed the processor. Both get plugged in.</li>
+            <li>The front-panel header: a block of small pins that a case's power button would plug into. Note which two are the power button.</li>
+            <li><code>CPU_FAN1</code>, the fan header nearest the socket.</li>
+            <li>On the rear panel: the VGA port, the USB ports, two 10GbE network ports labelled LAN1 and LAN2, and a third, separate network port for management, usually labelled IPMI or MGMT.</li>
+          </ul>
+          <aside class="term"><b>IPMI / BMC</b>the board has a small computer of its own, the baseboard management controller, that runs whenever the power supply is switched on, even with the machine "off". It serves a web page on the management port where you can power the machine on, watch the screen and read every temperature sensor. It is also what drives the VGA port.</aside>
+          <div class="pair">
+            <div class="look"><b>Looks right when</b><p>You can point to all eight items above on the board without the manual.</p></div>
+            <div class="stop"><b>Stop if</b><p>Any label in the manual does not match what is printed on the board. Boards have revisions; trust the print on the board.</p></div>
+          </div>
+        </div>
+      </li>
+
+      <li>
+        <div class="body">
+          <h3>Processor into the socket</h3>
+          <p>This is the one step where force in the wrong place does permanent damage, and it is also simple if you follow the order. The socket's metal frame is held by <strong>three T20 Torx screws, numbered 1, 2 and 3</strong> on the frame itself. <strong>Open them 3, 2, 1. Close them 1, 2, 3.</strong> The screws are captive: they loosen but do not come out.</p>
+          <ul class="tight">
+            <li>Loosen 3, then 2, then 1. Lift the outer <strong>force frame</strong> up on its hinge.</li>
+            <li>Under it is a thinner <strong>rail frame</strong>. Lift it up on its hinge too. Now the socket's gold contacts are exposed. Do not touch them and do not let anything fall on them.</li>
+            <li>Take the processor, still in its plastic carrier. There is a small triangle on one corner of the carrier and a matching triangle on the rail frame. Match them.</li>
+            <li>Slide the carrier into the rail frame's guides from the top until it clicks. It should sit flat in the rail frame with no effort; you are sliding plastic into plastic, not pushing the processor into anything.</li>
+            <li>Lower the rail frame. Lower the force frame over it.</li>
+            <li>Tighten 1, then 2, then 3. Each screw turns freely, then stops. That stop is the end of travel: the socket is designed so that seated is seated. If you have a torque driver, 1.58 N·m; if not, snug and stop.</li>
+          </ul>
+          <aside class="term"><b>carrier frame</b>the plastic surround the processor ships in. On this socket the processor is never handled bare; the carrier is what you hold, and it stays on the chip inside the socket.</aside>
+          <div class="pair">
+            <div class="look"><b>Feels right when</b><p>The carrier slid in with no resistance and clicked; all three screws turned freely and stopped at the same firmness.</p></div>
+            <div class="stop"><b>Stop if</b><p>A screw resists before it stops, or the frame will not sit flat. Open 3-2-1 and check the carrier is fully in its guides. Never push harder.</p></div>
+          </div>
+        </div>
+      </li>
+
+      <li>
+        <div class="body">
+          <h3>Memory, all eight sticks</h3>
+          <p>Every slot gets a stick, so there is no choice about which slots to use. The board is <strong>one DIMM per channel</strong>: eight channels, eight slots, and the bandwidth this whole machine is built around only exists with all eight filled.</p>
+          <ul class="tight">
+            <li>Open both latches on a slot by pushing them outward.</li>
+            <li>Look at the gold edge of the stick: the notch is off-centre. Turn the stick until the notch lines up with the ridge in the slot. It only fits one way.</li>
+            <li>Set the stick in the slot, then press straight down on both ends at once, evenly. The latches swing up and click closed on their own when the stick is seated. That click is the confirmation.</li>
+            <li>Repeat for all eight. Then run a finger along each latch: every one closed, every stick at the same height.</li>
+          </ul>
+          <aside class="term"><b>ECC RDIMM</b>server memory. ECC means it detects and corrects single-bit errors instead of silently corrupting data; registered (the R) means a buffer chip on each stick lets the board run eight of them at full speed. It is not interchangeable with desktop memory.</aside>
+          <div class="pair">
+            <div class="look"><b>Feels right when</b><p>Each stick took firm, even pressure and both latches closed by themselves.</p></div>
+            <div class="stop"><b>Stop if</b><p>A stick needs real force. It is turned the wrong way. Take it out and match the notch.</p></div>
+          </div>
+        </div>
+      </li>
+
+      <li>
+        <div class="body">
+          <h3>The SSD into the first M.2 slot</h3>
+          <p>The Kingston stick is 80mm long, size <strong>2280</strong>. The board's slot has screw holes at several lengths; the standoff (a small threaded post) goes in the hole at the 80mm mark, from the bag that came with the board.</p>
+          <ul class="tight">
+            <li>Screw the standoff into the 80mm hole finger-tight.</li>
+            <li>Hold the stick at about 20 degrees and push its gold edge into the slot until it stops. It will spring up at an angle; that is normal.</li>
+            <li>Press it flat against the standoff and fix it with the small screw. Snug, not tight: the screw only stops the stick springing back up.</li>
+          </ul>
+          <aside class="term"><b>M.2 / NVMe</b>a solid-state drive that plugs straight into the board and talks over PCI Express, the same bus a graphics card uses. This one holds the operating system and the two or three models in active use. The board has no SATA ports at all, which is why the archive drive stays external over USB.</aside>
+          <div class="pair">
+            <div class="look"><b>Looks right when</b><p>The stick lies flat and parallel to the board, screwed down at its far end, chips facing up.</p></div>
+            <div class="stop"><b>Stop if</b><p>The stick will not go in far enough for the screw hole to reach the standoff. The gold edge is not fully in the slot; take it out and re-insert at the angle.</p></div>
+          </div>
+        </div>
+      </li>
+
+      <li>
+        <div class="body">
+          <h3>The cooler</h3>
+          <p>Follow ARCTIC's printed steps for the <strong>SP3 / TR4</strong> socket; they are the same mounting for both. The bracket screws come up from the cooler's mounting frame into the threaded holes that already surround the socket, so there is no backplate to fit. The PH1 Phillips is the tool.</p>
+          <ul class="tight">
+            <li><strong>Paste.</strong> The processor's metal lid is enormous compared with a desktop chip. Squeeze the whole 0.8g syringe onto it and spread it thin and even across the entire lid with the spreader in the box, or the edge of a card. A pea-sized dot in the middle, the desktop habit, leaves most of this lid dry. The syringe is one application; there is no second try without more paste.</li>
+            <li><strong>Orientation.</strong> Each fan has an arrow on its frame showing which way air moves. Mount the tower so the arrows point at the rear panel, the edge with the VGA and network ports. Air enters at the front of the board and leaves past the ports.</li>
+            <li>Set the heatsink down squarely, start all bracket screws by hand, then tighten in a cross pattern a few turns each until they all stop. Do not fully tighten one corner before the others have started.</li>
+            <li>Clip both fans on. Plug the fan lead into <code>CPU_FAN1</code>. If the box had two separate leads and no splitter, the second goes to the next fan header along; the manual's layout page names them.</li>
+          </ul>
+          <aside class="term"><b>PWM</b>the 4-pin fan connection where the board sets the speed. With the lead in <code>CPU_FAN1</code> the board ramps the fans with processor temperature; in any other header it may run them flat out or complain about a missing CPU fan at boot.</aside>
+          <div class="pair">
+            <div class="look"><b>Looks right when</b><p>The tower does not rock when you push its top gently; the arrows point at the ports; the fan lead is in <code>CPU_FAN1</code>.</p></div>
+            <div class="stop"><b>Stop if</b><p>The heatsink lands on the memory latches or the cooler cannot sit flat. Check you used the SP3 / TR4 hardware and not another socket's.</p></div>
+          </div>
+        </div>
+      </li>
+
+      <li>
+        <div class="body">
+          <h3>Power supply cables</h3>
+          <p>The supply is fully modular: nothing is attached until you attach it. Only <strong>four cables</strong> leave it in this build. No graphics card means no graphics-card cable. Keep the supply's switch <strong>off</strong> (the "O" position) throughout, and plug the AC cord in last.</p>
+          <ul class="tight">
+            <li><strong>24-pin</strong> motherboard cable → <code>ATXPWR1</code>. It has a latch; push until it clicks, then tug to confirm.</li>
+            <li><strong>CPU cable #1</strong>, the 8-pin end → <code>ATX12V1</code>, the 8-pin socket. Keep its two 4-pin halves together.</li>
+            <li><strong>CPU cable #2</strong>, split into 4+4 → one 4-pin half into <code>ATX12V2</code>, the 4-pin socket. The other half hangs free; tie it off. <strong>Both</strong> 12V connectors are populated. The Build Sheet flagged this as the one fact to confirm against the manual; the manual's connector list names both, so it stands.</li>
+            <li><strong>AC cord</strong> → the supply, then the wall, switch still off.</li>
+          </ul>
+          <p>Every plug is keyed and latched. If one seems to fit backwards, it is the wrong plug or the wrong socket: the 8-pin CPU plug and the 8-pin graphics-card plug on the supply side look similar but are not interchangeable, and the cable labels say which is which.</p>
+          <aside class="term"><b>EPS / ATX12V</b>the 12-volt cables that feed the processor's voltage regulators directly, separate from the 24-pin that feeds everything else. A 155W server processor with eight memory channels draws more through them than a desktop chip, hence two connectors.</aside>
+          <div class="pair">
+            <div class="look"><b>Looks right when</b><p>Four cables, all latched, the supply resting beside the board with its fan facing open air and nothing lying on the memory.</p></div>
+            <div class="stop"><b>Stop if</b><p>A plug needs force or sits proud of its socket. Check the key. Never power on with a half-seated 12V connector.</p></div>
+          </div>
+        </div>
+      </li>
+
+      <li>
+        <div class="body">
+          <h3>Monitor, keyboard, network</h3>
+          <ul class="tight">
+            <li>Monitor cable → the board's <strong>VGA</strong> port on the rear panel (or the adapter, then the monitor).</li>
+            <li>Keyboard → any rear USB port.</li>
+            <li>Ethernet cable #1 → the <strong>dedicated management port</strong> (IPMI / MGMT), other end into the router.</li>
+            <li>Ethernet cable #2 → <strong>LAN1</strong>, other end into the router.</li>
+            <li>Nothing else. Not the G-DRIVE, not the memtest stick yet.</li>
+          </ul>
+          <div class="pair">
+            <div class="look"><b>Looks right when</b><p>Two network cables in two different ports, the management one on its own away from the LAN1/LAN2 pair.</p></div>
+            <div class="stop"><b>Stop if</b><p>You cannot tell the management port from the two 10GbE ports. The manual's rear-panel drawing labels them; do not guess, the management page will not appear on the wrong port.</p></div>
+          </div>
+        </div>
+      </li>
+
+      <li>
+        <div class="body">
+          <h3>First power</h3>
+          <p>Two things happen in sequence, and the gap between them is where first builds get abandoned.</p>
+          <ul class="tight">
+            <li><strong>Switch the supply on</strong> (the "I" position). Nothing visible should happen except perhaps a status LED on the board and the fans twitching or spinning for a moment. The management controller is now booting on standby power. <strong>Give it two minutes.</strong> The screen stays black. This is normal.</li>
+            <li><strong>Press power</strong>: the management page's power button, the screwdriver across the two power-button pins for a second, or the pigtail. The fans start.</li>
+            <li><strong>Wait.</strong> A server processor with 128GB of memory can take <strong>two to four minutes</strong> on its very first boot before anything appears on screen, because the board is measuring every memory channel. A black screen with fans running is not a failure until five full minutes have passed. Then the ASRock Rack splash appears on the VGA monitor.</li>
+          </ul>
+          <aside class="term"><b>POST</b>power-on self-test, the board's own checks before any operating system. The first POST after new memory is installed is slow, and every later one is much faster.</aside>
+          <div class="callout stop">
+            <h3>No splash after five minutes</h3>
+            <p>Switch the supply off, then check in this order, each one fully: both 12V connectors seated (the usual cause); the 24-pin latched; all eight memory latches closed; the three socket screws snug in 1-2-3 order; the monitor on the board's VGA port and switched to that input. Switch on, wait two minutes for the management controller, press power, wait five. If it still shows nothing, the board's status LEDs or beep pattern are the next clue; the manual lists what they mean.</p>
+          </div>
+        </div>
+      </li>
+
+      <li>
+        <div class="body">
+          <h3>First visit to the BIOS</h3>
+          <p>Press <strong>Del</strong> as soon as the splash appears (the splash names the key; on ASRock Rack boards it is Del or F2). You are in the board's setup screen. Read, change almost nothing.</p>
+          <ul class="tight">
+            <li><strong>Confirm the processor</strong>: EPYC 7452, 32 cores.</li>
+            <li><strong>Confirm the memory</strong>: 131072 MB (that is 128GB) at 3200 MT/s. If it reads 65536 or 98304 MB, one or more sticks are not seated: power off and check the latches again.</li>
+            <li><strong>Confirm the SSD</strong> appears in the storage or NVMe list.</li>
+            <li><strong>Note the management IP.</strong> Under Server Mgmt → BMC Network Configuration the board shows the address it got from the router. Write it down. If it shows 0.0.0.0, the management cable is in the wrong port or the router has not handed out an address yet.</li>
+            <li><strong>Set boot mode to UEFI</strong> and set the date and time.</li>
+            <li>Leave everything else at defaults for now. The NUMA setting stays at NPS1, SMT stays on.</li>
+          </ul>
+          <aside class="term"><b>UEFI</b>the modern boot method. The operating-system installer and memtest86+ both expect it; the older "legacy" mode is not needed for anything here.</aside>
+          <div class="pair">
+            <div class="look"><b>Looks right when</b><p>32 cores, 131072 MB, one NVMe drive, a management IP that starts like your other home devices' addresses.</p></div>
+            <div class="stop"><b>Stop if</b><p>The memory speed reads 2933 or lower with all eight sticks detected. Look for a memory-speed setting left at "auto" and check the kit is the 3200 part you ordered.</p></div>
+          </div>
+        </div>
+      </li>
+
+      <li>
+        <div class="body">
+          <h3>Log in to the management page</h3>
+          <p>From the desktop, open a browser at the management IP from step 8, over <code>https</code>. The certificate warning is expected: the board signed its own. Log in with <strong>admin</strong> / <strong>admin</strong>. The board makes you change the password immediately; put the new one in the secrets file, not in this document.</p>
+          <ul class="tight">
+            <li><strong>Sensors</strong>: read and write down the idle temperatures for the processor, the voltage regulators (VRM) and the memory (DIMM). These are the numbers step A4 of the plan compares against under load; without idle values there is nothing to compare.</li>
+            <li><strong>Remote control / console</strong>: the screen of the machine, in the browser. From now on the VGA monitor is optional.</li>
+            <li><strong>Power control</strong>: on, off, reset. This is the power button for the rest of the machine's life.</li>
+          </ul>
+          <div class="pair">
+            <div class="look"><b>Looks right when</b><p>The sensors page shows live readings and the console shows the BIOS screen you were just looking at.</p></div>
+            <div class="stop"><b>Stop if</b><p>The page does not load. Confirm the cable is in the management port, not LAN1; check the router's list of connected devices for a new one; wait two more minutes and retry.</p></div>
+          </div>
+        </div>
+      </li>
+
+      <li>
+        <div class="body">
+          <h3>memtest86+ overnight, inside the return window</h3>
+          <p>This is the step with a deadline. A faulty stick found now is a defective-product return, paid by the vendor. The same stick found in month four is a warranty claim that needs a matched replacement on a board that wants all eight identical. The window is 30 days from delivery.</p>
+          <ul class="tight">
+            <li>On the desktop, download memtest86+ from <code>memtest.org</code> and write its USB image to the stick: <code>dd</code> on Linux or macOS, or Rufus in "DD image" mode on Windows. This erases the stick.</li>
+            <li>Plug the stick into a rear USB port on the board. Power on (or reset) and press the boot-menu key the splash names (F11 on ASRock boards). Choose the USB stick.</li>
+            <li>Let it run <strong>all passes, all night</strong>, with all eight sticks installed. The screen counts passes and errors.</li>
+            <li>In the morning: <strong>zero errors</strong> and at least four full passes is a pass. Photograph the screen with the date visible.</li>
+            <li>Any error at all: power off, leave one stick in slot A1, test again; rotate through the eight until the failing stick is found. Return that stick under the vendor's defective-return process, not a warranty claim.</li>
+          </ul>
+          <div class="pair">
+            <div class="look"><b>Looks right when</b><p>Errors: 0, four or more passes, 128GB shown at the top of the memtest screen.</p></div>
+            <div class="stop"><b>Stop if</b><p>memtest shows less than 128GB. A stick is not detected; go back to step 8 before testing further.</p></div>
+          </div>
+        </div>
+      </li>
+
+      <li>
+        <div class="body">
+          <h3>Record, then hand over to the plan</h3>
+          <p>Everything from this point is software, and it starts from the plan's step A3, the operating-system install. Before that, put five things in the repo's <code>notes/</code> directory so they are never re-derived:</p>
+          <ul class="tight">
+            <li>Photos of the finished bench, all connectors visible.</li>
+            <li>The management IP.</li>
+            <li>The idle temperatures from step 9, with the date.</li>
+            <li>The memtest result: passes, errors, date, photo.</li>
+            <li>The answer to the Build Sheet's open question: both <code>ATX12V1</code> and <code>ATX12V2</code> populated, confirmed at assembly.</li>
+          </ul>
+          <p>The new management password goes in the sops-encrypted secrets file only.</p>
+        </div>
+      </li>
+
+    </ol>
+  </section>
+
+  <!-- ============================ TROUBLESHOOTING ============================ -->
+  <section id="trouble">
+    <p class="eyebrow">If something is off</p>
+    <h2>The likely cause, in the likely order</h2>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>Symptom</th><th>Most likely</th><th>Do this</th></tr></thead>
+        <tbody>
+          <tr><td class="name">Fans spin, screen black</td><td>Still in POST, or the management controller is not up yet</td><td>Wait five minutes from pressing power. Then the checklist in step 7.</td></tr>
+          <tr><td class="name">Fans run flat out</td><td>Normal before the management controller takes control of them; a fan lead in the wrong header</td><td>Wait two minutes. If it persists into the BIOS, move the lead to <code>CPU_FAN1</code>.</td></tr>
+          <tr><td class="name">No management page</td><td>Cable in LAN1 instead of the management port; router has not issued an address</td><td>Move the cable. Look at the router's device list. Read the IP from the BIOS (step 8).</td></tr>
+          <tr><td class="name">Memory shows 64GB or 96GB</td><td>Two or four sticks not seated</td><td>Power off. Press each stick down again until both latches click. Every latch, every stick.</td></tr>
+          <tr><td class="name">"CPU fan error" at boot</td><td>Fan lead not in <code>CPU_FAN1</code></td><td>Move it. Or set the header to "ignore" in the BIOS if the fans are on another header on purpose.</td></tr>
+          <tr><td class="name">Beeps or a status-LED code</td><td>A specific fault the board is naming</td><td>The manual's table of codes; it names memory, processor and power faults separately.</td></tr>
+          <tr><td class="name">Processor temperature climbs fast at idle</td><td>Cooler not making contact: paste missing, or the bracket screws uneven</td><td>Power off at once. Remove the cooler, inspect the paste print on the lid; it should cover the whole lid. Re-paste (new paste needed) and remount in a cross pattern.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>Verified for this guide:</strong> socket SP3 uses T20 Torx, screws tightened 1-2-3 and loosened 3-2-1, torque 1.58 ± 0.1 N·m (AMD via WikiChip and AMD Community). ROMED8-2T: ASPEED AST2500 management controller with a VGA output, a dedicated management network port, default login admin/admin with a forced change, management IP shown under Server Mgmt in the BIOS; connectors ATXPWR1 (24-pin), ATX12V1 (8-pin), ATX12V2 (4-pin). ARCTIC Freezer 4U-M Rev. 2: MX-6 0.8g syringe in the box, PH1 Phillips required, two clip-on 120mm PWM fans, SP3 supported. MSI MPG A850G: 24-pin, two EPS 4+4, one 12V-2x6, three PCIe, eight SATA, four peripheral, fully modular. Kingston NV3: single-sided 2280.</p>
+    <p><strong>Not verified from here, confirm in the printed manual:</strong> whether the board carries an onboard power button; the front-panel header pinout; the names of the fan headers beyond CPU_FAN1; the beep and LED code table; whether the cooler's two fans share one lead. Nothing in this guide guesses at those; each step says "the manual" where it matters.</p>
+    <p>Companion to the PW-1x Handoff and Build Sheet. Neither is changed by this guide. Checked mechanically by <code>tools/spec-check.py</code> in the Studio-G repo.</p>
+  </footer>
+
+</div>
+
+<script>
+(function () {
+  var KEY = 'pw1x-assembly-checklist';
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('input[type=checkbox]'));
+  var state = {};
+  var doneEl = document.getElementById('count-done');
+  var allEl = document.getElementById('count-all');
+  var barEl = document.getElementById('bar');
+  var syncEl = document.getElementById('sync');
+  var dbDoc = null;
+  var writeTimer = null;
+
+  function render() {
+    var done = 0;
+    boxes.forEach(function (b) {
+      var on = !!state[b.id];
+      b.checked = on;
+      var row = b.closest('tr');
+      if (row) row.classList.toggle('done', on);
+      if (on) done++;
+    });
+    doneEl.textContent = done;
+    allEl.textContent = boxes.length;
+    barEl.style.width = (boxes.length ? (100 * done / boxes.length) : 0) + '%';
+  }
+  function loadLocal() {
+    try { state = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { state = {}; }
+  }
+  function saveLocal() {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  }
+  function saveRemote() {
+    if (!dbDoc) return;
+    clearTimeout(writeTimer);
+    writeTimer = setTimeout(function () {
+      dbDoc.set({ items: state, updatedAt: new Date().toISOString() })
+        .then(function () { syncEl.textContent = 'saved to your account'; })
+        .catch(function () { syncEl.textContent = 'saved on this device only'; });
+    }, 300);
+  }
+
+  loadLocal();
+  render();
+
+  boxes.forEach(function (b) {
+    b.addEventListener('change', function () {
+      if (b.checked) state[b.id] = true; else delete state[b.id];
+      render();
+      saveLocal();
+      saveRemote();
+    });
+  });
+
+  // Shared state across your devices, when the viewer grants it.
+  if (window.claude && typeof window.claude.use === 'function') {
+    window.claude.use('db').then(function (db) {
+      if (!db) return;
+      try { dbDoc = db.doc('checklist/pw1x'); } catch (e) { return; }
+      dbDoc.onSnapshot(function (snap) {
+        if (snap.exists) {
+          var items = snap.data().items;
+          if (items && typeof items === 'object') { state = Object.assign({}, items); render(); saveLocal(); }
+        }
+        syncEl.textContent = 'saved to your account';
+      }, function () { syncEl.textContent = 'saved on this device only'; });
+    }).catch(function () {});
+  }
+})();
+</script>

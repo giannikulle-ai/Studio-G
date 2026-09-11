@@ -2,16 +2,19 @@
 """spec-check — mechanical verification of the Studio-G documents.
 
 Reading a document back does not find its errors. This does. It runs six
-checks over docs/handoff.html, docs/build-sheet.html and docs/systems-map.html
-and exits non-zero on any failure, so CI catches drift the moment a price,
-a part, or a drawing changes.
+checks over docs/handoff.html, docs/build-sheet.html, docs/systems-map.html
+and docs/assembly-guide.html and exits non-zero on any failure, so CI catches
+drift the moment a price, a part, or a drawing changes.
 
   1. Arithmetic        every printed total equals the sum of its line items
                        (Handoff, Build Sheet)
-  2. Cross-document    facts the Handoff and Build Sheet share appear in both
-  3. Stale strings     retired values are gone from every corner of both
+  2. Cross-document    facts the Handoff and Build Sheet share appear in both;
+                       the Assembly Guide's part numbers and prices match the
+                       Build Sheet
+  3. Stale strings     retired values are gone from every corner of both; the
+                       Assembly Guide carries no GPU-in-PW-1x language
   4. Structure         tags balance; every class used has a stylesheet rule
-                       (all three documents)
+                       (all four documents)
   5. Systems Map       every edge is orthogonal — no diagonal lines, no curve
                        commands — and no words from the superseded design
                        survive outside a sentence that names it as replaced
@@ -61,6 +64,16 @@ STALE = [
     "# arithmetic only", "arithmetic only; no benchmark",
 ]
 
+# Strings the Assembly Guide must share with the Build Sheet (part numbers,
+# prices, the platform facts the guide restates).
+GUIDE_SHARED = [
+    "ACFRE00133B", "SNV3S/1000G", "0G10265", "1,315.69", "57.92", "89.99",
+    "156.99", "EPYC 7452", "ROMED8-2T", "no SATA", "30-day",
+]
+
+# The guide describes a CPU-only build. None of this belongs in it.
+GUIDE_STALE = ["CUDA", "n-cpu-moe", "-ngl", "graphics card cable", "into the x16 slot"]
+
 # Model footprints: (name, size_gb, total_params_b, min_bits, max_bits)
 MODELS = [
     ("gpt-oss-120b", 63, 117, 3.8, 5.0),
@@ -97,11 +110,12 @@ def main() -> int:
         H = (DOCS / "handoff.html").read_text(encoding="utf-8")
         B = (DOCS / "build-sheet.html").read_text(encoding="utf-8")
         M = (DOCS / "systems-map.html").read_text(encoding="utf-8")
+        G = (DOCS / "assembly-guide.html").read_text(encoding="utf-8")
     except FileNotFoundError as e:
         print(f"missing document: {e.filename}")
         return 2
 
-    ht, bt = strip(H), strip(B)
+    ht, bt, gt = strip(H), strip(B), strip(G)
     fails, notes = [], []
 
     # 1. arithmetic --------------------------------------------------------
@@ -131,6 +145,14 @@ def main() -> int:
         else:
             fails.append(f"cross-doc {k!r}: handoff={a} build-sheet={b}")
     print(f"[cross-doc] {ok}/{len(SHARED)} shared facts present in both")
+    gok = 0
+    for k in GUIDE_SHARED:
+        a, b = k in gt, k in bt
+        if a and b:
+            gok += 1
+        else:
+            fails.append(f"guide/build-sheet {k!r}: guide={a} build-sheet={b}")
+    print(f"[cross-doc] {gok}/{len(GUIDE_SHARED)} guide facts match the build sheet")
 
     # 3. stale -------------------------------------------------------------
     for name, doc in (("handoff", H), ("build-sheet", B)):
@@ -141,9 +163,14 @@ def main() -> int:
     if m and m.group(1) != "12.1":
         fails.append(f"handoff Layer 3 gpt-oss-20b size_gb={m.group(1)} (table says 12.1)")
     print(f"[stale]     {len(STALE)} retired strings scanned in both")
+    for bad in GUIDE_STALE:
+        if bad in G:
+            fails.append(f"assembly-guide: GPU-build language {bad!r}")
+    print(f"[stale]     {len(GUIDE_STALE)} GPU-build strings scanned in the guide")
 
     # 4. structure ---------------------------------------------------------
-    for name, doc in (("handoff", H), ("build-sheet", B), ("systems-map", M)):
+    for name, doc in (("handoff", H), ("build-sheet", B), ("systems-map", M),
+                      ("assembly-guide", G)):
         for tag in TAGS:
             o = len(re.findall(r"<" + tag + r"[\s>]", doc))
             c = len(re.findall(r"</" + tag + r">", doc))
