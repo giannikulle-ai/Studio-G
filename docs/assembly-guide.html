@@ -109,7 +109,6 @@
   aside.term b::after { content: " — "; color: var(--muted); font-weight: 400; }
   ul.tight { margin: 0 0 12px; padding-left: 20px; max-width: 70ch; }
   ul.tight li { margin: 4px 0; }
-  pre { font-family: var(--mono); font-size: 13px; background: var(--surface-2); border-radius: 4px; padding: 12px 14px; overflow-x: auto; max-width: 78ch; color: var(--ink); }
 
   .callout { background: var(--surface); border: 1px solid var(--rule); border-left: 3px solid var(--accent); border-radius: 4px; padding: 18px 22px; box-shadow: var(--shadow); margin: 22px 0; max-width: 84ch; }
   .callout h3 { margin-top: 0; }
@@ -145,6 +144,7 @@
       <span class="bar"><i id="bar"></i></span>
       <span class="sync" id="sync">saved on this device</span>
     </div>
+    <p class="note"><span class="chip ok">Have</span> already on hand &nbsp; <span class="chip warn">Bought</span> shipping; confirm the box contents on arrival &nbsp; <span class="chip stop">Confirm</span> never bought; check you own one &nbsp; <span class="chip neutral">You decide</span> a choice, not a part</p>
 
     <h3>Bought or owned, per the Build Sheet</h3>
     <div class="scroll">
@@ -242,7 +242,7 @@
           <tr>
             <td class="tick"><input type="checkbox" id="n-power" aria-label="Confirm a way to press power"></td>
             <td class="name">A way to press "power"<small>no case means no button</small></td>
-            <td>Three options, any one is enough: (a) power on from the management web page, which works once step 9 is done; (b) touch a screwdriver tip across the two power-button pins on the board's front-panel header for one second, the pinout is in the manual; (c) a power-switch pigtail, a $5 button on a lead that plugs onto those pins. Some ASRock Rack boards carry an onboard button; the manual's layout page says whether this one does.</td>
+            <td>Three options, any one is enough: (a) power on from the management web page, which works once step 9 is done; (b) touch a screwdriver tip across the two power-button pins on the board's front-panel header for one second (the pair is marked for the power switch in the manual's header pinout, typically PWRBTN or PWR_SW); (c) a power-switch pigtail, a $5 button on a lead that plugs onto those pins. Some ASRock Rack boards carry an onboard button; the manual's layout page says whether this one does.</td>
             <td><span class="chip stop">Confirm</span></td>
           </tr>
           <tr>
@@ -254,7 +254,7 @@
           <tr>
             <td class="tick"><input type="checkbox" id="n-misc" aria-label="Confirm small things"></td>
             <td class="name">Small things<small>flashlight · zip ties · a phone</small></td>
-            <td>A flashlight for reading tiny header labels; zip ties for the four PSU cables once they are routed; the phone to photograph every label and every connector before it is covered.</td>
+            <td>A flashlight for reading tiny header labels; zip ties for the PSU cables once they are routed; the phone to photograph every label and every connector before it is covered.</td>
             <td><span class="chip stop">Confirm</span></td>
           </tr>
         </tbody>
@@ -287,7 +287,7 @@
   <section id="build">
     <p class="eyebrow">Part 2 · The build</p>
     <h2>Twelve steps, in this order</h2>
-    <p class="lede">Each step says what you are doing, what it should look or feel like when it is right, and the one condition where you stop instead of pushing on. Steps 1 to 5 are the board on the bench with nothing plugged into the wall. Step 7 is the first time power is applied.</p>
+    <p class="lede">Each step says what you are doing, what it should look or feel like when it is right, and the one condition where you stop instead of pushing on. Steps 1 to 5 are the board on the bench with no cable between it and the power supply. Step 7 is the first time the supply's switch is turned on. Budget an unhurried two to three hours for steps 0 to 9, then the night for step 10.</p>
 
     <ol class="steps">
 
@@ -295,7 +295,7 @@
         <div class="body">
           <h3>Before opening anything</h3>
           <p><strong>Open bench</strong> means the board lies flat on its box with the parts mounted on it and the power supply beside it, no case. Workshop servers run like this for years. What it costs you is that nothing pushes air across the board except the cooler's own fans; step 9 reads the temperatures that tell you whether that matters.</p>
-          <p><strong>Static.</strong> Before you touch any part, touch something metal that is plugged into the wall, such as the power supply's steel shell once its cord is in (with its switch off). Do that again whenever you have walked away and come back. Leave every part in its bag until the step that uses it.</p>
+          <p><strong>Static.</strong> Plug the power supply's AC cord into the supply and the wall now, with the supply's rocker switch <strong>off</strong> (the "O" position), and leave it there. Its steel shell is now grounded: touch it before you pick up any part, and again whenever you have walked away and come back. Nothing else is connected to the supply yet, so nothing can be energised. Leave every part in its bag until the step that uses it.</p>
           <p><strong>Find these on the real board</strong> with the manual's layout page open (it is near the front of the printed manual). You will need every one of them:</p>
           <ul class="tight">
             <li>The processor socket: a large square with a hinged metal frame and three screws.</li>
@@ -305,7 +305,7 @@
             <li><code>ATX12V1</code>, an 8-pin power connector, and <code>ATX12V2</code>, a 4-pin one. Both feed the processor. Both get plugged in.</li>
             <li>The front-panel header: a block of small pins that a case's power button would plug into. Note which two are the power button.</li>
             <li><code>CPU_FAN1</code>, the fan header nearest the socket.</li>
-            <li>On the rear panel: the VGA port, the USB ports, two 10GbE network ports labelled LAN1 and LAN2, and a third, separate network port for management, usually labelled IPMI or MGMT.</li>
+            <li>On the rear panel: the VGA port, the USB ports, two 10GbE network ports labelled LAN1 and LAN2, and a third, separate network port for management, set apart from the pair and labelled for it (the manual's rear-panel drawing names it).</li>
           </ul>
           <aside class="term"><b>IPMI / BMC</b>the board has a small computer of its own, the baseboard management controller, that runs whenever the power supply is switched on, even with the machine "off". It serves a web page on the management port where you can power the machine on, watch the screen and read every temperature sensor. It is also what drives the VGA port.</aside>
           <div class="pair">
@@ -318,7 +318,7 @@
       <li>
         <div class="body">
           <h3>Processor into the socket</h3>
-          <p>This is the one step where force in the wrong place does permanent damage, and it is also simple if you follow the order. The socket's metal frame is held by <strong>three T20 Torx screws, numbered 1, 2 and 3</strong> on the frame itself. <strong>Open them 3, 2, 1. Close them 1, 2, 3.</strong> The screws are captive: they loosen but do not come out.</p>
+          <p>This is the one step where force in the wrong place does permanent damage, and it is also simple if you follow the order. The socket's metal frame is held by <strong>three T20 Torx screws, numbered 1, 2 and 3</strong>; the numbers are stamped into the frame beside each screw. <strong>Open them 3, 2, 1. Close them 1, 2, 3.</strong> The screws are captive: they loosen but do not come out.</p>
           <ul class="tight">
             <li>Loosen 3, then 2, then 1. Lift the outer <strong>force frame</strong> up on its hinge.</li>
             <li>Under it is a thinner <strong>rail frame</strong>. Lift it up on its hinge too. Now the socket's gold contacts are exposed. Do not touch them and do not let anything fall on them.</li>
@@ -376,7 +376,7 @@
           <p>Follow ARCTIC's printed steps for the <strong>SP3 / TR4</strong> socket; they are the same mounting for both. The bracket screws come up from the cooler's mounting frame into the threaded holes that already surround the socket, so there is no backplate to fit. The PH1 Phillips is the tool.</p>
           <ul class="tight">
             <li><strong>Paste.</strong> The processor's metal lid is enormous compared with a desktop chip. Squeeze the whole 0.8g syringe onto it and spread it thin and even across the entire lid with the spreader in the box, or the edge of a card. A pea-sized dot in the middle, the desktop habit, leaves most of this lid dry. The syringe is one application; there is no second try without more paste.</li>
-            <li><strong>Orientation.</strong> Each fan has an arrow on its frame showing which way air moves. Mount the tower so the arrows point at the rear panel, the edge with the VGA and network ports. Air enters at the front of the board and leaves past the ports.</li>
+            <li><strong>Orientation.</strong> Each fan has an arrow on its frame showing which way air moves. Mount the tower so the arrows point at the rear panel, the edge with the VGA and network ports. On a bench there is no case to dictate this, but the board's voltage regulators sit between the socket and that edge and this is the direction that blows the cooler's warm exhaust across them and away, rather than into the memory.</li>
             <li>Set the heatsink down squarely, start all bracket screws by hand, then tighten in a cross pattern a few turns each until they all stop. Do not fully tighten one corner before the others have started.</li>
             <li>Clip both fans on. Plug the fan lead into <code>CPU_FAN1</code>. If the box had two separate leads and no splitter, the second goes to the next fan header along; the manual's layout page names them.</li>
           </ul>
@@ -391,17 +391,17 @@
       <li>
         <div class="body">
           <h3>Power supply cables</h3>
-          <p>The supply is fully modular: nothing is attached until you attach it. Only <strong>four cables</strong> leave it in this build. No graphics card means no graphics-card cable. Keep the supply's switch <strong>off</strong> (the "O" position) throughout, and plug the AC cord in last.</p>
+          <p>The supply is fully modular: nothing is attached until you attach it. Only <strong>three cables</strong> run from it to the board in this build, plus the AC cord that has been in since step 0. No graphics card means no graphics-card cable. The supply's switch stays <strong>off</strong> throughout this step.</p>
           <ul class="tight">
             <li><strong>24-pin</strong> motherboard cable → <code>ATXPWR1</code>. It has a latch; push until it clicks, then tug to confirm.</li>
             <li><strong>CPU cable #1</strong>, the 8-pin end → <code>ATX12V1</code>, the 8-pin socket. Keep its two 4-pin halves together.</li>
             <li><strong>CPU cable #2</strong>, split into 4+4 → one 4-pin half into <code>ATX12V2</code>, the 4-pin socket. The other half hangs free; tie it off. <strong>Both</strong> 12V connectors are populated. The Build Sheet flagged this as the one fact to confirm against the manual; the manual's connector list names both, so it stands.</li>
-            <li><strong>AC cord</strong> → the supply, then the wall, switch still off.</li>
+            <li><strong>AC cord</strong>: already in from step 0. Check the rocker is still on "O".</li>
           </ul>
           <p>Every plug is keyed and latched. If one seems to fit backwards, it is the wrong plug or the wrong socket: the 8-pin CPU plug and the 8-pin graphics-card plug on the supply side look similar but are not interchangeable, and the cable labels say which is which.</p>
           <aside class="term"><b>EPS / ATX12V</b>the 12-volt cables that feed the processor's voltage regulators directly, separate from the 24-pin that feeds everything else. A 155W server processor with eight memory channels draws more through them than a desktop chip, hence two connectors.</aside>
           <div class="pair">
-            <div class="look"><b>Looks right when</b><p>Four cables, all latched, the supply resting beside the board with its fan facing open air and nothing lying on the memory.</p></div>
+            <div class="look"><b>Looks right when</b><p>Three cables into the board, all latched, the spare 4-pin half tied off, the supply resting beside the board with its fan facing open air and nothing lying on the memory.</p></div>
             <div class="stop"><b>Stop if</b><p>A plug needs force or sits proud of its socket. Check the key. Never power on with a half-seated 12V connector.</p></div>
           </div>
         </div>
@@ -444,7 +444,7 @@
       <li>
         <div class="body">
           <h3>First visit to the BIOS</h3>
-          <p>Press <strong>Del</strong> as soon as the splash appears (the splash names the key; on ASRock Rack boards it is Del or F2). You are in the board's setup screen. Read, change almost nothing.</p>
+          <p>Tap <strong>Del</strong> once a second from the moment the splash appears until the setup screen opens (the splash names the key; on ASRock Rack boards it is Del or F2). This is the BIOS, the board's own settings. Read, change almost nothing.</p>
           <ul class="tight">
             <li><strong>Confirm the processor</strong>: EPYC 7452, 32 cores.</li>
             <li><strong>Confirm the memory</strong>: 131072 MB (that is 128GB) at 3200 MT/s. If it reads 65536 or 98304 MB, one or more sticks are not seated: power off and check the latches again.</li>
@@ -464,10 +464,10 @@
       <li>
         <div class="body">
           <h3>Log in to the management page</h3>
-          <p>From the desktop, open a browser at the management IP from step 8, over <code>https</code>. The certificate warning is expected: the board signed its own. Log in with <strong>admin</strong> / <strong>admin</strong>. The board makes you change the password immediately; put the new one in the secrets file, not in this document.</p>
+          <p>From the desktop, open a browser at the management IP from step 8, over <code>https</code>. The browser will warn that the connection is not private; that is expected, the board signed its own certificate, and the page is on your home network. Choose the advanced or proceed option to continue. Log in with <strong>admin</strong> / <strong>admin</strong>. The board makes you change the password immediately. Put the new one in the repo's encrypted secrets file (the sops file the plan describes), not in this document and not in a note on the bench.</p>
           <ul class="tight">
-            <li><strong>Sensors</strong>: read and write down the idle temperatures for the processor, the voltage regulators (VRM) and the memory (DIMM). These are the numbers step A4 of the plan compares against under load; without idle values there is nothing to compare.</li>
-            <li><strong>Remote control / console</strong>: the screen of the machine, in the browser. From now on the VGA monitor is optional.</li>
+            <li><strong>Sensors</strong>: read and write down the idle temperatures for the processor, the voltage regulators (VRM) and the memory (DIMM). The plan's later thermal check (its step A4) reads the same sensors under a full inference load and decides whether the bench needs a fan; without idle values there is nothing to compare.</li>
+            <li><strong>Remote control / console</strong>: the machine's screen and keyboard, in the browser tab. From now on the VGA monitor and the keyboard on the bench are optional.</li>
             <li><strong>Power control</strong>: on, off, reset. This is the power button for the rest of the machine's life.</li>
           </ul>
           <div class="pair">
@@ -483,13 +483,13 @@
           <p>This is the step with a deadline. A faulty stick found now is a defective-product return, paid by the vendor. The same stick found in month four is a warranty claim that needs a matched replacement on a board that wants all eight identical. The window is 30 days from delivery.</p>
           <ul class="tight">
             <li>On the desktop, download memtest86+ from <code>memtest.org</code> and write its USB image to the stick: <code>dd</code> on Linux or macOS, or Rufus in "DD image" mode on Windows. This erases the stick.</li>
-            <li>Plug the stick into a rear USB port on the board. Power on (or reset) and press the boot-menu key the splash names (F11 on ASRock boards). Choose the USB stick.</li>
+            <li>Plug the stick into a rear USB port on the board. Power on (or reset) and press the boot-menu key the splash names (usually F11 on ASRock boards). Choose the USB stick; pick the entry that starts with "UEFI" if two are offered.</li>
             <li>Let it run <strong>all passes, all night</strong>, with all eight sticks installed. The screen counts passes and errors.</li>
-            <li>In the morning: <strong>zero errors</strong> and at least four full passes is a pass. Photograph the screen with the date visible.</li>
-            <li>Any error at all: power off, leave one stick in slot A1, test again; rotate through the eight until the failing stick is found. Return that stick under the vendor's defective-return process, not a warranty claim.</li>
+            <li>In the morning: <strong>zero errors</strong> across at least two completed passes is a pass; with 128GB a single pass takes an hour or more, so a full night gives several. Photograph the screen with the pass count and date visible.</li>
+            <li>Any error at all: power off, leave one stick in the slot the manual names for a single module (on most boards A1), test again; rotate through the eight until the failing stick is found. Return that stick under the vendor's defective-return process, not a warranty claim.</li>
           </ul>
           <div class="pair">
-            <div class="look"><b>Looks right when</b><p>Errors: 0, four or more passes, 128GB shown at the top of the memtest screen.</p></div>
+            <div class="look"><b>Looks right when</b><p>Errors: 0, two or more completed passes, 128GB shown at the top of the memtest screen.</p></div>
             <div class="stop"><b>Stop if</b><p>memtest shows less than 128GB. A stick is not detected; go back to step 8 before testing further.</p></div>
           </div>
         </div>
@@ -498,7 +498,7 @@
       <li>
         <div class="body">
           <h3>Record, then hand over to the plan</h3>
-          <p>Everything from this point is software, and it starts from the plan's step A3, the operating-system install. Before that, put five things in the repo's <code>notes/</code> directory so they are never re-derived:</p>
+          <p>Everything from this point is software, and it starts from the plan's step A3, the operating-system install. Before that, put five things in the Studio-G repository's <code>notes/</code> directory so they are never re-derived:</p>
           <ul class="tight">
             <li>Photos of the finished bench, all connectors visible.</li>
             <li>The management IP.</li>
@@ -506,7 +506,7 @@
             <li>The memtest result: passes, errors, date, photo.</li>
             <li>The answer to the Build Sheet's open question: both <code>ATX12V1</code> and <code>ATX12V2</code> populated, confirmed at assembly.</li>
           </ul>
-          <p>The new management password goes in the sops-encrypted secrets file only.</p>
+          <p>The new management password goes in the encrypted secrets file only, never in <code>notes/</code>.</p>
         </div>
       </li>
 
@@ -599,10 +599,20 @@
     window.claude.use('db').then(function (db) {
       if (!db) return;
       try { dbDoc = db.doc('checklist/pw1x'); } catch (e) { return; }
+      var first = true;
       dbDoc.onSnapshot(function (snap) {
-        if (snap.exists) {
-          var items = snap.data().items;
-          if (items && typeof items === 'object') { state = Object.assign({}, items); render(); saveLocal(); }
+        var remote = (snap.exists && snap.data().items && typeof snap.data().items === 'object') ? snap.data().items : {};
+        if (first) {
+          // Ticks made before the account copy arrived are kept, not lost.
+          first = false;
+          var merged = Object.assign({}, remote, state);
+          var differs = Object.keys(merged).length !== Object.keys(remote).length;
+          state = merged;
+          render(); saveLocal();
+          if (differs) saveRemote();
+        } else if (!snap.metadata.hasPendingWrites) {
+          state = Object.assign({}, remote);
+          render(); saveLocal();
         }
         syncEl.textContent = 'saved to your account';
       }, function () { syncEl.textContent = 'saved on this device only'; });
