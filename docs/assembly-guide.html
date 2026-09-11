@@ -137,7 +137,7 @@
   <section id="inventory">
     <p class="eyebrow">Part 1 · Inventory</p>
     <h2>Do you actually have everything?</h2>
-    <p class="lede">Tick each row as you confirm it. The first table is what the Build Sheet says was bought or owned. The second is what the Build Sheet does not mention because it was never a purchase, and it is where builds usually stall on day one. The third is two decisions to make before the boxes are open.</p>
+    <p class="lede">Tick each row as you confirm it. The first table is what the Build Sheet says was bought or owned. The second is what the Build Sheet does not mention because it was never a purchase, and it is where builds usually stall on day one. The third is what to do in the days before the boxes arrive, with the two parts you already have. The board and the processor are the only parts that cannot be returned; finding a fault in either <em>before</em> the memory's 30-day clock starts is the single biggest risk reduction available.</p>
 
     <div class="progress" aria-live="polite">
       <span><b id="count-done">0</b> / <b id="count-all">0</b> confirmed</span>
@@ -257,15 +257,45 @@
             <td>A flashlight for reading tiny header labels; zip ties for the PSU cables once they are routed; the phone to photograph every label and every connector before it is covered.</td>
             <td><span class="chip stop">Confirm</span></td>
           </tr>
+          <tr>
+            <td class="tick"><input type="checkbox" id="n-paste" aria-label="Confirm spare thermal paste"></td>
+            <td class="name">A second syringe of thermal paste<small>MX-6 or MX-4, ~$8</small></td>
+            <td>The cooler's 0.8g is exactly one application on a lid this size. If the cooler has to come off once, for any reason, there is no paste for the second mount. Buy one tube now; it is the cheapest insurance on this list.</td>
+            <td><span class="chip stop">Confirm</span></td>
+          </tr>
+          <tr>
+            <td class="tick"><input type="checkbox" id="n-strap" aria-label="Confirm anti-static wrist strap"></td>
+            <td class="name">An anti-static wrist strap<small>~$6, clips to the supply's shell</small></td>
+            <td>Touching the grounded supply works if you remember to. The strap makes forgetting impossible, for a chip and a board that cannot be returned. Optional in the sense that a seatbelt is.</td>
+            <td><span class="chip stop">Confirm</span></td>
+          </tr>
         </tbody>
       </table>
     </div>
 
-    <h3>Decide before delivery</h3>
+    <h3>Do before delivery, with the parts already here</h3>
     <div class="scroll">
       <table>
-        <thead><tr><th></th><th>Decision</th><th>What it changes</th><th>State</th></tr></thead>
+        <thead><tr><th></th><th>Do</th><th>Why now</th><th>State</th></tr></thead>
         <tbody>
+          <tr>
+            <td class="tick"><input type="checkbox" id="d-socket" aria-label="Inspect the socket and processor"></td>
+            <td class="name">Inspect the socket and the processor today</td>
+            <td>Both were bought earlier and neither is returnable. Open the socket per step 1 (3-2-1), hold a flashlight at a low angle across the contact field and look for any bent, flattened or discoloured contact; the field should be a perfectly regular grid with no glint out of line. Close it again (1-2-3) with nothing in it. Then look at the processor's underside through its carrier: every pad present, none scratched. A bad socket found today means a replacement board is ordered before the memory arrives and its 30-day window opens. Found on assembly day, it costs the window.</td>
+            <td><span class="chip stop">Do first</span></td>
+          </tr>
+          <tr>
+            <td class="tick"><input type="checkbox" id="d-manual" aria-label="Read the manual for the open items"></td>
+            <td class="name">Read the board's manual for the five open items</td>
+            <td>You have the board, so you have the manual. Find and write down: whether there is an onboard power button; which two front-panel pins are the power switch; the fan header names; the beep and LED code table; the DIMM latch type. Those are the only things in this guide that say "the manual" instead of giving the answer, and twenty minutes today removes every one of them from assembly day.</td>
+            <td><span class="chip stop">Do first</span></td>
+          </tr>
+          <tr>
+            <td class="tick"><input type="checkbox" id="d-dryrun" aria-label="Consider seating the processor now"></td>
+            <td class="name">Consider doing step 1 today, unhurried</td>
+            <td>The processor can sit in its closed socket with no cooler on it indefinitely; that is how boards ship from integrators. Doing the one irreversible step on a quiet evening, with the manual open and nothing else waiting, is easier than doing it with four opened boxes on the table. If the socket inspection above was clean, this is the calmest way to take the hardest step. If you would rather do it once, on the day, that is also fine: the inspection is the part that matters.</td>
+            <td><span class="chip neutral">You decide</span></td>
+          </tr>
           <tr>
             <td class="tick"><input type="checkbox" id="d-nic" aria-label="Decide desktop NIC"></td>
             <td class="name">Does the desktop have a 10GbE port?</td>
