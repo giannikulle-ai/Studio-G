@@ -68,6 +68,11 @@ STALE = [
     'vram_gb</span>: <span class="v">16', "16GB of VRAM is the real bottleneck",
     "Prefill on long context, with 16GB", "GPU-resident. 12.1GB",
     "Second GPU", "gpu_resident", "attention_kv_prefill",
+    # One figure (gpt-oss-20b) is now measured, so these absolutes are false.
+    "Tok/s are estimates, not benchmarks",
+    "Throughput figures are estimates, not benchmarks",
+    "Neither is a benchmark",
+    "estimates, not measurements",
 ]
 
 # Strings the Assembly Guide must share with the Build Sheet (part numbers,
