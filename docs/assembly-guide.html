@@ -257,7 +257,7 @@
           <tr>
             <td class="tick"><input type="checkbox" id="n-eth" aria-label="Confirm two Ethernet cables"></td>
             <td class="name">Two Ethernet cables<small>any length that reaches the router</small></td>
-            <td>One for the board's dedicated management port, one for its first 10GbE port. The management port is how you power the machine on and off and read its temperatures from the desktop; it is worth the cable.</td>
+            <td>One for the board's dedicated management port, one for its first 10GbE port, both ending at the router. The management cable can be any old Ethernet cable from a drawer; that link carries a web page. Only the LAN1 cable benefits from Cat 6 or better. The management port is how you power the machine on and off and read its temperatures from the desktop; it is worth the cable.</td>
             <td><span class="chip stop">Confirm</span></td>
           </tr>
           <tr>
@@ -269,7 +269,7 @@
           <tr>
             <td class="tick"><input type="checkbox" id="n-power" aria-label="Confirm a way to press power"></td>
             <td class="name">A way to press "power"<small>no case means no button</small></td>
-            <td>Three options, any one is enough: (a) power on from the management web page, which works once step 9 is done; (b) touch a screwdriver tip across the two power-button pins on the board's front-panel header for one second (the pair is marked for the power switch in the manual's header pinout, typically PWRBTN or PWR_SW); (c) a power-switch pigtail, a $5 button on a lead that plugs onto those pins. Some ASRock Rack boards carry an onboard button; the manual's layout page says whether this one does.</td>
+            <td>Three options, any one is enough, and two cost nothing: (a) power on from the management web page, which works once step 9 is done; (b) touch a screwdriver tip across the two power-button pins on the board's front-panel header for one second (the pair is marked for the power switch in the manual's header pinout, typically PWRBTN or PWR_SW); (c) a power-switch pigtail, a $5 button on a lead that plugs onto those pins. Some ASRock Rack boards carry an onboard button; the manual's layout page says whether this one does.</td>
             <td><span class="chip stop">Confirm</span></td>
           </tr>
           <tr>
@@ -288,6 +288,12 @@
             <td class="tick"><input type="checkbox" id="n-paste" aria-label="Confirm spare thermal paste"></td>
             <td class="name">A second syringe of thermal paste<small>MX-6 or MX-4, ~$8</small></td>
             <td>The cooler's 0.8g is exactly one application on a lid this size. If the cooler has to come off once, for any reason, there is no paste for the second mount. Buy one tube now; it is the cheapest insurance on this list.</td>
+            <td><span class="chip stop">Confirm</span></td>
+          </tr>
+          <tr>
+            <td class="tick"><input type="checkbox" id="n-ipa" aria-label="Confirm isopropyl alcohol and cloth"></td>
+            <td class="name">Isopropyl alcohol, 90% or stronger, and a lint-free cloth<small>~$4 · coffee filters work as the cloth</small></td>
+            <td>The processor was bought used, so its metal lid almost certainly carries the previous owner's dried paste. New paste over old paste runs hot, and you would find out on the one cooler mount you have paste for. The lid gets cleaned to bare metal in step 4 before anything else touches it.</td>
             <td><span class="chip stop">Confirm</span></td>
           </tr>
           <tr>
@@ -326,7 +332,7 @@
           <tr>
             <td class="tick"><input type="checkbox" id="d-nic" aria-label="Decide desktop NIC"></td>
             <td class="name">Does the desktop have a 10GbE port?</td>
-            <td>The Systems Map draws a direct 10GbE cable between the desktop and PW-1x. If the desktop's Ethernet is 1GbE or 2.5GbE, the same cable still works, just slower: the link negotiates down. It is fine to start that way. A 10GbE card for the desktop is a later purchase, not a blocker.</td>
+            <td>The Systems Map draws a direct 10GbE cable between the desktop and PW-1x. If the desktop's Ethernet is 1GbE or 2.5GbE, the same cable still works, just slower: the link negotiates down. It is fine to start that way; link speed does not change how fast the models run, only how long a 60 GB model file takes to copy. No USB adapter reaches 10GbE; they stop at 1 or 2.5. The real path is a PCIe card, a used Intel X540-T2 or X550-T1 at $30–60, parked until there is a reason.</td>
             <td><span class="chip neutral">You decide</span></td>
           </tr>
           <tr>
@@ -647,6 +653,7 @@
           <h3>The cooler</h3>
           <p>Follow ARCTIC's printed steps for the <strong>SP3 / TR4</strong> socket; they are the same mounting for both. The bracket screws come up from the cooler's mounting frame into the threaded holes that already surround the socket, so there is no backplate to fit. The PH1 Phillips is the tool.</p>
           <ul class="tight">
+            <li><strong>Clean the lid first.</strong> With the processor seated and the socket closed, wipe its metal lid with the cloth and isopropyl until it is bare, dull metal with no grey residue; a used chip usually has old paste on it. Let it dry for a minute. Nothing drips into the socket because the lid sits above the closed frame.</li>
             <li><strong>Paste.</strong> The processor's metal lid is enormous compared with a desktop chip. Squeeze the whole 0.8g syringe onto it and spread it thin and even across the entire lid with the spreader in the box, or the edge of a card. A pea-sized dot in the middle, the desktop habit, leaves most of this lid dry. The syringe is one application; there is no second try without more paste.</li>
             <li><strong>Orientation.</strong> Each fan has an arrow on its frame showing which way air moves. Mount the tower so the arrows point at the rear panel, the edge with the VGA and network ports. On a bench there is no case to dictate this; the direction still matters because the board was designed for air to leave at that edge, past the finned voltage-regulator heatsinks that sit beside the socket. Memory is on both sides of the socket and gets air either way.</li>
             <li>Set the heatsink down squarely, start all bracket screws by hand, then tighten in a cross pattern a few turns each until they all stop. Do not fully tighten one corner before the others have started.</li>
