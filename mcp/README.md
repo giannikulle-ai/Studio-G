@@ -29,7 +29,7 @@ The server picks. Claude never sees which.
 
 | Backend | Where | When |
 |---|---|---|
-| Ollama, gpt-oss-20b | the desktop's 4060 Ti, over 10GbE | Call-shaped volume work, **best-effort** — first choice when the PC is idle, skipped without complaint when it isn't (Ollama's idle unload means it yields naturally) |
+| Ollama, gpt-oss-20b | the desktop's 4060 Ti (**8GB**, measured), over the LAN | Call-shaped volume work, **best-effort** — first choice when the PC is idle, skipped without complaint when it isn't. The model's 12.1GB does not fit 8GB, so half its layers run on that machine's processor: measured 39 tok/s, not the resident fast tier the artifacts first described |
 | llama.cpp, gpt-oss-120b / Scout | PW-1x, `/v1`, CPU-only until a GPU is bought | Reads and briefs, anything the small model shouldn't do, and the fallback for everything |
 
 Once PW-1x has a GPU, gpt-oss-20b and the 120b **swap** on that card — they don't coexist. This server owns that decision.

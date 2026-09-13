@@ -201,11 +201,11 @@
         <table>
           <thead><tr><th>Milestone</th><th>State</th><th>Notes</th></tr></thead>
           <tbody>
-            <tr><td class="name">Core hardware</td><td><span class="chip ok">Complete</span></td><td>Processor, motherboard, graphics card on hand</td></tr>
+            <tr><td class="name">Core hardware</td><td><span class="chip ok">Complete</span></td><td>Processor and motherboard on hand. The graphics card is the desktop’s and stays there, so PW-1x has none.</td></tr>
             <tr><td class="name">Memory</td><td><span class="chip ok">Ordered</span></td><td>128GB, lifetime warranty, 2–4 day shipping</td></tr>
             <tr><td class="name">Remaining parts</td><td><span class="chip ok">Ordered</span></td><td>Cooler, power supply, storage — $304.90 of the $1,620.59 ordered</td></tr>
             <tr><td class="name">Assembly</td><td><span class="chip warn">Awaiting delivery</span></td><td>All parts bought; nothing left to procure</td></tr>
-            <tr><td class="name">Software baseline</td><td><span class="chip warn">In progress</span></td><td>Small-model test running on existing desktop, no new hardware needed</td></tr>
+            <tr><td class="name">Software baseline</td><td><span class="chip warn">In progress</span></td><td>gpt-oss-20b measured on the desktop at 39 tok/s, Sept 2026. The week of real volume work, and the rate-limit count to compare it against, are still outstanding.</td></tr>
             <tr><td class="name">Hosting migration</td><td><span class="chip stop">Not started</span></td><td>Websites and dev environments move on after the machine is stable</td></tr>
           </tbody>
         </table>
@@ -249,7 +249,7 @@
             </tr>
             <tr>
               <td class="name">Graphics<span class="pn">NVIDIA RTX 4060 Ti FE</span></td>
-              <td>16GB. Hosts attention layers, shared experts and KV cache; performs prompt processing.</td>
+              <td><strong>8GB</strong> — measured at the desktop, Sept 2026. Revisions before this said 16GB, which was never possible: NVIDIA made no Founders Edition of the 16GB card. Stays in the desktop; PW-1x has no GPU.</td>
               <td><span class="chip ok">Have</span></td><td class="num">—</td>
             </tr>
             <tr>
@@ -264,7 +264,7 @@
             </tr>
             <tr>
               <td class="name">Power supply<span class="pn">MSI MPG A850G PCIE5</span></td>
-              <td>850W, 80+ Gold, fully modular, ATX 3.1, 2× EPS 4+4. Board requirement (one 8-pin + one 4-pin) is from the ServeTheHome review only — <strong>confirm against the ASRock manual at assembly</strong>. Two EPS 4+4 covers either reading.</td>
+              <td>850W, 80+ Gold, fully modular, ATX 3.1, 2× EPS 4+4. Board requirement confirmed against the ASRock manual, Sept 2026: ATXPWR1 24-pin, ATX12V1 8-pin, ATX12V2 4-pin, and both 12V connectors get populated. The two EPS 4+4 cables cover it.</td>
               <td><span class="chip ok">Ordered</span></td><td class="num">$89.99</td>
             </tr>
             <tr>
@@ -319,8 +319,8 @@
             </tr>
             <tr>
               <td class="name">gpt-oss-20b<span class="pn">OpenAI · 21B · Apache 2.0</span></td>
-              <td class="num">3.6B</td><td class="num">12.1GB</td><td class="num">50+</td>
-              <td><span class="chip ok">Volume tier</span> GPU-resident. 12.1GB of weights at Q8_0; OpenAI specs ~16GB total once KV cache is counted, which is the whole 16GB card. Triage, classification, diff summaries.</td>
+              <td class="num">3.6B</td><td class="num">12.1GB</td><td class="num">39 †</td>
+              <td><span class="chip warn">Volume tier</span> <strong>Does not fit the desktop’s 8GB card.</strong> 12.1GB of weights against 8GB of VRAM, so about half the layers spill to system memory. † Measured, not estimated: <strong>39 tok/s</strong> decode at 4096 context on the desktop, Sept 2026. Triage, classification, diff summaries.</td>
             </tr>
             <tr>
               <td class="name">Nemotron 3 Super<span class="pn">NVIDIA · 120B-A12B · SWE-bench 60.47%</span></td>
@@ -339,9 +339,9 @@
 
     <section>
       <h3>Runtime configuration</h3>
-      <p class="lede">llama.cpp with <code>--n-cpu-moe</code>. Always-active weights on the GPU, routed experts in system memory.</p>
+      <p class="lede">llama.cpp with <code>--n-cpu-moe</code>. Always-active weights on the GPU, routed experts in system memory. <strong>This describes a GPU PW-1x does not have.</strong> The 4060 Ti stays in the desktop, so the machine starts CPU-only: every weight lives in RAM, and <code>--n-cpu-moe</code> and <code>-ngl</code> do not apply until a card is bought. The figures below are what to return to when one is.</p>
       <div class="specs">
-        <div><dt>On GPU (16GB)</dt><dd>Attention<small>+ dense FFN, shared experts, KV cache</small></dd></div>
+        <div><dt>On GPU (once fitted)</dt><dd>Attention<small>+ dense FFN, shared experts, KV cache</small></dd></div>
         <div><dt>In RAM (128GB)</dt><dd>Routed experts<small>streamed per token</small></dd></div>
         <div><dt>Prefill bound by</dt><dd>GPU compute</dd></div>
         <div><dt>Generation bound by</dt><dd>RAM bandwidth</dd></div>
@@ -373,7 +373,7 @@
           <tbody>
             <tr><td class="name">Logical CPUs</td><td class="num">0–11, 32–43</td><td class="num">12–31, 44–63</td><td>32C/64T — pin each core <em>with</em> its SMT sibling or the other workload lands on the same physical core</td></tr>
             <tr><td class="name">Memory</td><td class="num">76GB cap</td><td class="num">40GB cap</td><td>63GB model + KV vs containers; 12GB left for host and page cache</td></tr>
-            <tr><td class="name">GPU</td><td class="num">exclusive</td><td class="num">—</td><td>No contention; nothing else needs it</td></tr>
+            <tr><td class="name">GPU</td><td class="num">none</td><td class="num">—</td><td>PW-1x has no card; the desktop’s 8GB 4060 Ti is a separate best-effort tier</td></tr>
             <tr><td class="name">Memory bandwidth</td><td class="num">dominant</td><td class="num">minimal</td><td>Only builds contend meaningfully</td></tr>
           </tbody>
         </table>
@@ -418,13 +418,13 @@
           <li><strong>No SATA ports on this board.</strong> Storage is 2× M.2 plus OCuLink and miniSAS HD. Any SATA device needs a breakout cable. This is why the archive drive stays in its USB enclosure.</li>
           <li><strong>Never mix RDIMM and LRDIMM.</strong> The installed memory is RDIMM. Any future capacity change replaces all eight modules, it does not add to them.</li>
           <li><strong>Server board on an open bench has no directed airflow</strong> over the passive VRM heatsinks or the DIMM bank. Read the IPMI sensors under sustained load before deciding whether a fan is needed.</li>
-          <li><strong>llama.cpp must be built with CUDA.</strong> A CPU-only build loads fine and runs at a crawl, which reads as "slow model" rather than "wrong build". Check the startup log for device detection.</li>
+          <li><strong>Build CPU-only for now; check the log when that changes.</strong> PW-1x has no card, so a CPU-only build is the correct one. When a GPU is fitted, rebuild with CUDA and confirm device detection in the startup log — a CPU-only build on a machine that has a card loads fine and runs at a crawl, which reads as "slow model" rather than "wrong build".</li>
         </ul>
       </div>
       <ul>
         <li><strong>~140 GB/s is a hard ceiling</strong>, inherent to the SP3 platform. Genoa's ~460 GB/s requires a different socket, board and memory generation.</li>
-        <li><strong>16GB of VRAM is the real bottleneck.</strong> gpt-oss-20b is specified to run <em>within</em> 16GB — the whole card — so it cannot be resident while a large model also uses the GPU. The two models swap; they do not coexist.</li>
-        <li><strong>Zen 2 is excluded from AMD's ZenDNN</strong>, which gives 2–4.5× faster prompt processing on Milan and newer. Largely academic while the GPU handles prefill; it matters if the machine is ever run CPU-only.</li>
+        <li><strong>PW-1x has no GPU, and the desktop’s is 8GB.</strong> gpt-oss-20b needs 12.1GB of weights, so it does not fit that card at all: measured, it runs at 39 tok/s with roughly half its layers on the processor. Any card bought for PW-1x wants 24GB or more to hold the small model and the large one’s attention layers at the same time.</li>
+        <li><strong>Zen 2 is excluded from AMD's ZenDNN</strong>, which gives 2–4.5× faster prompt processing on Milan and newer. Not academic: PW-1x runs CPU-only, so nothing offloads prompt processing and this is a live cost.</li>
         <li><strong>Single socket, permanently.</strong> One CPU, no second.</li>
         <li><strong>Uptime is coupled.</strong> Anything hosted here goes down when the box reboots for a kernel update, and every experiment with the inference stack is a risk to those services. Reloading a model after a restart is cheap — about twelve seconds off the NVMe — but a host reboot takes everything with it.</li>
       </ul>
@@ -433,8 +433,8 @@
     <section>
       <h3>Upgrade path, in priority order</h3>
       <ol class="steps">
-        <li><div><b>Second GPU.</b> Six x16 slots free. Directly attacks prefill and context headroom, and is what allows the small and large models to run concurrently. Used RTX 3090 ~$1,000. Nothing existing is replaced.</div></li>
-        <li><div><b>Milan CPU swap.</b> Board supports EPYC 7003. A 7543P (~$950, 256MB L3 implying 8 CCDs) adds ZenDNN support, Zen 3 IPC and more fabric bandwidth. Poor value against the GPU: 8× the price of the current $120 chip for a fraction of the benefit. Note Milan is still AVX2 — AVX-512 is not reachable on this socket.</div></li>
+        <li><div><b>A GPU — PW-1x has none.</b> Six x16 slots free. Directly attacks prefill and context headroom, and is what allows the small and large models to run concurrently. Measure CPU-only prefill first; that number is what the purchase is judged against. A used RTX 3090 24GB runs ~$1,050 as of Sept 2026; a used AMD Instinct MI50 32GB at $250–380 is the budget route, paid for in community-maintained drivers rather than dollars. Nothing existing is replaced.</div></li>
+        <li><div><b>CPU swap — price the cheap one first.</b> Staying on Rome, a used <strong>EPYC 7532</strong> ($140–243) is the same 32 cores with 256MB L3, meaning eight chiplets against the 7452’s four and twice the fabric between cores and memory. Whether that converts into real bandwidth is a measurement rather than a certainty — the 7452 has tested in the same STREAM band as 8-chiplet parts — so run the bandwidth check on arrival and buy only if the number disappoints. Milan is the expensive version: a 7543P (~$950) adds ZenDNN and Zen 3 IPC at eight times the price of the current chip, for a fraction of a GPU’s benefit. Milan is still AVX2; AVX-512 is not reachable on this socket.</div></li>
         <li><div><b>Memory to 512GB.</b> Eight 64GB modules. Verify 64GB dual-rank at 3200 against the board QVL first — not confirmed. Only worth it for 400B-class models this bandwidth barely supports.</div></li>
         <li><div><b>OCuLink storage expansion.</b> Two Gen4 x4 ports for external NVMe or a drive cage.</div></li>
       </ol>
@@ -443,11 +443,11 @@
     <section>
       <h3>Next actions</h3>
       <ol class="steps">
-        <li><div><b>Baseline test — do now, costs nothing.</b> Install Ollama on the existing desktop and run <code>gpt-oss:20b</code> on the 4060 Ti. Point the current agent harness at <code>localhost:11434/v1</code>. This answers whether the small tier is sufficient, which is the assumption the whole build rests on.</div></li>
-        <li><div><b>On memory arrival: memtest86+, all eight modules, full passes, overnight.</b> Inside the 30-day return window. A failure found in week one is a defective return; the same failure in month four is a warranty claim requiring a matched replacement.</div></li>
-        <li><div><b>Assemble on open bench.</b> Non-conductive surface, off carpet, out of reach of pets.</div></li>
+        <li><div><b>Baseline test — first numbers in, Sept 2026.</b> Ollama running <code>gpt-oss-20b</code> on the desktop returns <strong>39 tok/s</strong> decode at 4096 context, with the model split evenly across processor and card because 12.1GB does not fit 8GB of VRAM. Still open: a week of real volume work to judge whether the small tier is good enough, and the current rate-limit count it is meant to reduce.</div></li>
+        <li><div><b>Assemble on open bench.</b> Non-conductive surface, off carpet, out of reach of pets. This comes <em>before</em> the memory test — revisions before Sept 2026 had the two the wrong way round, and that order cannot execute: memtest86+ needs the processor, cooler, supply and board mounted and POSTing.</div></li>
+        <li><div><b>Then memtest86+, all eight modules, full passes, overnight.</b> Inside the 30-day return window, counted from delivery. A failure found in week one is a defective return; the same failure in month four is a warranty claim requiring a matched replacement.</div></li>
         <li><div><b>Load under sustained inference and read IPMI</b> VRM and DIMM temperatures. Add a ~$12 fan aimed at the DIMM bank only if the numbers call for it.</div></li>
-        <li><div><b>Build llama.cpp with CUDA, load gpt-oss-120b Q8_0, tune <code>--n-cpu-moe</code></b> downward until VRAM is nearly full. Record actual tokens/sec and replace the estimates in this document.</div></li>
+        <li><div><b>Build llama.cpp CPU-only, load gpt-oss-120b Q8_0 fully in RAM.</b> Record actual tokens/sec, decode <em>and</em> prefill on a 32k context, and replace the estimates in this document. Prefill is the number that decides whether a GPU is worth buying.</div></li>
         <li><div><b>Close the three open memory quote threads</b> (Topmemory, memory.net, TechMikeNY) with a one-line note. Keep the contacts — future GPU and CPU purchases come from the same channel.</div></li>
       </ol>
     </section>
@@ -482,7 +482,7 @@
 <span class="k">hardware</span>:
   <span class="k">cpu</span>: { <span class="k">model</span>: <span class="v">EPYC 7452</span>, <span class="k">cores</span>: <span class="v">32</span>, <span class="k">arch</span>: <span class="v">zen2_rome</span>, <span class="k">l3_mb</span>: <span class="v">128</span>, <span class="k">ccd_est</span>: <span class="v">4</span>, <span class="k">tdp_w</span>: <span class="v">155</span>, <span class="k">socket</span>: <span class="v">SP3</span>, <span class="k">state</span>: <span class="v">owned</span> }
   <span class="k">board</span>: { <span class="k">model</span>: <span class="v">ASRock Rack ROMED8-2T</span>, <span class="k">pcie_x16_slots</span>: <span class="v">7</span>, <span class="k">pcie_gen</span>: <span class="v">4</span>, <span class="k">lanes</span>: <span class="v">112</span>, <span class="k">dimm_slots</span>: <span class="v">8</span>, <span class="k">dpc</span>: <span class="v">1</span>, <span class="k">m2</span>: <span class="v">2</span>, <span class="k">sata_ports</span>: <span class="v">0</span>, <span class="k">oculink</span>: <span class="v">2</span>, <span class="k">minisas_hd</span>: <span class="v">2</span>, <span class="k">nic</span>: <span class="v">dual_10gbe_x550</span>, <span class="k">ipmi</span>: <span class="v">true</span>, <span class="k">cpu_support</span>: [<span class="v">7002</span>, <span class="v">7003</span>], <span class="k">state</span>: <span class="v">owned</span> }
-  <span class="k">gpu</span>: { <span class="k">model</span>: <span class="v">RTX 4060 Ti FE</span>, <span class="k">vram_gb</span>: <span class="v">16</span>, <span class="k">role</span>: <span class="v">attention_kv_prefill</span>, <span class="k">state</span>: <span class="v">owned</span> }
+  <span class="k">gpu</span>: { <span class="k">model</span>: <span class="v">RTX 4060 Ti FE</span>, <span class="k">vram_gb</span>: <span class="v">8</span>, <span class="k">role</span>: <span class="v">desktop_best_effort_tier</span>, <span class="k">location</span>: <span class="v">desktop</span>, <span class="k">pw1x_gpu</span>: <span class="v">none</span>, <span class="k">state</span>: <span class="v">owned</span> }
   <span class="k">memory</span>: { <span class="k">kit</span>: <span class="v">A-Tech 128GB</span>, <span class="k">modules</span>: <span class="v">8</span>, <span class="k">module_gb</span>: <span class="v">16</span>, <span class="k">type</span>: <span class="v">DDR4-3200 PC4-25600R</span>, <span class="k">form</span>: <span class="v">RDIMM</span>, <span class="k">rank</span>: <span class="v">2Rx8</span>, <span class="k">ecc</span>: <span class="v">registered</span>, <span class="k">warranty</span>: <span class="v">lifetime</span>, <span class="k">cost_usd</span>: <span class="v">1315.69</span>, <span class="k">state</span>: <span class="v">ordered</span> }
   <span class="k">cooler</span>: { <span class="k">model</span>: <span class="v">ARCTIC Freezer 4U-M</span>, <span class="k">pn</span>: <span class="v">ACFRE00133B</span>, <span class="k">socket</span>: <span class="v">SP3</span>, <span class="k">cost_usd</span>: <span class="v">57.92</span>, <span class="k">state</span>: <span class="v">ordered</span> }
   <span class="k">psu</span>: { <span class="k">model</span>: <span class="v">MSI MPG A850G PCIE5</span>, <span class="k">watts</span>: <span class="v">850</span>, <span class="k">eps_connectors</span>: <span class="v">2</span>, <span class="k">cost_usd</span>: <span class="v">89.99</span>, <span class="k">state</span>: <span class="v">ordered</span> }
@@ -498,7 +498,7 @@
 <span class="k">models</span>:
   - { <span class="k">id</span>: <span class="v">gpt-oss-120b</span>, <span class="k">total_b</span>: <span class="v">117</span>, <span class="k">active_b</span>: <span class="v">5.1</span>, <span class="k">size_gb</span>: <span class="v">63</span>, <span class="k">quant</span>: <span class="v">mxfp4_native</span>, <span class="k">license</span>: <span class="v">apache_2.0</span>, <span class="k">tps_est</span>: [<span class="v">17</span>,<span class="v">25</span>], <span class="k">role</span>: <span class="v">primary</span>, <span class="k">runs_on_stock_llamacpp</span>: <span class="v">true</span> }
   - { <span class="k">id</span>: <span class="v">llama-4-scout</span>, <span class="k">total_b</span>: <span class="v">109</span>, <span class="k">active_b</span>: <span class="v">17</span>, <span class="k">size_gb</span>: <span class="v">65</span>, <span class="k">quant</span>: <span class="v">q4_k_m</span>, <span class="k">ctx</span>: <span class="v">10000000</span>, <span class="k">license</span>: <span class="v">llama4_community</span>, <span class="k">tps_est</span>: [<span class="v">8</span>,<span class="v">11</span>], <span class="k">role</span>: <span class="v">alternate</span>, <span class="k">runs_on_stock_llamacpp</span>: <span class="v">true</span> }
-  - { <span class="k">id</span>: <span class="v">gpt-oss-20b</span>, <span class="k">total_b</span>: <span class="v">21</span>, <span class="k">active_b</span>: <span class="v">3.6</span>, <span class="k">size_gb</span>: <span class="v">12.1</span>, <span class="k">vram_total_gb</span>: <span class="v">16</span>, <span class="k">quant</span>: <span class="v">mxfp4_native</span>, <span class="k">license</span>: <span class="v">apache_2.0</span>, <span class="k">tps_est</span>: [<span class="v">50</span>,<span class="v">null</span>], <span class="k">role</span>: <span class="v">volume_tier</span>, <span class="k">placement</span>: <span class="v">gpu_resident</span> }
+  - { <span class="k">id</span>: <span class="v">gpt-oss-20b</span>, <span class="k">total_b</span>: <span class="v">21</span>, <span class="k">active_b</span>: <span class="v">3.6</span>, <span class="k">size_gb</span>: <span class="v">12.1</span>, <span class="k">vram_total_gb</span>: <span class="v">16</span>, <span class="k">quant</span>: <span class="v">mxfp4_native</span>, <span class="k">license</span>: <span class="v">apache_2.0</span>, <span class="k">tps_est</span>: [<span class="v">39</span>,<span class="v">null</span>], <span class="k">role</span>: <span class="v">volume_tier</span>, <span class="k">placement</span>: <span class="v">does_not_fit_8gb_card</span> }
   - { <span class="k">id</span>: <span class="v">nemotron-3-super</span>, <span class="k">total_b</span>: <span class="v">120</span>, <span class="k">active_b</span>: <span class="v">12</span>, <span class="k">size_gb</span>: <span class="v">68</span>, <span class="k">swebench</span>: <span class="v">60.47</span>, <span class="k">status</span>: <span class="v">unresolved</span>, <span class="k">blocker</span>: <span class="v">nvfp4_modelopt_quant</span>, <span class="k">note</span>: <span class="v">llamacpp_issue_20504_closed_via_pr_20539_verify_before_relying</span> }
   - { <span class="k">id</span>: <span class="v">llama-4-maverick</span>, <span class="k">total_b</span>: <span class="v">400</span>, <span class="k">active_b</span>: <span class="v">17</span>, <span class="k">size_gb</span>: <span class="v">243</span>, <span class="k">size_gb_iq1s</span>: <span class="v">122</span>, <span class="k">status</span>: <span class="v">rejected</span>, <span class="k">reason</span>: <span class="v">does_not_fit_128gb_at_usable_quant</span> }
 
@@ -508,7 +508,7 @@
   <span class="k">gpu_holds</span>: [<span class="v">attention</span>, <span class="v">dense_ffn</span>, <span class="v">shared_experts</span>, <span class="v">kv_cache</span>]
   <span class="k">ram_holds</span>: [<span class="v">routed_experts</span>]
   <span class="k">api</span>: <span class="v">openai_compatible_v1</span>
-  <span class="k">requires_cuda_build</span>: <span class="v">true</span>
+  <span class="k">requires_cuda_build</span>: <span class="v">false_until_a_gpu_exists</span>
 
 <span class="k">workloads</span>:
   <span class="k">topology</span>: { <span class="k">physical_cores</span>: <span class="v">32</span>, <span class="k">logical_cpus</span>: <span class="v">64</span>, <span class="k">smt</span>: <span class="v">true</span>, <span class="k">verify_with</span>: <span class="v">lscpu -e=CPU,CORE</span> }
@@ -521,8 +521,8 @@
 
 <span class="k">constraints</span>:
   - { <span class="k">id</span>: <span class="v">bandwidth_ceiling</span>, <span class="k">value_gbs</span>: <span class="v">140</span>, <span class="k">fixable</span>: <span class="v">false</span>, <span class="k">note</span>: <span class="v">inherent_to_sp3</span> }
-  - { <span class="k">id</span>: <span class="v">vram_ceiling</span>, <span class="k">value_gb</span>: <span class="v">16</span>, <span class="k">fixable</span>: <span class="v">true</span>, <span class="k">fix</span>: <span class="v">second_gpu</span>, <span class="k">effect</span>: <span class="v">blocks_concurrent_small_and_large_models</span> }
-  - { <span class="k">id</span>: <span class="v">zendnn_unsupported</span>, <span class="k">reason</span>: <span class="v">zen2</span>, <span class="k">fixable</span>: <span class="v">true</span>, <span class="k">fix</span>: <span class="v">milan_cpu</span>, <span class="k">severity</span>: <span class="v">low_while_gpu_handles_prefill</span> }
+  - { <span class="k">id</span>: <span class="v">vram_ceiling</span>, <span class="k">value_gb</span>: <span class="v">8</span>, <span class="k">fixable</span>: <span class="v">true</span>, <span class="k">fix</span>: <span class="v">buy_a_gpu</span>, <span class="k">effect</span>: <span class="v">blocks_concurrent_small_and_large_models</span> }
+  - { <span class="k">id</span>: <span class="v">zendnn_unsupported</span>, <span class="k">reason</span>: <span class="v">zen2</span>, <span class="k">fixable</span>: <span class="v">true</span>, <span class="k">fix</span>: <span class="v">milan_cpu</span>, <span class="k">severity</span>: <span class="v">high_pw1x_has_no_gpu</span> }
   - { <span class="k">id</span>: <span class="v">no_sata</span>, <span class="k">fixable</span>: <span class="v">true</span>, <span class="k">fix</span>: <span class="v">oculink_or_minisas_breakout</span> }
   - { <span class="k">id</span>: <span class="v">single_socket</span>, <span class="k">fixable</span>: <span class="v">false</span> }
   - { <span class="k">id</span>: <span class="v">workload_colocation</span>, <span class="k">risk</span>: <span class="v">security</span>, <span class="k">note</span>: <span class="v">public_sites_share_host_with_dev_and_models</span>, <span class="k">mitigation</span>: <span class="v">rootless_podman_treat_host_as_exposed</span> }
@@ -531,14 +531,14 @@
   - { <span class="k">id</span>: <span class="v">no_rdimm_lrdimm_mixing</span>, <span class="k">effect</span>: <span class="v">capacity_change_replaces_all_8_modules</span> }
 
 <span class="k">upgrades_ranked</span>:
-  - { <span class="k">rank</span>: <span class="v">1</span>, <span class="k">item</span>: <span class="v">second_gpu</span>, <span class="k">candidate</span>: <span class="v">used_rtx_3090</span>, <span class="k">cost_usd</span>: <span class="v">1000</span>, <span class="k">unlocks</span>: [<span class="v">prefill</span>, <span class="v">context_headroom</span>, <span class="v">concurrent_models</span>] }
-  - { <span class="k">rank</span>: <span class="v">2</span>, <span class="k">item</span>: <span class="v">milan_cpu</span>, <span class="k">candidate</span>: <span class="v">EPYC 7543P</span>, <span class="k">cost_usd</span>: <span class="v">950</span>, <span class="k">unlocks</span>: [<span class="v">zendnn</span>, <span class="v">zen3_ipc</span>, <span class="v">8_ccd_fabric</span>], <span class="k">value</span>: <span class="v">poor_vs_gpu</span> }
+  - { <span class="k">rank</span>: <span class="v">1</span>, <span class="k">item</span>: <span class="v">gpu</span>, <span class="k">candidate</span>: <span class="v">used_rtx_3090</span>, <span class="k">cost_usd</span>: <span class="v">1050</span>, <span class="k">unlocks</span>: [<span class="v">prefill</span>, <span class="v">context_headroom</span>, <span class="v">concurrent_models</span>] }
+  - { <span class="k">rank</span>: <span class="v">2</span>, <span class="k">item</span>: <span class="v">milan_cpu</span>, <span class="k">candidate</span>: <span class="v">EPYC 7543P</span>, <span class="k">cost_usd</span>: <span class="v">950</span>, <span class="k">cheaper_first</span>: <span class="v">EPYC_7532_rome_8ccd_140_243usd_measure_bandwidth_first</span>, <span class="k">unlocks</span>: [<span class="v">zendnn</span>, <span class="v">zen3_ipc</span>, <span class="v">8_ccd_fabric</span>], <span class="k">value</span>: <span class="v">poor_vs_gpu</span> }
   - { <span class="k">rank</span>: <span class="v">3</span>, <span class="k">item</span>: <span class="v">memory_512gb</span>, <span class="k">blocker</span>: <span class="v">64gb_dual_rank_at_3200_unverified_on_qvl</span> }
   - { <span class="k">rank</span>: <span class="v">4</span>, <span class="k">item</span>: <span class="v">oculink_nvme_expansion</span> }
 
 <span class="k">open_actions</span>:
-  - { <span class="k">id</span>: <span class="v">baseline_test</span>, <span class="k">blocking</span>: <span class="v">false</span>, <span class="k">cost_usd</span>: <span class="v">0</span>, <span class="k">desc</span>: <span class="v">run gpt-oss-20b on existing 4060 Ti via ollama; point current harness at localhost:11434/v1</span> }
-  - { <span class="k">id</span>: <span class="v">memtest_on_arrival</span>, <span class="k">deadline</span>: <span class="v">within_30d_return_window</span>, <span class="k">desc</span>: <span class="v">memtest86+ all 8 modules, full passes</span> }
+  - { <span class="k">id</span>: <span class="v">baseline_test</span>, <span class="k">blocking</span>: <span class="v">false</span>, <span class="k">cost_usd</span>: <span class="v">0</span>, <span class="k">desc</span>: <span class="v">done_sept2026: 39 tps on desktop 8gb card, 50/50 split; still open: week of volume work and rate-limit count</span> }
+  - { <span class="k">id</span>: <span class="v">memtest_on_arrival</span>, <span class="k">deadline</span>: <span class="v">within_30d_return_window</span>, <span class="k">desc</span>: <span class="v">assemble first, then memtest86+ all 8 modules, full passes</span> }
   - { <span class="k">id</span>: <span class="v">ipmi_thermal_check</span>, <span class="k">desc</span>: <span class="v">read vrm and dimm temps under sustained load; add fan only if indicated</span> }
   - { <span class="k">id</span>: <span class="v">record_actual_tps</span>, <span class="k">desc</span>: <span class="v">replace estimates in this document with measurements</span> }
   - { <span class="k">id</span>: <span class="v">close_quote_threads</span>, <span class="k">parties</span>: [<span class="v">topmemory</span>, <span class="v">memory.net</span>, <span class="v">techmikeny</span>] }

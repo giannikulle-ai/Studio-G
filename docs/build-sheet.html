@@ -429,10 +429,10 @@
     <p class="note">Also considered and rejected: RIMLANCE 4× kits at $800 (cheapest, but ships from China with a 30-day window, no reviews, and demonstrable spec errors in their catalog — a stick failing in month four means hunting a matched replacement); NEMIX at $1,323 (identical to A-Tech, $7 more); PCSP used Hynix lot at $1,320 (used, same price as new, 90-day RMA only). Kept here as the decision trail, not as live options.</p>
 
     <div class="callout">
-      <h3>On arrival — do this before anything else</h3>
-      <p>Run <strong>memtest86+ on all eight sticks together, full passes overnight</strong>, then again one stick at a time if anything errors. Do it inside the 30-day return window, not after.</p>
+      <h3>On arrival — assemble, then test the memory</h3>
+      <p><strong>Assembly comes first.</strong> memtest86+ needs the processor, cooler, supply and board mounted and POSTing, so it cannot run before the machine is built — earlier revisions of this sheet implied otherwise. Then run <strong>memtest86+ on all eight sticks together, full passes overnight</strong>, and again one stick at a time if anything errors. Do it inside the 30-day return window, not after.</p>
       <p>This is what the window is actually for. A bad stick found in week one is a defective return — the vendor pays shipping and the restocking fee never comes up. The same stick failing in month four is a warranty claim: slower, and on a 1DPC board it means finding a <em>matched</em> replacement or replacing all eight.</p>
-      <p>Close out the three quote threads with a one-line "covered on 128GB, thanks." Topmemory especially — fleet pulls are where the second GPU and a Milan CPU will come from.</p>
+      <p>Close out the three quote threads with a one-line "covered on 128GB, thanks." Topmemory especially — fleet pulls are where a GPU and any CPU swap will come from.</p>
     </div>
   </section>
 
@@ -461,7 +461,7 @@
           </tr>
           <tr>
             <td class="name">RTX 4060 Ti FE</td>
-            <td>16GB — holds attention, shared experts, KV cache</td>
+            <td><strong>8GB</strong>, measured — not the 16GB earlier revisions claimed. NVIDIA made no Founders Edition of the 16GB card, so that line contradicted itself. Stays in the desktop.</td>
             <td><span class="chip ok">Have</span></td>
             <td class="num">—</td>
           </tr>
@@ -479,7 +479,7 @@
           </tr>
           <tr>
             <td class="name">PSU</td>
-            <td>MSI MPG A850G PCIE5, 850W 80+ Gold, 2× EPS 4+4. Board requirement (24-pin + one 8-pin + one 4-pin) is from the ServeTheHome review only — confirm against the ASRock manual at assembly. Two EPS 4+4 covers either reading. 850W leaves headroom for a second GPU.</td>
+            <td>MSI MPG A850G PCIE5, 850W 80+ Gold, 2× EPS 4+4. Board requirement confirmed against the ASRock manual, Sept 2026: ATXPWR1 24-pin, ATX12V1 8-pin, ATX12V2 4-pin, and both 12V connectors get populated. The two EPS 4+4 cables cover it. 850W leaves headroom for a GPU.</td>
             <td><span class="chip ok">Ordered</span></td>
             <td class="num">$89.99</td>
           </tr>
@@ -574,8 +574,8 @@
             <td class="num">3.6B</td>
             <td>Apache 2.0</td>
             <td class="num">12.1GB</td>
-            <td class="num">50+</td>
-            <td>Volume grunt work: triage, classification, diff summaries, commit messages. Mid in isolation, correct for this job.</td>
+            <td class="num">39 †</td>
+            <td>Volume grunt work: triage, classification, diff summaries, commit messages. Mid in isolation, correct for this job. † <strong>Measured at 39 tok/s</strong> on the desktop’s 8GB card, Sept 2026 — the weights do not fit, so half the layers run on the processor.</td>
           </tr>
           <tr>
             <td class="name">Llama 4 Maverick<span class="pn">Meta · 400B · 128 experts · 1M ctx</span></td>
@@ -591,9 +591,10 @@
 
     <p class="note">Model specs verified against the vendors’ own Hugging Face cards. Tok/s are estimates, not benchmarks. Raw weight-streaming math — 140 GB/s over active-parameter bytes — gives a <em>ceiling</em> of roughly 51 tok/s for gpt-oss-120b and 14 for Scout; those assume nothing but expert weights crosses the bus. The figures above discount for attention compute, KV cache traffic, MoE routing and the GPU/CPU boundary — more heavily for gpt-oss-120b, whose 5.1B active set is small enough that fixed overheads weigh proportionally more. The discount is judgement rather than measurement. Bandwidth is derived from Dell’s STREAM Triad on 7452 silicon (270–300 GB/s dual-socket, halved). Published figures for these models come from Macs at 546 GB/s and read roughly 3× higher.</p>
 
-    <h3>The pairing — one card, one model at a time</h3>
-    <p>OpenAI specs gpt-oss-20b to run <em>within</em> 16GB, which is the whole card. It cannot sit resident while a 120B MoE also uses the GPU for attention and KV cache — the two configurations compete for the same VRAM. So this is a swap, not a pairing: load the small model when you want volume and speed, the large one when you want reasoning.</p>
-    <p>Running both at once is the first thing a second GPU buys you, which is a stronger argument for that upgrade than prefill alone.</p>
+    <h3>The pairing — there is no card to pair with</h3>
+    <p><strong>Correction, Sept 2026.</strong> Earlier revisions of this sheet built a plan around a 16GB 4060 Ti. The card is <strong>8GB</strong>, and it stays in the desktop rather than moving into PW-1x. Both halves of that assumption are now gone.</p>
+    <p>What it means for the small model: gpt-oss-20b’s 12.1GB of weights do not fit 8GB of VRAM at all, so on the desktop it runs half on the card and half on the processor, measured at <strong>39 tok/s</strong>. It is still useful for volume work; it is not the fast resident tier this sheet described.</p>
+    <p>What it means for PW-1x: the machine starts with no GPU, every weight in RAM, and prompt processing done by the processor. A card bought later wants 24GB or more to hold the small model and the large one’s attention layers together — which is the same conclusion this sheet reached, for a different reason.</p>
     <p><strong>The runnable set is two models, not four.</strong> Nemotron needs a fork; Maverick is a skip. That leaves gpt-oss-120b at 63GB and Llama 4 Scout at 62–65GB — both on stock llama.cpp, both comfortably inside 128GB with ~60GB left for KV cache. That headroom is the argument for 128GB, and the reason 256GB adds nothing.</p>
   </section>
 
@@ -601,10 +602,10 @@
   <section>
     <p class="eyebrow">Runtime</p>
     <h2>How the split works</h2>
-    <p class="lede">llama.cpp with <code>--n-cpu-moe</code> is the mechanism that makes this build viable: always-active weights on the GPU, routed experts in system RAM.</p>
+    <p class="lede">llama.cpp with <code>--n-cpu-moe</code> is the mechanism that makes this build viable <em>once a GPU exists</em>: always-active weights on the card, routed experts in system RAM. <strong>PW-1x has no card yet</strong>, so the machine starts CPU-only with everything in RAM and these flags idle. Keep this section for the day one is fitted.</p>
 
     <div class="specs">
-      <div><dt>On GPU (16GB)</dt><dd>Attention · dense FFN · shared experts · KV cache</dd></div>
+      <div><dt>On GPU (once fitted)</dt><dd>Attention · dense FFN · shared experts · KV cache</dd></div>
       <div><dt>In RAM (128GB)</dt><dd>Routed experts</dd></div>
       <div><dt>Prefill runs on</dt><dd>GPU</dd></div>
       <div><dt>Generation bound by</dt><dd>RAM bandwidth</dd></div>
@@ -634,7 +635,7 @@
     </div>
 
     <div class="specs">
-      <div><dt>Inference</dt><dd>CPUs 0–11, 32–43<small>76GB cap, GPU exclusive</small></dd></div>
+      <div><dt>Inference</dt><dd>CPUs 0–11, 32–43<small>76GB cap, no GPU</small></dd></div>
       <div><dt>Hosting + dev</dt><dd>CPUs 12–31, 44–63<small>40GB cap, containers</small></dd></div>
       <div><dt>Host reserve</dt><dd>12GB<small>Caps must not sum past 128</small></dd></div>
       <div><dt>Stack cost</dt><dd>$0<small>All open source</small></dd></div>
@@ -651,9 +652,9 @@
     <h2>Where this hurts</h2>
 
     <ul>
-      <li><strong>Prefill on long context, with 16GB of VRAM.</strong> The daily annoyance once an agent is pointed at a large repo, and the first thing worth fixing.</li>
+      <li><strong>Prefill on long context, with no GPU at all.</strong> PW-1x runs CPU-only, so prompt processing has nothing behind it. The daily annoyance once an agent is pointed at a large repo, and the first thing worth fixing.</li>
       <li><strong>~140 GB/s is a hard wall.</strong> Dell measured 270–300 GB/s dual-socket STREAM Triad on the 7452, so roughly 135–150 per socket. No configuration gets past it, and it’s inherent to SP3 — Genoa’s ~460 GB/s needs a different socket, board, and memory.</li><li><strong>The 7452 is a 4-CCD part</strong> (inferred: 128MB L3 at 32MB per Rome CCD — no vendor doc states it outright). It is <em>not</em> one of the bandwidth-crippled SKUs; those are the 2-CCD parts — 7282, 7272, 7252, 7232P — which lose roughly half their bandwidth to fabric limits. Dell measured the 7452 in the same STREAM band as the 8-CCD 7702, so the conclusion rests on measurement rather than on the CCD count.</li>
-      <li><strong>Rome is excluded from ZenDNN.</strong> AMD's 2–4.5× llama.cpp prompt-processing speedup covers Milan, Genoa and Turin, not Zen 2. Largely academic while the GPU handles prefill; it becomes real if you ever run CPU-only.</li>
+      <li><strong>Rome is excluded from ZenDNN.</strong> AMD's 2–4.5× llama.cpp prompt-processing speedup covers Milan, Genoa and Turin, not Zen 2. Not academic: this machine <em>is</em> CPU-only, so the missing speedup is a live cost rather than a footnote.</li>
       <li><strong>Single socket, permanently.</strong> One CPU, no second.</li>
       <li><strong>The CPU presents 64 logical CPUs, not 32.</strong> Any core-pinning scheme that ignores SMT siblings silently fails to isolate anything. Verify with <code>lscpu -e</code>.</li>
       <li><strong>Uptime is coupled.</strong> Anything hosted here goes down when the box reboots. Reloading a model afterwards is cheap — about twelve seconds off the NVMe — but a host reboot takes the sites with it.</li>
@@ -667,15 +668,15 @@
     <h2>What to buy next, and when</h2>
 
     <ol class="rank">
-      <li><div><b>Second GPU.</b> Six x16 slots sit empty. Directly attacks prefill and context headroom, which is the actual bottleneck. Nothing you own gets replaced. Used 3090s run ~$1,000 — up from $700 two years ago, same squeeze that hit RAM.</div></li>
-      <li><div><b>Milan CPU swap.</b> The board supports EPYC 7003 including 3D V-Cache. A used 7443P or 7543P is a drop-in that lifts IPC and puts you on the supported side of the ZenDNN line. Milan pricing is falling for the same reason Rome's did — price it before buying GPUs.</div></li>
+      <li><div><b>A GPU — there is none in PW-1x.</b> Six x16 slots sit empty. Directly attacks prefill and context headroom, which is the actual bottleneck. Nothing you own gets replaced. Measure CPU-only prefill first — that is the number the purchase is judged against. Used 3090s run ~$1,050 as of Sept 2026, up from $700 two years ago, the same squeeze that hit RAM. A used AMD Instinct MI50 32GB at $250–380 is the budget route: more VRAM and more bandwidth than a 3090, roughly a third of its prompt-processing speed, and drivers the community maintains rather than AMD.</div></li>
+      <li><div><b>CPU swap — the cheap option is same-generation.</b> A used <strong>EPYC 7532</strong> ($140–243) is 32 cores with 256MB L3: eight chiplets rather than the 7452's four, so twice the fabric between cores and memory. Whether that shows up as real bandwidth is a measurement — see the 4-CCD note above, where the 7452 tested in the same band as 8-CCD parts — so run the bandwidth check first and buy only if the number disappoints. Milan (7443P, 7543P, ~$950) lifts IPC and crosses the ZenDNN line, at a price that competes with a GPU rather than with the 7532.</div></li>
       <li><div><b>RAM to 512GB.</b> Eight slots, 64GB modules. DDR4-3200 at 1DPC is official for Rome, but I found no vendor doc confirming 64GB dual-rank modules hold 3200 on this board — verify against the QVL before buying. Only worth it for 400B-class MoE, which this bandwidth barely supports anyway.</div></li>
       <li><div><b>OCuLink NVMe expansion.</b> Two Gen4 x4 ports for fast external storage or a drive cage. Makes the missing SATA a non-event.</div></li>
     </ol>
 
     <div class="callout">
-      <h3>Do this while the parts ship</h3>
-      <p>Pull <code>gpt-oss-20b</code> onto the 4060 Ti in the desktop you already have and point your agent harness at it. It costs nothing and tells you what the small tier can and can't do — which is the question the whole RAM purchase is currently a guess about.</p>
+      <h3>Done while the parts ship</h3>
+      <p>gpt-oss-20b is running on the desktop under Ollama: <strong>39 tok/s</strong> decode at 4096 context, split across card and processor because 12.1GB will not fit 8GB. That answers the hardware question and leaves the useful one open — a week of real volume work, against a written count of today’s rate-limit hits, is what tells you whether the small tier earns its place.</p>
     </div>
   </section>
 

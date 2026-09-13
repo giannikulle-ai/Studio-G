@@ -142,7 +142,7 @@
           <!-- row A -->
           <rect class="node" x="260" y="40" width="190" height="70" rx="3"/>
           <text class="t" x="276" y="64">Desktop PC</text>
-          <text class="s" x="276" y="82">RTX 4060 Ti · stays here</text>
+          <text class="s" x="276" y="82">RTX 4060 Ti 8GB · stays here</text>
           <text class="s" x="276" y="98">fast tier when idle</text>
 
           <rect class="node" x="790" y="40" width="190" height="70" rx="3"/>
@@ -284,7 +284,7 @@
 
           <rect class="node" x="260" y="480" width="190" height="90" rx="3"/>
           <text class="t" x="276" y="504">Desktop PC · Ollama</text>
-          <text class="s" x="276" y="524">4060 Ti · gpt-oss-20b</text>
+          <text class="s" x="276" y="524">4060 Ti 8GB · 39 tok/s</text>
           <text class="s" x="276" y="542">best-effort, only when idle</text>
 
           <rect class="node" x="560" y="480" width="190" height="90" rx="3"/>
@@ -503,8 +503,8 @@
     <p class="eyebrow">Before building</p>
     <h2>Where the five questions landed</h2>
     <ol class="q">
-      <li><div><b>Which 4060? — The 4060 Ti stays in the PC.</b> PW-1x starts CPU-only and the PC becomes a best-effort fast tier over 10GbE. Not cooked: decode is RAM-bound either way, so the 120b still runs — what you lose is prefill, which on Zen 2 without a GPU is minutes on a big repo context. Overnight batch is fine; interactive is not.
-        <span class="rec"><b>Now open:</b> the GPU path for PW-1x — run CPU-only and measure first (free), a 16GB card (~$430–450) to restore the design as drawn, or the used 3090 (~$1,000) that was already rank 1 on the Handoff's list. And whether the PC's tier is best-effort or a reserved VRAM slice.</span></div></li>
+      <li><div><b>Which 4060? — The 4060 Ti stays in the PC, and it is 8GB.</b> PW-1x starts CPU-only and the PC becomes a best-effort tier. Decode is RAM-bound either way, so the 120b still runs — what you lose is prefill, which on Zen 2 with no GPU is minutes on a big repo context. Overnight batch is fine; interactive is not.
+        <span class="rec"><b>Measured, Sept 2026:</b> the card is <b>8GB</b>, not the 16GB every document claimed — NVIDIA never made a 16GB Founders Edition, so the spec described a card that does not exist. gpt-oss-20b needs 12.1GB, so it does not fit: on the desktop it runs at <b>39 tok/s</b> with half its layers on the processor. The PC is therefore a weak tier for this model and a good one only for something small enough to fit. <b>Still open:</b> measure PW-1x CPU-only first, then a used 3090 24GB (~$1,050) or an MI50 32GB ($250–380) if prefill is what hurts.</span></div></li>
       <li><div><b>Subscription or API? — Subscription, through Claude Code.</b> Claude manages; local models are tools it calls over MCP. Nothing needs API keys unless it must run with no Claude session at all, and nothing does at launch.
         <span class="rec"><b>Consequence:</b> one bill, one code path. The first draft had a local Foreman dispatching to Claude as a tier — that was backwards, and it's gone.</span></div></li>
       <li><div><b>Screen A — small board + panel.</b> Pi Zero 2 W class, 7" 1024×600 HDMI panel, USB power from PW-1x, a cable to PW-1x's second 10GbE port so it stays up when the router doesn't.

@@ -43,4 +43,4 @@ Six checks over four documents: arithmetic, cross-document consistency (Handoff 
 
 ## Status
 
-All hardware bought. Nothing left to procure. Awaiting delivery. The 4060 Ti stays in the desktop, so PW-1x starts CPU-only; a 3090-class card is the planned purchase once real prefill numbers exist. See `docs/plan.md`.
+All hardware bought. Nothing left to procure. Awaiting delivery. The 4060 Ti stays in the desktop and is **8GB**, not the 16GB the artifacts claimed until Sept 2026, so PW-1x starts CPU-only; a 24GB card is the planned purchase once real prefill numbers exist. See `docs/plan.md`.

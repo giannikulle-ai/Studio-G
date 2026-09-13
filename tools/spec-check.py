@@ -50,7 +50,7 @@ MEM_TOTAL_GB = 128
 SHARED = [
     "1,620.59", "2,240.59", "2,230.59", "1,315.69", "57.92", "89.99", "156.99",
     "12.1GB", "243GB", "122GB", "68GB", "63GB", "65GB",
-    "17–25", "8–11", "50+", "60.47", "20504", "20539", "Unresolved",
+    "17–25", "8–11", "39 tok/s", "60.47", "20504", "20539", "Unresolved",
     "0–11, 32–43", "12–31, 44–63", "76GB", "40GB", "12GB", "lscpu -e",
     "judgement rather than measurement", "ceilings are arithmetic",
 ]
@@ -62,6 +62,12 @@ STALE = [
     '"chip stop">Blocked', 'AllowedCPUs</span>=<span class="v">0-11<',
     "Throughput figures are arithmetic", "Tok/s are arithmetic",
     "# arithmetic only", "arithmetic only; no benchmark",
+    # The 4060 Ti is 8GB, measured Sept 2026. NVIDIA never made a 16GB
+    # Founders Edition, so "FE" and "16GB" never described one real card.
+    "16GB — holds attention", "On GPU (16GB)", "within</em> 16GB",
+    'vram_gb</span>: <span class="v">16', "16GB of VRAM is the real bottleneck",
+    "Prefill on long context, with 16GB", "GPU-resident. 12.1GB",
+    "Second GPU", "gpu_resident", "attention_kv_prefill",
 ]
 
 # Strings the Assembly Guide must share with the Build Sheet (part numbers,
