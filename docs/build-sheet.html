@@ -393,6 +393,7 @@
       <span>Designation: <b>PW-1x</b></span>
       <span>Rev. <b>Sep 2026</b></span>
       <span>Socket <b>SP3</b> / 8-channel DDR4</span>
+      <span>Parts: <b>all in hand</b></span>
     </div>
     <h1>PW-1x Build Sheet</h1>
     <p class="sub">Projectile William v1 — a local agent and coding rig on EPYC Rome, doubling as a host for websites and dev environments. What's bought, which models actually fit, and what to upgrade when.</p>
@@ -401,7 +402,7 @@
   <!-- ============ DECISION ============ -->
   <section>
     <p class="eyebrow">Settled</p>
-    <h2>128GB — ordered</h2>
+    <h2>128GB — in hand</h2>
     <p class="lede">Every US open-weight model worth running fits inside 128GB. Doubling to 256GB unlocks no new model — it buys context headroom on one option that isn't worth running anyway.</p>
 
     <div class="callout">
@@ -425,11 +426,13 @@
       <div><dt>Kit</dt><dd>8 × 16GB<small>2Rx8 PC4-25600R</small></dd></div>
       <div><dt>Paid</dt><dd>$1,315.69</dd></div>
       <div><dt>Warranty</dt><dd>Lifetime</dd></div>
+      <div><dt>Arrived</dt><dd>13 Sep 2026<small>confirmed in hand</small></dd></div>
     </div>
     <p class="note">Also considered and rejected: RIMLANCE 4× kits at $800 (cheapest, but ships from China with a 30-day window, no reviews, and demonstrable spec errors in their catalog — a stick failing in month four means hunting a matched replacement); NEMIX at $1,323 (identical to A-Tech, $7 more); PCSP used Hynix lot at $1,320 (used, same price as new, 90-day RMA only). Kept here as the decision trail, not as live options.</p>
 
     <div class="callout">
-      <h3>On arrival — assemble, then test the memory</h3>
+      <h3>It arrived — assemble, then test the memory</h3>
+      <p><strong>The kit is in hand as of 13 September 2026, so the clock is running.</strong> Thirty days from delivery puts the last day to return a faulty module at <strong>13 October 2026</strong> — the latest it can be. The window counts from the vendor’s delivery date, not from the day the box was opened, so check the invoice and work to the real date if it is earlier.</p>
       <p><strong>Assembly comes first.</strong> memtest86+ needs the processor, cooler, supply and board mounted and POSTing, so it cannot run before the machine is built — earlier revisions of this sheet implied otherwise. Then run <strong>memtest86+ on all eight sticks together, full passes overnight</strong>, and again one stick at a time if anything errors. Do it inside the 30-day return window, not after.</p>
       <p>This is what the window is actually for. A bad stick found in week one is a defective return — the vendor pays shipping and the restocking fee never comes up. The same stick failing in month four is a warranty claim: slower, and on a 1DPC board it means finding a <em>matched</em> replacement or replacing all eight.</p>
       <p>Close out the three quote threads with a one-line "covered on 128GB, thanks." Topmemory especially — fleet pulls are where a GPU and any CPU swap will come from.</p>
@@ -468,19 +471,19 @@
           <tr>
             <td class="name">System memory</td>
             <td>128GB DDR4-3200 ECC RDIMM 2Rx8 — A-Tech kit, lifetime warranty</td>
-            <td><span class="chip ok">Ordered</span></td>
+            <td><span class="chip ok">In hand</span></td>
             <td class="num">$1,315.69</td>
           </tr>
           <tr>
             <td class="name">CPU cooler</td>
             <td>ARCTIC Freezer 4U-M (ACFRE00133B). SP3, dual 120mm, rated to 350W. The Noctua NH-U14S TR4-SP3 is discontinued.</td>
-            <td><span class="chip ok">Ordered</span></td>
+            <td><span class="chip ok">In hand</span></td>
             <td class="num">$57.92</td>
           </tr>
           <tr>
             <td class="name">PSU</td>
             <td>MSI MPG A850G PCIE5, 850W 80+ Gold, 2× EPS 4+4. Board connectors, from ASRock's published manual: ATXPWR1 24-pin, ATX12V1 8-pin, ATX12V2 4-pin. Whether the 4-pin is required or optional is <strong>still unconfirmed</strong> — read the manual's power section at assembly. Populating both is correct either way, and the two EPS 4+4 cables cover it. 850W leaves headroom for a GPU.</td>
-            <td><span class="chip ok">Ordered</span></td>
+            <td><span class="chip ok">In hand</span></td>
             <td class="num">$89.99</td>
           </tr>
           <tr>
@@ -492,7 +495,7 @@
           <tr>
             <td class="name">NVMe</td>
             <td>Kingston NV3 1TB (SNV3S/1000G), 6,000 MB/s. OS plus 2–3 active models; archive lives on the G-DRIVE. Second M.2 slot stays free.</td>
-            <td><span class="chip ok">Ordered</span></td>
+            <td><span class="chip ok">In hand</span></td>
             <td class="num">$156.99</td>
           </tr>
           <tr>
@@ -514,7 +517,7 @@
     <h3>Spend</h3>
     <div class="specs">
       <div><dt>Already owned</dt><dd>~$620<small>CPU ~$120 + board ~$500, market estimate</small></dd></div>
-      <div><dt>Ordered</dt><dd>$1,620.59<small>RAM, cooler, PSU, NVMe</small></dd></div>
+      <div><dt>Ordered</dt><dd>$1,620.59<small>RAM, cooler, PSU, NVMe — all delivered</small></dd></div>
       <div><dt>Outstanding</dt><dd>$0<small>Nothing left to procure</small></dd></div>
       <div><dt>Total</dt><dd>$2,240.59<small>$2,230.59 if the $10 rebate lands</small></dd></div>
     </div>
@@ -675,7 +678,7 @@
     </ol>
 
     <div class="callout">
-      <h3>Done while the parts ship</h3>
+      <h3>Done before the parts landed</h3>
       <p>gpt-oss-20b is running on the desktop under Ollama: <strong>39 tok/s</strong> decode at 4096 context, split across card and processor because 12.1GB will not fit 8GB. That answers the hardware question and leaves the useful one open — a week of real volume work, against a written count of today’s rate-limit hits, is what tells you whether the small tier earns its place.</p>
     </div>
   </section>

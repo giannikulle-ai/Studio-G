@@ -165,16 +165,16 @@
   <section id="inventory">
     <p class="eyebrow">Part 1 · Inventory</p>
     <h2>Do you actually have everything?</h2>
-    <p class="lede">Tick each row as you confirm it. The first table is what the Build Sheet says was bought or owned. The second is what the Build Sheet does not mention because it was never a purchase, and it is where builds usually stall on day one. The third is what to do in the days before the boxes arrive, with the two parts you already have. The board and the processor are the only parts that cannot be returned; finding a fault in either <em>before</em> the memory's 30-day clock starts is the single biggest risk reduction available.</p>
+    <p class="lede">Tick each row as you confirm it. The first table is what the Build Sheet says was bought or owned. The second is what the Build Sheet does not mention because it was never a purchase, and it is where builds usually stall on day one. The third is what to settle before you start, now that everything is here. <strong>All parts were confirmed in hand on 13 September 2026</strong>, which means the memory’s 30-day return window is already running — counted from that date it closes <strong>13 October 2026</strong>, and earlier if the invoice shows an earlier delivery date. The board and the processor are the only parts that cannot be returned at all, so a fault in either is worth finding tonight rather than on assembly night.</p>
 
     <div class="progress" aria-live="polite">
       <span><b id="count-done">0</b> / <b id="count-all">0</b> confirmed</span>
       <span class="bar"><i id="bar"></i></span>
       <span class="sync" id="sync">saved on this device</span>
     </div>
-    <p class="note"><span class="chip ok">Have</span> already on hand &nbsp; <span class="chip warn">Bought</span> shipping; confirm the box contents on arrival &nbsp; <span class="chip stop">Confirm</span> never bought; check you own one &nbsp; <span class="chip neutral">You decide</span> a choice, not a part</p>
+    <p class="note"><span class="chip ok">Have</span> already on hand &nbsp; <span class="chip warn">Arrived</span> in hand; open the box and check the contents against this row &nbsp; <span class="chip stop">Confirm</span> never bought; check you own one &nbsp; <span class="chip neutral">You decide</span> a choice, not a part</p>
 
-    <h3>Bought or owned, per the Build Sheet</h3>
+    <h3>Bought or owned, per the Build Sheet — all delivered</h3>
     <div class="scroll">
       <table>
         <thead><tr><th></th><th>Part</th><th>What should be in the box</th><th>State</th></tr></thead>
@@ -200,26 +200,26 @@
           <tr>
             <td class="tick"><input type="checkbox" id="i-ram" aria-label="Confirm memory kit"></td>
             <td class="name">A-Tech 128GB kit<small>8 × 16GB DDR4-3200 ECC RDIMM 2Rx8 · $1,315.69</small></td>
-            <td>Eight sticks, all with the same part number on the label. Count them. Photograph every label before they go in. This is the one part with a 30-day clock: the return window runs from delivery, and step 10 has to finish inside it.</td>
-            <td><span class="chip warn">Bought</span></td>
+            <td>Eight sticks, all with the same part number on the label. Count them. Photograph every label before they go in. This is the one part with a 30-day clock: the window runs from delivery, so it opened when this kit arrived — 13 September 2026 by the confirmation here, closing 13 October 2026 unless the invoice shows an earlier delivery date. Step 10 has to finish inside it.</td>
+            <td><span class="chip warn">Arrived</span></td>
           </tr>
           <tr>
             <td class="tick"><input type="checkbox" id="i-cooler" aria-label="Confirm cooler"></td>
             <td class="name">ARCTIC Freezer 4U-M Rev. 2<small>ACFRE00133B · $57.92</small></td>
             <td>The tower heatsink, two 120mm fans with clips, mounting hardware for several sockets (you want the SP3 / TR4 set), and a 0.8g syringe of MX-6 thermal paste. Check the box for the fan cable: ARCTIC ships either two leads or one lead with a splitter; note which.</td>
-            <td><span class="chip warn">Bought</span></td>
+            <td><span class="chip warn">Arrived</span></td>
           </tr>
           <tr>
             <td class="tick"><input type="checkbox" id="i-psu" aria-label="Confirm PSU"></td>
             <td class="name">MSI MPG A850G PCIE5<small>850W · fully modular · $89.99</small></td>
             <td>The supply, a bag of modular cables, and an AC power cord. The cables you need: one 24-pin motherboard cable and <strong>two</strong> CPU cables marked EPS or CPU, each ending in an 8-pin plug that splits into 4+4. Confirm the AC cord is in the box; it is the item most often missing.</td>
-            <td><span class="chip warn">Bought</span></td>
+            <td><span class="chip warn">Arrived</span></td>
           </tr>
           <tr>
             <td class="tick"><input type="checkbox" id="i-nvme" aria-label="Confirm NVMe"></td>
             <td class="name">Kingston NV3 1TB<small>SNV3S/1000G · M.2 2280 · $156.99</small></td>
             <td>A bare stick the size of a piece of gum, chips on one side only. No screw in the box; the board's bag has it.</td>
-            <td><span class="chip warn">Bought</span></td>
+            <td><span class="chip warn">Arrived</span></td>
           </tr>
         </tbody>
       </table>
@@ -307,15 +307,15 @@
       </table>
     </div>
 
-    <h3>Do before delivery, with the parts already here</h3>
+    <h3>Do before you start, with everything already here</h3>
     <div class="scroll">
       <table>
         <thead><tr><th></th><th>Do</th><th>Why now</th><th>State</th></tr></thead>
         <tbody>
           <tr>
             <td class="tick"><input type="checkbox" id="d-socket" aria-label="Inspect the socket and processor"></td>
-            <td class="name">Inspect the socket and the processor today</td>
-            <td>Both were bought earlier and neither is returnable. Open the socket per step 1 (3-2-1), hold a flashlight at a low angle across the contact field and look for any bent, flattened or discoloured contact; the field should be a perfectly regular grid with no glint out of line. Close it again (1-2-3) with nothing in it. Then look at the processor's underside through its carrier: every pad present, none scratched. A bad socket found today means a replacement board is ordered before the memory arrives and its 30-day window opens. Found on assembly day, it costs the window.</td>
+            <td class="name">Inspect the socket and the processor tonight</td>
+            <td>Both were bought earlier and neither is returnable. Open the socket per step 1 (3-2-1), hold a flashlight at a low angle across the contact field and look for any bent, flattened or discoloured contact; the field should be a perfectly regular grid with no glint out of line. Close it again (1-2-3) with nothing in it. Then look at the processor's underside through its carrier: every pad present, none scratched. The memory’s 30-day window is already open, so a bad socket found tonight still leaves four weeks to get a replacement board in and the memory tested. Found on assembly night, it eats most of them.</td>
             <td><span class="chip stop">Do first</span></td>
           </tr>
           <tr>
@@ -871,7 +871,7 @@
       <li>
         <div class="body">
           <h3>memtest86+ overnight, inside the return window</h3>
-          <p>This is the step with a deadline. A faulty stick found now is a defective-product return, paid by the vendor. The same stick found in month four is a warranty claim that needs a matched replacement on a board that wants all eight identical. The window is 30 days from delivery.</p>
+          <p>This is the step with a deadline. A faulty stick found now is a defective-product return, paid by the vendor. The same stick found in month four is a warranty claim that needs a matched replacement on a board that wants all eight identical. The window is 30 days from delivery: the parts were confirmed in hand on 13 September 2026, which puts the last day at <strong>13 October 2026</strong> — sooner if the invoice shows the kit was delivered before then. Work to the invoice date.</p>
           <ul class="tight">
             <li>On the desktop, download memtest86+ from <a href="https://www.memtest.org/">memtest.org</a> (the same files are on its <a href="https://github.com/memtest86plus/memtest86plus/releases">GitHub releases page</a>). Take the free, open memtest86+, not the similarly named commercial MemTest86; either works, this one costs nothing. On Windows use the "USB installer" download, which writes the stick itself. On Linux or macOS take the <code>.img</code> and write it with <code>dd</code> to the stick's base device, not a partition. Either way the stick is erased.</li>
             <li>Plug the stick into a rear USB port on the board. Power on (or reset) and press the boot-menu key the splash names (usually F11 on ASRock boards). Choose the USB stick; pick the entry that starts with "UEFI" if two are offered.</li>

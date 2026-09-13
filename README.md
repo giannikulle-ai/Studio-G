@@ -2,7 +2,7 @@
 
 Everything around PW-1x: the plan, the documents that describe the machine, the tool server that lets Claude use it, the control room that watches it all, and the measurements that replace the estimates.
 
-PW-1x ("Projectile William v1") is a dual-role box — a local LLM server and a host for websites and dev environments. It is bought and awaiting delivery. The two documents in `docs/` say what it is; `docs/plan.md` says how it gets stood up and what the studio around it looks like.
+PW-1x ("Projectile William v1") is a dual-role box — a local LLM server and a host for websites and dev environments. Every part is bought and in hand as of 13 September 2026; nothing is assembled yet. The two documents in `docs/` say what it is; `docs/plan.md` says how it gets stood up and what the studio around it looks like.
 
 ## The shape of it
 
@@ -43,4 +43,4 @@ Six checks over four documents: arithmetic, cross-document consistency (Handoff 
 
 ## Status
 
-All hardware bought. Nothing left to procure. Awaiting delivery. The 4060 Ti stays in the desktop and is **8GB**, not the 16GB the artifacts claimed until Sept 2026, so PW-1x starts CPU-only; a 24GB card is the planned purchase once real prefill numbers exist. See `docs/plan.md`.
+All hardware bought, and **all of it in hand as of 13 September 2026** — which starts the memory's 30-day return window, closing **13 October 2026** at the latest (verify against the invoice delivery date). Assembly and memtest86+ have to finish inside it; `docs/assembly-guide.html` is the procedure. Nothing is built yet. The 4060 Ti stays in the desktop and is **8GB**, not the 16GB the artifacts claimed until Sept 2026, so PW-1x starts CPU-only; a 24GB card is the planned purchase once real prefill numbers exist. See `docs/plan.md`.

@@ -73,6 +73,11 @@ STALE = [
     "Throughput figures are estimates, not benchmarks",
     "Neither is a benchmark",
     "estimates, not measurements",
+    # Every part was confirmed in hand on 2026-09-13. Nothing is "on the way".
+    "Awaiting delivery", "awaiting_delivery", "awaiting delivery",
+    '<span class="chip ok">Ordered</span>', '<span class="v">ordered</span>',
+    "128GB — ordered", "Done while the parts ship",
+    "2–4 day shipping",
 ]
 
 # Strings the Assembly Guide must share with the Build Sheet (part numbers,
@@ -83,7 +88,10 @@ GUIDE_SHARED = [
 ]
 
 # The guide describes a CPU-only build. None of this belongs in it.
-GUIDE_STALE = ["CUDA", "n-cpu-moe", "-ngl", "graphics card cable", "into the x16 slot"]
+GUIDE_STALE = ["CUDA", "n-cpu-moe", "-ngl", "graphics card cable", "into the x16 slot",
+               # parts are in hand; nothing in the guide may say they are shipping
+               '<span class="chip warn">Bought</span>', "before the boxes arrive",
+               "Do before delivery"]
 
 # Model footprints: (name, size_gb, total_params_b, min_bits, max_bits)
 MODELS = [

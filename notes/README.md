@@ -4,6 +4,7 @@ Facts checked against the real machine, one file each, dated. These answer quest
 
 | File | Question it answers | When |
 |---|---|---|
+| `delivery.md` | When did every part land, and when does the memory's 30-day return window close? | On delivery — done 13 Sep 2026 |
 | `eps-connector.md` | Does the ROMED8-2T want one 8-pin + one 4-pin, or two 8-pin? The docs source this from a ServeTheHome review only. | Before assembly (A0/A1) |
 | `nemotron-pr-20539.md` | Did llama.cpp PR #20539 land stock support for Nemotron 3 Super's NVFP4 quant? | A0 — five-minute check |
 | `lscpu.txt` | Which logical CPUs share a physical core. Decides every `AllowedCPUs` line. | Right after OS install (A3) |

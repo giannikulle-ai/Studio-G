@@ -156,7 +156,7 @@
       <span>Handoff</span>
       <span>Rev. <b>Sep 2026</b></span>
       <span>Designation: <b>PW-1x</b></span>
-      <span>Status: <b>awaiting delivery</b></span>
+      <span>Status: <b>all parts in hand</b></span>
     </div>
     <h1>PW-1x Handoff</h1>
     <p class="sub">Projectile William v1 — a dual-role machine. Primary role: a local large-language-model server absorbing high-volume agent workload that currently runs against a rate-limited commercial plan. Secondary role: hosting websites and development environments. Personal project; the capacity problem it solves is a working one.</p>
@@ -187,7 +187,7 @@
       <h3>Budget</h3>
       <div class="specs">
         <div><dt>Already owned</dt><dd>~$620<small>CPU and motherboard, bought earlier</small></dd></div>
-        <div><dt>Ordered</dt><dd>$1,620.59<small>Memory, cooler, PSU, SSD</small></dd></div>
+        <div><dt>Ordered</dt><dd>$1,620.59<small>Memory, cooler, PSU, SSD — all delivered</small></dd></div>
         <div><dt>Outstanding</dt><dd>$0<small>Everything is bought</small></dd></div>
         <div><dt>Total</dt><dd>$2,240.59<small>$2,230.59 if the $10 rebate lands</small></dd></div>
       </div>
@@ -202,14 +202,15 @@
           <thead><tr><th>Milestone</th><th>State</th><th>Notes</th></tr></thead>
           <tbody>
             <tr><td class="name">Core hardware</td><td><span class="chip ok">Complete</span></td><td>Processor and motherboard on hand. The graphics card is the desktop’s and stays there, so PW-1x has none.</td></tr>
-            <tr><td class="name">Memory</td><td><span class="chip ok">Ordered</span></td><td>128GB, lifetime warranty, 2–4 day shipping</td></tr>
-            <tr><td class="name">Remaining parts</td><td><span class="chip ok">Ordered</span></td><td>Cooler, power supply, storage — $304.90 of the $1,620.59 ordered</td></tr>
-            <tr><td class="name">Assembly</td><td><span class="chip warn">Awaiting delivery</span></td><td>All parts bought; nothing left to procure</td></tr>
+            <tr><td class="name">Memory</td><td><span class="chip ok">In hand</span></td><td>128GB delivered, lifetime warranty. The 30-day return window is now running — see below.</td></tr>
+            <tr><td class="name">Remaining parts</td><td><span class="chip ok">In hand</span></td><td>Cooler, power supply, storage — $304.90 of the $1,620.59, all delivered</td></tr>
+            <tr><td class="name">Assembly</td><td><span class="chip warn">Ready to start</span></td><td>Every part is on the bench. Nothing is built yet; the assembly guide is the procedure.</td></tr>
             <tr><td class="name">Software baseline</td><td><span class="chip warn">In progress</span></td><td>gpt-oss-20b measured on the desktop at 39 tok/s, Sept 2026. The week of real volume work, and the rate-limit count to compare it against, are still outstanding.</td></tr>
             <tr><td class="name">Hosting migration</td><td><span class="chip stop">Not started</span></td><td>Websites and dev environments move on after the machine is stable</td></tr>
           </tbody>
         </table>
       </div>
+      <p class="note"><strong>All parts arrived — confirmed 13 September 2026.</strong> That starts the memory’s 30-day return window, the only clock in this build. Counted from 13 September the last day to return a faulty module is <strong>13 October 2026</strong>. Treat that as the <em>latest</em> possible deadline, not a certain one: the window runs from the vendor’s delivery date, which may be earlier than the day the boxes were opened — read it off the invoice and use the real date. Next action 3 is what has to finish inside it.</p>
     </section>
 
     <section>
@@ -255,22 +256,22 @@
             <tr>
               <td class="name">Memory<span class="pn">A-Tech 128GB kit</span></td>
               <td>8 × 16GB, 2Rx8, DDR4-3200 PC4-25600R, ECC Registered, 1.2V, 288-pin. Lifetime warranty.</td>
-              <td><span class="chip ok">Ordered</span></td><td class="num">$1,315.69</td>
+              <td><span class="chip ok">In hand</span></td><td class="num">$1,315.69</td>
             </tr>
             <tr>
               <td class="name">CPU cooler<span class="pn">ARCTIC Freezer 4U-M · ACFRE00133B</span></td>
               <td>SP3-compatible, dual 120mm push-pull, rated to 350W TDP, 211×160×141mm</td>
-              <td><span class="chip ok">Ordered</span></td><td class="num">$57.92</td>
+              <td><span class="chip ok">In hand</span></td><td class="num">$57.92</td>
             </tr>
             <tr>
               <td class="name">Power supply<span class="pn">MSI MPG A850G PCIE5</span></td>
               <td>850W, 80+ Gold, fully modular, ATX 3.1, 2× EPS 4+4. Board connectors, from ASRock's published manual: ATXPWR1 24-pin, ATX12V1 8-pin, ATX12V2 4-pin. Whether the 4-pin is required or optional is <strong>still unconfirmed</strong> — read the manual's power section at assembly. Populating both is correct either way, and the two EPS 4+4 cables cover it.</td>
-              <td><span class="chip ok">Ordered</span></td><td class="num">$89.99</td>
+              <td><span class="chip ok">In hand</span></td><td class="num">$89.99</td>
             </tr>
             <tr>
               <td class="name">System SSD<span class="pn">Kingston NV3 · SNV3S/1000G</span></td>
               <td>1TB M.2 2280 PCIe 4.0 x4, up to 6,000 MB/s. OS plus 2–3 active models.</td>
-              <td><span class="chip ok">Ordered</span></td><td class="num">$156.99</td>
+              <td><span class="chip ok">In hand</span></td><td class="num">$156.99</td>
             </tr>
             <tr>
               <td class="name">Model archive<span class="pn">G-DRIVE mobile USB-C · 0G10265</span></td>
@@ -445,7 +446,7 @@
       <ol class="steps">
         <li><div><b>Baseline test — first numbers in, Sept 2026.</b> Ollama running <code>gpt-oss-20b</code> on the desktop returns <strong>39 tok/s</strong> decode at 4096 context, with the model split evenly across processor and card because 12.1GB does not fit 8GB of VRAM. Still open: a week of real volume work to judge whether the small tier is good enough, and the current rate-limit count it is meant to reduce.</div></li>
         <li><div><b>Assemble on open bench.</b> Non-conductive surface, off carpet, out of reach of pets. This comes <em>before</em> the memory test — revisions before Sept 2026 had the two the wrong way round, and that order cannot execute: memtest86+ needs the processor, cooler, supply and board mounted and POSTing.</div></li>
-        <li><div><b>Then memtest86+, all eight modules, full passes, overnight.</b> Inside the 30-day return window, counted from delivery. A failure found in week one is a defective return; the same failure in month four is a warranty claim requiring a matched replacement.</div></li>
+        <li><div><b>Then memtest86+, all eight modules, full passes, overnight.</b> Inside the 30-day return window, counted from delivery — <strong>no later than 13 October 2026</strong>, and earlier if the invoice shows the kit landed before 13 September. A failure found in week one is a defective return; the same failure in month four is a warranty claim requiring a matched replacement.</div></li>
         <li><div><b>Load under sustained inference and read IPMI</b> VRM and DIMM temperatures. Add a ~$12 fan aimed at the DIMM bank only if the numbers call for it.</div></li>
         <li><div><b>Build llama.cpp CPU-only, load gpt-oss-120b Q8_0 fully in RAM.</b> Record actual tokens/sec, decode <em>and</em> prefill on a 32k context, and replace the estimates in this document. Prefill is the number that decides whether a GPU is worth buying.</div></li>
         <li><div><b>Close the three open memory quote threads</b> (Topmemory, memory.net, TechMikeNY) with a one-line note. Keep the contacts — future GPU and CPU purchases come from the same channel.</div></li>
@@ -467,7 +468,9 @@
   <span class="k">name</span>: <span class="v">Projectile William v1</span>
   <span class="k">type</span>: <span class="v">personal</span>
   <span class="k">roles</span>: [<span class="v">llm_inference</span>, <span class="v">web_and_dev_hosting</span>]
-  <span class="k">status</span>: <span class="v">awaiting_delivery</span>
+  <span class="k">status</span>: <span class="v">parts_in_hand_unassembled</span>
+  <span class="k">parts_confirmed_on</span>: <span class="v">2026-09-13</span>
+  <span class="k">memory_return_window_closes</span>: <span class="v">2026-10-13</span>  <span class="c"># 30d from 2026-09-13; verify against the invoice delivery date, which may be earlier</span>
   <span class="k">driver</span>: <span class="v">rate_limit_ceiling_on_commercial_plan</span>
   <span class="k">strategy</span>: <span class="v">tiered_routing</span>  <span class="c"># local absorbs volume; frontier retains hard reasoning</span>
   <span class="k">model_constraint</span>: <span class="v">us_origin_open_weight_only</span>
@@ -483,10 +486,10 @@
   <span class="k">cpu</span>: { <span class="k">model</span>: <span class="v">EPYC 7452</span>, <span class="k">cores</span>: <span class="v">32</span>, <span class="k">arch</span>: <span class="v">zen2_rome</span>, <span class="k">l3_mb</span>: <span class="v">128</span>, <span class="k">ccd_est</span>: <span class="v">4</span>, <span class="k">tdp_w</span>: <span class="v">155</span>, <span class="k">socket</span>: <span class="v">SP3</span>, <span class="k">state</span>: <span class="v">owned</span> }
   <span class="k">board</span>: { <span class="k">model</span>: <span class="v">ASRock Rack ROMED8-2T</span>, <span class="k">pcie_x16_slots</span>: <span class="v">7</span>, <span class="k">pcie_gen</span>: <span class="v">4</span>, <span class="k">lanes</span>: <span class="v">112</span>, <span class="k">dimm_slots</span>: <span class="v">8</span>, <span class="k">dpc</span>: <span class="v">1</span>, <span class="k">m2</span>: <span class="v">2</span>, <span class="k">sata_ports</span>: <span class="v">0</span>, <span class="k">oculink</span>: <span class="v">2</span>, <span class="k">minisas_hd</span>: <span class="v">2</span>, <span class="k">nic</span>: <span class="v">dual_10gbe_x550</span>, <span class="k">ipmi</span>: <span class="v">true</span>, <span class="k">cpu_support</span>: [<span class="v">7002</span>, <span class="v">7003</span>], <span class="k">state</span>: <span class="v">owned</span> }
   <span class="k">gpu</span>: { <span class="k">model</span>: <span class="v">RTX 4060 Ti FE</span>, <span class="k">vram_gb</span>: <span class="v">8</span>, <span class="k">role</span>: <span class="v">desktop_best_effort_tier</span>, <span class="k">location</span>: <span class="v">desktop</span>, <span class="k">pw1x_gpu</span>: <span class="v">none</span>, <span class="k">state</span>: <span class="v">owned</span> }
-  <span class="k">memory</span>: { <span class="k">kit</span>: <span class="v">A-Tech 128GB</span>, <span class="k">modules</span>: <span class="v">8</span>, <span class="k">module_gb</span>: <span class="v">16</span>, <span class="k">type</span>: <span class="v">DDR4-3200 PC4-25600R</span>, <span class="k">form</span>: <span class="v">RDIMM</span>, <span class="k">rank</span>: <span class="v">2Rx8</span>, <span class="k">ecc</span>: <span class="v">registered</span>, <span class="k">warranty</span>: <span class="v">lifetime</span>, <span class="k">cost_usd</span>: <span class="v">1315.69</span>, <span class="k">state</span>: <span class="v">ordered</span> }
-  <span class="k">cooler</span>: { <span class="k">model</span>: <span class="v">ARCTIC Freezer 4U-M</span>, <span class="k">pn</span>: <span class="v">ACFRE00133B</span>, <span class="k">socket</span>: <span class="v">SP3</span>, <span class="k">cost_usd</span>: <span class="v">57.92</span>, <span class="k">state</span>: <span class="v">ordered</span> }
-  <span class="k">psu</span>: { <span class="k">model</span>: <span class="v">MSI MPG A850G PCIE5</span>, <span class="k">watts</span>: <span class="v">850</span>, <span class="k">eps_connectors</span>: <span class="v">2</span>, <span class="k">cost_usd</span>: <span class="v">89.99</span>, <span class="k">state</span>: <span class="v">ordered</span> }
-  <span class="k">ssd</span>: { <span class="k">model</span>: <span class="v">Kingston NV3</span>, <span class="k">pn</span>: <span class="v">SNV3S/1000G</span>, <span class="k">capacity_gb</span>: <span class="v">1000</span>, <span class="k">read_mbs</span>: <span class="v">6000</span>, <span class="k">cost_usd</span>: <span class="v">156.99</span>, <span class="k">state</span>: <span class="v">ordered</span> }
+  <span class="k">memory</span>: { <span class="k">kit</span>: <span class="v">A-Tech 128GB</span>, <span class="k">modules</span>: <span class="v">8</span>, <span class="k">module_gb</span>: <span class="v">16</span>, <span class="k">type</span>: <span class="v">DDR4-3200 PC4-25600R</span>, <span class="k">form</span>: <span class="v">RDIMM</span>, <span class="k">rank</span>: <span class="v">2Rx8</span>, <span class="k">ecc</span>: <span class="v">registered</span>, <span class="k">warranty</span>: <span class="v">lifetime</span>, <span class="k">cost_usd</span>: <span class="v">1315.69</span>, <span class="k">state</span>: <span class="v">in_hand</span> }
+  <span class="k">cooler</span>: { <span class="k">model</span>: <span class="v">ARCTIC Freezer 4U-M</span>, <span class="k">pn</span>: <span class="v">ACFRE00133B</span>, <span class="k">socket</span>: <span class="v">SP3</span>, <span class="k">cost_usd</span>: <span class="v">57.92</span>, <span class="k">state</span>: <span class="v">in_hand</span> }
+  <span class="k">psu</span>: { <span class="k">model</span>: <span class="v">MSI MPG A850G PCIE5</span>, <span class="k">watts</span>: <span class="v">850</span>, <span class="k">eps_connectors</span>: <span class="v">2</span>, <span class="k">cost_usd</span>: <span class="v">89.99</span>, <span class="k">state</span>: <span class="v">in_hand</span> }
+  <span class="k">ssd</span>: { <span class="k">model</span>: <span class="v">Kingston NV3</span>, <span class="k">pn</span>: <span class="v">SNV3S/1000G</span>, <span class="k">capacity_gb</span>: <span class="v">1000</span>, <span class="k">read_mbs</span>: <span class="v">6000</span>, <span class="k">cost_usd</span>: <span class="v">156.99</span>, <span class="k">state</span>: <span class="v">in_hand</span> }
   <span class="k">archive</span>: { <span class="k">model</span>: <span class="v">G-DRIVE mobile USB-C</span>, <span class="k">pn</span>: <span class="v">0G10265</span>, <span class="k">capacity_gb</span>: <span class="v">1000</span>, <span class="k">medium</span>: <span class="v">hdd</span>, <span class="k">read_mbs</span>: <span class="v">140</span>, <span class="k">interface</span>: <span class="v">usb31gen1</span>, <span class="k">do_not_shuck</span>: <span class="v">true</span>, <span class="k">state</span>: <span class="v">owned</span> }
   <span class="k">chassis</span>: { <span class="k">type</span>: <span class="v">open_bench</span>, <span class="k">fans</span>: <span class="v">deferred_pending_ipmi_readings</span> }
 

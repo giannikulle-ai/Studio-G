@@ -2,14 +2,14 @@
 
 ## Context
 
-PW-1x ("Projectile William v1") is a dual-role machine: a local LLM server that absorbs high-volume agent work currently hitting rate limits on a commercial plan, and a host for websites and dev environments. All parts are bought (~$2,240.59); nothing is left to procure. The machine does not exist yet — it is awaiting delivery.
+PW-1x ("Projectile William v1") is a dual-role machine: a local LLM server that absorbs high-volume agent work currently hitting rate limits on a commercial plan, and a host for websites and dev environments. All parts are bought (~$2,240.59) and **all of them are in hand as of 13 September 2026**; nothing is left to procure. The machine does not exist yet — it is unassembled. The memory's 30-day return window opened at delivery and closes **13 October 2026** at the latest, so A1 and A2 below are now on a clock.
 
 Two artifacts describe it and both now pass a full mechanical check (arithmetic, cross-document consistency, stale strings, structural validity, physics-vs-method):
 
 - **PW-1x Handoff** — https://claude.ai/code/artifact/518fcfa6-6bd5-4751-b982-98056c5f555a
 - **PW-1x Build Sheet** — https://claude.ai/code/artifact/af94f37f-10d3-43d1-a183-66c2a7306341
 
-Those documents say *what* the machine is. This plan says *how it gets stood up* and *what has to be decided before the boxes arrive*. **It does not modify either artifact.**
+Those documents say *what* the machine is. This plan says *how it gets stood up* and *what has to be decided now that the boxes are here*. **It does not modify either artifact.**
 
 The repo `giannikulle-ai/Studio-G` is currently empty — no commits at all, and branch `claude/pw-1x-handoff-spec-inwpu5` has no history.
 
@@ -49,13 +49,13 @@ The Handoff lists memtest (step 2) *before* assembly (step 3). That order can't 
 - Check whether llama.cpp PR #20539 actually landed stock support for Nemotron's `modelopt`/NVFP4 quant. It's a five-minute check that could move the best-scoring model from "Unresolved" to "Primary" and change the model set before you tune anything.
 - Confirm the board's EPS requirement against the ASRock manual (docs flag it as sourced from a ServeTheHome review only). The PSU covers either reading, so this is not a purchase risk — it's a no-POST-at-2am risk.
 
-### A1 — Assemble (on delivery)
+### A1 — Assemble (parts in hand 13 Sep 2026)
 
 Open bench, non-conductive surface, off carpet, away from pets. 24-pin + EPS per A0's confirmed answer. Do not shuck the G-DRIVE — no SATA ports on this board.
 
 ### A2 — memtest86+ — the clock is running
 
-All eight modules together, full passes, overnight. If anything errors, re-run one stick at a time to identify it. **Do this inside the 30-day window**, counted from delivery. A failure found in week one is a defective return; the same failure in month four is a warranty claim needing a *matched* replacement on a 1DPC board, or replacing all eight.
+All eight modules together, full passes, overnight. If anything errors, re-run one stick at a time to identify it. **Do this inside the 30-day window**, counted from delivery — 13 October 2026 at the latest, earlier if the invoice says so. A failure found in week one is a defective return; the same failure in month four is a warranty claim needing a *matched* replacement on a 1DPC board, or replacing all eight.
 
 ### A3 — OS install and partitioning ⚠️ gated on C
 
@@ -314,7 +314,7 @@ Editing either artifact. Both pass their checks as they stand; any content chang
 1. **Inventory checklist** (interactive checkboxes; state persists — load `artifact-capabilities` first and use shared state if this account has it, else `localStorage` with try/catch). Three groups:
    - *Bought or owned, per the Build Sheet* — EPYC 7452 (owned), ROMED8-2T (owned), G-DRIVE (owned, stays in its USB enclosure), A-Tech 8×16GB kit, ARCTIC Freezer 4U-M Rev. 2 (ACFRE00133B), MSI MPG A850G PCIE5, Kingston NV3 1TB. Each row: what the box should contain (cooler: MX-6 0.8g syringe, two 120mm PWM fans, SP3 bracket parts; PSU: 24-pin, 2× EPS 4+4, AC cord; board: I/O shield, M.2 screw/standoff; NVMe: bare drive) and a "confirm on arrival" tick.
    - *Not in the BOM, needed to assemble* — the honest "do you actually have everything" list: **T20 Torx driver** (a torque driver set to 1.58 N·m is the AMD way; a plain T20 works because the SP3 screws bottom out — stop when they stop), **PH1 Phillips** (ARCTIC's manual requires it), a monitor with **VGA (D-Sub) input** or a VGA→HDMI adapter (the board's only video is the BMC's VGA port; there is no GPU), a USB keyboard, **two Ethernet cables** (IPMI port → router; LAN1 → router), a USB stick ≥ 2GB for memtest86+ (a second ≥ 4GB, or the same one later, for the OS installer), a non-conductive work surface (the motherboard's own box), a **way to press "power"** — the board has no case button: short the two PWRBTN pins on the front-panel header with a screwdriver tip, or power on from the IPMI web page, or a $5 power-switch pigtail — zip ties, a flashlight, the phone for photos of every label before it's covered.
-   - *Decide before delivery* — does the desktop have a 10GbE NIC? (The map's direct link assumes one; without it the cable negotiates 1GbE or 2.5GbE, which is fine to start. Row stays a hook.) Where the bench lives: off carpet, away from pets, near the router.
+   - *Decide before you start* — does the desktop have a 10GbE NIC? (The map's direct link assumes one; without it the cable negotiates 1GbE or 2.5GbE, which is fine to start. Row stays a hook.) Where the bench lives: off carpet, away from pets, near the router.
    Each row has a status chip: **have · bought · confirm · missing**. Rows I could not verify from the manual carry "confirm in the manual, p.14 layout" rather than a guess.
 
 2. **The build, step by step** — twelve steps, each with: *what you're doing · what it should look like/feel like · stop if …*. Jargon boxes inline the first time a term appears (POST, BMC/IPMI, RDIMM/ECC, EPS/ATX12V, 1DPC, M.2, UEFI, PWM, memory training).
