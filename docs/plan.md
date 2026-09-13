@@ -336,3 +336,7 @@ Editing either artifact. Both pass their checks as they stand; any content chang
 **Repo.** `docs/assembly-guide.html` mirror; `tools/spec-check.py` gets the guide in the structure check plus the part numbers and prices in the SHARED set (ACFRE00133B, SNV3S/1000G, 0G10265, $1,315.69, $57.92, $89.99, $156.99) and a STALE entry for "graphics card goes in" / "4060 Ti in PW-1x"; `README.md` and `docs/README.md` layout tables gain the row; `docs/plan.md` synced. Commit, push.
 
 **Verification.** Checker clean with the guide included; the page renders at 400px and 1100px with no horizontal scroll; checkboxes survive a reload; the stale sweep finds no GPU-in-PW-1x language; the two PW-1x artifacts untouched.
+
+## Seventh implementation step: pictures in the assembly guide
+
+Eight drawn figures (inline SVG, same style as the Systems Map; no photos available from here), one per step that needs one: board map, rear ports, socket screws 1-2-3, memory notch and latch, M.2 angle, paste spread and fan direction, power cabling, first-power timeline. Positions not read from the manual are captioned "schematic". Render once, checker, republish, commit, push.
