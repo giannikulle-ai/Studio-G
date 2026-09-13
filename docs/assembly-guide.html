@@ -104,6 +104,7 @@
   .pair .look b { color: var(--ok); }
   .pair .stop b { color: var(--stop); }
   .pair p { margin: 0; max-width: none; }
+  p.esd { font-family: var(--mono); font-size: 11.5px; letter-spacing: .04em; color: var(--accent); background: var(--accent-bg); border-radius: 3px; padding: 6px 10px; margin: 0 0 12px; max-width: 78ch; }
   aside.term { background: var(--surface-2); border-radius: 4px; padding: 10px 14px; font-size: 13.5px; color: var(--ink-2); max-width: 78ch; margin: 12px 0; }
   aside.term b { color: var(--ink); font-weight: 600; }
   aside.term b::after { content: " — "; color: var(--muted); font-weight: 400; }
@@ -358,7 +359,7 @@
         <div class="body">
           <h3>Before opening anything</h3>
           <p><strong>Open bench</strong> means the board lies flat on its box with the parts mounted on it and the power supply beside it, no case. Workshop servers run like this for years. What it costs you is that nothing pushes air across the board except the cooler's own fans; step 9 reads the temperatures that tell you whether that matters.</p>
-          <p><strong>Static.</strong> Plug the power supply's AC cord into the supply and the wall now, with the supply's rocker switch <strong>off</strong> (the "O" position), and leave it there. Its steel shell is now grounded: touch it before you pick up any part, and again whenever you have walked away and come back. Nothing else is connected to the supply yet, so nothing can be energised. Leave every part in its bag until the step that uses it.</p>
+          <p><strong>Static.</strong> Plug the power supply's AC cord into the supply and the wall now, with the supply's rocker switch <strong>off</strong> (the "O" position), and leave it there. Its steel shell is now grounded: touch it before you pick up any part, and again whenever you have walked away and come back. If you bought the wrist strap, clip it to that shell and wear it for the whole build; then forgetting is impossible. Nothing else is connected to the supply yet, so nothing can be energised. Leave every part in its bag until the step that uses it.</p>
           <p><strong>Find these on the real board</strong> with the manual's layout page open (it is near the front of the printed manual). You will need every one of them:</p>
           <ul class="tight">
             <li>The processor socket: a large square with a hinged metal frame and three screws.</li>
@@ -502,6 +503,7 @@
       <li>
         <div class="body">
           <h3>Processor into the socket</h3>
+          <p class="esd">Ground yourself first: touch the supply's bare shell, or clip the wrist strap to it. Again every time you sit back down.</p>
           <p>This is the one step where force in the wrong place does permanent damage, and it is also simple if you follow the order. The socket's metal frame is held by <strong>three T20 Torx screws, numbered 1, 2 and 3</strong>; the numbers are stamped into the frame beside each screw. <strong>Open them 3, 2, 1. Close them 1, 2, 3.</strong> The screws are captive: they loosen but do not come out.</p>
           <ul class="tight">
             <li>Loosen 3, then 2, then 1. Lift the outer <strong>force frame</strong> up on its hinge.</li>
@@ -563,6 +565,7 @@
       <li>
         <div class="body">
           <h3>Memory, all eight sticks</h3>
+          <p class="esd">Ground yourself first: touch the supply's bare shell, or clip the wrist strap to it. Again every time you sit back down.</p>
           <p>Every slot gets a stick, so there is no choice about which slots to use. The board is <strong>one DIMM per channel</strong>: eight channels, eight slots, and the bandwidth this whole machine is built around only exists with all eight filled.</p>
           <ul class="tight">
             <li>Open the latch at each end of the slot by pushing it outward (some slots have a fixed end and one latch; then open the one).</li>
@@ -612,6 +615,7 @@
       <li>
         <div class="body">
           <h3>The SSD into the first M.2 slot</h3>
+          <p class="esd">Ground yourself first: touch the supply's bare shell, or clip the wrist strap to it. Again every time you sit back down.</p>
           <p>The Kingston stick is 80mm long, size <strong>2280</strong>. The board's slot has screw holes at several lengths; the standoff (a small threaded post) goes in the hole at the 80mm mark, from the bag that came with the board.</p>
           <ul class="tight">
             <li>Screw the standoff into the 80mm hole finger-tight.</li>
@@ -651,6 +655,7 @@
       <li>
         <div class="body">
           <h3>The cooler</h3>
+          <p class="esd">Ground yourself first: touch the supply's bare shell, or clip the wrist strap to it. Again every time you sit back down.</p>
           <p>Follow ARCTIC's printed steps for the <strong>SP3 / TR4</strong> socket; they are the same mounting for both. The bracket screws come up from the cooler's mounting frame into the threaded holes that already surround the socket, so there is no backplate to fit. The PH1 Phillips is the tool.</p>
           <ul class="tight">
             <li><strong>Clean the lid first.</strong> With the processor seated and the socket closed, wipe its metal lid with the cloth and isopropyl until it is bare, dull metal with no grey residue; a used chip usually has old paste on it. Let it dry for a minute. Nothing drips into the socket because the lid sits above the closed frame.</li>
@@ -709,6 +714,7 @@
       <li>
         <div class="body">
           <h3>Power supply cables</h3>
+          <p class="esd">Ground yourself first: touch the supply's bare shell, or clip the wrist strap to it. Again every time you sit back down.</p>
           <p>The supply is fully modular: nothing is attached until you attach it. Only <strong>three cables</strong> run from it to the board in this build, plus the AC cord that has been in since step 0. No graphics card means no graphics-card cable. The supply's switch stays <strong>off</strong> throughout this step.</p>
           <ul class="tight">
             <li><strong>24-pin</strong> motherboard cable → <code>ATXPWR1</code>. It has a latch; push until it clicks, then tug to confirm.</li>
@@ -867,7 +873,7 @@
           <h3>memtest86+ overnight, inside the return window</h3>
           <p>This is the step with a deadline. A faulty stick found now is a defective-product return, paid by the vendor. The same stick found in month four is a warranty claim that needs a matched replacement on a board that wants all eight identical. The window is 30 days from delivery.</p>
           <ul class="tight">
-            <li>On the desktop, download memtest86+ from <code>memtest.org</code> and write its USB image to the stick: <code>dd</code> on Linux or macOS, or Rufus in "DD image" mode on Windows. This erases the stick.</li>
+            <li>On the desktop, download memtest86+ from <a href="https://www.memtest.org/">memtest.org</a> (the same files are on its <a href="https://github.com/memtest86plus/memtest86plus/releases">GitHub releases page</a>). Take the free, open memtest86+, not the similarly named commercial MemTest86; either works, this one costs nothing. On Windows use the "USB installer" download, which writes the stick itself. On Linux or macOS take the <code>.img</code> and write it with <code>dd</code> to the stick's base device, not a partition. Either way the stick is erased.</li>
             <li>Plug the stick into a rear USB port on the board. Power on (or reset) and press the boot-menu key the splash names (usually F11 on ASRock boards). Choose the USB stick; pick the entry that starts with "UEFI" if two are offered.</li>
             <li>Let it run <strong>all passes, all night</strong>, with all eight sticks installed. The screen counts passes and errors.</li>
             <li>In the morning: <strong>zero errors</strong> across at least two completed passes is a pass; with 128GB a single pass takes an hour or more, so a full night gives several. Photograph the screen with the pass count and date visible.</li>
