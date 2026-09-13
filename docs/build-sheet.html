@@ -479,7 +479,7 @@
           </tr>
           <tr>
             <td class="name">PSU</td>
-            <td>MSI MPG A850G PCIE5, 850W 80+ Gold, 2× EPS 4+4. Board requirement confirmed against the ASRock manual, Sept 2026: ATXPWR1 24-pin, ATX12V1 8-pin, ATX12V2 4-pin, and both 12V connectors get populated. The two EPS 4+4 cables cover it. 850W leaves headroom for a GPU.</td>
+            <td>MSI MPG A850G PCIE5, 850W 80+ Gold, 2× EPS 4+4. Board connectors, from ASRock's published manual: ATXPWR1 24-pin, ATX12V1 8-pin, ATX12V2 4-pin. Whether the 4-pin is required or optional is <strong>still unconfirmed</strong> — read the manual's power section at assembly. Populating both is correct either way, and the two EPS 4+4 cables cover it. 850W leaves headroom for a GPU.</td>
             <td><span class="chip ok">Ordered</span></td>
             <td class="num">$89.99</td>
           </tr>
@@ -589,7 +589,7 @@
       </table>
     </div>
 
-    <p class="note">Model specs verified against the vendors’ own Hugging Face cards. Tok/s are estimates, not benchmarks. Raw weight-streaming math — 140 GB/s over active-parameter bytes — gives a <em>ceiling</em> of roughly 51 tok/s for gpt-oss-120b and 14 for Scout; those assume nothing but expert weights crosses the bus. The figures above discount for attention compute, KV cache traffic, MoE routing and the GPU/CPU boundary — more heavily for gpt-oss-120b, whose 5.1B active set is small enough that fixed overheads weigh proportionally more. The discount is judgement rather than measurement. Bandwidth is derived from Dell’s STREAM Triad on 7452 silicon (270–300 GB/s dual-socket, halved). Published figures for these models come from Macs at 546 GB/s and read roughly 3× higher.</p>
+    <p class="note">Model specs verified against the vendors’ own Hugging Face cards. Tok/s are estimates rather than benchmarks, except gpt-oss-20b, measured on the desktop in Sept 2026 and marked †. Raw weight-streaming math — 140 GB/s over active-parameter bytes — gives a <em>ceiling</em> of roughly 51 tok/s for gpt-oss-120b and 14 for Scout; those assume nothing but expert weights crosses the bus. The figures above discount for attention compute, KV cache traffic, MoE routing and the GPU/CPU boundary — more heavily for gpt-oss-120b, whose 5.1B active set is small enough that fixed overheads weigh proportionally more. The discount is judgement rather than measurement. Bandwidth is derived from Dell’s STREAM Triad on 7452 silicon (270–300 GB/s dual-socket, halved). Published figures for these models come from Macs at 546 GB/s and read roughly 3× higher.</p>
 
     <h3>The pairing — there is no card to pair with</h3>
     <p><strong>Correction, Sept 2026.</strong> Earlier revisions of this sheet built a plan around a 16GB 4060 Ti. The card is <strong>8GB</strong>, and it stays in the desktop rather than moving into PW-1x. Both halves of that assumption are now gone.</p>
@@ -681,7 +681,7 @@
   </section>
 
   <footer>
-    Model specs from vendor model cards · Board specs from ASRock and ServeTheHome · Bandwidth from Dell STREAM runs · Tok/s ceilings are arithmetic; published ranges are judgement. Neither is a benchmark · Prices move weekly
+    Model specs from vendor model cards · Board specs from ASRock and ServeTheHome · Bandwidth from Dell STREAM runs · Tok/s ceilings are arithmetic and published ranges are judgement; only the gpt-oss-20b figure is measured · Prices move weekly
   </footer>
 
 </div>

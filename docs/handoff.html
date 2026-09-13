@@ -216,7 +216,7 @@
       <h3>Risks, plainly</h3>
       <ul>
         <li><strong>The local machine will not match the commercial service on hard problems.</strong> The best freely available model that fits this hardware scores around 60% on a standard software-engineering benchmark. Useful, not equivalent. The plan assumes a split workload, not a replacement.</li>
-        <li><strong>The performance figures are estimates, not measurements.</strong> The upper bound is arithmetic; the published range is a judgement call discounted below it. Nothing has been benchmarked on this specific machine. Figures could move ±30% in either direction.</li>
+        <li><strong>Every PW-1x figure is still an estimate.</strong> The upper bound is arithmetic; the published range is a judgement call discounted below it. Nothing has been benchmarked on PW-1x, which does not exist yet, so these could move ±30% in either direction. The one real measurement so far is gpt-oss-20b on the desktop, and it came in below what this document predicted — which is the argument for replacing the rest with measurements rather than trusting them.</li>
         <li><strong>Component prices are volatile.</strong> Both memory and flash storage are in supply squeezes. Quoted prices have moved within days during this build.</li>
         <li><strong>One assumption is untested:</strong> that a large local model is genuinely more useful here than a small fast one. A free test on existing hardware settles it before further spend.</li>
       </ul>
@@ -264,7 +264,7 @@
             </tr>
             <tr>
               <td class="name">Power supply<span class="pn">MSI MPG A850G PCIE5</span></td>
-              <td>850W, 80+ Gold, fully modular, ATX 3.1, 2× EPS 4+4. Board requirement confirmed against the ASRock manual, Sept 2026: ATXPWR1 24-pin, ATX12V1 8-pin, ATX12V2 4-pin, and both 12V connectors get populated. The two EPS 4+4 cables cover it.</td>
+              <td>850W, 80+ Gold, fully modular, ATX 3.1, 2× EPS 4+4. Board connectors, from ASRock's published manual: ATXPWR1 24-pin, ATX12V1 8-pin, ATX12V2 4-pin. Whether the 4-pin is required or optional is <strong>still unconfirmed</strong> — read the manual's power section at assembly. Populating both is correct either way, and the two EPS 4+4 cables cover it.</td>
               <td><span class="chip ok">Ordered</span></td><td class="num">$89.99</td>
             </tr>
             <tr>
@@ -301,7 +301,7 @@
 
     <section>
       <h3>Model set</h3>
-      <p class="lede">Constrained to US-origin open-weight models. Throughput figures are estimates, not benchmarks.</p>
+      <p class="lede">Constrained to US-origin open-weight models. Throughput figures are estimates rather than benchmarks, except the one marked † — measured on the desktop, Sept 2026.</p>
       <p class="note"><strong>How the estimates were derived, and why they are below the naive number.</strong> Raw weight-streaming math — 140 GB/s divided by active-parameter bytes — gives a <em>ceiling</em> of roughly 51 tok/s for gpt-oss-120b and 14 for Scout. Those assume nothing but expert weights crosses the bus. Real decode also pays for attention compute, KV cache traffic, MoE routing, and the GPU/CPU boundary. The figures below discount for that — more heavily for gpt-oss-120b, whose 5.1B active set is small enough that fixed overheads weigh proportionally more. The discount is judgement rather than measurement. Treat the range as a guess bracketed by a hard ceiling, and replace it with real numbers once the machine runs.</p>
       <div class="scroll">
         <table>
@@ -512,7 +512,7 @@
 
 <span class="k">workloads</span>:
   <span class="k">topology</span>: { <span class="k">physical_cores</span>: <span class="v">32</span>, <span class="k">logical_cpus</span>: <span class="v">64</span>, <span class="k">smt</span>: <span class="v">true</span>, <span class="k">verify_with</span>: <span class="v">lscpu -e=CPU,CORE</span> }
-  <span class="k">primary</span>: { <span class="k">id</span>: <span class="v">llm_inference</span>, <span class="k">cpus</span>: <span class="v">0-11,32-43</span>, <span class="k">mem_cap_gb</span>: <span class="v">76</span>, <span class="k">gpu</span>: <span class="v">exclusive</span>, <span class="k">isolation</span>: <span class="v">systemd_allowedcpus</span> }
+  <span class="k">primary</span>: { <span class="k">id</span>: <span class="v">llm_inference</span>, <span class="k">cpus</span>: <span class="v">0-11,32-43</span>, <span class="k">mem_cap_gb</span>: <span class="v">76</span>, <span class="k">gpu</span>: <span class="v">none_in_pw1x</span>, <span class="k">isolation</span>: <span class="v">systemd_allowedcpus</span> }
   <span class="k">secondary</span>: { <span class="k">id</span>: <span class="v">web_and_dev_hosting</span>, <span class="k">cpus</span>: <span class="v">12-31,44-63</span>, <span class="k">mem_cap_gb</span>: <span class="v">40</span>, <span class="k">runtime</span>: <span class="v">rootless_podman</span>, <span class="k">proxy</span>: <span class="v">caddy</span> }
   <span class="k">host_reserve_gb</span>: <span class="v">12</span>   <span class="c"># caps must not sum above 128</span>
   <span class="k">contention</span>: { <span class="k">resource</span>: <span class="v">memory_bandwidth</span>, <span class="k">trigger</span>: <span class="v">parallel_builds</span>, <span class="k">mitigation</span>: <span class="v">cap_build_parallelism_j16</span> }
@@ -546,12 +546,12 @@
 <span class="k">confidence</span>:
   <span class="k">hardware_specs</span>: <span class="v">verified</span>        <span class="c"># vendor docs: asrock, kingston, dell, amd</span>
   <span class="k">model_specs</span>: <span class="v">verified</span>           <span class="c"># vendor model cards on huggingface</span>
-  <span class="k">throughput</span>: <span class="v">estimated</span>           <span class="c"># ceiling is arithmetic; published range is judgement. no benchmark on this machine</span>
+  <span class="k">throughput</span>: <span class="v">estimated_except_gpt_oss_20b</span>   <span class="c"># ceiling is arithmetic; published range is judgement; 20b measured on desktop sept2026 at 39tps</span>
   <span class="k">prices</span>: <span class="v">volatile</span>               <span class="c"># ddr4 and nand both in supply squeeze</span></code></pre>
   </div>
 
   <footer>
-    Hardware specs from ASRock, Kingston, Dell and AMD documentation · Model specs from vendor model cards · Throughput ceilings are arithmetic; published ranges are judgement. Neither is a benchmark · Component prices move weekly
+    Hardware specs from ASRock, Kingston, Dell and AMD documentation · Model specs from vendor model cards · Throughput ceilings are arithmetic and published ranges are judgement; only the gpt-oss-20b figure is measured · Component prices move weekly
   </footer>
 
 </div>

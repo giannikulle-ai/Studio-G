@@ -719,7 +719,7 @@
           <ul class="tight">
             <li><strong>24-pin</strong> motherboard cable → <code>ATXPWR1</code>. It has a latch; push until it clicks, then tug to confirm.</li>
             <li><strong>CPU cable #1</strong>, the 8-pin end → <code>ATX12V1</code>, the 8-pin socket. Keep its two 4-pin halves together.</li>
-            <li><strong>CPU cable #2</strong>, split into 4+4 → one 4-pin half into <code>ATX12V2</code>, the 4-pin socket. The other half hangs free; tie it off. <strong>Both</strong> 12V connectors are populated. The Build Sheet flagged this as the one fact to confirm against the manual; the manual's connector list names both, so it stands.</li>
+            <li><strong>CPU cable #2</strong>, split into 4+4 → one 4-pin half into <code>ATX12V2</code>, the 4-pin socket. The other half hangs free; tie it off. <strong>Both</strong> 12V connectors get populated. The board has both — ATX12V1 8-pin and ATX12V2 4-pin, from ASRock's published connector list — but whether the 4-pin is strictly required is not something this guide could confirm, so check the manual's power section. Filling both is correct either way.</li>
             <li><strong>AC cord</strong>: already in from step 0. Check the rocker is still on "O".</li>
           </ul>
 
@@ -895,7 +895,7 @@
             <li>The management IP.</li>
             <li>The idle temperatures from step 9, with the date.</li>
             <li>The memtest result: passes, errors, date, photo.</li>
-            <li>The answer to the Build Sheet's open question: both <code>ATX12V1</code> and <code>ATX12V2</code> populated, confirmed at assembly.</li>
+            <li>The answer to the Build Sheet's open question, read off the manual at assembly: whether <code>ATX12V2</code> is required or optional. Both were populated either way.</li>
           </ul>
           <p>The new management password goes in the encrypted secrets file only, never in <code>notes/</code>.</p>
         </div>
