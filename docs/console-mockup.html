@@ -59,7 +59,7 @@
   .ah { display: flex; align-items: center; justify-content: space-between; gap: 14px 20px; flex-wrap: wrap; }
   .ah-l { display: flex; align-items: center; gap: 14px; }
   .mark { width: 56px; height: 56px; flex: none; border: 1.5px dashed var(--muted); border-radius: 4px; }
-  .ah h1 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: 42px; line-height: 1;
+  .ah h1 { margin: 0; font-family: var(--sans); font-weight: 700; font-size: 36px; line-height: 1.05; letter-spacing: -.02em;
            padding-bottom: 6px; border-bottom: 2px solid var(--rule); }
   .ah-r { display: flex; align-items: stretch; gap: 10px; }
 
@@ -82,16 +82,16 @@
     .col-log { border-left: 0; padding-left: 0; border-top: 1px solid var(--hair); padding-top: 22px; margin-top: 28px; }
   }
 
-  .sub { font-family: var(--serif); font-weight: 400; font-size: 27px; line-height: 1.1; margin: 0 0 14px; }
+  .sub { font-family: var(--sans); font-weight: 700; font-size: 24px; letter-spacing: -.02em; line-height: 1.15; margin: 0 0 14px; }
   .sub.later { margin-top: 36px; }
 
   /* ---- groups ---- */
   .grp + .grp { margin-top: 22px; }
   .grp-h { display: flex; align-items: baseline; gap: 10px; padding-bottom: 7px; border-bottom: 1px solid var(--hair); }
-  .gname { font-family: var(--serif); font-size: 19px; }
+  .gname { font-family: var(--sans); font-weight: 700; font-size: 17px; letter-spacing: -.01em; }
   .gcount { font: 500 11px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
   .gcount::before { content: "("; } .gcount::after { content: ")"; }
-  .empty { margin: 0; padding: 14px 2px 2px; font-family: var(--serif); font-size: 18px; color: var(--muted); }
+  .empty { margin: 0; padding: 14px 2px 2px; font-family: var(--sans); font-weight: 700; font-size: 16px; color: var(--muted); }
 
   /* ---- a row: the status outside on the left, the row its own box with the chevron in it ---- */
   .wrow { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; align-items: start; margin-bottom: 8px; }
@@ -145,7 +145,7 @@
   /* ---- token spend ---- */
   .spend { border: 1.5px solid var(--ink); border-radius: 4px; padding: 16px 18px 18px; display: grid; gap: 10px; margin-bottom: 30px; }
   .spend .top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
-  .spend .ttl { font: 600 12px var(--sans); letter-spacing: .02em; color: var(--muted); }
+  .spend .ttl { font: 700 12px var(--sans); letter-spacing: .02em; color: var(--muted); }
   .spend .hero { font-family: var(--mono); font-size: 34px; line-height: 1; font-variant-numeric: tabular-nums; }
   .spend .hero small { font-family: var(--sans); font-size: 13px; font-weight: 500; color: var(--ink-2); margin-left: 8px; letter-spacing: 0; }
   .spend .bar { display: flex; height: 14px; background: var(--well); border-radius: 2px; overflow: hidden; gap: 2px; }
@@ -195,7 +195,7 @@
   .settings[hidden] { display: none; }
   .settings .sh { display: flex; align-items: baseline; justify-content: space-between; gap: 12px 20px; flex-wrap: wrap;
                   padding-bottom: 14px; border-bottom: 2px solid var(--rule); }
-  .settings .sh h2 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: 30px; line-height: 1; }
+  .settings .sh h2 { margin: 0; font-family: var(--sans); font-weight: 700; font-size: 26px; letter-spacing: -.02em; line-height: 1.1; }
   .setrow { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 14px 20px; align-items: center;
             padding: 18px 0; border-bottom: 1px solid var(--hair-2); }
   .setrow .lbl { font-weight: 600; font-size: 15px; }
@@ -210,8 +210,8 @@
   /* the documentation, now behind settings */
   .doc { margin-top: 10px; }
   .doc section { margin-top: 40px; }
-  .doc h3 { margin: 0 0 6px; font-family: var(--serif); font-weight: 400; font-size: 25px; line-height: 1.15; }
-  .doc h4 { margin: 0 0 8px; font: 600 14px var(--sans); }
+  .doc h3 { margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 21px; letter-spacing: -.02em; line-height: 1.2; }
+  .doc h4 { margin: 0 0 8px; font: 700 14px var(--sans); }
   .doc .lede { font-size: 15.5px; color: var(--ink-2); max-width: 68ch; margin: 0 0 18px; }
   .doc p { max-width: 70ch; }
   .doc .note { font-size: 13.5px; color: var(--muted); max-width: 72ch; }
