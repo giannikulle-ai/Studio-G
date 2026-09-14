@@ -142,26 +142,6 @@
   .tool.add { border-style: dashed; border-color: var(--muted); color: var(--muted); box-shadow: none; justify-content: center; }
   .tool.add:hover { background: var(--surface); box-shadow: none; }
 
-  /* ---- the sheet a tool opens ---- */
-  .sheet { margin-top: 20px; border: 1.5px solid var(--ink); border-radius: 4px; padding: 18px 20px; display: grid; gap: 12px; background: var(--surface); }
-  .sheet[hidden] { display: none; }
-  .sheet .h { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-  .sheet .h b { font-family: var(--serif); font-weight: 400; font-size: 22px; }
-  .sheet .h .path { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
-  .sheet .f { display: grid; grid-template-columns: 116px minmax(0, 1fr); gap: 10px; align-items: center; }
-  .sheet label { font: 600 12px var(--sans); color: var(--muted); }
-  .sheet input, .sheet select, .sheet textarea { width: 100%; font: 14px var(--sans); color: var(--ink); background: var(--surface-2);
-    border: 1.5px solid var(--hair); border-radius: 3px; padding: 9px 11px; min-height: 40px; }
-  .sheet textarea { min-height: 76px; resize: vertical; }
-  .sheet input:focus, .sheet select:focus, .sheet textarea:focus { border-color: var(--ink); outline: none; }
-  .sheet .act { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
-  .sheet .say { margin: 0; font-size: 14px; color: var(--ink-2); max-width: 60ch; }
-  .undef { border: 1.5px dashed var(--muted); border-radius: 3px; min-height: 104px; display: grid; place-items: center;
-           color: var(--muted); font-size: 14px; }
-  @media (max-width: 560px) { .sheet .f { grid-template-columns: 1fr; gap: 4px; } }
-  .reply { font-size: 14.5px; line-height: 1.6; border-left: 2px solid var(--ink); padding-left: 14px; }
-  .reply .who { display: block; font: 600 11px var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
-
   /* ---- token spend ---- */
   .spend { border: 1.5px solid var(--ink); border-radius: 4px; padding: 16px 18px 18px; display: grid; gap: 10px; margin-bottom: 30px; }
   .spend .top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
@@ -343,12 +323,6 @@
               <span><b>16:29</b> session_digest · "the brief is empty, stopping"</span>
               <span><b>16:29</b> session_digest · idle, waiting on you</span>
             </div>
-            <div class="acts">
-              <button class="b solid" data-tool="ask">Re-run the Brief</button>
-              <button class="b" data-tool="send">Send a Message</button>
-              <button class="b" data-tool="handoff">Hand It Something Else</button>
-              <button class="b plain" data-handled="1">Mark Handled</button>
-            </div>
           </div>
 
           <div class="wrow" data-row="2">
@@ -366,11 +340,6 @@
             <div class="ev">
               <span><b>13:41</b> session_likes · wrote likes-triage.md · 212 rows sorted</span>
               <span><b>13:41</b> session_likes · "ready for review"</span>
-            </div>
-            <div class="acts">
-              <button class="b solid" data-tool="handoff">Hand the Result On</button>
-              <button class="b" data-tool="send">Send a Message</button>
-              <button class="b plain" data-handled="2">Mark Handled</button>
             </div>
           </div>
 
@@ -397,11 +366,6 @@
             <span><b>16:40</b> Bash · pytest · 61 passed</span>
             <span><b>16:38</b> mcp · studio-local.read_and_brief(tools/)</span>
           </div>
-          <div class="acts">
-            <button class="b" data-tool="send">Send a Message</button>
-            <button class="b" data-tool="watch">Wake It On…</button>
-            <button class="b danger" data-tool="stop">Stop</button>
-          </div>
         </div>
 
         <div class="wrow">
@@ -418,11 +382,6 @@
           <div class="ev">
             <span><b>16:44</b> fetched 14 renewal quotes</span>
             <span><b>16:31</b> classify ×40 · gpt-oss-20b on the desktop</span>
-          </div>
-          <div class="acts">
-            <button class="b" data-tool="send">Send a Message</button>
-            <button class="b" data-tool="watch">Wake It On…</button>
-            <button class="b danger" data-tool="stop">Stop</button>
           </div>
         </div>
 
@@ -441,10 +400,6 @@
             <span><b>16:04</b> batch_job accepted · 41 paths · gpt-oss-120b on PW-1x</span>
             <span><b>16:04</b> webhook registered → wakes session_falsework</span>
           </div>
-          <div class="acts">
-            <button class="b" data-tool="dash">Watch the Throughput</button>
-            <button class="b danger" data-tool="stop">Cancel the Job</button>
-          </div>
         </div>
       </div>
 
@@ -460,7 +415,6 @@
         <button class="tool add" data-tool="more">+ Tools?</button>
       </div>
 
-      <form class="sheet" id="sheet" hidden></form>
     </section>
 
     <!-- ============ RIGHT ============ -->
@@ -779,22 +733,6 @@
     });
   });
 
-  /* ---------- mark handled ---------- */
-  $$('[data-handled]').forEach(function (b) {
-    b.addEventListener('click', function (e) {
-      e.stopPropagation();
-      var n = b.getAttribute('data-handled');
-      var row = $('.wrow[data-row="' + n + '"]'), det = document.getElementById('d' + n);
-      if (row) row.parentNode.removeChild(row);
-      if (det) det.parentNode.removeChild(det);
-      var left = $$('#lost-list .wrow').length;
-      $('#c-lost').textContent = left;
-      if (!left) { $('#lost-empty').hidden = false; $('#c-lost').hidden = true; }
-      addLog('you', '<b>You</b> cleared one from the jungle', '0.1 s');
-      toast(left ? 'Cleared. ' + left + ' left in the jungle.' : 'Cleared. On Course.');
-    });
-  });
-
   /* ---------- statistics you pick ---------- */
   var STATS = [
     { k: 'calls',    label: 'Calls Today',     v: '137' },
@@ -827,107 +765,6 @@
     });
   }
   paintStats();
-
-  /* ---------- what a tool opens ---------- */
-  var results = ['run_9f3 · brief-2026-09-10.md', 'session_likes · likes-triage.md', 'job_7c2 · when it finishes', 'nothing · type or drop files'];
-  var forms = {
-    ask:     { title: 'Ask Local', path: 'POST /api/local-models/ask', run: 'Ask', fields: [
-                 { k: 'text', label: 'Question', type: 'text', v: 'Which three files in tools/ would a new contributor read first, and why?' },
-                 { k: 'model', label: 'Model', type: 'enum', o: ['Auto · the door picks', 'gpt-oss-120b · PW-1x', 'gpt-oss-20b · desktop', 'Scout · PW-1x'] },
-                 { k: 'turns', label: 'Turns of History', type: 'str', v: '6' } ] },
-    create:  { title: 'New Session', path: 'POST /api/claude-code-remote/create', run: 'Create', fields: [
-                 { k: 'prompt', label: 'Prompt', type: 'text', v: 'Rewrite the intro of the digest from the attached brief. Keep the voice.' },
-                 { k: 'files', label: 'Files', type: 'files' },
-                 { k: 'title', label: 'Title', type: 'str', v: 'Sheepcliff Digest · Intro' } ] },
-    send:    { title: 'Send a Message', path: 'POST /api/claude-code-remote/send', run: 'Send', fields: [
-                 { k: 'session', label: 'Session', type: 'enum', o: ['session_falsework', 'session_digest', 'session_likes'] },
-                 { k: 'text', label: 'Message', type: 'text', v: '' },
-                 { k: 'files', label: 'Files', type: 'files' } ] },
-    handoff: { title: 'Hand a Result On', path: 'fromResultOf() → another verb', run: 'Hand It On', fields: [
-                 { k: 'result', label: 'Result', type: 'files' },
-                 { k: 'to', label: 'Hand To', type: 'enum', o: ['A new session', 'A running session', 'Local · summarise it', 'Your phone'] } ] },
-    watch:   { title: 'Wake It On…', path: 'POST /api/claude-code-remote/watch', run: 'Arm It', fields: [
-                 { k: 'session', label: 'Session', type: 'enum', o: ['session_falsework', 'session_domains', 'session_likes'] },
-                 { k: 'on', label: 'Wake On', type: 'enum', o: ['the batch job finishing', 'a push to GitHub', 'the print finishing'] } ] }
-  };
-  var toolNames = {
-    bots: 'Bot Land', projects: 'Project Center', models: 'Local Models', dash: 'Dashboards',
-    store: 'Storage', conn: 'Connections', printer: 'Printer', more: '+ Tools?', stop: 'Stop'
-  };
-
-  var sheet = $('#sheet');
-  function closer() { var c = sheet.querySelector('[data-close]'); if (c) c.addEventListener('click', function () { sheet.hidden = true; }); }
-  function openSheet(key) {
-    var f = forms[key], name = toolNames[key];
-    sheet.innerHTML = '';
-    if (!f && name) {
-      sheet.innerHTML = '<div class="h"><b>' + name + '</b></div>' +
-        '<div class="undef">Not Defined Yet</div>' +
-        '<div class="act"><button type="button" class="b" data-close>Close</button></div>';
-      sheet.hidden = false; closer(); sheet.scrollIntoView({ block: 'nearest', behavior: reduced ? 'auto' : 'smooth' }); return;
-    }
-    if (!f) { toast('Opens ' + key + '.'); return; }
-    var h = document.createElement('div'); h.className = 'h';
-    h.innerHTML = '<b>' + f.title + '</b><span class="path">' + f.path + '</span>';
-    sheet.appendChild(h);
-    f.fields.forEach(function (fl) {
-      var row = document.createElement('div'); row.className = 'f';
-      var id = 'fld-' + key + '-' + fl.k;
-      var lab = document.createElement('label'); lab.htmlFor = id; lab.textContent = fl.label; row.appendChild(lab);
-      var ctl;
-      if (fl.type === 'text') { ctl = document.createElement('textarea'); ctl.value = fl.v || ''; }
-      else if (fl.type === 'enum' || fl.type === 'files') {
-        ctl = document.createElement('select');
-        (fl.type === 'files' ? results : fl.o).forEach(function (o) {
-          var op = document.createElement('option'); op.textContent = (fl.type === 'files' ? 'From the result of · ' : '') + o; ctl.appendChild(op);
-        });
-      } else { ctl = document.createElement('input'); ctl.type = 'text'; ctl.value = fl.v || ''; }
-      ctl.id = id; ctl.name = fl.k; row.appendChild(ctl); sheet.appendChild(row);
-    });
-    var act = document.createElement('div'); act.className = 'act';
-    act.innerHTML = '<button type="button" class="b" data-close>Cancel</button><button type="submit" class="b solid">' + f.run + '</button>';
-    sheet.appendChild(act);
-    sheet.setAttribute('data-key', key); sheet.hidden = false; closer();
-    sheet.scrollIntoView({ block: 'nearest', behavior: reduced ? 'auto' : 'smooth' });
-    var first = sheet.querySelector('textarea, input, select'); if (first) first.focus({ preventScroll: true });
-  }
-  $$('[data-tool]').forEach(function (b) {
-    b.addEventListener('click', function (e) { e.stopPropagation(); openSheet(b.getAttribute('data-tool')); });
-  });
-  sheet.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var key = sheet.getAttribute('data-key'), input = {};
-    $$('input, select, textarea', sheet).forEach(function (c) { input[c.name] = c.value; });
-    sheet.hidden = true;
-    if (key === 'ask') { runAsk(input); return; }
-    var what = { create: '<b>You</b> started a session', send: '<b>You</b> sent a message', handoff: '<b>You</b> handed a result on', watch: '<b>You</b> armed a wake' }[key] || ('<b>You</b> ran ' + key);
-    addLog('you', what, (0.1 + Math.random() * 0.4).toFixed(1) + ' s');
-    toast(forms[key].title + ' · run_' + Math.random().toString(16).slice(2, 5));
-  });
-
-  /* ---------- ask streams ---------- */
-  var answer = 'Start with tools/spec-check.py: it is the only code in the repo, and its docstring says what the three documents promise each other. Then docs/README.md, which explains why the HTML in docs/ is a mirror rather than the source. Third, the spec-check workflow, so they can see the checker is the gate and not a suggestion.';
-  var busy = false;
-  function runAsk(input) {
-    if (busy) return; busy = true;
-    var model = (input.model || 'Auto').split(' ·')[0];
-    sheet.innerHTML = '<div class="h"><b>Ask Local</b><span class="path">streaming · source = console</span></div>' +
-      '<p class="say" style="color:var(--muted)">' + (input.text || '').replace(/[<>]/g, '') + '</p>' +
-      '<div class="reply"><span class="who" id="who">' + model + ' · answering</span><span id="out"></span></div>' +
-      '<div class="act"><button type="button" class="b" data-close>Close</button></div>';
-    sheet.hidden = false; closer();
-    var words = answer.split(' '), i = 0, t0 = Date.now(), out = $('#out');
-    (function tick() {
-      out.textContent += (i ? ' ' : '') + words[i++];
-      if (i < words.length) setTimeout(tick, reduced ? 0 : 34 + Math.random() * 46);
-      else {
-        var s = reduced ? 6.4 : (Date.now() - t0) / 1000;
-        $('#who').textContent = model + ' · ' + s.toFixed(1) + ' s · in the log';
-        busy = false;
-        addLog('you', '<b>You</b> asked local', (/desktop/.test(input.model || '') ? 'desktop' : 'PW-1x') + ' · 1.1k → ' + (words.length + 12) + ' · ' + s.toFixed(1) + ' s');
-      }
-    })();
-  }
 
   /* ---------- the log ---------- */
   function addLog(src, what, meta) {

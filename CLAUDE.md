@@ -24,7 +24,9 @@ Small labels are set in title case rather than being force-uppercased by CSS.
 
 Where a thing is not designed yet, draw it undefined rather than filling it in. The page has one way of saying so: a bare dashed outline, as on the icon, the eighth tool, and every tool panel.
 
-Lists of items, sample statuses and explanatory blurbs invented to make a mockup look finished are worse than an empty box, because they get mistaken for decisions.
+Lists of items, sample statuses and explanatory blurbs invented to make a mockup look finished are worse than an empty box, because they get mistaken for decisions. A placeholder panel is the same mistake one step removed: if a panel was not asked for, do not draw one and label it undefined. Draw nothing.
+
+Buttons are decisions. Which actions a row offers, and what a tool opens, are the user's to pick.
 
 Example data is the exception, and only where the shape is already agreed: the rows, the log and the load figures carry plausible example values so the layout can be judged.
 
