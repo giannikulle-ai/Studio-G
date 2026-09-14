@@ -399,8 +399,9 @@
           <ul class="tight">
             <li>Loosen A, B, C. Lift the outer <strong>force frame</strong>, then the <strong>rail frame</strong> under it.</li>
             <li><strong>Take out the internal plastic cover</strong> and keep it. Now the contacts are exposed — do not touch them.</li>
-            <li>Hold the processor by its <strong>carrier frame</strong>; it never comes off. Triangle on the carrier to triangle on the rail frame.</li>
-            <li>Slide the carrier into the rail frame’s guides until it clicks. Plastic into plastic, no effort.</li>
+            <li>Hold the processor by its <strong>carrier frame</strong>; it never comes off.</li>
+            <li><strong>Orientation.</strong> Find the triangle on the carrier <em>and</em> the one on the rail frame before you lift anything — they finish on the same corner. Photograph the closed socket first if it helps you keep track.</li>
+            <li>Slide the carrier into the rail frame’s guides until it clicks. Plastic into plastic, <strong>no effort</strong>. Resistance means it is 180° out — turn it round, never push.</li>
             <li>Lower the rail frame, lower the force frame, tighten A → B → C. 1.58 N·m if you have a torque driver.</li>
           </ul>
 <figure>
@@ -417,7 +418,7 @@
                 <polygon points="102,72 118,72 102,88" fill="currentColor" stroke="none"/>
                 <text class="s" x="235" y="188" text-anchor="middle">carrier with processor</text>
                 <text class="s" x="235" y="206" text-anchor="middle">slides in from the top · click</text>
-                <text class="e" x="160" y="122" text-anchor="start">triangles match</text>
+                <text class="ta" x="160" y="122" text-anchor="start">triangles — see next figure</text>
                 <circle class="acc" cx="392" cy="195" r="15"/>
                 <text class="ta" x="392" y="200" text-anchor="middle">A</text>
                 <circle class="acc" cx="392" cy="80" r="15"/>
@@ -446,7 +447,31 @@
             </div>
             <figcaption><b>Three screws in one order, and a carrier that slides in.</b> The letters are ASRock’s; the frame itself is stamped, and the stamps win. Their positions here are the least certain thing in the drawing. The dashed layer is the <b>internal plastic cover</b> — out before the processor goes in, and worth keeping.</figcaption>
           </figure>
-          <div class="pair"><div class="look"><b>Looks right when</b><p>The carrier slid in with no resistance and clicked; all three screws turned freely and stopped at the same firmness.</p></div><div class="stop"><b>Stop if</b><p>A screw resists before it stops, or the frame will not sit flat. Open it again and check the plastic cover came out and the carrier is fully in its guides. Never push harder.</p></div></div>
+                    <figure>
+            <div class="fig">
+              <svg class="dg" viewBox="0 0 1000 360" role="img" aria-label="Two top views of the carrier seated in the rail frame. Left, marked right: the triangle on the rail frame and the triangle on the carrier are at the same corner, next to each other. Right, marked wrong: the carrier is turned 180 degrees, so the two triangles sit at opposite corners.">
+                <text class="okt" x="250" y="42" text-anchor="middle">✓ both triangles on the same corner</text>
+                <rect class="part" x="80" y="110" width="340" height="180" rx="4"/>
+                <polygon class="acc" points="94,124 118,124 94,148"/>
+                <rect class="part" x="120" y="150" width="260" height="110" rx="3"/>
+                <polygon class="acc" points="132,162 152,162 132,182"/>
+                <text class="s" x="250" y="212" text-anchor="middle">carrier + processor</text>
+                <text class="e" x="250" y="312" text-anchor="middle">rail frame · they end up side by side</text>
+
+                <text class="not" x="740" y="42" text-anchor="middle">✕ turned 180° — opposite corners</text>
+                <rect class="part" x="570" y="110" width="340" height="180" rx="4"/>
+                <polygon class="acc" points="584,124 608,124 584,148"/>
+                <rect class="part" x="610" y="150" width="260" height="110" rx="3"/>
+                <polygon class="nol" points="858,248 838,248 858,228"/>
+                <text class="s" x="740" y="212" text-anchor="middle">carrier + processor</text>
+                <text class="not" x="740" y="312" text-anchor="middle">it will not slide freely · turn it, do not push</text>
+
+                <text class="s" x="500" y="348" text-anchor="middle">corner shown is schematic — find the real one on your board and your carrier first</text>
+              </svg>
+            </div>
+            <figcaption><b>The package is rectangular, so it cannot go in sideways.</b> A 180° flip is the only mistake available, and it shows up as resistance — the carrier rides its guides with no effort when it is right. Find both triangles <b>before</b> you lift a frame; once the socket is open you are working over exposed contacts and do not want to be hunting for a marking.</figcaption>
+          </figure>
+          <div class="pair"><div class="look"><b>Looks right when</b><p>The carrier slid in with no resistance and clicked; all three screws turned freely and stopped at the same firmness.</p></div><div class="stop"><b>Stop if</b><p>The carrier needs any pressure to seat — it is the wrong way round. Or a screw resists before it stops, or the frame will not sit flat: open it again and check the plastic cover came out and the carrier is fully in its guides. Never push harder.</p></div></div>
 
         </div>
       </li>
@@ -545,6 +570,7 @@
           <p class="esd">Ground yourself first: wrist strap on the supply’s shell, or touch a grounded metal object.</p>
           <ul class="tight">
             <li><strong>Clean the lid first.</strong> With the socket closed, wipe the metal lid with isopropyl until it is bare, dull metal. A used processor carries old paste, and new over old runs hot. Let it dry.</li>
+            <li><strong>Peel the film off the cooler’s cold plate.</strong> The flat copper face that meets the processor ships with a clear or printed protective film. It is easy to miss and leaving it on is the classic way to cook a chip in minutes. Wipe the bare plate with isopropyl too.</li>
             <li>Fit ARCTIC’s <strong>SP3 / TR4</strong> bracket — PH1 screwdriver, screws up from under the mounting frame into the socket’s own holes.</li>
             <li>Spread the MX-6 <strong>thin over the whole lid</strong> with the spreader or a card. The lid is far bigger than a desktop chip’s and 0.8g is one application.</li>
             <li>Seat the tower with its <strong>airflow arrow pointing at the rear ports</strong>. Tighten the nuts a little at a time, crosswise, until they stop.</li>
@@ -798,7 +824,7 @@
           <tr><td class="name">A two-digit code on the board</td><td>Dr. Debug naming the stage it stopped at</td><td>Photograph it and look it up in the User’s Manual. There are no beeps — no speaker.</td></tr>
           <tr><td class="name">Memory shows 64GB or 96GB</td><td>Sticks not seated</td><td>Power off, press each down again, lock every clip by hand.</td></tr>
           <tr><td class="name">The NVMe is missing</td><td>It is in <code>M2_1</code>, which <code>PE16_SEL</code> can disable</td><td>Move it to <code>M2_2</code>.</td></tr>
-          <tr><td class="name">Processor temperature climbs fast at idle</td><td>No contact: paste missing, or uneven bracket screws</td><td>Power off at once. Remove the cooler, check the paste print covers the lid, re-paste and remount crosswise.</td></tr>
+          <tr><td class="name">Processor temperature climbs fast at idle</td><td>No contact: film left on the cooler’s cold plate, paste missing, or uneven bracket screws</td><td>Power off at once. Remove the cooler, check the paste print covers the lid, re-paste and remount crosswise.</td></tr>
         </tbody>
       </table>
     </div>
