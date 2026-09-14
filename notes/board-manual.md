@@ -85,3 +85,96 @@ Chips: Intel X550 (or Broadcom BCM57416) for the 10G pair, ASPEED AST2500 for th
 
 Unrelated to the board, still open: whether the ARCTIC cooler's two fans share one lead
 or use two (answered by the cooler's box, not this sheet).
+
+---
+
+# Back of the same sheet — read 14 September 2026
+
+Sections 5 to 10. This side is procedures rather than names, and it closes almost
+everything the front side left open.
+
+## Section 5, Install the Processor and Heatsink — a contradiction
+
+> "Locate the three torx screws on the CPU socket and unscrew them according to the
+> order **A→B→C**." … "Close the bracket that holds the CPU. Close the retention cover.
+> Fasten the torx screw according to the order **A→B→C**."
+
+**ASRock says the same order in both directions.** AMD's SP3 documentation numbers the
+screws 1/2/3 and says tighten 1→2→3, loosen 3→2→1. The guide followed AMD until now.
+
+Both agree on **fastening ascending**, which is the direction that seats the processor
+evenly. They differ only on loosening, where nothing is being seated. The guide now
+follows the sheet that came with the board and says so, with the disagreement stated.
+
+Also on this side, and previously missing from the guide:
+
+- **"Open the second bracket. Take out the internal plastic cover."** A protective
+  plastic insert ships in the rail frame and must come out before the processor goes in.
+- **"Install CPU along with the carrier frame, do not separate them"** — printed twice,
+  once in a warning triangle. Consistent with what the guide already said.
+- "We recommend using the CPU Installation tool to avoid CPU pin-bent problem."
+- No torque figure is given. AMD's 1.58 ± 0.1 N·m stands, attributed to AMD.
+
+## Section 6, Install the Power Cables — pin counts confirmed
+
+The section draws all three connectors with full pinouts: a **24-pin**, an **8-pin 12V**,
+and a **4-pin 12V**. So `ATXPWR1` 24-pin / `ATX12V1` 8-pin / `ATX12V2` 4-pin is now the
+board's own statement, not a figure borrowed from the User's Manual.
+
+**Still not stated in words:** whether the 4-pin is mandatory. It is drawn as part of
+power installation. Both get populated; the question is now cosmetic.
+
+## Section 7, Install the Memory — one clip
+
+1. "Unlock a DIMM slot by pressing the module clip outward."
+2. "Insert the memory module."
+3. "Lock the clip."
+
+The drawings show **a single clip at one end**, not a latch at both. And locking it is
+**its own numbered step** — so the guide no longer tells you the latch closes itself.
+
+## Section 8, LAN Port LED Indications
+
+| Port | Activity/Link LED | Speed LED |
+|---|---|---|
+| `IPMI_LAN1` | off = no link · blinking yellow = traffic · on = link | off = 10 Mbps or no link · yellow = 100 Mbps · green = 1 Gbps |
+| `LAN1` / `LAN2` (ROMED8-2T) | same | off = 100 Mbps or no link · **off** = 1 Gbps (yellow on R3.0X) · green = **10 Gbps** |
+
+Useful beyond the build: **green on `LAN1` is the test for whether the desktop link
+actually negotiated 10GbE**, which was an open decision in the guide's third table. Note
+the trap — on the 10G ports a dark speed LED with a live link means 1 Gbps, not a fault.
+
+## Section 9, Headers — the `PANEL1` pinout
+
+System Panel, eight pins in two rows of four, pin 1 marked at the lower left:
+
+```
+ PLED+   PLED−   PWRBTN#   GND
+ GND     RESET#  HDLED−    HDLED+
+```
+
+**The power button is `PWRBTN#` and the `GND` beside it on the same row.** Short them
+for about a second. `RESET#` + its `GND` is the reset pair.
+
+The sheet also prints pinouts for `AUX_PANEL1` (SMB, locator, chassis-open, LAN link
+LEDs, `+3V5B`/`+5VSB`), `TPM-SPI` and `RDS1`. **`AUX_PANEL1` carries standby power** —
+it is the header next to `PANEL1` and must not be confused with it.
+
+## Section 10, M.2 SSD Module Installation — nut positions
+
+| Position | A | B | C | D | E |
+|---|---|---|---|---|---|
+| Length | 3 cm | 4.2 cm | 6 cm | 8 cm | 11 cm |
+| Type | 2230 | 2242 | 2260 | 2280 | 22110 |
+
+`M2_1` has A–D; `M2_2` has A–E. **The Kingston 2280 uses position D.**
+
+Procedure notes worth having:
+
+- Step 3: **"Peel off the yellow protective film on the nut."** Hand-tighten the standoff.
+- Step 5: "Please do not overtighten the screw."
+
+## What is left
+
+Only the **Dr. Debug code table**, and the word "required" next to `ATX12V2`. Both are in
+the full User's Manual; neither blocks assembly.

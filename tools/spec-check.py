@@ -80,6 +80,8 @@ STALE = [
     "2–4 day shipping",
     # superseded by the board's own manual, read 14 Sep 2026
     "from ASRock's published manual", "read the manual's power section",
+    # pin counts are confirmed from the board's own sheet as of 14 Sep 2026
+    "still unconfirmed", "no pin counts",
 ]
 
 # Strings the Assembly Guide must share with the Build Sheet (part numbers,
@@ -99,7 +101,14 @@ GUIDE_STALE = ["CUDA", "n-cpu-moe", "-ngl", "graphics card cable", "into the x16
                # connectors), the SSD goes in M2_2, and the AC cord stays out
                # of the wall until step 7 per the board's handling precautions.
                "CPU_FAN1", "first M.2 slot", "beep pattern",
-               "AC cord</strong>: already in from step 0"]
+               "AC cord</strong>: already in from step 0",
+               # section 5/7/10 of the same sheet, read 14 Sep 2026: screws are
+               # A-B-C in one order, the slots have one clip that you lock, and
+               # the M.2 standoff has a named nut position and a film on it.
+               "Open them 3, 2, 1", "numbered 1, 2 and 3</strong>",
+               "latch swings up and clicks closed on its own",
+               "latch closed by itself", "latches close by themselves",
+               "Open the latch at each end", "its 80mm hole"]
 
 # Model footprints: (name, size_gb, total_params_b, min_bits, max_bits)
 MODELS = [
