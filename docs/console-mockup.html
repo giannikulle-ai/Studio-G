@@ -494,6 +494,14 @@
   </div>
 
   <div class="setrow">
+    <div class="lbl">Throughput<small>Against the baseline measured before PW-1x</small></div>
+    <div>
+      <p style="margin:0;font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums">×1.9</p>
+      <p class="note" style="margin:6px 0 0">Work getting done now over the same work measured on the old setup, which is step A0 in the plan. This is the number the whole machine is justified by, so it lives here rather than on a page you read all day.</p>
+    </div>
+  </div>
+
+  <div class="setrow">
     <div class="lbl">Adapters<small>One file per connected thing</small></div>
     <div><p class="note" style="margin:0">Eight at launch, three reserved. Secrets come from the sops file and never from adapter source.</p></div>
   </div>
@@ -745,19 +753,20 @@
     { k: 'claude',   label: "Claude's Share",  v: '61%' },
     { k: 'yours',    label: 'Your Share',      v: '27%' },
     { k: 'clients',  label: "Clients' Share",  v: '12%' },
-    { k: 'a0',       label: 'Against A0',      v: '×1.9' },
     { k: 'fell',     label: 'Fell Back',       v: '3' },
     { k: 'latency',  label: 'Median Latency',  v: '4.2 s' },
     { k: 'saved',    label: 'Spend Avoided',   v: '$4.80' }
   ];
-  var picked = ['calls', 'frontier', 'a0'];
-  try { var raw = localStorage.getItem('pw1x-stats-v2'); if (raw) picked = JSON.parse(raw); } catch (e) {}
+  var picked = ['calls', 'frontier', 'claude'];
+  try { var raw = localStorage.getItem('pw1x-stats-v3'); if (raw) picked = JSON.parse(raw); } catch (e) {}
   $$('.stat select').forEach(function (sel, i) {
     STATS.forEach(function (s) { var o = document.createElement('option'); o.value = s.k; o.textContent = s.label; sel.appendChild(o); });
-    sel.value = picked[i] || STATS[i].k;
+    var want = picked[i];
+    if (!STATS.some(function (x) { return x.k === want; })) want = STATS[i].k;
+    sel.value = want; picked[i] = want;
     sel.addEventListener('change', function () {
       picked[i] = sel.value;
-      try { localStorage.setItem('pw1x-stats-v2', JSON.stringify(picked)); } catch (e) {}
+      try { localStorage.setItem('pw1x-stats-v3', JSON.stringify(picked)); } catch (e) {}
       paintStats();
     });
   });
