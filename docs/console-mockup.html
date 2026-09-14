@@ -90,31 +90,29 @@
   /* header */
   .ah { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px 20px; flex-wrap: wrap; }
   .ah-l { display: flex; align-items: center; gap: 12px; }
-  .mark { width: 34px; height: 34px; flex: none; border: 1.5px solid var(--ink); border-radius: 4px; display: grid; place-items: center; }
+  .mark { width: 54px; height: 54px; flex: none; border: 1.5px dashed var(--muted); border-radius: 5px; display: grid; place-items: center; color: var(--muted); }
   .mark svg { display: block; }
   .ah h1 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: 40px; line-height: 1; letter-spacing: -.01em; padding-bottom: 6px; border-bottom: 2px solid var(--rule); }
   .ah-r { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
   /* the lamp: the USB light, mirrored. Monochrome on purpose. */
-  .lamp { appearance: none; border: 1.5px solid var(--hair); background: var(--surface); border-radius: 4px; height: 38px; padding: 0 12px 0 10px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font: 500 13px var(--sans); color: var(--ink-2); }
+  .lamp { appearance: none; border: 1.5px solid var(--hair); background: var(--surface); border-radius: 4px; height: 46px; padding: 0 14px 0 12px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font: 500 13px var(--sans); color: var(--ink-2); }
   .lamp:hover { border-color: var(--ink); color: var(--ink); }
   .lamp .bulb { width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid var(--ink); background: transparent; transition: background .25s, box-shadow .25s; }
   .lamp.on .bulb { background: var(--ink); box-shadow: 0 0 0 3px var(--well); }
   .lamp.on { color: var(--ink); }
 
-  /* PW-1x status: the percent split for work and server, links to the dashboard */
-  .split { display: inline-grid; grid-auto-flow: column; align-items: stretch; border: 1.5px solid var(--ink); border-radius: 4px; text-decoration: none; overflow: hidden; height: 38px; }
-  .split .cell { display: grid; align-content: center; gap: 1px; padding: 0 12px; border-right: 1px solid var(--hair); }
-  .split .cell:last-child { border-right: 0; }
-  .split .cell.state { background: var(--ink); color: var(--surface); display: flex; align-items: center; gap: 7px; font: 600 12.5px var(--sans); letter-spacing: .04em; text-transform: uppercase; }
-  .split .cell.state .d { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
-  .split .k { font: 600 9.5px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-  .split .v { font: 500 15px var(--mono); font-variant-numeric: tabular-nums; line-height: 1; }
-  .split:hover .cell.state { background: var(--ink-2); }
-  .split .bar { width: 72px; display: flex; align-items: center; gap: 2px; padding: 0 11px; }
-  .split .bar i { flex: none; height: 9px; background: var(--ink); }
-  .split .bar i + i { background: var(--muted); }
-  .iconb { appearance: none; width: 38px; height: 38px; border: 1.5px solid var(--hair); background: var(--surface); border-radius: 4px; display: grid; place-items: center; cursor: pointer; color: var(--ink-2); }
+  /* PW-1x load: the split between inference work and web serving. Opens the dashboard. */
+  .load { display: inline-grid; grid-auto-flow: column; align-items: stretch; border: 1.5px solid var(--ink); border-radius: 4px; text-decoration: none; overflow: hidden; height: 46px; }
+  .load .state { background: var(--ink); color: var(--surface); display: flex; align-items: center; gap: 7px; padding: 0 13px; font: 600 12.5px var(--sans); letter-spacing: .04em; text-transform: uppercase; }
+  .load .state .d { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
+  .load .read { display: grid; align-content: center; gap: 3px; padding: 0 14px; }
+  .load .k { font: 600 9.5px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .load .v { font: 400 13px var(--sans); color: var(--ink-2); white-space: nowrap; }
+  .load .v b { font-family: var(--mono); font-weight: 500; font-size: 13.5px; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .load:hover .state { background: var(--ink-2); }
+  .load:hover { border-color: var(--ink-2); }
+  .iconb { appearance: none; width: 46px; height: 46px; border: 1.5px solid var(--hair); background: var(--surface); border-radius: 4px; display: grid; place-items: center; cursor: pointer; color: var(--ink-2); }
   .iconb:hover { border-color: var(--ink); color: var(--ink); }
 
   /* two columns, divided */
@@ -123,7 +121,7 @@
   .col-main { min-width: 0; }
   @media (max-width: 560px) {
     .ah-r { width: 100%; display: grid; grid-template-columns: 1fr auto; gap: 8px; }
-    .ah-r .lamp { order: 0; } .ah-r .iconb { order: 1; } .ah-r .split { order: 2; grid-column: 1 / -1; }
+    .ah-r .lamp { order: 0; } .ah-r .iconb { order: 1; } .ah-r .load { order: 2; grid-column: 1 / -1; }
     .wr { align-items: start; }
     .wr .glyph { margin-top: 3px; } .wr .chev { margin-top: 6px; }
     .det { padding-left: 16px; }
@@ -155,7 +153,7 @@
   .glyph.go { color: var(--go); background: var(--go-bg); }
   .wr .t { font-weight: 600; font-size: 15px; letter-spacing: -.005em; }
   .wr .s { display: block; font-size: 13px; color: var(--ink-2); margin-top: 1px; }
-  .wr .s .id { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .wr .m { display: block; font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 3px; font-variant-numeric: tabular-nums; }
   .chev { color: var(--muted); display: grid; place-items: center; transition: transform .18s; }
   .wr[aria-expanded="true"] .chev { transform: rotate(90deg); }
   .wr[aria-expanded="true"] { background: var(--surface-2); }
@@ -178,22 +176,19 @@
   .b.plain { border-color: transparent; color: var(--ink-2); padding-inline: 8px; }
   .b.plain:hover { border-color: var(--hair); color: var(--ink); }
 
-  /* ---- tools: bracketed tiles ---- */
-  .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(188px, 1fr)); gap: 22px 20px; }
+  /* ---- tools: a bracket, then buttons. Only the unfinished one is a bare outline. ---- */
+  .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); gap: 22px 20px; align-items: start; }
   .tile { border-top: 2px solid var(--rule); border-left: 2px solid var(--rule); padding: 9px 0 0 11px; min-width: 0; }
-  .tile.add { border-color: var(--muted); border-top-style: dashed; border-left-style: dashed; }
-  .tile h3 { margin: 0 0 7px; font: 600 14px var(--sans); letter-spacing: -.005em; display: flex; align-items: center; gap: 7px; }
+  .tile h3 { margin: 0 0 9px; font: 600 14px var(--sans); letter-spacing: -.005em; display: flex; align-items: center; gap: 7px; }
   .tile h3 svg { flex: none; color: var(--ink-2); }
-  .tile ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; }
-  .tile li { min-width: 0; }
-  .tlink { width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px; align-items: baseline; text-align: left;
-           appearance: none; background: none; border: 0; padding: 4px 6px 4px 0; cursor: pointer; font: 400 13.5px var(--sans); color: var(--ink-2); border-radius: 3px; }
-  .tlink:hover { color: var(--ink); background: var(--surface-2); }
-  .tlink .n { font-family: var(--mono); font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .tlink .n.go { color: var(--go); }
-  .tile.add p { margin: 0; font-size: 13px; color: var(--muted); max-width: 26ch; }
-  .tile .dim { color: var(--muted); }
-
+  .tbtns { display: grid; gap: 6px; }
+  .tb { width: 100%; text-align: left; appearance: none; font: 500 13.5px var(--sans); color: var(--ink); background: var(--surface);
+        border: 1px solid var(--hair); border-radius: 4px; padding: 9px 11px; min-height: 38px; cursor: pointer;
+        box-shadow: 0 1px 0 var(--hair), 0 2px 4px -2px rgba(25,24,19,.18); }
+  .tb:hover { border-color: var(--ink); box-shadow: 0 1px 0 var(--ink-2), 0 3px 6px -2px rgba(25,24,19,.25); }
+  .tb:active { transform: translateY(1px); box-shadow: 0 1px 0 var(--hair); }
+  .tile.add { border: 1.5px dashed var(--muted); border-radius: 5px; padding: 0; min-height: 132px; display: grid; place-items: center; }
+  .tile.add h3 { margin: 0; color: var(--muted); font-weight: 500; }
   /* ---- the sheet a tool opens ---- */
   .sheet { margin-top: 22px; border: 1.5px solid var(--ink); border-radius: 5px; padding: 18px 20px; display: grid; gap: 12px; background: var(--surface); }
   .sheet[hidden] { display: none; }
@@ -216,12 +211,12 @@
   .filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 4px; }
   .filters .b { font-size: 12px; min-height: 30px; padding: 5px 10px; }
   .filters .b[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--surface); }
-  .band { font: 600 10.5px var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); padding: 16px 0 6px; border-bottom: 1px solid var(--hair); }
-  .now { display: grid; gap: 8px; padding: 12px 0; border-bottom: 1px solid var(--hair-2); }
-  .now .l { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: baseline; font-size: 13.5px; }
-  .now .l .r { font-family: var(--mono); font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .now .track { height: 2px; background: var(--well); }
-  .now .track i { display: block; height: 100%; background: var(--ink); transition: width .6s; }
+  .reserved { border: 1.5px dashed var(--muted); border-radius: 5px; min-height: 148px; display: grid; place-items: center; color: var(--muted); font-size: 13px; margin-bottom: 30px; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 0 14px; border-bottom: 2px solid var(--rule); margin-bottom: 8px; }
+  .stats .k { font: 600 10px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .stats .v { font-family: var(--mono); font-size: 18px; font-variant-numeric: tabular-nums; margin-top: 3px; }
+  .stats .v small { font-size: 11px; color: var(--muted); }
+  #log { max-height: 430px; overflow-y: auto; mask-image: linear-gradient(to bottom, #000 calc(100% - 26px), transparent); -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 26px), transparent); }
   .ent { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--hair-2); font-size: 13.5px; align-items: baseline; }
   .ent .t { font-family: var(--mono); font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
   .ent .w b { font-weight: 600; }
@@ -229,11 +224,6 @@
   .ent .w .fell { color: var(--wait); }
   .ent.fresh { animation: fade 1.6s ease-out; }
   @keyframes fade { from { background: var(--surface-2); } to { background: transparent; } }
-  .log-foot { margin-top: 16px; padding-top: 12px; border-top: 2px solid var(--rule); display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-  .log-foot .k { font: 600 10px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-  .log-foot .v { font-family: var(--mono); font-size: 18px; font-variant-numeric: tabular-nums; margin-top: 2px; }
-  .log-foot .v small { font-size: 11px; color: var(--muted); }
-
   .toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); background: var(--ink); color: var(--surface); font: 600 13px var(--sans); padding: 11px 16px; border-radius: 4px; opacity: 0; pointer-events: none; transition: opacity .22s; z-index: 9; max-width: calc(100vw - 32px); }
   .toast.on { opacity: 1; }
 
@@ -317,8 +307,8 @@
 
   <header class="ah">
     <div class="ah-l">
-      <span class="mark" aria-hidden="true">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <span class="mark" title="Placeholder icon, not designed yet" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
           <path d="M4 3.5 L12 14.5"/><path d="M12.5 14.5 H15"/>
         </svg>
       </span>
@@ -328,14 +318,15 @@
       <button class="lamp on" id="lamp" title="The USB light. On while anything is processing. Click to hold it on or off.">
         <span class="bulb"></span><span id="lamp-txt">Light on</span>
       </button>
-      <a class="split" href="#built" title="Opens the dashboard">
-        <span class="cell state"><span class="d"></span>Up</span>
-        <span class="cell"><span class="k">Work</span><span class="v num" id="pc-work">61%</span></span>
-        <span class="cell"><span class="k">Serve</span><span class="v num" id="pc-serve">12%</span></span>
-        <span class="cell bar" aria-hidden="true"><i id="bar-work" style="width:61%"></i><i id="bar-serve" style="width:12%"></i></span>
+      <a class="load" href="#built" title="Opens the dashboard">
+        <span class="state"><span class="d"></span>Up</span>
+        <span class="read">
+          <span class="k">PW-1x load</span>
+          <span class="v"><b id="pc-work">61%</b> work · <b id="pc-serve">12%</b> serving</span>
+        </span>
       </a>
       <button class="iconb" id="settings" title="Studio settings">
-        <svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <svg width="19" height="19" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
           <path d="M9 2v14M3 5.5l12 7M15 5.5l-12 7"/>
         </svg>
       </button>
@@ -353,7 +344,11 @@
         <div id="lost-list">
           <button class="wr" aria-expanded="false" aria-controls="d1" data-row="1">
             <span class="glyph lost">!</span>
-            <span><span class="t">The digest session stopped</span><span class="s">Local handed it an empty brief, so it had nothing to rewrite · <span class="id">session_digest</span> · 12 min ago</span></span>
+            <span>
+              <span class="t">The digest session stopped</span>
+              <span class="s">Local handed it an empty brief, so it had nothing to rewrite</span>
+              <span class="m">16:20 · You · session_digest · PW-1x · stopped 16:29</span>
+            </span>
             <span class="chev" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
           </button>
           <div class="det" id="d1" hidden>
@@ -372,7 +367,11 @@
 
           <button class="wr" aria-expanded="false" aria-controls="d2" data-row="2">
             <span class="glyph wait">?</span>
-            <span><span class="t">Likes triage is waiting on your review</span><span class="s">It finished and has sat for three hours · <span class="id">session_likes</span> · likes-triage.md, 14 KB</span></span>
+            <span>
+              <span class="t">Likes triage is waiting on your review</span>
+              <span class="s">It finished and has sat for three hours</span>
+              <span class="m">13:41 · Claude · session_likes · likes-triage.md, 14 KB · idle 3 h</span>
+            </span>
             <span class="chev" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
           </button>
           <div class="det" id="d2" hidden>
@@ -387,14 +386,17 @@
             </div>
           </div>
         </div>
-        <p class="empty" id="lost-empty" hidden>Nothing lost. We're on course.</p>
+        <p class="empty" id="lost-empty" hidden>On course</p>
       </div>
 
       <div class="grp">
         <div class="grp-h"><span class="gname">Navigating</span><span class="gcount">3</span></div>
         <button class="wr" aria-expanded="false" aria-controls="d3">
           <span class="glyph go">&rarr;</span>
-          <span><span class="t">Falsework is making the checker run in CI</span><span class="s" id="s-falsework">Running 41 min · last: pytest, 61 passed · <span class="id">session_falsework</span></span></span>
+          <span>
+            <span class="t">Falsework is making the checker run in CI</span>
+            <span class="m" id="m-falsework">16:00 · You · session_falsework · 45 min · last: pytest, 61 passed</span>
+          </span>
           <span class="chev" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
         </button>
         <div class="det" id="d3" hidden>
@@ -412,10 +414,33 @@
 
         <button class="wr" aria-expanded="false" aria-controls="d4">
           <span class="glyph go">&rarr;</span>
-          <span><span class="t">Local is summarising 41 files</span><span class="s"><span id="s-job">19 done</span> · wakes Falsework when it finishes · <span class="id">job_7c2</span></span></span>
+          <span>
+            <span class="t">Domain gang is pricing the renewals</span>
+            <span class="m">16:12 · You · session_domains · 33 min · last: fetched registrar prices</span>
+          </span>
           <span class="chev" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
         </button>
         <div class="det" id="d4" hidden>
+          <div class="ev">
+            <span><b>16:44</b> fetched 14 renewal quotes</span>
+            <span><b>16:31</b> classify ×40 · gpt-oss-20b on the desktop</span>
+          </div>
+          <div class="verbs">
+            <button class="b" data-tool="send">Send a message</button>
+            <button class="b" data-tool="watch">Wake it on…</button>
+            <button class="b danger" data-tool="stop">Stop</button>
+          </div>
+        </div>
+
+        <button class="wr" aria-expanded="false" aria-controls="d5">
+          <span class="glyph go">&rarr;</span>
+          <span>
+            <span class="t">Local is summarising 41 files for Falsework</span>
+            <span class="m" id="m-job">16:04 · Claude · job_7c2 · PW-1x · <span id="s-job">19</span> of 41</span>
+          </span>
+          <span class="chev" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
+        </button>
+        <div class="det" id="d5" hidden>
           <div class="ev">
             <span><b>16:04</b> batch_job accepted · 41 paths · gpt-oss-120b on PW-1x</span>
             <span><b>16:04</b> webhook registered → wakes session_falsework</span>
@@ -425,22 +450,6 @@
             <button class="b danger" data-tool="stop">Cancel the job</button>
           </div>
         </div>
-
-        <button class="wr" aria-expanded="false" aria-controls="d5">
-          <span class="glyph go">&rarr;</span>
-          <span><span class="t">The printer is on the Screen B enclosure</span><span class="s"><span id="s-print">63% · 1 h 12 m left</span> · layer <span id="s-layer">212</span> of 338</span></span>
-          <span class="chev" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
-        </button>
-        <div class="det" id="d5" hidden>
-          <div class="ev">
-            <span><b>16:22</b> AMS · slot 2 → PETG black</span>
-            <span><b>15:29</b> print started · screen-b-enclosure-v3.3mf</span>
-          </div>
-          <div class="verbs">
-            <button class="b" data-tool="camera">Camera</button>
-            <button class="b danger" data-tool="pause">Pause</button>
-          </div>
-        </div>
       </div>
 
       <h2 class="sub later">Tools</h2>
@@ -448,78 +457,75 @@
 
         <div class="tile">
           <h3><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="4.5" width="11" height="9" rx="2"/><path d="M8 1.5v3M5.5 8.5h.01M10.5 8.5h.01" stroke-linecap="round"/></svg>Bot Land</h3>
-          <ul>
-            <li><button class="tlink" data-tool="create">New session</button></li>
-            <li><button class="tlink" data-tool="sessions">All sessions <span class="n">3</span></button></li>
-            <li><button class="tlink" data-tool="routines">Routines <span class="n">1 armed</span></button></li>
-            <li><button class="tlink dim" data-tool="hooks">Other bots <span class="n">hook</span></button></li>
-          </ul>
+          <div class="tbtns">
+            <button class="tb" data-tool="create">New session</button>
+            <button class="tb" data-tool="sessions">All sessions</button>
+            <button class="tb" data-tool="routines">Routines</button>
+            <button class="tb" data-tool="hooks">Other bots</button>
+          </div>
         </div>
 
         <div class="tile">
           <h3><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4.5A1.5 1.5 0 0 1 3.5 3h3l1.5 2h4.5A1.5 1.5 0 0 1 14 6.5v5A1.5 1.5 0 0 1 12.5 13h-9A1.5 1.5 0 0 1 2 11.5z"/></svg>Project Center</h3>
-          <ul>
-            <li><button class="tlink" data-tool="repo">Studio-G <span class="n go">green</span></button></li>
-            <li><button class="tlink" data-tool="repo">Falsework <span class="n">2 ahead</span></button></li>
-            <li><button class="tlink" data-tool="repo">sheepcliff-digest <span class="n">2 h</span></button></li>
-            <li><button class="tlink" data-tool="pr">Open a pull request</button></li>
-          </ul>
+          <div class="tbtns">
+            <button class="tb" data-tool="repo">Studio-G</button>
+            <button class="tb" data-tool="repo">Falsework</button>
+            <button class="tb" data-tool="repo">sheepcliff-digest</button>
+            <button class="tb" data-tool="pr">Open a pull request</button>
+          </div>
         </div>
 
         <div class="tile">
           <h3><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="2.5" width="11" height="11" rx="1.5"/><path d="M5.5 6h5M5.5 8.5h5M5.5 11h2.5" stroke-linecap="round"/></svg>Local models</h3>
-          <ul>
-            <li><button class="tlink" data-tool="ask">Ask local</button></li>
-            <li><button class="tlink" data-tool="batch">Run a batch job</button></li>
-            <li><button class="tlink" data-tool="models">gpt-oss-120b <span class="n go">loaded</span></button></li>
-            <li><button class="tlink" data-tool="models">gpt-oss-20b <span class="n">idle</span></button></li>
-            <li><button class="tlink" data-tool="models">Manage models</button></li>
-          </ul>
+          <div class="tbtns">
+            <button class="tb" data-tool="ask">Ask local</button>
+            <button class="tb" data-tool="batch">Run a batch job</button>
+            <button class="tb" data-tool="models">Manage models</button>
+          </div>
         </div>
 
         <div class="tile">
           <h3><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2.5 13.5V9M6.5 13.5V4M10.5 13.5V7M14 13.5V2.5"/></svg>Dashboards</h3>
-          <ul>
-            <li><button class="tlink" data-tool="dash">Bench · Screen A</button></li>
-            <li><button class="tlink" data-tool="dash">Night · Screens B, C</button></li>
-            <li><button class="tlink" data-tool="dash">Throughput <span class="n">×1.9</span></button></li>
-            <li><button class="tlink" data-tool="dash">Model server</button></li>
-          </ul>
+          <div class="tbtns">
+            <button class="tb" data-tool="dash">Bench</button>
+            <button class="tb" data-tool="dash">Night</button>
+            <button class="tb" data-tool="dash">Throughput</button>
+            <button class="tb" data-tool="dash">Model server</button>
+          </div>
         </div>
 
         <div class="tile">
           <h3><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="8" cy="4" rx="5.5" ry="2"/><path d="M2.5 4v8c0 1.1 2.5 2 5.5 2s5.5-.9 5.5-2V4M2.5 8c0 1.1 2.5 2 5.5 2s5.5-.9 5.5-2"/></svg>Storage</h3>
-          <ul>
-            <li><button class="tlink" data-tool="store">/srv/models <span class="n">412 GB</span></button></li>
-            <li><button class="tlink" data-tool="store">Results <span class="n">1.2 GB</span></button></li>
-            <li><button class="tlink" data-tool="store">G-DRIVE <span class="n go">attached</span></button></li>
-            <li><button class="tlink dim" data-tool="store">OCuLink ×2 <span class="n">free</span></button></li>
-          </ul>
+          <div class="tbtns">
+            <button class="tb" data-tool="store">Models</button>
+            <button class="tb" data-tool="store">Results</button>
+            <button class="tb" data-tool="store">Archive</button>
+            <button class="tb" data-tool="store">Free slots</button>
+          </div>
         </div>
 
         <div class="tile">
           <h3><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 13.5v-4M8 9.5a3.5 3.5 0 0 0 3.5-3.5V4M8 9.5A3.5 3.5 0 0 1 4.5 6V4"/><circle cx="4.5" cy="3" r="1.2"/><circle cx="11.5" cy="3" r="1.2"/></svg>Connections</h3>
-          <ul>
-            <li><button class="tlink" data-tool="conn">Tailscale <span class="n">6 devices</span></button></li>
-            <li><button class="tlink" data-tool="conn">Cloudflare tunnel <span class="n go">up</span></button></li>
-            <li><button class="tlink" data-tool="conn">GitHub webhook <span class="n go">ok</span></button></li>
-            <li><button class="tlink" data-tool="notify">Phone · ntfy</button></li>
-          </ul>
+          <div class="tbtns">
+            <button class="tb" data-tool="conn">Tailscale</button>
+            <button class="tb" data-tool="conn">Cloudflare tunnel</button>
+            <button class="tb" data-tool="conn">GitHub</button>
+            <button class="tb" data-tool="notify">Phone</button>
+          </div>
         </div>
 
         <div class="tile">
           <h3><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6.5" width="10" height="5" rx="1"/><path d="M5 6.5V3h6v3.5M5.5 11.5V14h5v-2.5"/></svg>Printer</h3>
-          <ul>
-            <li><button class="tlink" data-tool="camera">Camera <span class="n">1080p</span></button></li>
-            <li><button class="tlink" data-tool="pause">Pause the print</button></li>
-            <li><button class="tlink" data-tool="ams">AMS <span class="n">PETG black</span></button></li>
-            <li><button class="tlink" data-tool="files">Send a file</button></li>
-          </ul>
+          <div class="tbtns">
+            <button class="tb" data-tool="camera">Camera</button>
+            <button class="tb" data-tool="pause">Pause the print</button>
+            <button class="tb" data-tool="ams">AMS</button>
+            <button class="tb" data-tool="files">Send a file</button>
+          </div>
         </div>
 
         <div class="tile add">
-          <h3 class="dim">+ Tools?</h3>
-          <p>Anything with an HTTP or MQTT face lands here as one adapter file and one line in the sops file.</p>
+          <h3>+ Tools?</h3>
         </div>
       </div>
 
@@ -528,7 +534,14 @@
 
     <!-- ============ RIGHT: the log ============ -->
     <section class="col-log">
+      <div class="reserved"><span>Not defined yet</span></div>
+
       <h2 class="sub">Log</h2>
+      <div class="stats">
+        <div><div class="k">Calls today</div><div class="v num">137</div></div>
+        <div><div class="k">Claude's share</div><div class="v num">61<small>%</small></div></div>
+        <div><div class="k">Against A0</div><div class="v num">×1.9</div></div>
+      </div>
       <div class="filters" role="group" aria-label="Filter the log">
         <button class="b" type="button" aria-pressed="true" data-src="">Everything</button>
         <button class="b" type="button" aria-pressed="false" data-src="claude">Claude</button>
@@ -536,33 +549,20 @@
         <button class="b" type="button" aria-pressed="false" data-src="client">Clients</button>
       </div>
 
-      <div class="band">Now</div>
-      <div class="now" data-src="claude">
-        <div class="l"><span>Local is summarising 41 files</span><span class="r" id="n-job">19/41</span></div>
-        <div class="track" aria-hidden="true"><i id="n-bar" style="width:46%"></i></div>
-      </div>
-      <div class="now" data-src="claude">
-        <div class="l"><span id="n-fw">Falsework is running pytest</span><span class="r">41 min</span></div>
-      </div>
-
-      <div class="band">Earlier today</div>
       <div id="log">
-        <div class="ent" data-src="you"><span class="t">16:41</span><span class="w"><b>You</b> started the digest session from local's brief<span class="m">0.3 s</span></span></div>
         <div class="ent" data-src="you"><span class="t">16:41</span><span class="w"><b>You</b> asked local<span class="m">PW-1x · 1.2k → 210 · 6.4 s</span></span></div>
         <div class="ent" data-src="claude"><span class="t">16:38</span><span class="w"><b>Claude</b> read and briefed tools/<span class="m">PW-1x · 38k → 0.9k · 71 s</span></span></div>
-        <div class="ent" data-src="claude"><span class="t">16:31</span><span class="w"><b>Claude</b> classified 40 items<span class="m">desktop · 12k → 0.4k · 9 s</span></span></div>
+        <div class="ent" data-src="claude"><span class="t">16:31</span><span class="w"><b>Claude</b> classified 40 renewal quotes<span class="m">desktop · 12k → 0.4k · 9 s</span></span></div>
         <div class="ent" data-src="client"><span class="t">16:30</span><span class="w"><b>A client</b> called /v1/chat, <span class="fell">the desktop was busy</span><span class="m">PW-1x · 2.0k → 0.3k · 19 s</span></span></div>
+        <div class="ent" data-src="you"><span class="t">16:29</span><span class="w"><b>The digest session</b> stopped on an empty brief<span class="m">session_digest · 9 min run</span></span></div>
         <div class="ent" data-src="you"><span class="t">16:22</span><span class="w"><b>You</b> pushed a note to your phone<span class="m">print 63 % · 0.1 s</span></span></div>
+        <div class="ent" data-src="you"><span class="t">16:20</span><span class="w"><b>You</b> started the digest session from local's brief<span class="m">session_digest · 0.3 s</span></span></div>
+        <div class="ent" data-src="you"><span class="t">16:12</span><span class="w"><b>You</b> started the domain gang session<span class="m">session_domains · 0.3 s</span></span></div>
         <div class="ent" data-src="claude"><span class="t">16:04</span><span class="w"><b>Claude</b> started the batch job<span class="m">job_7c2 · PW-1x</span></span></div>
+        <div class="ent" data-src="you"><span class="t">16:00</span><span class="w"><b>You</b> started Falsework<span class="m">session_falsework · 0.3 s</span></span></div>
         <div class="ent" data-src="claude"><span class="t">15:58</span><span class="w"><b>Claude</b> extracted 12 records<span class="m">desktop · 6.1k → 1.1k · 4 s</span></span></div>
         <div class="ent" data-src="you"><span class="t">15:29</span><span class="w"><b>You</b> resumed the printer<span class="m">0.1 s</span></span></div>
         <div class="ent" data-src="client"><span class="t">15:10</span><span class="w"><b>A client</b> called /v1/chat<span class="m">desktop · 0.8k → 0.2k · 2 s</span></span></div>
-      </div>
-
-      <div class="log-foot">
-        <div><div class="k">Calls today</div><div class="v num">137</div></div>
-        <div><div class="k">Claude's share</div><div class="v num">61<small>%</small></div></div>
-        <div><div class="k">Against A0</div><div class="v num">×1.9</div></div>
       </div>
     </section>
 
@@ -585,16 +585,16 @@
         <ul class="plain">
           <li><b>Is it up, and is work happening.</b> The header: one dot, the work-and-serve split, and the light. The split is PW-1x's double life in one control, and it opens the dashboard.</li>
           <li><b>What needs you.</b> <i>Lost in the jungle.</i> A session that stopped, a result nobody read, an alert still firing. When it empties it says so.</li>
-          <li><b>What's moving.</b> <i>Navigating.</i> Sessions, batch jobs and the print, each with its last line.</li>
+          <li><b>What's moving.</b> <i>Navigating.</i> The sessions running right now, and the jobs they are waiting on. Every row carries the same identifying line as the log: when it started, who started it, its id, and how long it has run.</li>
           <li><b>The tools.</b> Eight brackets: the bots, the projects, the models, the dashboards, the disks, the connections, the printer, and room for more.</li>
-          <li><b>The log.</b> Live things at the top, then the day, every call tagged with who made it. The evidence for the throughput claim.</li>
+          <li><b>The log.</b> History only, newest first, every call tagged with who made it. Anything still running is above it in <i>Navigating</i>, so nothing appears twice. The day's totals sit under the heading.</li>
         </ul>
       </div>
       <div>
         <h4>Not on the page</h4>
         <ul class="plain">
           <li><b>CPU, memory, temperatures, tokens per second.</b> Screen A and Grafana own these. The console needs "up" and a way through to the graphs.</li>
-          <li><b>Layer counts, nozzle temperatures, fan speeds.</b> Same. The row says 63 % and an hour left; the tile has the camera.</li>
+          <li><b>The printer, until it needs you.</b> It is not a session, so it is not in <i>Navigating</i>. Its buttons are in the Printer tools, and a failed print shows up in the jungle like anything else that stops.</li>
           <li><b>Which backend holds which model.</b> The door picks. It appears under Local models because you occasionally swap them, not because you watch them.</li>
           <li><b>A row of big numbers.</b> Two of the four on the last draft were statistics invented to fill the row.</li>
         </ul>
@@ -655,7 +655,7 @@
           <line x1="915" y1="438" x2="915" y2="500" marker-end="url(#a1)"/>
         </svg>
       </div>
-      <figcaption><b>One process, four parts, no framework.</b> Caddy terminates TLS and keeps the console on the tailnet; only <code>/hook/&lt;adapter&gt;</code> is reachable from outside, each with its own secret. Inside, <code>http</code> serves one page and the screen routes; the SSE hub merges every adapter's <code>events()</code> into one stream per browser; the verb runner validates input against the verb's JSON schema, resolves any <code>fromResultOf()</code> against the work log, runs the verb and records it. The two heavy outlines are one fact seen twice: the console's own calls to <code>studio-local</code> carry <code>source = console</code>, so what you ask lands in the same log as what Claude delegates.</figcaption>
+      <figcaption><b>One process, four parts, no framework.</b> Caddy terminates TLS and keeps the console on the tailnet; only <code>/hook/&lt;adapter&gt;</code> is reachable from outside, each with its own secret. Inside, <code>http</code> serves one page and the screen routes; the SSE hub merges every adapter's <code>events()</code> into one stream per browser; the verb runner validates input against the verb's JSON schema, resolves any <code>fromResultOf()</code> against the work log, runs the verb and records it. The two heavy outlines are one fact seen twice: the console's own calls to <code>studio-local</code> carry <code>source = console</code>, so what you ask is recorded in the same log as what Claude delegates.</figcaption>
     </figure>
   </section>
 
@@ -664,11 +664,11 @@
     <div class="scroll"><table class="t">
       <thead><tr><th>From the sketch</th><th>How it is built</th></tr></thead>
       <tbody>
-        <tr><td class="n">Where are we?</td><td>The first thing on the page, left column. <b>Lost in the jungle</b> is anything stopped, failed, alerting, or finished and unread; <b>Navigating</b> is anything in flight. A row is one adapter item, so a session, a job and a print render identically. An empty jungle prints "Nothing lost. We're on course."</td></tr>
-        <tr><td class="n">The chevron</td><td>Opens the row in place rather than navigating away: the last three events from that adapter's stream, then its verbs as buttons. That is <code>status()</code>, <code>events()</code> and <code>verbs[]</code> in one control, which is why the printer row and the session row are the same component.</td></tr>
-        <tr><td class="n">Log, swapped right</td><td>Live entries pinned under <b>Now</b>, the day under <b>Earlier</b>. Every line comes from the joined view over the console's <code>runs</code> table and the door's <code>calls</code> table, so who did it is a filter, not a guess.</td></tr>
-        <tr><td class="n">Percent split, work and server</td><td>PW-1x is two machines in one box. The header splits its load into inference work and web serving, the only place that duality is visible, and it opens Grafana.</td></tr>
-        <tr><td class="n">Tool section</td><td>Eight bracketed tiles, each a heading and a handful of entries. A tile groups adapters rather than being one: <b>Bot Land</b> is every session connector, <b>Connections</b> every piece of plumbing. The dashed bracket is the hook the README promises.</td></tr>
+        <tr><td class="n">Where are we?</td><td>The first thing on the page, left column. <b>Lost in the jungle</b> is anything stopped, failed, alerting, or finished and unread, whatever kind of thing it is. <b>Navigating</b> is the active sessions and the jobs they are waiting on. An empty jungle prints <b>On course</b>.</td></tr>
+        <tr><td class="n">The chevron</td><td>Opens the row in place rather than navigating away: the last three events from that thing's stream, then its actions as buttons. <i>Verb</i> is the word <code>adapters/README.md</code> already uses for an action an adapter can perform, so the buttons under a row are that adapter's verbs. One control shows <code>status()</code>, <code>events()</code> and <code>verbs[]</code> at once, which is why every row is the same component.</td></tr>
+        <tr><td class="n">Log, swapped right</td><td>History, under a reserved block and the day's totals. Every line comes from the joined view over the console's <code>runs</code> table and the door's <code>calls</code> table, so who did it is a filter rather than a guess. It scrolls inside a fixed height so the column ends where the tools do.</td></tr>
+        <tr><td class="n">Percent split, work and server</td><td>PW-1x is two machines in one box, so the header reads <b>61% work · 12% serving</b> under the label <b>PW-1x load</b>, and opens Grafana. It is a labelled readout rather than a gauge: the numbers only mean anything next to the words, which the first attempt left out.</td></tr>
+        <tr><td class="n">Tool section</td><td>Seven bracketed tiles of buttons, and one empty dashed box. A tile groups adapters rather than being one: <b>Bot Land</b> is every session connector, <b>Connections</b> every piece of plumbing. Nothing in a tile carries a status, because a button should say what it does and nothing else. The dashed box is the hook the README promises, and a bare outline is how this page says a thing is unfinished.</td></tr>
         <tr><td class="n">Studio settings</td><td>The one icon button. Secrets, adapters, screens and the sops file, none of which belong on a page you look at all day.</td></tr>
       </tbody>
     </table></div>
@@ -730,7 +730,7 @@
   run(input: unknown, ctx: Ctx): Promise&lt;Result&gt;;
 }
 <b>export interface</b> Status {
-  state: <i>"lost" | "waiting" | "moving" | "idle"</i>;   <em>// which group the row lands in</em>
+  state: <i>"lost" | "waiting" | "moving" | "idle"</i>;   <em>// which group the row appears in</em>
   line: string;                      <em>// the row's sentence</em>
   sub?: string;                      <em>// the grey line under it</em>
   items?: Item[];                    <em>// sessions and jobs: rows with their own verbs</em>
@@ -777,7 +777,7 @@
       <li><div><b>The adapter calls the door.</b> One streaming request to <code>studio-local</code>'s <code>/v1</code> with <code>source: console</code>. Chunks come back as events under the run id, the page appends them, the door logs the call, and the light comes on.<span class="m">the door picks the backend: the desktop when idle, else PW-1x</span></div></li>
       <li><div><b>The result is stored as a path,</b> not as text in a row. "Hand it on" now offers every adapter with a verb that takes files.<span class="m">/srv/studio/results/run_9f3/brief.md</span></div></li>
       <li><div><b>You hand it to a session.</b> The form fills <code>files: fromResultOf("run_9f3")</code>; the runner resolves it to paths, sets <code>parent_run</code>, and the adapter calls create.<span class="m">POST /api/claude-code-remote/create → session_digest</span></div></li>
-      <li><div><b>The session streams back</b> through the adapter's <code>events()</code>. If it calls the door itself over MCP mid-task, that lands in the same log under <code>source = claude</code>. A bonus, not the mechanism.</div></li>
+      <li><div><b>The session streams back</b> through the adapter's <code>events()</code>. If it calls the door itself over MCP mid-task, that is recorded in the same log under <code>source = claude</code>. A bonus, not the mechanism.</div></li>
       <li><div><b>Overnight, the same shape without you.</b> A routine arms, <code>batch_job</code> returns at once, and when it finishes the door posts to <code>/hook/local-models</code>; the adapter emits done and the routine's watch wakes the session. <code>parent_run</code> still links the chain.<span class="m">POST /hook/local-models { job_id:"job_7c2", status:"done" }</span></div></li>
     </ol>
   </section>
@@ -805,7 +805,7 @@
       <div class="scr">
         <div class="frame" role="img" aria-label="Screen B at night: we are on course, and what happened overnight">
           <div style="display:flex;justify-content:space-between"><span class="lbl">Nightstand · /screens/night</span><span class="lbl">02:14</span></div>
-          <div class="big">We're on course.</div>
+          <div class="big">On course</div>
           <div class="rows">
             <div><span class="t">02:00</span><span>Overnight brief started · 41 files</span></div>
             <div><span class="t">01:38</span><span>Falsework finished · CI green</span></div>
@@ -869,7 +869,7 @@
       <thead><tr><th>Choice</th><th>Why</th><th>The alternative</th></tr></thead>
       <tbody>
         <tr><td class="n">Colour only means state</td><td>Three colours on the whole page: lost, waiting, moving. Nothing else is tinted, so anything coloured is something to look at. Everything else is ink, paper and rules.</td><td>A brand accent, which competes with the one signal the page exists to carry.</td></tr>
-        <tr><td class="n">Questions in serif</td><td>"Where are we?", "Lost in the jungle", "We're on course" are your words, so they are set in a serif. The machine answers in sans and mono. The two voices never blur.</td><td>One typeface throughout. Tidier, and it loses the joke.</td></tr>
+        <tr><td class="n">Questions in serif</td><td>"Where are we?", "Lost in the jungle" and "On course" are your words, so they are set in a serif. The machine answers in sans and mono. The two voices never blur.</td><td>One typeface throughout. Tidier, and it loses the joke.</td></tr>
         <tr><td class="n">The chevron opens in place</td><td>Detail is three events and the verbs for that thing. No second page, no modal, no lost context.</td><td>A detail route per adapter. More screens to design, and you lose the list while you read one row.</td></tr>
         <tr><td class="n">One page, no tabs</td><td>The sketch has no tabs. The console is one screen; graphs are Grafana's job and settings sit behind the one icon.</td><td>Tabs for bench, log and tools, which hide the thing you came for behind a click.</td></tr>
         <tr><td class="n">Results are paths</td><td>Files stay on PW-1x under <code>/srv/studio/results/</code>, so handing a forty-file brief to a session costs nothing.</td><td>Results inline in SQLite. Fine for text, wrong for files.</td></tr>
@@ -918,7 +918,7 @@
       $('#c-lost').textContent = left;
       if (!left) { $('#lost-empty').hidden = false; $('#c-lost').hidden = true; }
       addLog('you', '<b>You</b> cleared one from the jungle', '0.1 s');
-      toast(left ? 'Cleared. ' + left + ' left in the jungle.' : "Cleared. Nothing lost — we're on course.");
+      toast(left ? 'Cleared. ' + left + ' left in the jungle.' : 'Cleared. On course.');
     });
   });
 
@@ -1077,7 +1077,7 @@
   }
   var filter = '';
   function applyFilter() {
-    $$('#log .ent, .now').forEach(function (e) { e.hidden = !!filter && e.getAttribute('data-src') !== filter; });
+    $$('#log .ent').forEach(function (e) { e.hidden = !!filter && e.getAttribute('data-src') !== filter; });
   }
   $$('.filters .b').forEach(function (b) {
     b.addEventListener('click', function () {
@@ -1088,15 +1088,13 @@
   });
 
   /* ---------- the machine keeps working while you read ---------- */
-  var job = 19, layer = 212, work = 61;
+  var job = 19, work = 61;
   var ticks = [
-    function () { job = Math.min(41, job + 1); $('#n-job').textContent = job + '/41'; $('#n-bar').style.width = (job / 41 * 100) + '%'; $('#s-job').textContent = job + ' done'; },
-    function () { layer += 1; $('#s-layer').textContent = layer; },
-    function () { $('#n-fw').textContent = 'Falsework is reading tools/spec-check.py'; },
-    function () { work = 56 + Math.floor(Math.random() * 12); $('#pc-work').textContent = work + '%'; $('#bar-work').style.width = work + '%'; },
+    function () { job = Math.min(41, job + 1); $('#s-job').textContent = job; },
+    function () { work = 56 + Math.floor(Math.random() * 12); $('#pc-work').textContent = work + '%'; },
+    function () { $('#m-falsework').textContent = '16:00 · You · session_falsework · 46 min · last: reading tools/spec-check.py'; },
     function () { addLog('claude', '<b>Claude</b> classified 8 items', 'desktop · 2.3k → 0.1k · 2 s'); },
-    function () { $('#n-fw').textContent = 'Falsework is running pytest'; },
-    function () { $('#s-falsework').innerHTML = 'Running 43 min · last: pushed to sheepcliff/ci-checker · <span class="id">session_falsework</span>'; }
+    function () { $('#m-falsework').textContent = '16:00 · You · session_falsework · 47 min · last: pushed to sheepcliff/ci-checker'; }
   ];
   var i = 0;
   (function loop() { ticks[i++ % ticks.length](); setTimeout(loop, reduced ? 9000 : 4200 + Math.random() * 2600); })();
