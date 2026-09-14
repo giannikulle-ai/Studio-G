@@ -482,7 +482,7 @@
           </tr>
           <tr>
             <td class="name">PSU</td>
-            <td>MSI MPG A850G PCIE5, 850W 80+ Gold, 2× EPS 4+4. Board connectors, from ASRock's published manual: ATXPWR1 24-pin, ATX12V1 8-pin, ATX12V2 4-pin. Whether the 4-pin is required or optional is <strong>still unconfirmed</strong> — read the manual's power section at assembly. Populating both is correct either way, and the two EPS 4+4 cables cover it. 850W leaves headroom for a GPU.</td>
+            <td>MSI MPG A850G PCIE5, 850W 80+ Gold, 2× EPS 4+4. The board's printed Quick Installation Guide, read 14 Sept 2026, confirms ATXPWR1 plus two 12V connectors, ATX12V1 and ATX12V2, but prints no pin counts and does not say whether the second is required; the counts (24-pin, 8-pin, 4-pin) come from the User's Manual. Populating both is correct either way, and the two EPS 4+4 cables cover it. 850W leaves headroom for a GPU.</td>
             <td><span class="chip ok">In hand</span></td>
             <td class="num">$89.99</td>
           </tr>
@@ -524,7 +524,8 @@
 
     <div class="callout">
       <h3>The board has no SATA ports</h3>
-      <p>Storage is two M.2 slots plus two OCuLink and two miniSAS HD connectors. Any SATA drive needs a breakout cable — which is why the G-DRIVE stays in its enclosure on USB rather than being shucked.</p>
+      <p>Storage is two M.2 slots plus two OCuLink and two miniSAS HD connectors — silkscreened <code>SATA_0_3</code> and <code>SATA_4_7</code>. Any SATA drive needs a breakout cable, which is why the G-DRIVE stays in its enclosure on USB rather than being shucked.</p>
+      <p><strong>And the two M.2 slots are not equivalent.</strong> The board’s own quick guide, read 14 Sept 2026, shows <code>M2_1</code> sharing lanes with PCIE2, <code>SATA_4_7</code> and both OCuLink ports under the <code>PE8_SEL</code>/<code>PE16_SEL</code> jumpers — and switched off entirely in two of the four documented positions, silently. <code>M2_2</code> appears nowhere in that table. The system SSD goes in <code>M2_2</code>.</p>
       <p><strong>Two tiers.</strong> Active models on the NVMe, where a 63GB load takes ~12 seconds. Library on the G-DRIVE, where the same copy takes ~7½ minutes — fine for something fetched occasionally, unusable as the live path. Portable USB HDDs aren’t rated for continuous duty, so let it idle between pulls.</p>
     </div>
   </section>

@@ -47,7 +47,7 @@ The Handoff lists memtest (step 2) *before* assembly (step 3). That order can't 
 - **Record the current state before changing it:** rate-limit hits per day, sessions lost to them, rough share of work that is high-volume/low-difficulty. Without this there is no "before" to double.
 - Answers the assumption the whole build rests on: is the small tier actually useful? If it isn't, the 120B tier is doing more work than planned and the tok/s estimates matter far more.
 - Check whether llama.cpp PR #20539 actually landed stock support for Nemotron's `modelopt`/NVFP4 quant. It's a five-minute check that could move the best-scoring model from "Unresolved" to "Primary" and change the model set before you tune anything.
-- Confirm the board's EPS requirement against the ASRock manual (docs flag it as sourced from a ServeTheHome review only). The PSU covers either reading, so this is not a purchase risk — it's a no-POST-at-2am risk.
+- **Partly closed, 14 Sep 2026.** The board's printed Quick Installation Guide (in the box) confirms three power connectors — `ATXPWR1`, `ATX12V1`, `ATX12V2` — but prints no pin counts and no requirement; whether the second 12V connector is mandatory still needs the full User's Manual. Both get populated either way, so this was never a purchase risk. The same read settled four other open items and turned up one nobody had: **`M2_1` can be switched off by the `PE16_SEL` jumper, so the system SSD goes in `M2_2`.** See `notes/board-manual.md`.
 
 ### A1 — Assemble (parts in hand 13 Sep 2026)
 

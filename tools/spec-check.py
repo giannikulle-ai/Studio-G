@@ -78,6 +78,8 @@ STALE = [
     '<span class="chip ok">Ordered</span>', '<span class="v">ordered</span>',
     "128GB — ordered", "Done while the parts ship",
     "2–4 day shipping",
+    # superseded by the board's own manual, read 14 Sep 2026
+    "from ASRock's published manual", "read the manual's power section",
 ]
 
 # Strings the Assembly Guide must share with the Build Sheet (part numbers,
@@ -91,7 +93,13 @@ GUIDE_SHARED = [
 GUIDE_STALE = ["CUDA", "n-cpu-moe", "-ngl", "graphics card cable", "into the x16 slot",
                # parts are in hand; nothing in the guide may say they are shipping
                '<span class="chip warn">Bought</span>', "before the boxes arrive",
-               "Do before delivery"]
+               "Do before delivery",
+               # read off the board's own Quick Installation Guide, 14 Sep 2026:
+               # there is no CPU fan header (FAN1-FAN7 are all system fan
+               # connectors), the SSD goes in M2_2, and the AC cord stays out
+               # of the wall until step 7 per the board's handling precautions.
+               "CPU_FAN1", "first M.2 slot", "beep pattern",
+               "AC cord</strong>: already in from step 0"]
 
 # Model footprints: (name, size_gb, total_params_b, min_bits, max_bits)
 MODELS = [
