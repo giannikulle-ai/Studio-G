@@ -20,6 +20,14 @@ Small labels are set in title case rather than being force-uppercased by CSS.
 
 - **"lands here", "landing spot", "where it lands."** Say what a thing is, or what it connects to.
 
+## Do not invent content
+
+Where a thing is not designed yet, draw it undefined rather than filling it in. The page has one way of saying so: a bare dashed outline, as on the icon, the eighth tool, and every tool panel.
+
+Lists of items, sample statuses and explanatory blurbs invented to make a mockup look finished are worse than an empty box, because they get mistaken for decisions.
+
+Example data is the exception, and only where the shape is already agreed: the rows, the log and the load figures carry plausible example values so the layout can be judged.
+
 ## Where the console's rules live
 
 `console/README.md` and `console/adapters/README.md` hold the design. Two that the mockup added, from the sketches:
@@ -30,6 +38,8 @@ Small labels are set in title case rather than being force-uppercased by CSS.
 - The console page carries no build documentation. It sits behind the settings button.
 - The block above the log is token spend: frontier tokens are what you pay for, so that figure leads.
 - The three figures above the log are chosen by the user from a list, not fixed.
+- A row is its own box with the chevron inside it. The status marker sits outside the box, on the left, aligned to the row.
+- Token spend layout is the user's to design.
 
 ## Documents
 

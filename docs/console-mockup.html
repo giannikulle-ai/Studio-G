@@ -93,25 +93,27 @@
   .gcount::before { content: "("; } .gcount::after { content: ")"; }
   .empty { margin: 0; padding: 14px 2px 2px; font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--muted); }
 
-  /* ---- a row: status box, the row, chevron box ---- */
-  .wrow { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; align-items: start; padding: 10px 0;
-          border-bottom: 1px solid var(--hair-2); }
+  /* ---- a row: the status outside on the left, the row its own box with the chevron in it ---- */
+  .wrow { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; align-items: start; margin-bottom: 8px; }
   .status { width: 28px; height: 28px; border: 1.5px solid currentColor; border-radius: 3px; display: grid; place-items: center;
-            font: 500 13px var(--mono); line-height: 1; margin-top: 3px; }
+            font: 500 13px var(--mono); line-height: 1; margin-top: 12px; }
   .status.lost { color: var(--lost); background: var(--lost-bg); }
   .status.wait { color: var(--wait); background: var(--wait-bg); }
   .status.go { color: var(--go); background: var(--go-bg); }
-  .rowbtn { display: grid; grid-template-columns: minmax(0, 1fr) 28px; gap: 12px; align-items: start; width: 100%;
-            appearance: none; background: none; border: 0; padding: 2px 0 0; text-align: left; font: inherit; color: inherit; cursor: pointer; }
-  .rowbtn:hover .chevbox { border-color: var(--ink); color: var(--ink); }
-  .rowbtn .t { font-weight: 600; font-size: 15px; display: block; }
-  .rowbtn .s { display: block; font-size: 13px; color: var(--ink-2); margin-top: 1px; }
-  .rowbtn .m { display: block; font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 3px; font-variant-numeric: tabular-nums; }
-  .chevbox { width: 28px; height: 28px; border: 1.5px solid var(--hair); border-radius: 3px; display: grid; place-items: center;
-             color: var(--muted); margin-top: 1px; transition: transform .18s; }
-  .rowbtn[aria-expanded="true"] .chevbox { transform: rotate(90deg); border-color: var(--ink); color: var(--ink); }
+  .rowbox { display: grid; grid-template-columns: minmax(0, 1fr) 16px; gap: 14px; align-items: center; width: 100%;
+            appearance: none; background: var(--surface); border: 1.5px solid var(--hair); border-radius: 3px;
+            padding: 11px 14px; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+  .rowbox:hover { border-color: var(--ink); }
+  .rowbox[aria-expanded="true"] { border-color: var(--ink); border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+  .rowbox .t { font-weight: 600; font-size: 15px; display: block; }
+  .rowbox .s { display: block; font-size: 13px; color: var(--ink-2); margin-top: 1px; }
+  .rowbox .m { display: block; font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 3px; font-variant-numeric: tabular-nums; }
+  .chev { color: var(--muted); display: grid; place-items: center; transition: transform .18s; }
+  .rowbox:hover .chev { color: var(--ink); }
+  .rowbox[aria-expanded="true"] .chev { transform: rotate(90deg); color: var(--ink); }
 
-  .det { padding: 4px 0 16px 38px; display: grid; gap: 12px; border-bottom: 1px solid var(--hair-2); }
+  .det { margin: -8px 0 8px 38px; border: 1.5px solid var(--ink); border-top: 0; border-radius: 0 0 3px 3px;
+         padding: 12px 14px 14px; display: grid; gap: 12px; background: var(--surface); }
   .det[hidden] { display: none; }
   .det .ev { font-family: var(--mono); font-size: 12px; color: var(--ink-2); display: grid; gap: 3px; }
   .det .ev b { color: var(--ink); font-weight: 500; }
@@ -154,7 +156,8 @@
   .sheet input:focus, .sheet select:focus, .sheet textarea:focus { border-color: var(--ink); outline: none; }
   .sheet .act { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
   .sheet .say { margin: 0; font-size: 14px; color: var(--ink-2); max-width: 60ch; }
-  .sheet ul { margin: 0; padding-left: 18px; color: var(--ink-2); font-size: 14px; display: grid; gap: 4px; }
+  .undef { border: 1.5px dashed var(--muted); border-radius: 3px; min-height: 104px; display: grid; place-items: center;
+           color: var(--muted); font-size: 14px; }
   @media (max-width: 560px) { .sheet .f { grid-template-columns: 1fr; gap: 4px; } }
   .reply { font-size: 14.5px; line-height: 1.6; border-left: 2px solid var(--ink); padding-left: 14px; }
   .reply .who { display: block; font: 600 11px var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
@@ -325,13 +328,13 @@
 
           <div class="wrow" data-row="1">
             <span class="status lost">!</span>
-            <button class="rowbtn" aria-expanded="false" aria-controls="d1">
+            <button class="rowbox" aria-expanded="false" aria-controls="d1">
               <span>
                 <span class="t">The digest session stopped</span>
                 <span class="s">Local handed it an empty brief, so it had nothing to rewrite</span>
                 <span class="m">16:20 · You · session_digest · PW-1x · stopped 16:29</span>
               </span>
-              <span class="chevbox" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
+              <span class="chev" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
             </button>
           </div>
           <div class="det" id="d1" hidden>
@@ -350,13 +353,13 @@
 
           <div class="wrow" data-row="2">
             <span class="status wait">?</span>
-            <button class="rowbtn" aria-expanded="false" aria-controls="d2">
+            <button class="rowbox" aria-expanded="false" aria-controls="d2">
               <span>
                 <span class="t">Likes triage is waiting on your review</span>
                 <span class="s">It finished and has sat for three hours</span>
                 <span class="m">13:41 · Claude · session_likes · likes-triage.md, 14 KB · idle 3 h</span>
               </span>
-              <span class="chevbox" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
+              <span class="chev" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
             </button>
           </div>
           <div class="det" id="d2" hidden>
@@ -380,12 +383,12 @@
 
         <div class="wrow">
           <span class="status go">&rarr;</span>
-          <button class="rowbtn" aria-expanded="false" aria-controls="d3">
+          <button class="rowbox" aria-expanded="false" aria-controls="d3">
             <span>
               <span class="t">Falsework is making the checker run in CI</span>
               <span class="m" id="m-falsework">16:00 · You · session_falsework · 45 min · last: pytest, 61 passed</span>
             </span>
-            <span class="chevbox" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
+            <span class="chev" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
           </button>
         </div>
         <div class="det" id="d3" hidden>
@@ -403,12 +406,12 @@
 
         <div class="wrow">
           <span class="status go">&rarr;</span>
-          <button class="rowbtn" aria-expanded="false" aria-controls="d4">
+          <button class="rowbox" aria-expanded="false" aria-controls="d4">
             <span>
               <span class="t">Domain gang is pricing the renewals</span>
               <span class="m">16:12 · You · session_domains · 33 min · last: fetched registrar prices</span>
             </span>
-            <span class="chevbox" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
+            <span class="chev" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
           </button>
         </div>
         <div class="det" id="d4" hidden>
@@ -425,12 +428,12 @@
 
         <div class="wrow">
           <span class="status go">&rarr;</span>
-          <button class="rowbtn" aria-expanded="false" aria-controls="d5">
+          <button class="rowbox" aria-expanded="false" aria-controls="d5">
             <span>
               <span class="t">Local is summarising 41 files for Falsework</span>
               <span class="m">16:04 · Claude · job_7c2 · PW-1x · <span id="s-job">19</span> of 41</span>
             </span>
-            <span class="chevbox" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
+            <span class="chev" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
           </button>
         </div>
         <div class="det" id="d5" hidden>
@@ -767,7 +770,7 @@
   });
 
   /* ---------- rows open in place ---------- */
-  $$('.rowbtn').forEach(function (row) {
+  $$('.rowbox').forEach(function (row) {
     row.addEventListener('click', function () {
       var open = row.getAttribute('aria-expanded') === 'true';
       var det = document.getElementById(row.getAttribute('aria-controls'));
@@ -847,34 +850,19 @@
                  { k: 'session', label: 'Session', type: 'enum', o: ['session_falsework', 'session_domains', 'session_likes'] },
                  { k: 'on', label: 'Wake On', type: 'enum', o: ['the batch job finishing', 'a push to GitHub', 'the print finishing'] } ] }
   };
-  var menus = {
-    bots:     { title: 'Bot Land', items: ['New Session', 'All Sessions · 3', 'Routines · 1 armed', 'Other Bots · reserved'],
-                say: 'Every session connector. Claude Code today; another agent product is one more file with the same verbs and no chat box.' },
-    projects: { title: 'Project Center', items: ['Studio-G · CI green', 'Falsework · 2 ahead', 'sheepcliff-digest · deployed 2 h ago', 'Open a Pull Request'],
-                say: 'GitHub is the only source. The console shows what a webhook told it, nothing more.' },
-    models:   { title: 'Local Models', items: ['Ask Local', 'Run a Batch Job', 'gpt-oss-120b · loaded on PW-1x', 'gpt-oss-20b · idle on the desktop', 'Manage Models'],
-                say: 'One door, studio-local. It picks the backend, logs every call with its source, and meters it.' },
-    dash:     { title: 'Dashboards', items: ['Bench · Screen A', 'Night · Screens B and C', 'Throughput Against A0', 'Model Server'],
-                say: 'Opens Grafana. The console keeps no graphs of its own: processor, memory, temperature and tokens per second live there.' },
-    store:    { title: 'Storage', items: ['/srv/models · 412 GB free', 'Results · 1.2 GB', 'G-DRIVE Archive · attached', 'OCuLink ×2 · free'],
-                say: 'Handing a result on passes its path, never its bytes, which is why a forty-file brief costs nothing to pass along.' },
-    conn:     { title: 'Connections', items: ['Tailscale · 6 devices', 'Cloudflare Tunnel · up', 'GitHub Webhook · ok', 'Phone · ntfy'],
-                say: 'Tailscale carries the private side and the Cloudflare tunnel the public side. Every inbound hook has its own secret.' },
-    printer:  { title: 'Printer', items: ['Camera · 1080p', 'Pause the Print', 'AMS · PETG black', 'Send a File'],
-                say: 'The P2S in LAN and developer mode. A print that fails turns up in the jungle like anything else that stops.' },
-    more:     { title: '+ Tools?', items: [], say: 'Anything with an HTTP or MQTT face becomes one adapter file and one line in the sops file. Nothing else changes.' },
-    stop:     { title: 'Stop', items: [], say: 'Would interrupt the session or cancel the job. In the mockup it stops at the confirmation.' }
+  var toolNames = {
+    bots: 'Bot Land', projects: 'Project Center', models: 'Local Models', dash: 'Dashboards',
+    store: 'Storage', conn: 'Connections', printer: 'Printer', more: '+ Tools?', stop: 'Stop'
   };
 
   var sheet = $('#sheet');
   function closer() { var c = sheet.querySelector('[data-close]'); if (c) c.addEventListener('click', function () { sheet.hidden = true; }); }
   function openSheet(key) {
-    var f = forms[key], m = menus[key];
+    var f = forms[key], name = toolNames[key];
     sheet.innerHTML = '';
-    if (!f && m) {
-      var items = m.items.length ? '<ul>' + m.items.map(function (i) { return '<li>' + i + '</li>'; }).join('') + '</ul>' : '';
-      sheet.innerHTML = '<div class="h"><b>' + m.title + '</b><span class="path">read-only in the mockup</span></div>' +
-        items + '<p class="say">' + m.say + '</p>' +
+    if (!f && name) {
+      sheet.innerHTML = '<div class="h"><b>' + name + '</b></div>' +
+        '<div class="undef">Not Defined Yet</div>' +
         '<div class="act"><button type="button" class="b" data-close>Close</button></div>';
       sheet.hidden = false; closer(); sheet.scrollIntoView({ block: 'nearest', behavior: reduced ? 'auto' : 'smooth' }); return;
     }
