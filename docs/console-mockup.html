@@ -89,6 +89,7 @@
   .sub.later { margin-top: 34px; }
 
   /* ---- groups ---- */
+  .grp { margin-left: 15px; }
   .grp + .grp { margin-top: 22px; }
   .grp-h { display: flex; align-items: baseline; gap: 10px; padding-bottom: 7px; border-bottom: 1px solid var(--hair); }
   .gname { font-family: var(--sans); font-weight: 700; font-size: 17px; letter-spacing: -.01em; }
@@ -97,9 +98,9 @@
   .empty { margin: 0; padding: 14px 2px 2px; font-family: var(--sans); font-weight: 700; font-size: 16px; color: var(--muted); }
 
   /* ---- a row: the status outside on the left, the row its own box with the chevron in it ---- */
-  .wrow { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; align-items: stretch; margin-bottom: 8px; }
-  .status { width: 30px; border: 1.5px solid currentColor; border-radius: 3px; display: grid; place-items: center;
-            font: 500 14px var(--mono); line-height: 1; }
+  .wrow { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; align-items: start; margin-bottom: 8px; }
+  .status { width: 30px; height: 30px; flex: none; border: 1.5px solid currentColor; border-radius: 3px;
+            display: grid; place-items: center; font: 500 14px var(--mono); line-height: 1; }
   .status.lost { color: var(--lost); background: var(--lost-bg); }
   .status.wait { color: var(--wait); background: var(--wait-bg); }
   .status.go { color: var(--go); background: var(--go-bg); }
@@ -180,6 +181,7 @@
          -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 26px), transparent); }
   .ent { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 10px; padding: 9px 0;
          border-bottom: 1px solid var(--hair-2); font-size: 13.5px; align-items: baseline; }
+  .ent[hidden] { display: none; }
   .ent .t { font-family: var(--mono); font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
   .ent .w b { font-weight: 600; }
   .ent .w .m { display: block; font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 2px; font-variant-numeric: tabular-nums; }
@@ -455,25 +457,25 @@
 
       <div class="filters" role="group" aria-label="Filter the log">
         <button class="b" type="button" aria-pressed="true" data-src="">Everything</button>
-        <button class="b" type="button" aria-pressed="false" data-src="claude">Claude</button>
+        <button class="b" type="button" aria-pressed="false" data-src="frontier">Frontier</button>
         <button class="b" type="button" aria-pressed="false" data-src="you">You</button>
         <button class="b" type="button" aria-pressed="false" data-src="client">Clients</button>
       </div>
 
       <div id="log">
         <div class="ent" data-src="you"><span class="t">16:41</span><span class="w"><b>You</b> asked local<span class="m">PW-1x · 1.2k → 210 · 6.4 s</span></span></div>
-        <div class="ent" data-src="claude"><span class="t">16:43</span><span class="w"><b>Claude</b> worked the domain gang session<span class="m">frontier · 24k → 1.8k · 38 s</span></span></div>
+        <div class="ent" data-src="claude" data-lane="frontier"><span class="t">16:43</span><span class="w"><b>Claude</b> worked the domain gang session<span class="m">frontier · 24k → 1.8k · 38 s</span></span></div>
         <div class="ent" data-src="claude"><span class="t">16:38</span><span class="w"><b>Claude</b> read and briefed tools/<span class="m">PW-1x · 38k → 0.9k · 71 s</span></span></div>
         <div class="ent" data-src="claude"><span class="t">16:31</span><span class="w"><b>Claude</b> classified 40 renewal quotes<span class="m">desktop · 12k → 0.4k · 9 s</span></span></div>
         <div class="ent" data-src="client"><span class="t">16:30</span><span class="w"><b>A client</b> called /v1/chat, <span class="fell">the desktop was busy</span><span class="m">PW-1x · 2.0k → 0.3k · 19 s</span></span></div>
         <div class="ent" data-src="you"><span class="t">16:29</span><span class="w"><b>The digest session</b> stopped on an empty brief<span class="m">session_digest · 9 min run</span></span></div>
-        <div class="ent" data-src="claude"><span class="t">16:26</span><span class="w"><b>Claude</b> worked the digest session<span class="m">frontier · 31k → 2.1k · 44 s</span></span></div>
+        <div class="ent" data-src="claude" data-lane="frontier"><span class="t">16:26</span><span class="w"><b>Claude</b> worked the digest session<span class="m">frontier · 31k → 2.1k · 44 s</span></span></div>
         <div class="ent" data-src="you"><span class="t">16:22</span><span class="w"><b>You</b> pushed a note to your phone<span class="m">print 63 % · 0.1 s</span></span></div>
         <div class="ent" data-src="you"><span class="t">16:20</span><span class="w"><b>You</b> started the digest session from local's brief<span class="m">session_digest · 0.3 s</span></span></div>
         <div class="ent" data-src="you"><span class="t">16:12</span><span class="w"><b>You</b> started the domain gang session<span class="m">session_domains · 0.3 s</span></span></div>
         <div class="ent" data-src="claude"><span class="t">16:04</span><span class="w"><b>Claude</b> started the batch job<span class="m">job_7c2 · PW-1x</span></span></div>
         <div class="ent" data-src="you"><span class="t">16:00</span><span class="w"><b>You</b> started Falsework<span class="m">session_falsework · 0.3 s</span></span></div>
-        <div class="ent" data-src="claude"><span class="t">16:02</span><span class="w"><b>Claude</b> worked Falsework<span class="m">frontier · 63k → 4.4k · 2 m 10 s</span></span></div>
+        <div class="ent" data-src="claude" data-lane="frontier"><span class="t">16:02</span><span class="w"><b>Claude</b> worked Falsework<span class="m">frontier · 63k → 4.4k · 2 m 10 s</span></span></div>
         <div class="ent" data-src="claude"><span class="t">15:58</span><span class="w"><b>Claude</b> extracted 12 records<span class="m">desktop · 6.1k → 1.1k · 4 s</span></span></div>
         <div class="ent" data-src="you"><span class="t">15:29</span><span class="w"><b>You</b> resumed the printer<span class="m">0.1 s</span></span></div>
         <div class="ent" data-src="client"><span class="t">15:10</span><span class="w"><b>A client</b> called /v1/chat<span class="m">desktop · 0.8k → 0.2k · 2 s</span></span></div>
@@ -827,7 +829,11 @@
     applyFilter();
   }
   var filter = '';
-  function applyFilter() { $$('#log .ent').forEach(function (e) { e.hidden = !!filter && e.getAttribute('data-src') !== filter; }); }
+  function applyFilter() {
+    $$('#log .ent').forEach(function (e) {
+      e.hidden = !!filter && e.getAttribute('data-src') !== filter && e.getAttribute('data-lane') !== filter;
+    });
+  }
   $$('.filters .b').forEach(function (b) {
     b.addEventListener('click', function () {
       filter = b.getAttribute('data-src');

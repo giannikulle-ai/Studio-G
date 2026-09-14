@@ -43,8 +43,10 @@ Example data is the exception, and only where the shape is already agreed: the r
 - A row is its own box with the chevron inside it. The status marker sits outside the box, on the left, aligned to the row.
 - Token spend layout is the user's to design.
 - Every section head carries a 90 degree corner marker at its top left, from the sketch.
-- The status marker on a row is the full height of that row, not a small square.
+- The status marker on a row is a fixed square, top aligned with the row box, so shrinking a row never stretches it.
 - Theme is Light, Dark or System, chosen in settings. System is the default.
+- Subsections are inset under their section head, starting where the head's text starts.
+- The log filters are Everything, Frontier, You and Clients. Frontier selects by where the work ran; You and Clients select by who made the call.
 
 ## Documents
 
