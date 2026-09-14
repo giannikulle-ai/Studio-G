@@ -82,8 +82,11 @@
     .col-log { border-left: 0; padding-left: 0; border-top: 1px solid var(--hair); padding-top: 22px; margin-top: 28px; }
   }
 
-  .sub { font-family: var(--sans); font-weight: 700; font-size: 24px; letter-spacing: -.02em; line-height: 1.15; margin: 0 0 14px; }
-  .sub.later { margin-top: 36px; }
+  .sub { position: relative; font-family: var(--sans); font-weight: 700; font-size: 24px; letter-spacing: -.02em;
+         line-height: 1.15; margin: 0 0 16px; padding: 12px 0 0 15px; }
+  .sub::before { content: ""; position: absolute; left: 0; top: 0; width: 18px; height: 18px;
+                 border-top: 2px solid var(--rule); border-left: 2px solid var(--rule); }
+  .sub.later { margin-top: 34px; }
 
   /* ---- groups ---- */
   .grp + .grp { margin-top: 22px; }
@@ -94,9 +97,9 @@
   .empty { margin: 0; padding: 14px 2px 2px; font-family: var(--sans); font-weight: 700; font-size: 16px; color: var(--muted); }
 
   /* ---- a row: the status outside on the left, the row its own box with the chevron in it ---- */
-  .wrow { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; align-items: start; margin-bottom: 8px; }
-  .status { width: 28px; height: 28px; border: 1.5px solid currentColor; border-radius: 3px; display: grid; place-items: center;
-            font: 500 13px var(--mono); line-height: 1; margin-top: 12px; }
+  .wrow { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; align-items: stretch; margin-bottom: 8px; }
+  .status { width: 30px; border: 1.5px solid currentColor; border-radius: 3px; display: grid; place-items: center;
+            font: 500 14px var(--mono); line-height: 1; }
   .status.lost { color: var(--lost); background: var(--lost-bg); }
   .status.wait { color: var(--wait); background: var(--wait-bg); }
   .status.go { color: var(--go); background: var(--go-bg); }
@@ -143,7 +146,7 @@
   .tool.add:hover { background: var(--surface); box-shadow: none; }
 
   /* ---- token spend ---- */
-  .spend { border: 1.5px solid var(--ink); border-radius: 4px; padding: 16px 18px 18px; display: grid; gap: 10px; margin-bottom: 30px; }
+  .spend { border: 1.5px solid var(--ink); border-radius: 4px; padding: 16px 18px 18px; display: grid; gap: 10px; margin-bottom: 32px; }
   .spend .top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
   .spend .ttl { font: 700 12px var(--sans); letter-spacing: .02em; color: var(--muted); }
   .spend .hero { font-family: var(--mono); font-size: 34px; line-height: 1; font-variant-numeric: tabular-nums; }
@@ -195,7 +198,10 @@
   .settings[hidden] { display: none; }
   .settings .sh { display: flex; align-items: baseline; justify-content: space-between; gap: 12px 20px; flex-wrap: wrap;
                   padding-bottom: 14px; border-bottom: 2px solid var(--rule); }
-  .settings .sh h2 { margin: 0; font-family: var(--sans); font-weight: 700; font-size: 26px; letter-spacing: -.02em; line-height: 1.1; }
+  .settings .sh h2 { position: relative; margin: 0; font-family: var(--sans); font-weight: 700; font-size: 26px;
+                     letter-spacing: -.02em; line-height: 1.1; padding: 12px 0 0 15px; }
+  .settings .sh h2::before { content: ""; position: absolute; left: 0; top: 0; width: 18px; height: 18px;
+                             border-top: 2px solid var(--rule); border-left: 2px solid var(--rule); }
   .setrow { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 14px 20px; align-items: center;
             padding: 18px 0; border-bottom: 1px solid var(--hair-2); }
   .setrow .lbl { font-weight: 600; font-size: 15px; }
@@ -210,7 +216,10 @@
   /* the documentation, now behind settings */
   .doc { margin-top: 10px; }
   .doc section { margin-top: 40px; }
-  .doc h3 { margin: 0 0 6px; font-family: var(--sans); font-weight: 700; font-size: 21px; letter-spacing: -.02em; line-height: 1.2; }
+  .doc h3 { position: relative; margin: 0 0 8px; font-family: var(--sans); font-weight: 700; font-size: 21px;
+            letter-spacing: -.02em; line-height: 1.2; padding: 12px 0 0 15px; }
+  .doc h3::before { content: ""; position: absolute; left: 0; top: 0; width: 18px; height: 18px;
+                    border-top: 2px solid var(--rule); border-left: 2px solid var(--rule); }
   .doc h4 { margin: 0 0 8px; font: 700 14px var(--sans); }
   .doc .lede { font-size: 15.5px; color: var(--ink-2); max-width: 68ch; margin: 0 0 18px; }
   .doc p { max-width: 70ch; }
@@ -482,6 +491,17 @@
   </div>
 
   <div class="setrow">
+    <div class="lbl">Theme<small>Light, dark, or follow the machine</small></div>
+    <div>
+      <div class="seg" role="group" aria-label="Theme">
+        <button type="button" data-theme-set="light" aria-pressed="false">Light</button>
+        <button type="button" data-theme-set="dark" aria-pressed="false">Dark</button>
+        <button type="button" data-theme-set="system" aria-pressed="true">System</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="setrow">
     <div class="lbl">The Light<small>On whenever a model is running</small></div>
     <div>
       <div class="seg" role="group" aria-label="The light">
@@ -715,6 +735,24 @@
   var tT; function toast(m) { var e = $('#toast'); e.textContent = m; e.classList.add('on'); clearTimeout(tT); tT = setTimeout(function () { e.classList.remove('on'); }, 2800); }
   function pad(n) { return String(n).padStart(2, '0'); }
   function hm() { var d = new Date(); return pad(d.getHours()) + ':' + pad(d.getMinutes()); }
+
+  /* ---------- theme ---------- */
+  var THEME_KEY = 'pw1x-theme';
+  function applyTheme(t) {
+    if (t === 'system') document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme', t);
+    $$('[data-theme-set]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-theme-set') === t)); });
+  }
+  var theme = 'system';
+  try { theme = localStorage.getItem(THEME_KEY) || 'system'; } catch (e) {}
+  applyTheme(theme);
+  $$('[data-theme-set]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      theme = b.getAttribute('data-theme-set');
+      try { localStorage.setItem(THEME_KEY, theme); } catch (e) {}
+      applyTheme(theme);
+    });
+  });
 
   /* ---------- settings ---------- */
   var sbtn = $('#settings-btn'), spanel = $('#settings');

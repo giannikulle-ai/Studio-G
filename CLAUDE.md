@@ -42,6 +42,9 @@ Example data is the exception, and only where the shape is already agreed: the r
 - The three figures above the log are chosen by the user from a list, not fixed.
 - A row is its own box with the chevron inside it. The status marker sits outside the box, on the left, aligned to the row.
 - Token spend layout is the user's to design.
+- Every section head carries a 90 degree corner marker at its top left, from the sketch.
+- The status marker on a row is the full height of that row, not a small square.
+- Theme is Light, Dark or System, chosen in settings. System is the default.
 
 ## Documents
 
