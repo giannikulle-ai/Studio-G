@@ -39,7 +39,7 @@ Example data is the exception, and only where the shape is already agreed: the r
 - The light is automatic, following the alert rule. The manual override lives in settings and nowhere else.
 - The console page carries no build documentation. It sits behind the settings button.
 - The block above the log is token spend: frontier tokens are what you pay for, so that figure leads.
-- The three figures above the log are chosen by the user from a list, not fixed.
+- The three figures above the log are chosen by the user from a list, not fixed. A slot the user has not chosen reads Pick One with a dash, never a default I picked. Frontier is the one they chose.
 - A row is its own box with the chevron inside it. The status marker sits outside the box, on the left, aligned to the row.
 - Token spend layout is the user's to design.
 - Every section head carries a 90 degree corner marker at its top left, from the sketch.

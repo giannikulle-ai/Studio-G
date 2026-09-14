@@ -797,23 +797,24 @@
     { k: 'latency',  label: 'Median Latency',  v: '4.2 s' },
     { k: 'saved',    label: 'Spend Avoided',   v: '$4.80' }
   ];
-  var picked = ['calls', 'frontier', 'claude'];
-  try { var raw = localStorage.getItem('pw1x-stats-v3'); if (raw) picked = JSON.parse(raw); } catch (e) {}
+  var picked = ['', 'frontier', ''];
+  try { var raw = localStorage.getItem('pw1x-stats-v4'); if (raw) picked = JSON.parse(raw); } catch (e) {}
   $$('.stat select').forEach(function (sel, i) {
+    var none = document.createElement('option'); none.value = ''; none.textContent = 'Pick One'; sel.appendChild(none);
     STATS.forEach(function (s) { var o = document.createElement('option'); o.value = s.k; o.textContent = s.label; sel.appendChild(o); });
-    var want = picked[i];
-    if (!STATS.some(function (x) { return x.k === want; })) want = STATS[i].k;
+    var want = picked[i] || '';
+    if (want && !STATS.some(function (x) { return x.k === want; })) want = '';
     sel.value = want; picked[i] = want;
     sel.addEventListener('change', function () {
       picked[i] = sel.value;
-      try { localStorage.setItem('pw1x-stats-v3', JSON.stringify(picked)); } catch (e) {}
+      try { localStorage.setItem('pw1x-stats-v4', JSON.stringify(picked)); } catch (e) {}
       paintStats();
     });
   });
   function paintStats() {
     $$('.stat select').forEach(function (sel, i) {
-      var s = STATS.filter(function (x) { return x.k === sel.value; })[0] || STATS[0];
-      $('[data-v="' + i + '"]').textContent = s.v;
+      var s = STATS.filter(function (x) { return x.k === sel.value; })[0];
+      $('[data-v="' + i + '"]').textContent = s ? s.v : '—';
     });
   }
   paintStats();
