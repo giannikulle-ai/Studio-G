@@ -3,44 +3,26 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Public+Sans:wght@400;500;600;700&display=swap">
 <style>
-  /* ============================================================
-     Ink on bone. The only colour on this page is state:
-     lost (red), waiting (amber), moving (green). Nothing else
-     is tinted, so colour always means something.
-     Questions are set in serif, the machine's answers in sans.
-     ============================================================ */
+  /* Ink on bone. The only colour is state: lost, waiting, moving.
+     Questions are serif, the machine's answers are sans and mono. */
   :root {
-    --ground: #EFEDE7;
-    --surface: #FDFCFA;
-    --surface-2: #F4F2EC;
-    --well: #E8E5DC;
-    --ink: #191813;
-    --ink-2: #55524A;
-    --muted: #8B877B;
-    --hair: #DCD8CD;
-    --hair-2: #E9E6DD;
-    --rule: #191813;
+    --ground: #EFEDE7; --surface: #FDFCFA; --surface-2: #F4F2EC; --well: #E8E5DC;
+    --ink: #191813; --ink-2: #55524A; --muted: #8B877B;
+    --hair: #DCD8CD; --hair-2: #E9E6DD; --rule: #191813;
     --lost: #A4342A; --lost-bg: #F6E3DF;
     --wait: #8A5A08; --wait-bg: #F6EDD8;
     --go:   #2B6A49; --go-bg:  #E1EDE6;
     --shadow: 0 1px 1px rgba(25,24,19,.04), 0 24px 48px -34px rgba(25,24,19,.4);
-    --serif: "Instrument Serif", Georgia, "Times New Roman", serif;
-    --sans: "Public Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
-    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --serif: "Instrument Serif", Georgia, serif;
+    --sans: "Public Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
     color-scheme: light;
   }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --ground: #100F0D;
-      --surface: #1A1915;
-      --surface-2: #221F1A;
-      --well: #12110E;
-      --ink: #F3F1EA;
-      --ink-2: #C2BCAF;
-      --muted: #8C8779;
-      --hair: #322E26;
-      --hair-2: #262319;
-      --rule: #F3F1EA;
+      --ground: #100F0D; --surface: #1A1915; --surface-2: #221F1A; --well: #12110E;
+      --ink: #F3F1EA; --ink-2: #C2BCAF; --muted: #8C8779;
+      --hair: #322E26; --hair-2: #262319; --rule: #F3F1EA;
       --lost: #E98A7A; --lost-bg: #38201B;
       --wait: #DFAE61; --wait-bg: #33280F;
       --go:   #79C89B; --go-bg:  #162C20;
@@ -49,16 +31,9 @@
     }
   }
   :root[data-theme="dark"] {
-    --ground: #100F0D;
-    --surface: #1A1915;
-    --surface-2: #221F1A;
-    --well: #12110E;
-    --ink: #F3F1EA;
-    --ink-2: #C2BCAF;
-    --muted: #8C8779;
-    --hair: #322E26;
-    --hair-2: #262319;
-    --rule: #F3F1EA;
+    --ground: #100F0D; --surface: #1A1915; --surface-2: #221F1A; --well: #12110E;
+    --ink: #F3F1EA; --ink-2: #C2BCAF; --muted: #8C8779;
+    --hair: #322E26; --hair-2: #262319; --rule: #F3F1EA;
     --lost: #E98A7A; --lost-bg: #38201B;
     --wait: #DFAE61; --wait-bg: #33280F;
     --go:   #79C89B; --go-bg:  #162C20;
@@ -67,210 +42,226 @@
   }
 
   * { box-sizing: border-box; }
-  body {
-    background: var(--ground); color: var(--ink);
-    font-family: var(--sans); font-size: 15px; line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-    padding-inline: clamp(12px, 3vw, 40px); padding-block: clamp(16px, 3vw, 40px) 80px;
-  }
+  body { background: var(--ground); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.5;
+         -webkit-font-smoothing: antialiased;
+         padding-inline: clamp(12px, 3vw, 40px); padding-block: clamp(16px, 3vw, 40px) 72px; }
   .page { max-width: 1240px; margin: 0 auto; }
-  a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a { color: inherit; text-underline-offset: 2px; }
   :focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-radius: 2px; }
-  .mono { font-family: var(--mono); }
   .num { font-variant-numeric: tabular-nums; }
   code { font-family: var(--mono); font-size: .88em; background: var(--surface-2); padding: 1px 5px; border-radius: 3px; }
   @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
 
-  /* ===================== THE CONSOLE ===================== */
-  .app {
-    background: var(--surface); border: 1px solid var(--hair); border-radius: 6px; box-shadow: var(--shadow);
-    padding: clamp(18px, 2.4vw, 30px) clamp(16px, 2.4vw, 30px) clamp(22px, 2.6vw, 32px);
-  }
+  /* ======================= THE CONSOLE ======================= */
+  .app { background: var(--surface); border: 1px solid var(--hair); border-radius: 6px; box-shadow: var(--shadow);
+         padding: clamp(18px, 2.4vw, 30px) clamp(16px, 2.4vw, 30px) clamp(22px, 2.6vw, 32px); }
 
-  /* header */
-  .ah { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px 20px; flex-wrap: wrap; }
-  .ah-l { display: flex; align-items: center; gap: 12px; }
-  .mark { width: 54px; height: 54px; flex: none; border: 1.5px dashed var(--muted); border-radius: 5px; display: grid; place-items: center; color: var(--muted); }
-  .mark svg { display: block; }
-  .ah h1 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: 40px; line-height: 1; letter-spacing: -.01em; padding-bottom: 6px; border-bottom: 2px solid var(--rule); }
-  .ah-r { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .ah { display: flex; align-items: center; justify-content: space-between; gap: 14px 20px; flex-wrap: wrap; }
+  .ah-l { display: flex; align-items: center; gap: 14px; }
+  .mark { width: 56px; height: 56px; flex: none; border: 1.5px dashed var(--muted); border-radius: 4px; }
+  .ah h1 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: 42px; line-height: 1;
+           padding-bottom: 6px; border-bottom: 2px solid var(--rule); }
+  .ah-r { display: flex; align-items: stretch; gap: 10px; }
 
-  /* the lamp: the USB light, mirrored. Monochrome on purpose. */
-  .lamp { appearance: none; border: 1.5px solid var(--hair); background: var(--surface); border-radius: 4px; height: 46px; padding: 0 14px 0 12px; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font: 500 13px var(--sans); color: var(--ink-2); }
-  .lamp:hover { border-color: var(--ink); color: var(--ink); }
-  .lamp .bulb { width: 11px; height: 11px; border-radius: 50%; border: 1.5px solid var(--ink); background: transparent; transition: background .25s, box-shadow .25s; }
-  .lamp.on .bulb { background: var(--ink); box-shadow: 0 0 0 3px var(--well); }
-  .lamp.on { color: var(--ink); }
-
-  /* PW-1x load: the split between inference work and web serving. Opens the dashboard. */
-  .load { display: inline-grid; grid-auto-flow: column; align-items: stretch; border: 1.5px solid var(--ink); border-radius: 4px; text-decoration: none; overflow: hidden; height: 46px; }
-  .load .state { background: var(--ink); color: var(--surface); display: flex; align-items: center; gap: 7px; padding: 0 13px; font: 600 12.5px var(--sans); letter-spacing: .04em; text-transform: uppercase; }
-  .load .state .d { width: 8px; height: 8px; border-radius: 50%; background: currentColor; }
-  .load .read { display: grid; align-content: center; gap: 3px; padding: 0 14px; }
-  .load .k { font: 600 9.5px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-  .load .v { font: 400 13px var(--sans); color: var(--ink-2); white-space: nowrap; }
-  .load .v b { font-family: var(--mono); font-weight: 500; font-size: 13.5px; color: var(--ink); font-variant-numeric: tabular-nums; }
-  .load:hover .state { background: var(--ink-2); }
-  .load:hover { border-color: var(--ink-2); }
-  .iconb { appearance: none; width: 46px; height: 46px; border: 1.5px solid var(--hair); background: var(--surface); border-radius: 4px; display: grid; place-items: center; cursor: pointer; color: var(--ink-2); }
+  .load { display: grid; align-content: center; gap: 3px; border: 1.5px solid var(--ink); border-radius: 4px;
+          padding: 8px 16px; height: 50px; text-decoration: none; }
+  .load .k { font: 600 11px var(--sans); letter-spacing: .04em; color: var(--muted); }
+  .load .v { font: 400 13.5px var(--sans); color: var(--ink-2); white-space: nowrap; }
+  .load .v b { font-family: var(--mono); font-weight: 500; font-size: 14px; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .load:hover { border-color: var(--ink-2); background: var(--surface-2); }
+  .iconb { appearance: none; width: 50px; height: 50px; border: 1.5px solid var(--hair); background: var(--surface);
+           border-radius: 4px; display: grid; place-items: center; cursor: pointer; color: var(--ink-2); }
   .iconb:hover { border-color: var(--ink); color: var(--ink); }
+  .iconb[aria-expanded="true"] { background: var(--ink); border-color: var(--ink); color: var(--surface); }
 
-  /* two columns, divided */
-  .ab { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 0 30px; margin-top: 26px; }
+  .ab { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 0 30px; margin-top: 28px; }
   .col-log { border-left: 1px solid var(--hair); padding-left: 30px; min-width: 0; }
   .col-main { min-width: 0; }
-  @media (max-width: 560px) {
-    .ah-r { width: 100%; display: grid; grid-template-columns: 1fr auto; gap: 8px; }
-    .ah-r .lamp { order: 0; } .ah-r .iconb { order: 1; } .ah-r .load { order: 2; grid-column: 1 / -1; }
-    .wr { align-items: start; }
-    .wr .glyph { margin-top: 3px; } .wr .chev { margin-top: 6px; }
-    .det { padding-left: 16px; }
-  }
   @media (max-width: 900px) {
-    .ab { grid-template-columns: minmax(0, 1fr); gap: 0; }
-    .col-log { border-left: 0; padding-left: 0; border-top: 1px solid var(--hair); padding-top: 22px; margin-top: 26px; }
+    .ab { grid-template-columns: minmax(0, 1fr); }
+    .col-log { border-left: 0; padding-left: 0; border-top: 1px solid var(--hair); padding-top: 22px; margin-top: 28px; }
   }
 
-  /* subheads are questions, so they are serif */
-  .sub { font-family: var(--serif); font-weight: 400; font-size: 27px; line-height: 1.1; margin: 0 0 14px; letter-spacing: -.005em; }
-  .sub.later { margin-top: 34px; }
+  .sub { font-family: var(--serif); font-weight: 400; font-size: 27px; line-height: 1.1; margin: 0 0 14px; }
+  .sub.later { margin-top: 36px; }
 
   /* ---- groups ---- */
-  .grp + .grp { margin-top: 20px; }
+  .grp + .grp { margin-top: 22px; }
   .grp-h { display: flex; align-items: baseline; gap: 10px; padding-bottom: 7px; border-bottom: 1px solid var(--hair); }
-  .gname { font-family: var(--serif); font-style: italic; font-size: 19px; line-height: 1.2; }
+  .gname { font-family: var(--serif); font-style: italic; font-size: 19px; }
   .gcount { font: 500 11px var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
   .gcount::before { content: "("; } .gcount::after { content: ")"; }
   .empty { margin: 0; padding: 14px 2px 2px; font-family: var(--serif); font-style: italic; font-size: 18px; color: var(--muted); }
 
-  /* ---- a row: glyph, label, chevron ---- */
-  .wr { width: 100%; display: grid; grid-template-columns: 24px minmax(0, 1fr) 18px; gap: 12px; align-items: center; text-align: left;
-        appearance: none; background: none; border: 0; border-bottom: 1px solid var(--hair-2); padding: 11px 2px; cursor: pointer; font: inherit; color: inherit; min-height: 52px; }
-  .wr:hover { background: var(--surface-2); }
-  .glyph { width: 22px; height: 22px; border: 1.5px solid currentColor; border-radius: 3px; display: grid; place-items: center; font: 500 12px var(--mono); line-height: 1; }
-  .glyph.lost { color: var(--lost); background: var(--lost-bg); }
-  .glyph.wait { color: var(--wait); background: var(--wait-bg); }
-  .glyph.go { color: var(--go); background: var(--go-bg); }
-  .wr .t { font-weight: 600; font-size: 15px; letter-spacing: -.005em; }
-  .wr .s { display: block; font-size: 13px; color: var(--ink-2); margin-top: 1px; }
-  .wr .m { display: block; font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 3px; font-variant-numeric: tabular-nums; }
-  .chev { color: var(--muted); display: grid; place-items: center; transition: transform .18s; }
-  .wr[aria-expanded="true"] .chev { transform: rotate(90deg); }
-  .wr[aria-expanded="true"] { background: var(--surface-2); }
+  /* ---- a row: status box, the row, chevron box ---- */
+  .wrow { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; align-items: start; padding: 10px 0;
+          border-bottom: 1px solid var(--hair-2); }
+  .status { width: 28px; height: 28px; border: 1.5px solid currentColor; border-radius: 3px; display: grid; place-items: center;
+            font: 500 13px var(--mono); line-height: 1; margin-top: 3px; }
+  .status.lost { color: var(--lost); background: var(--lost-bg); }
+  .status.wait { color: var(--wait); background: var(--wait-bg); }
+  .status.go { color: var(--go); background: var(--go-bg); }
+  .rowbtn { display: grid; grid-template-columns: minmax(0, 1fr) 28px; gap: 12px; align-items: start; width: 100%;
+            appearance: none; background: none; border: 0; padding: 2px 0 0; text-align: left; font: inherit; color: inherit; cursor: pointer; }
+  .rowbtn:hover .chevbox { border-color: var(--ink); color: var(--ink); }
+  .rowbtn .t { font-weight: 600; font-size: 15px; display: block; }
+  .rowbtn .s { display: block; font-size: 13px; color: var(--ink-2); margin-top: 1px; }
+  .rowbtn .m { display: block; font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 3px; font-variant-numeric: tabular-nums; }
+  .chevbox { width: 28px; height: 28px; border: 1.5px solid var(--hair); border-radius: 3px; display: grid; place-items: center;
+             color: var(--muted); margin-top: 1px; transition: transform .18s; }
+  .rowbtn[aria-expanded="true"] .chevbox { transform: rotate(90deg); border-color: var(--ink); color: var(--ink); }
 
-  /* ---- what the chevron opens ---- */
-  .det { background: var(--surface-2); border-bottom: 1px solid var(--hair-2); padding: 14px 16px 16px 48px; display: grid; gap: 12px; }
+  .det { padding: 4px 0 16px 38px; display: grid; gap: 12px; border-bottom: 1px solid var(--hair-2); }
   .det[hidden] { display: none; }
   .det .ev { font-family: var(--mono); font-size: 12px; color: var(--ink-2); display: grid; gap: 3px; }
-  .det .ev span { display: block; }
   .det .ev b { color: var(--ink); font-weight: 500; }
-  .det .verbs { display: flex; gap: 7px; flex-wrap: wrap; }
+  .det .acts { display: flex; gap: 7px; flex-wrap: wrap; }
 
   /* ---- buttons ---- */
-  .b { appearance: none; font: 600 13px var(--sans); color: var(--ink); background: var(--surface); border: 1.5px solid var(--hair); border-radius: 4px; padding: 8px 13px; min-height: 36px; cursor: pointer; white-space: nowrap; }
+  .b { appearance: none; font: 600 13px var(--sans); color: var(--ink); background: var(--surface);
+       border: 1.5px solid var(--hair); border-radius: 3px; padding: 8px 13px; min-height: 36px; cursor: pointer; white-space: nowrap; }
   .b:hover { border-color: var(--ink); }
   .b.solid { background: var(--ink); border-color: var(--ink); color: var(--surface); }
   .b.solid:hover { background: var(--ink-2); border-color: var(--ink-2); }
   .b.danger { color: var(--lost); }
   .b.danger:hover { border-color: var(--lost); }
-  .b.plain { border-color: transparent; color: var(--ink-2); padding-inline: 8px; }
+  .b.plain { border-color: transparent; color: var(--ink-2); }
   .b.plain:hover { border-color: var(--hair); color: var(--ink); }
 
-  /* ---- tools: a bracket, then buttons. Only the unfinished one is a bare outline. ---- */
-  .tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); gap: 22px 20px; align-items: start; }
-  .tile { border-top: 2px solid var(--rule); border-left: 2px solid var(--rule); padding: 9px 0 0 11px; min-width: 0; }
-  .tile h3 { margin: 0 0 9px; font: 600 14px var(--sans); letter-spacing: -.005em; display: flex; align-items: center; gap: 7px; }
-  .tile h3 svg { flex: none; color: var(--ink-2); }
-  .tbtns { display: grid; gap: 6px; }
-  .tb { width: 100%; text-align: left; appearance: none; font: 500 13.5px var(--sans); color: var(--ink); background: var(--surface);
-        border: 1px solid var(--hair); border-radius: 4px; padding: 9px 11px; min-height: 38px; cursor: pointer;
-        box-shadow: 0 1px 0 var(--hair), 0 2px 4px -2px rgba(25,24,19,.18); }
-  .tb:hover { border-color: var(--ink); box-shadow: 0 1px 0 var(--ink-2), 0 3px 6px -2px rgba(25,24,19,.25); }
-  .tb:active { transform: translateY(1px); box-shadow: 0 1px 0 var(--hair); }
-  .tile.add { border: 1.5px dashed var(--muted); border-radius: 5px; padding: 0; min-height: 132px; display: grid; place-items: center; }
-  .tile.add h3 { margin: 0; color: var(--muted); font-weight: 500; }
+  /* ---- tools: one rectangle each ---- */
+  .tools { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 12px; }
+  .tool { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 62px; padding: 0 16px;
+          appearance: none; text-align: left; font: 600 15px var(--sans); color: var(--ink); background: var(--surface);
+          border: 1.5px solid var(--ink); border-radius: 3px; cursor: pointer;
+          box-shadow: 3px 3px 0 var(--well); }
+  .tool:hover { background: var(--surface-2); box-shadow: 4px 4px 0 var(--hair); }
+  .tool:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--hair); }
+  .tool svg { flex: none; color: var(--ink-2); }
+  .tool.add { border-style: dashed; border-color: var(--muted); color: var(--muted); box-shadow: none; justify-content: center; }
+  .tool.add:hover { background: var(--surface); box-shadow: none; }
+
   /* ---- the sheet a tool opens ---- */
-  .sheet { margin-top: 22px; border: 1.5px solid var(--ink); border-radius: 5px; padding: 18px 20px; display: grid; gap: 12px; background: var(--surface); }
+  .sheet { margin-top: 20px; border: 1.5px solid var(--ink); border-radius: 4px; padding: 18px 20px; display: grid; gap: 12px; background: var(--surface); }
   .sheet[hidden] { display: none; }
   .sheet .h { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
   .sheet .h b { font-family: var(--serif); font-weight: 400; font-size: 22px; }
   .sheet .h .path { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
-  .sheet .f { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 10px; align-items: center; }
-  .sheet label { font: 600 12px var(--sans); color: var(--muted); letter-spacing: .02em; }
-  .sheet input, .sheet select, .sheet textarea { width: 100%; font: 14px var(--sans); color: var(--ink); background: var(--surface-2); border: 1.5px solid var(--hair); border-radius: 4px; padding: 9px 11px; min-height: 40px; }
+  .sheet .f { display: grid; grid-template-columns: 116px minmax(0, 1fr); gap: 10px; align-items: center; }
+  .sheet label { font: 600 12px var(--sans); color: var(--muted); }
+  .sheet input, .sheet select, .sheet textarea { width: 100%; font: 14px var(--sans); color: var(--ink); background: var(--surface-2);
+    border: 1.5px solid var(--hair); border-radius: 3px; padding: 9px 11px; min-height: 40px; }
   .sheet textarea { min-height: 76px; resize: vertical; }
   .sheet input:focus, .sheet select:focus, .sheet textarea:focus { border-color: var(--ink); outline: none; }
-  .sheet select.from { font-family: var(--mono); font-size: 12.5px; }
   .sheet .act { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
   .sheet .say { margin: 0; font-size: 14px; color: var(--ink-2); max-width: 60ch; }
+  .sheet ul { margin: 0; padding-left: 18px; color: var(--ink-2); font-size: 14px; display: grid; gap: 4px; }
   @media (max-width: 560px) { .sheet .f { grid-template-columns: 1fr; gap: 4px; } }
-  .reply { font-size: 14.5px; line-height: 1.6; color: var(--ink); border-left: 2px solid var(--ink); padding-left: 14px; }
+  .reply { font-size: 14.5px; line-height: 1.6; border-left: 2px solid var(--ink); padding-left: 14px; }
   .reply .who { display: block; font: 600 11px var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
 
+  /* ---- token spend ---- */
+  .spend { border: 1.5px solid var(--ink); border-radius: 4px; padding: 16px 18px 18px; display: grid; gap: 10px; margin-bottom: 30px; }
+  .spend .top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+  .spend .ttl { font: 600 12px var(--sans); letter-spacing: .02em; color: var(--muted); }
+  .spend .hero { font-family: var(--mono); font-size: 34px; line-height: 1; font-variant-numeric: tabular-nums; }
+  .spend .hero small { font-family: var(--sans); font-size: 13px; font-weight: 500; color: var(--ink-2); margin-left: 8px; letter-spacing: 0; }
+  .spend .bar { display: flex; height: 14px; background: var(--well); border-radius: 2px; overflow: hidden; gap: 2px; }
+  .spend .bar i { display: block; height: 100%; }
+  .spend .bar .frontier { background: var(--ink); }
+  .spend .bar .local { background: var(--muted); opacity: .75; }
+  .spend .keys { display: flex; justify-content: space-between; gap: 12px; font-size: 12.5px; color: var(--ink-2); flex-wrap: wrap; }
+  .spend .keys b { font-family: var(--mono); font-weight: 500; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .spend .keys .sw { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 6px; vertical-align: baseline; }
+  .spend .keys .sw.frontier { background: var(--ink); }
+  .spend .keys .sw.local { background: var(--muted); opacity: .75; }
+  .spend .foot { font-size: 12.5px; color: var(--muted); }
+
   /* ---- log ---- */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 0 14px;
+           border-bottom: 2px solid var(--rule); margin-bottom: 10px; }
+  .stat select { width: 100%; appearance: none; font: 600 12px var(--sans); letter-spacing: .01em;
+                 color: var(--muted); background: none; border: 0; border-bottom: 1px dashed var(--hair); padding: 0 14px 3px 0;
+                 cursor: pointer; border-radius: 0;
+                 background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+                 background-position: right 4px top 5px, right 0 top 5px; background-size: 4px 4px, 4px 4px; background-repeat: no-repeat; }
+  .stat select:hover, .stat select:focus { color: var(--ink); border-bottom-color: var(--ink); outline: none; }
+  .stat .v { font-family: var(--mono); font-size: 19px; font-variant-numeric: tabular-nums; margin-top: 5px; }
   .filters { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 4px; }
   .filters .b { font-size: 12px; min-height: 30px; padding: 5px 10px; }
   .filters .b[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--surface); }
-  .reserved { border: 1.5px dashed var(--muted); border-radius: 5px; min-height: 148px; display: grid; place-items: center; color: var(--muted); font-size: 13px; margin-bottom: 30px; }
-  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 0 14px; border-bottom: 2px solid var(--rule); margin-bottom: 8px; }
-  .stats .k { font: 600 10px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
-  .stats .v { font-family: var(--mono); font-size: 18px; font-variant-numeric: tabular-nums; margin-top: 3px; }
-  .stats .v small { font-size: 11px; color: var(--muted); }
-  #log { max-height: 430px; overflow-y: auto; mask-image: linear-gradient(to bottom, #000 calc(100% - 26px), transparent); -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 26px), transparent); }
-  .ent { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--hair-2); font-size: 13.5px; align-items: baseline; }
+  #log { max-height: 392px; overflow-y: auto;
+         mask-image: linear-gradient(to bottom, #000 calc(100% - 26px), transparent);
+         -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 26px), transparent); }
+  .ent { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 10px; padding: 9px 0;
+         border-bottom: 1px solid var(--hair-2); font-size: 13.5px; align-items: baseline; }
   .ent .t { font-family: var(--mono); font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
   .ent .w b { font-weight: 600; }
   .ent .w .m { display: block; font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 2px; font-variant-numeric: tabular-nums; }
   .ent .w .fell { color: var(--wait); }
   .ent.fresh { animation: fade 1.6s ease-out; }
   @keyframes fade { from { background: var(--surface-2); } to { background: transparent; } }
-  .toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); background: var(--ink); color: var(--surface); font: 600 13px var(--sans); padding: 11px 16px; border-radius: 4px; opacity: 0; pointer-events: none; transition: opacity .22s; z-index: 9; max-width: calc(100vw - 32px); }
+
+  .toast { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); background: var(--ink); color: var(--surface);
+           font: 600 13px var(--sans); padding: 11px 16px; border-radius: 3px; opacity: 0; pointer-events: none;
+           transition: opacity .22s; z-index: 9; max-width: calc(100vw - 32px); }
   .toast.on { opacity: 1; }
 
-  /* ===================== THE SPEC ===================== */
-  .doc { margin-top: 56px; }
-  .doc-h { border-top: 3px solid var(--rule); padding-top: 16px; display: flex; align-items: baseline; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; }
-  .doc-h h2 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(28px, 4vw, 42px); line-height: 1; }
-  .doc-h .m { font-size: 13.5px; color: var(--muted); }
-  .doc section { margin-top: 46px; }
-  .doc h3 { margin: 0 0 6px; font-family: var(--serif); font-weight: 400; font-size: 26px; line-height: 1.15; }
+  /* ======================= SETTINGS ======================= */
+  .settings { margin-top: 22px; background: var(--surface); border: 1px solid var(--hair); border-radius: 6px; box-shadow: var(--shadow);
+              padding: clamp(18px, 2.4vw, 30px); }
+  .settings[hidden] { display: none; }
+  .settings .sh { display: flex; align-items: baseline; justify-content: space-between; gap: 12px 20px; flex-wrap: wrap;
+                  padding-bottom: 14px; border-bottom: 2px solid var(--rule); }
+  .settings .sh h2 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: 30px; line-height: 1; }
+  .setrow { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 14px 20px; align-items: center;
+            padding: 18px 0; border-bottom: 1px solid var(--hair-2); }
+  .setrow .lbl { font-weight: 600; font-size: 15px; }
+  .setrow .lbl small { display: block; font-weight: 400; font-size: 13px; color: var(--muted); margin-top: 2px; }
+  .seg { display: inline-grid; grid-auto-flow: column; border: 1.5px solid var(--ink); border-radius: 3px; overflow: hidden; }
+  .seg button { appearance: none; border: 0; border-right: 1.5px solid var(--ink); background: var(--surface); color: var(--ink-2);
+                font: 600 13px var(--sans); padding: 9px 16px; min-height: 38px; cursor: pointer; }
+  .seg button:last-child { border-right: 0; }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: var(--surface); }
+  @media (max-width: 560px) { .setrow { grid-template-columns: 1fr; } }
+
+  /* the documentation, now behind settings */
+  .doc { margin-top: 10px; }
+  .doc section { margin-top: 40px; }
+  .doc h3 { margin: 0 0 6px; font-family: var(--serif); font-weight: 400; font-size: 25px; line-height: 1.15; }
   .doc h4 { margin: 0 0 8px; font: 600 14px var(--sans); }
-  .doc .lede { font-size: 16px; color: var(--ink-2); max-width: 68ch; margin: 0 0 18px; }
+  .doc .lede { font-size: 15.5px; color: var(--ink-2); max-width: 68ch; margin: 0 0 18px; }
   .doc p { max-width: 70ch; }
   .doc .note { font-size: 13.5px; color: var(--muted); max-width: 72ch; }
   .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; align-items: start; }
   .two > div { min-width: 0; }
-  pre { font-family: var(--mono); font-size: 12.5px; line-height: 1.6; background: var(--surface); border: 1px solid var(--hair); border-radius: 5px; padding: 16px 18px; overflow-x: auto; margin: 0; color: var(--ink-2); }
+  pre { font-family: var(--mono); font-size: 12.5px; line-height: 1.6; background: var(--surface-2); border: 1px solid var(--hair);
+        border-radius: 4px; padding: 16px 18px; overflow-x: auto; margin: 0; color: var(--ink-2); }
   pre b { color: var(--ink); font-weight: 500; }
-  pre i { font-style: normal; text-decoration: underline; text-decoration-color: var(--hair); text-underline-offset: 2px; }
   pre em { color: var(--muted); font-style: normal; }
   .scroll { overflow-x: auto; }
   table.t { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 600px; }
-  table.t thead th { text-align: left; font: 600 10.5px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); padding: 0 16px 9px 0; border-bottom: 2px solid var(--rule); white-space: nowrap; }
+  table.t thead th { text-align: left; font: 600 10.5px var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+                     padding: 0 16px 9px 0; border-bottom: 2px solid var(--rule); white-space: nowrap; }
   table.t tbody td { padding: 11px 16px 11px 0; border-bottom: 1px solid var(--hair-2); vertical-align: top; color: var(--ink-2); }
   table.t tbody tr:last-child td { border-bottom: 0; }
   table.t td.n { color: var(--ink); font-weight: 600; white-space: nowrap; }
-  table.t td.n code { background: none; padding: 0; font-size: 13px; }
-  .need { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 26px; }
+  ul.plain { list-style: none; margin: 0; padding: 0; }
+  ul.plain li { padding: 9px 0; border-bottom: 1px solid var(--hair-2); color: var(--ink-2); font-size: 14px; }
+  ul.plain li:last-child { border-bottom: 0; }
+  ul.plain b { color: var(--ink); font-weight: 600; }
   ol.n { list-style: none; counter-reset: n; margin: 0; padding: 0; }
   ol.n li { counter-increment: n; display: grid; grid-template-columns: 26px minmax(0,1fr); gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--hair-2); }
   ol.n li:last-child { border-bottom: 0; }
   ol.n li::before { content: counter(n); font-family: var(--mono); font-size: 12px; color: var(--muted); padding-top: 3px; }
   ol.n b { color: var(--ink); }
   ol.n .m { display: block; font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 4px; }
-  ul.plain { list-style: none; margin: 0; padding: 0; }
-  ul.plain li { padding: 9px 0; border-bottom: 1px solid var(--hair-2); color: var(--ink-2); font-size: 14px; }
-  ul.plain li:last-child { border-bottom: 0; }
-  ul.plain b { color: var(--ink); font-weight: 600; }
-  .quote { font-family: var(--serif); font-style: italic; font-size: 21px; line-height: 1.4; color: var(--ink); max-width: 40ch; margin: 0; }
-
-  .diagram { background: var(--surface); border: 1px solid var(--hair); border-radius: 5px; padding: 18px 18px 8px; overflow-x: auto; }
+  .diagram { background: var(--surface-2); border: 1px solid var(--hair); border-radius: 4px; padding: 18px 18px 8px; overflow-x: auto; }
   .diagram svg { display: block; width: 100%; height: auto; min-width: 700px; color: var(--ink); }
   figure { margin: 0; }
   figcaption { font-size: 13.5px; color: var(--ink-2); max-width: 76ch; margin: 12px 2px 0; line-height: 1.55; }
   figcaption b { color: var(--ink); }
-  .dg rect.node { fill: var(--surface-2); stroke: none; }
-  .dg rect.hub { fill: var(--surface); stroke: currentColor; stroke-width: 1.4; }
+  .dg rect.node { fill: var(--surface); stroke: none; }
+  .dg rect.hub { fill: var(--surface-2); stroke: currentColor; stroke-width: 1.4; }
   .dg rect.key { fill: none; stroke: currentColor; stroke-width: 2; }
   .dg text { font-family: var(--sans); font-size: 12px; fill: currentColor; }
   .dg text.t { font-weight: 600; font-size: 12.5px; }
@@ -279,10 +270,10 @@
   .dg text.e { font-size: 10.5px; fill: var(--muted); }
   .dg line, .dg path { stroke: currentColor; stroke-width: 1.2; fill: none; }
   .dg .key { stroke-width: 2; }
-
   .screens { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
   .scr { display: grid; gap: 10px; min-width: 0; }
-  .frame { background: #100F0D; color: #F3F1EA; border-radius: 4px; box-shadow: 0 0 0 5px var(--well); padding: 16px; aspect-ratio: 1024/600; display: grid; gap: 10px; overflow: hidden; font-size: 13px; }
+  .frame { background: #100F0D; color: #F3F1EA; border-radius: 4px; box-shadow: 0 0 0 5px var(--well); padding: 16px;
+           aspect-ratio: 1024/600; display: grid; gap: 10px; overflow: hidden; font-size: 13px; }
   .frame .lbl { font: 600 9.5px var(--sans); letter-spacing: .16em; text-transform: uppercase; color: #8C8779; }
   .frame .big { font-family: var(--serif); font-size: clamp(26px, 4.4vw, 44px); line-height: 1; }
   .frame .tiles3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
@@ -296,8 +287,7 @@
   .frame.down { place-items: center; text-align: center; }
   .scr .cap { font-size: 13.5px; color: var(--ink-2); line-height: 1.5; max-width: 52ch; }
   .scr .cap b { color: var(--ink); }
-
-  footer { margin-top: 56px; padding-top: 14px; border-top: 1px solid var(--hair); font-size: 12.5px; color: var(--muted); }
+  footer { margin-top: 44px; padding-top: 14px; border-top: 1px solid var(--hair); font-size: 12.5px; color: var(--muted); }
 </style>
 
 <div class="page">
@@ -307,26 +297,16 @@
 
   <header class="ah">
     <div class="ah-l">
-      <span class="mark" title="Placeholder icon, not designed yet" aria-hidden="true">
-        <svg width="28" height="28" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
-          <path d="M4 3.5 L12 14.5"/><path d="M12.5 14.5 H15"/>
-        </svg>
-      </span>
+      <span class="mark" title="Icon placeholder, not designed yet" aria-hidden="true"></span>
       <h1>PW-1x</h1>
     </div>
     <div class="ah-r">
-      <button class="lamp on" id="lamp" title="The USB light. On while anything is processing. Click to hold it on or off.">
-        <span class="bulb"></span><span id="lamp-txt">Light on</span>
-      </button>
-      <a class="load" href="#built" title="Opens the dashboard">
-        <span class="state"><span class="d"></span>Up</span>
-        <span class="read">
-          <span class="k">PW-1x load</span>
-          <span class="v"><b id="pc-work">61%</b> work · <b id="pc-serve">12%</b> serving</span>
-        </span>
+      <a class="load" href="#dash" title="Opens the dashboard">
+        <span class="k">PW-1x Load</span>
+        <span class="v"><b id="pc-work">61%</b> Work · <b id="pc-serve">12%</b> Serving</span>
       </a>
-      <button class="iconb" id="settings" title="Studio settings">
-        <svg width="19" height="19" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+      <button class="iconb" id="settings-btn" aria-expanded="false" aria-controls="settings" title="Studio Settings">
+        <svg width="20" height="20" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
           <path d="M9 2v14M3 5.5l12 7M15 5.5l-12 7"/>
         </svg>
       </button>
@@ -335,213 +315,178 @@
 
   <div class="ab">
 
-    <!-- ============ LEFT: where are we, then tools ============ -->
+    <!-- ============ LEFT ============ -->
     <section class="col-main">
-      <h2 class="sub">Where are we?</h2>
+      <h2 class="sub">Where Are We?</h2>
 
       <div class="grp" id="g-lost">
-        <div class="grp-h"><span class="gname">Lost in the jungle</span><span class="gcount" id="c-lost">2</span></div>
+        <div class="grp-h"><span class="gname">Lost in the Jungle</span><span class="gcount" id="c-lost">2</span></div>
         <div id="lost-list">
-          <button class="wr" aria-expanded="false" aria-controls="d1" data-row="1">
-            <span class="glyph lost">!</span>
-            <span>
-              <span class="t">The digest session stopped</span>
-              <span class="s">Local handed it an empty brief, so it had nothing to rewrite</span>
-              <span class="m">16:20 · You · session_digest · PW-1x · stopped 16:29</span>
-            </span>
-            <span class="chev" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
-          </button>
+
+          <div class="wrow" data-row="1">
+            <span class="status lost">!</span>
+            <button class="rowbtn" aria-expanded="false" aria-controls="d1">
+              <span>
+                <span class="t">The digest session stopped</span>
+                <span class="s">Local handed it an empty brief, so it had nothing to rewrite</span>
+                <span class="m">16:20 · You · session_digest · PW-1x · stopped 16:29</span>
+              </span>
+              <span class="chevbox" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
+            </button>
+          </div>
           <div class="det" id="d1" hidden>
             <div class="ev">
               <span><b>16:29</b> local-models · read_and_brief sheepcliff-digest/ → 0 bytes</span>
               <span><b>16:29</b> session_digest · "the brief is empty, stopping"</span>
               <span><b>16:29</b> session_digest · idle, waiting on you</span>
             </div>
-            <div class="verbs">
-              <button class="b solid" data-tool="ask">Re-run the brief</button>
-              <button class="b" data-tool="send">Send a message</button>
-              <button class="b" data-tool="handoff">Hand it something else</button>
-              <button class="b plain" data-handled="1">Mark handled</button>
+            <div class="acts">
+              <button class="b solid" data-tool="ask">Re-run the Brief</button>
+              <button class="b" data-tool="send">Send a Message</button>
+              <button class="b" data-tool="handoff">Hand It Something Else</button>
+              <button class="b plain" data-handled="1">Mark Handled</button>
             </div>
           </div>
 
-          <button class="wr" aria-expanded="false" aria-controls="d2" data-row="2">
-            <span class="glyph wait">?</span>
-            <span>
-              <span class="t">Likes triage is waiting on your review</span>
-              <span class="s">It finished and has sat for three hours</span>
-              <span class="m">13:41 · Claude · session_likes · likes-triage.md, 14 KB · idle 3 h</span>
-            </span>
-            <span class="chev" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
-          </button>
+          <div class="wrow" data-row="2">
+            <span class="status wait">?</span>
+            <button class="rowbtn" aria-expanded="false" aria-controls="d2">
+              <span>
+                <span class="t">Likes triage is waiting on your review</span>
+                <span class="s">It finished and has sat for three hours</span>
+                <span class="m">13:41 · Claude · session_likes · likes-triage.md, 14 KB · idle 3 h</span>
+              </span>
+              <span class="chevbox" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
+            </button>
+          </div>
           <div class="det" id="d2" hidden>
             <div class="ev">
               <span><b>13:41</b> session_likes · wrote likes-triage.md · 212 rows sorted</span>
               <span><b>13:41</b> session_likes · "ready for review"</span>
             </div>
-            <div class="verbs">
-              <button class="b solid" data-tool="handoff">Hand the result on</button>
-              <button class="b" data-tool="send">Send a message</button>
-              <button class="b plain" data-handled="2">Mark handled</button>
+            <div class="acts">
+              <button class="b solid" data-tool="handoff">Hand the Result On</button>
+              <button class="b" data-tool="send">Send a Message</button>
+              <button class="b plain" data-handled="2">Mark Handled</button>
             </div>
           </div>
+
         </div>
         <p class="empty" id="lost-empty" hidden>On course</p>
       </div>
 
       <div class="grp">
         <div class="grp-h"><span class="gname">Navigating</span><span class="gcount">3</span></div>
-        <button class="wr" aria-expanded="false" aria-controls="d3">
-          <span class="glyph go">&rarr;</span>
-          <span>
-            <span class="t">Falsework is making the checker run in CI</span>
-            <span class="m" id="m-falsework">16:00 · You · session_falsework · 45 min · last: pytest, 61 passed</span>
-          </span>
-          <span class="chev" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
-        </button>
+
+        <div class="wrow">
+          <span class="status go">&rarr;</span>
+          <button class="rowbtn" aria-expanded="false" aria-controls="d3">
+            <span>
+              <span class="t">Falsework is making the checker run in CI</span>
+              <span class="m" id="m-falsework">16:00 · You · session_falsework · 45 min · last: pytest, 61 passed</span>
+            </span>
+            <span class="chevbox" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
+          </button>
+        </div>
         <div class="det" id="d3" hidden>
           <div class="ev">
             <span><b>16:40</b> pushed sheepcliff/ci-checker (+2)</span>
             <span><b>16:40</b> Bash · pytest · 61 passed</span>
             <span><b>16:38</b> mcp · studio-local.read_and_brief(tools/)</span>
           </div>
-          <div class="verbs">
-            <button class="b" data-tool="send">Send a message</button>
-            <button class="b" data-tool="watch">Wake it on…</button>
+          <div class="acts">
+            <button class="b" data-tool="send">Send a Message</button>
+            <button class="b" data-tool="watch">Wake It On…</button>
             <button class="b danger" data-tool="stop">Stop</button>
           </div>
         </div>
 
-        <button class="wr" aria-expanded="false" aria-controls="d4">
-          <span class="glyph go">&rarr;</span>
-          <span>
-            <span class="t">Domain gang is pricing the renewals</span>
-            <span class="m">16:12 · You · session_domains · 33 min · last: fetched registrar prices</span>
-          </span>
-          <span class="chev" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
-        </button>
+        <div class="wrow">
+          <span class="status go">&rarr;</span>
+          <button class="rowbtn" aria-expanded="false" aria-controls="d4">
+            <span>
+              <span class="t">Domain gang is pricing the renewals</span>
+              <span class="m">16:12 · You · session_domains · 33 min · last: fetched registrar prices</span>
+            </span>
+            <span class="chevbox" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
+          </button>
+        </div>
         <div class="det" id="d4" hidden>
           <div class="ev">
             <span><b>16:44</b> fetched 14 renewal quotes</span>
             <span><b>16:31</b> classify ×40 · gpt-oss-20b on the desktop</span>
           </div>
-          <div class="verbs">
-            <button class="b" data-tool="send">Send a message</button>
-            <button class="b" data-tool="watch">Wake it on…</button>
+          <div class="acts">
+            <button class="b" data-tool="send">Send a Message</button>
+            <button class="b" data-tool="watch">Wake It On…</button>
             <button class="b danger" data-tool="stop">Stop</button>
           </div>
         </div>
 
-        <button class="wr" aria-expanded="false" aria-controls="d5">
-          <span class="glyph go">&rarr;</span>
-          <span>
-            <span class="t">Local is summarising 41 files for Falsework</span>
-            <span class="m" id="m-job">16:04 · Claude · job_7c2 · PW-1x · <span id="s-job">19</span> of 41</span>
-          </span>
-          <span class="chev" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
-        </button>
+        <div class="wrow">
+          <span class="status go">&rarr;</span>
+          <button class="rowbtn" aria-expanded="false" aria-controls="d5">
+            <span>
+              <span class="t">Local is summarising 41 files for Falsework</span>
+              <span class="m">16:04 · Claude · job_7c2 · PW-1x · <span id="s-job">19</span> of 41</span>
+            </span>
+            <span class="chevbox" aria-hidden="true"><svg width="7" height="12" viewBox="0 0 7 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M1 1l5 5-5 5"/></svg></span>
+          </button>
+        </div>
         <div class="det" id="d5" hidden>
           <div class="ev">
             <span><b>16:04</b> batch_job accepted · 41 paths · gpt-oss-120b on PW-1x</span>
             <span><b>16:04</b> webhook registered → wakes session_falsework</span>
           </div>
-          <div class="verbs">
-            <button class="b" data-tool="dash">Watch the throughput</button>
-            <button class="b danger" data-tool="stop">Cancel the job</button>
+          <div class="acts">
+            <button class="b" data-tool="dash">Watch the Throughput</button>
+            <button class="b danger" data-tool="stop">Cancel the Job</button>
           </div>
         </div>
       </div>
 
       <h2 class="sub later">Tools</h2>
-      <div class="tiles">
-
-        <div class="tile">
-          <h3><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="4.5" width="11" height="9" rx="2"/><path d="M8 1.5v3M5.5 8.5h.01M10.5 8.5h.01" stroke-linecap="round"/></svg>Bot Land</h3>
-          <div class="tbtns">
-            <button class="tb" data-tool="create">New session</button>
-            <button class="tb" data-tool="sessions">All sessions</button>
-            <button class="tb" data-tool="routines">Routines</button>
-            <button class="tb" data-tool="hooks">Other bots</button>
-          </div>
-        </div>
-
-        <div class="tile">
-          <h3><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4.5A1.5 1.5 0 0 1 3.5 3h3l1.5 2h4.5A1.5 1.5 0 0 1 14 6.5v5A1.5 1.5 0 0 1 12.5 13h-9A1.5 1.5 0 0 1 2 11.5z"/></svg>Project Center</h3>
-          <div class="tbtns">
-            <button class="tb" data-tool="repo">Studio-G</button>
-            <button class="tb" data-tool="repo">Falsework</button>
-            <button class="tb" data-tool="repo">sheepcliff-digest</button>
-            <button class="tb" data-tool="pr">Open a pull request</button>
-          </div>
-        </div>
-
-        <div class="tile">
-          <h3><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="2.5" width="11" height="11" rx="1.5"/><path d="M5.5 6h5M5.5 8.5h5M5.5 11h2.5" stroke-linecap="round"/></svg>Local models</h3>
-          <div class="tbtns">
-            <button class="tb" data-tool="ask">Ask local</button>
-            <button class="tb" data-tool="batch">Run a batch job</button>
-            <button class="tb" data-tool="models">Manage models</button>
-          </div>
-        </div>
-
-        <div class="tile">
-          <h3><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2.5 13.5V9M6.5 13.5V4M10.5 13.5V7M14 13.5V2.5"/></svg>Dashboards</h3>
-          <div class="tbtns">
-            <button class="tb" data-tool="dash">Bench</button>
-            <button class="tb" data-tool="dash">Night</button>
-            <button class="tb" data-tool="dash">Throughput</button>
-            <button class="tb" data-tool="dash">Model server</button>
-          </div>
-        </div>
-
-        <div class="tile">
-          <h3><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="8" cy="4" rx="5.5" ry="2"/><path d="M2.5 4v8c0 1.1 2.5 2 5.5 2s5.5-.9 5.5-2V4M2.5 8c0 1.1 2.5 2 5.5 2s5.5-.9 5.5-2"/></svg>Storage</h3>
-          <div class="tbtns">
-            <button class="tb" data-tool="store">Models</button>
-            <button class="tb" data-tool="store">Results</button>
-            <button class="tb" data-tool="store">Archive</button>
-            <button class="tb" data-tool="store">Free slots</button>
-          </div>
-        </div>
-
-        <div class="tile">
-          <h3><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 13.5v-4M8 9.5a3.5 3.5 0 0 0 3.5-3.5V4M8 9.5A3.5 3.5 0 0 1 4.5 6V4"/><circle cx="4.5" cy="3" r="1.2"/><circle cx="11.5" cy="3" r="1.2"/></svg>Connections</h3>
-          <div class="tbtns">
-            <button class="tb" data-tool="conn">Tailscale</button>
-            <button class="tb" data-tool="conn">Cloudflare tunnel</button>
-            <button class="tb" data-tool="conn">GitHub</button>
-            <button class="tb" data-tool="notify">Phone</button>
-          </div>
-        </div>
-
-        <div class="tile">
-          <h3><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6.5" width="10" height="5" rx="1"/><path d="M5 6.5V3h6v3.5M5.5 11.5V14h5v-2.5"/></svg>Printer</h3>
-          <div class="tbtns">
-            <button class="tb" data-tool="camera">Camera</button>
-            <button class="tb" data-tool="pause">Pause the print</button>
-            <button class="tb" data-tool="ams">AMS</button>
-            <button class="tb" data-tool="files">Send a file</button>
-          </div>
-        </div>
-
-        <div class="tile add">
-          <h3>+ Tools?</h3>
-        </div>
+      <div class="tools">
+        <button class="tool" data-tool="bots"><svg width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="4.5" width="11" height="9" rx="2"/><path d="M8 1.5v3M5.5 8.5h.01M10.5 8.5h.01" stroke-linecap="round"/></svg>Bot Land</button>
+        <button class="tool" data-tool="projects"><svg width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4.5A1.5 1.5 0 0 1 3.5 3h3l1.5 2h4.5A1.5 1.5 0 0 1 14 6.5v5A1.5 1.5 0 0 1 12.5 13h-9A1.5 1.5 0 0 1 2 11.5z"/></svg>Project Center</button>
+        <button class="tool" data-tool="models"><svg width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2.5" y="2.5" width="11" height="11" rx="1.5"/><path d="M5.5 6h5M5.5 8.5h5M5.5 11h2.5" stroke-linecap="round"/></svg>Local Models</button>
+        <button class="tool" data-tool="dash"><svg width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2.5 13.5V9M6.5 13.5V4M10.5 13.5V7M14 13.5V2.5"/></svg>Dashboards</button>
+        <button class="tool" data-tool="store"><svg width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="8" cy="4" rx="5.5" ry="2"/><path d="M2.5 4v8c0 1.1 2.5 2 5.5 2s5.5-.9 5.5-2V4M2.5 8c0 1.1 2.5 2 5.5 2s5.5-.9 5.5-2"/></svg>Storage</button>
+        <button class="tool" data-tool="conn"><svg width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M8 13.5v-4M8 9.5a3.5 3.5 0 0 0 3.5-3.5V4M8 9.5A3.5 3.5 0 0 1 4.5 6V4"/><circle cx="4.5" cy="3" r="1.2"/><circle cx="11.5" cy="3" r="1.2"/></svg>Connections</button>
+        <button class="tool" data-tool="printer"><svg width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6.5" width="10" height="5" rx="1"/><path d="M5 6.5V3h6v3.5M5.5 11.5V14h5v-2.5"/></svg>Printer</button>
+        <button class="tool add" data-tool="more">+ Tools?</button>
       </div>
 
       <form class="sheet" id="sheet" hidden></form>
     </section>
 
-    <!-- ============ RIGHT: the log ============ -->
+    <!-- ============ RIGHT ============ -->
     <section class="col-log">
-      <div class="reserved"><span>Not defined yet</span></div>
+
+      <div class="spend">
+        <div class="top">
+          <span class="ttl">Token Spend</span>
+          <span class="ttl">Today</span>
+        </div>
+        <div class="hero num">118k<small>frontier tokens, the part you pay for</small></div>
+        <div class="bar" role="img" aria-label="Of 2.52 million tokens today, 118 thousand went to frontier and 2.4 million to local.">
+          <i class="frontier" style="width:4.7%"></i>
+          <i class="local" style="width:95.3%"></i>
+        </div>
+        <div class="keys">
+          <span><span class="sw frontier"></span>Frontier <b>118k</b> · 4.7%</span>
+          <span><span class="sw local"></span>Local <b>2.4M</b> · 95.3%</span>
+        </div>
+        <div class="foot">Down from 214k yesterday. Every token local absorbs is one you do not buy.</div>
+      </div>
 
       <h2 class="sub">Log</h2>
-      <div class="stats">
-        <div><div class="k">Calls today</div><div class="v num">137</div></div>
-        <div><div class="k">Claude's share</div><div class="v num">61<small>%</small></div></div>
-        <div><div class="k">Against A0</div><div class="v num">×1.9</div></div>
+      <div class="stats" id="stats">
+        <div class="stat"><select aria-label="First statistic" data-slot="0"></select><div class="v num" data-v="0">—</div></div>
+        <div class="stat"><select aria-label="Second statistic" data-slot="1"></select><div class="v num" data-v="1">—</div></div>
+        <div class="stat"><select aria-label="Third statistic" data-slot="2"></select><div class="v num" data-v="2">—</div></div>
       </div>
+
       <div class="filters" role="group" aria-label="Filter the log">
         <button class="b" type="button" aria-pressed="true" data-src="">Everything</button>
         <button class="b" type="button" aria-pressed="false" data-src="claude">Claude</button>
@@ -569,188 +514,153 @@
   </div>
 </div>
 
-<!-- =========================== THE SPEC =========================== -->
-<div class="doc" id="built">
-  <div class="doc-h">
-    <h2>How it's built</h2>
-    <div class="m">Everything above is the console at 1240 px · example data as at A5 · nothing calls a real backend</div>
+<!-- =========================== SETTINGS =========================== -->
+<div class="settings" id="settings" hidden>
+  <div class="sh">
+    <h2>Studio Settings</h2>
+    <button class="b" type="button" id="settings-close">Close</button>
   </div>
 
-  <section>
-    <h3>What earns a place on it</h3>
-    <p class="lede">The kiosk screens already do the glancing. So the console is where you act, and the test for anything on it is whether you would touch it. Four things from the earlier drafts are gone.</p>
-    <div class="need">
-      <div>
-        <h4>On the page</h4>
-        <ul class="plain">
-          <li><b>Is it up, and is work happening.</b> The header: one dot, the work-and-serve split, and the light. The split is PW-1x's double life in one control, and it opens the dashboard.</li>
-          <li><b>What needs you.</b> <i>Lost in the jungle.</i> A session that stopped, a result nobody read, an alert still firing. When it empties it says so.</li>
-          <li><b>What's moving.</b> <i>Navigating.</i> The sessions running right now, and the jobs they are waiting on. Every row carries the same identifying line as the log: when it started, who started it, its id, and how long it has run.</li>
-          <li><b>The tools.</b> Eight brackets: the bots, the projects, the models, the dashboards, the disks, the connections, the printer, and room for more.</li>
-          <li><b>The log.</b> History only, newest first, every call tagged with who made it. Anything still running is above it in <i>Navigating</i>, so nothing appears twice. The day's totals sit under the heading.</li>
-        </ul>
+  <div class="setrow">
+    <div class="lbl">The Light<small>On whenever a model is running</small></div>
+    <div>
+      <div class="seg" role="group" aria-label="The light">
+        <button type="button" data-light="auto" aria-pressed="true">Automatic</button>
+        <button type="button" data-light="on" aria-pressed="false">Hold On</button>
+        <button type="button" data-light="off" aria-pressed="false">Hold Off</button>
       </div>
-      <div>
-        <h4>Not on the page</h4>
-        <ul class="plain">
-          <li><b>CPU, memory, temperatures, tokens per second.</b> Screen A and Grafana own these. The console needs "up" and a way through to the graphs.</li>
-          <li><b>The printer, until it needs you.</b> It is not a session, so it is not in <i>Navigating</i>. Its buttons are in the Printer tools, and a failed print shows up in the jungle like anything else that stops.</li>
-          <li><b>Which backend holds which model.</b> The door picks. It appears under Local models because you occasionally swap them, not because you watch them.</li>
-          <li><b>A row of big numbers.</b> Two of the four on the last draft were statistics invented to fill the row.</li>
-        </ul>
-        <p class="quote" style="margin-top:22px">Most days nothing is wrong, so the resting state of this page is a short list and a quiet log. That is the design, not an empty state.</p>
-      </div>
+      <p class="note" style="margin:8px 0 0">Automatic follows the Prometheus alert on <code>studio_active_requests</code>. Holding it overrides the rule until you set it back.</p>
     </div>
-  </section>
+  </div>
 
-  <section>
-    <h3>One process</h3>
-    <p class="lede">One Node service on PW-1x. The browser gets one page and one event stream. Everything shown comes from an adapter; everything you do is a verb on one. The service knows nothing about Claude specifically.</p>
-    <figure>
-      <div class="diagram">
-        <svg class="dg" viewBox="0 0 1000 600" role="img" aria-label="Layers. Your browser, the phone, the kiosk Pis and webhook senders reach Caddy. Caddy fronts the console service, which holds four parts: http, an SSE hub, a verb runner and the work log in SQLite. Below it the adapters, one file each. Below them the things they connect to: the Claude Code Remote API, studio-local, Prometheus, the printer, the USB relay and ntfy.">
-          <defs><marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor" stroke="none"/></marker></defs>
+  <div class="setrow">
+    <div class="lbl">Adapters<small>One file per connected thing</small></div>
+    <div><p class="note" style="margin:0">Eight at launch, three reserved. Secrets come from the sops file and never from adapter source.</p></div>
+  </div>
 
-          <rect class="node" x="20" y="16" width="200" height="52" rx="4"/><text class="t" x="36" y="38">Your browser</text><text class="s" x="36" y="56">the console · /</text>
-          <rect class="node" x="250" y="16" width="200" height="52" rx="4"/><text class="t" x="266" y="38">Phone</text><text class="s" x="266" y="56">ntfy action → /hook/phone</text>
-          <rect class="node" x="480" y="16" width="200" height="52" rx="4"/><text class="t" x="496" y="38">Kiosk Pis</text><text class="s" x="496" y="56">/screens/bench · /screens/night</text>
-          <rect class="node" x="780" y="16" width="200" height="52" rx="4"/><text class="t" x="796" y="38">Webhook senders</text><text class="s" x="796" y="56">GitHub · Cloudflare · the door</text>
+  <div class="setrow" style="border-bottom:0">
+    <div class="lbl">Screens<small>The read-only kiosk routes</small></div>
+    <div><p class="note" style="margin:0">Bench, Night, and the static page each Pi swaps to when the health check fails.</p></div>
+  </div>
 
-          <rect class="node" x="20" y="112" width="960" height="40" rx="4"/><text class="t" x="36" y="137">Caddy</text><text class="s" x="96" y="137">HTTPS · one address · tailnet only for / and /screens · a per-adapter secret on /hook/&lt;adapter&gt;</text>
+  <!-- the build documentation -->
+  <div class="doc">
+    <section>
+      <h3>How It's Built</h3>
+      <p class="lede">One Node service on PW-1x. The browser gets one page and one event stream. Everything shown comes from an adapter; everything you do is a verb on one, which is the word <code>adapters/README.md</code> uses for an action an adapter performs. The service knows nothing about Claude specifically.</p>
+      <figure>
+        <div class="diagram">
+          <svg class="dg" viewBox="0 0 1000 600" role="img" aria-label="Layers. Your browser, the phone, the kiosk Pis and webhook senders reach Caddy. Caddy fronts the console service, which holds four parts: http, an SSE hub, a verb runner and the work log in SQLite. Below it the adapters, one file each. Below them the things they connect to.">
+            <defs><marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor" stroke="none"/></marker></defs>
+            <rect class="node" x="20" y="16" width="200" height="52" rx="4"/><text class="t" x="36" y="38">Your browser</text><text class="s" x="36" y="56">the console · /</text>
+            <rect class="node" x="250" y="16" width="200" height="52" rx="4"/><text class="t" x="266" y="38">Phone</text><text class="s" x="266" y="56">ntfy action → /hook/phone</text>
+            <rect class="node" x="480" y="16" width="200" height="52" rx="4"/><text class="t" x="496" y="38">Kiosk Pis</text><text class="s" x="496" y="56">/screens/bench · /screens/night</text>
+            <rect class="node" x="780" y="16" width="200" height="52" rx="4"/><text class="t" x="796" y="38">Webhook senders</text><text class="s" x="796" y="56">GitHub · Cloudflare · the door</text>
+            <rect class="node" x="20" y="112" width="960" height="40" rx="4"/><text class="t" x="36" y="137">Caddy</text><text class="s" x="96" y="137">HTTPS · one address · tailnet only for / and /screens · a per-adapter secret on /hook/&lt;adapter&gt;</text>
+            <rect class="hub" x="20" y="196" width="960" height="142" rx="4"/>
+            <text class="t" x="38" y="221">console · one Node service · one systemd unit</text>
+            <text class="m" x="38" y="238">console/src/</text>
+            <rect class="node" x="38" y="250" width="216" height="72" rx="4"/><text class="t" x="52" y="272">http</text><text class="s" x="52" y="290">GET / · /screens/* · /healthz</text><text class="s" x="52" y="306">GET /api/adapters</text>
+            <rect class="node" x="278" y="250" width="216" height="72" rx="4"/><text class="t" x="292" y="272">sse hub</text><text class="s" x="292" y="290">GET /api/events, one stream</text><text class="s" x="292" y="306">merges every adapter's events()</text>
+            <rect class="node" x="518" y="250" width="216" height="72" rx="4"/><text class="t" x="532" y="272">verb runner</text><text class="s" x="532" y="290">POST /api/:adapter/:verb</text><text class="s" x="532" y="306">validate · resolve fromResultOf · run</text>
+            <rect class="key" x="758" y="250" width="204" height="72" rx="4"/><text class="t" x="772" y="272">work log · SQLite</text><text class="s" x="772" y="290">runs · results · chains</text><text class="s" x="772" y="306">+ reads the door's log</text>
+            <rect class="node" x="20" y="382" width="960" height="56" rx="4"/>
+            <text class="t" x="36" y="406">adapters/ · one file each · { id, kind, status(), events(), verbs[] }</text>
+            <text class="m" x="36" y="425">claude-code-remote · local-models · pw1x · p2s · usb-light · github · cloudflare · phone   ·   reserved: agent-other · openai · gemini</text>
+            <rect class="node" x="20" y="500" width="150" height="72" rx="4"/><text class="t" x="34" y="522">Claude Code</text><text class="s" x="34" y="540">Remote API</text><text class="s" x="34" y="556">create · send · watch</text>
+            <rect class="key" x="190" y="500" width="180" height="72" rx="4"/><text class="t" x="204" y="522">studio-local</text><text class="s" x="204" y="540">/v1 · /metrics · webhook</text><text class="s" x="204" y="556">work_log.sqlite, read</text>
+            <rect class="node" x="390" y="500" width="150" height="72" rx="4"/><text class="t" x="404" y="522">Prometheus</text><text class="s" x="404" y="540">query API</text><text class="s" x="404" y="556">alertmanager → hook</text>
+            <rect class="node" x="560" y="500" width="130" height="72" rx="4"/><text class="t" x="574" y="522">P2S</text><text class="s" x="574" y="540">MQTT · FTP</text><text class="s" x="574" y="556">RTSP camera</text>
+            <rect class="node" x="710" y="500" width="120" height="72" rx="4"/><text class="t" x="724" y="522">USB relay</text><text class="s" x="724" y="540">uhubctl</text>
+            <rect class="node" x="850" y="500" width="130" height="72" rx="4"/><text class="t" x="864" y="522">ntfy</text><text class="s" x="864" y="540">push + actions</text>
+            <line x1="120" y1="68" x2="120" y2="112" marker-end="url(#a1)"/><text class="e" x="128" y="95">page + SSE</text>
+            <line x1="350" y1="68" x2="350" y2="112" marker-end="url(#a1)"/><text class="e" x="358" y="95">tailnet</text>
+            <line x1="580" y1="68" x2="580" y2="112" marker-end="url(#a1)"/><text class="e" x="588" y="95">kiosk URL</text>
+            <line x1="880" y1="68" x2="880" y2="112" marker-end="url(#a1)"/><text class="e" x="888" y="95">POST /hook/…</text>
+            <line x1="500" y1="152" x2="500" y2="196" marker-end="url(#a1)"/><text class="e" x="508" y="179">reverse_proxy :8787</text>
+            <line x1="254" y1="288" x2="278" y2="288" marker-end="url(#a1)"/>
+            <line x1="494" y1="288" x2="518" y2="288" marker-end="url(#a1)"/>
+            <line class="key" x1="734" y1="288" x2="758" y2="288" marker-end="url(#a1)"/>
+            <line x1="380" y1="322" x2="380" y2="382" marker-end="url(#a1)" marker-start="url(#a1)"/><text class="e" x="388" y="357">events() · status()</text>
+            <line x1="620" y1="322" x2="620" y2="382" marker-end="url(#a1)"/><text class="e" x="628" y="357">verb.run(input)</text>
+            <line x1="95" y1="438" x2="95" y2="500" marker-end="url(#a1)" marker-start="url(#a1)"/>
+            <line class="key" x1="280" y1="438" x2="280" y2="500" marker-end="url(#a1)" marker-start="url(#a1)"/><text class="e" x="288" y="473">ask · source = console</text>
+            <line x1="465" y1="438" x2="465" y2="500" marker-end="url(#a1)" marker-start="url(#a1)"/>
+            <line x1="625" y1="438" x2="625" y2="500" marker-end="url(#a1)" marker-start="url(#a1)"/>
+            <line x1="770" y1="438" x2="770" y2="500" marker-end="url(#a1)"/>
+            <line x1="915" y1="438" x2="915" y2="500" marker-end="url(#a1)"/>
+          </svg>
+        </div>
+        <figcaption><b>One process, four parts, no framework.</b> Caddy terminates TLS and keeps the console on the tailnet; only <code>/hook/&lt;adapter&gt;</code> is reachable from outside, each with its own secret. The two heavy outlines are one fact seen twice: the console's own calls to <code>studio-local</code> carry <code>source = console</code>, so what you ask is recorded in the same log as what Claude delegates.</figcaption>
+      </figure>
+    </section>
 
-          <rect class="hub" x="20" y="196" width="960" height="142" rx="4"/>
-          <text class="t" x="38" y="221">console · one Node service · one systemd unit</text>
-          <text class="m" x="38" y="238">console/src/</text>
-          <rect class="node" x="38" y="250" width="216" height="72" rx="4"/><text class="t" x="52" y="272">http</text><text class="s" x="52" y="290">GET / · /screens/* · /healthz</text><text class="s" x="52" y="306">GET /api/adapters</text>
-          <rect class="node" x="278" y="250" width="216" height="72" rx="4"/><text class="t" x="292" y="272">sse hub</text><text class="s" x="292" y="290">GET /api/events, one stream</text><text class="s" x="292" y="306">merges every adapter's events()</text>
-          <rect class="node" x="518" y="250" width="216" height="72" rx="4"/><text class="t" x="532" y="272">verb runner</text><text class="s" x="532" y="290">POST /api/:adapter/:verb</text><text class="s" x="532" y="306">validate · resolve fromResultOf · run</text>
-          <rect class="key" x="758" y="250" width="204" height="72" rx="4"/><text class="t" x="772" y="272">work log · SQLite</text><text class="s" x="772" y="290">runs · results · chains</text><text class="s" x="772" y="306">+ reads the door's log</text>
-
-          <rect class="node" x="20" y="382" width="960" height="56" rx="4"/>
-          <text class="t" x="36" y="406">adapters/ · one file each · { id, kind, status(), events(), verbs[] }</text>
-          <text class="m" x="36" y="425">claude-code-remote · local-models · pw1x · p2s · usb-light · github · cloudflare · phone   ·   reserved: agent-other · openai · gemini</text>
-
-          <rect class="node" x="20" y="500" width="150" height="72" rx="4"/><text class="t" x="34" y="522">Claude Code</text><text class="s" x="34" y="540">Remote API</text><text class="s" x="34" y="556">create · send · watch</text>
-          <rect class="key" x="190" y="500" width="180" height="72" rx="4"/><text class="t" x="204" y="522">studio-local</text><text class="s" x="204" y="540">/v1 · /metrics · webhook</text><text class="s" x="204" y="556">work_log.sqlite, read</text>
-          <rect class="node" x="390" y="500" width="150" height="72" rx="4"/><text class="t" x="404" y="522">Prometheus</text><text class="s" x="404" y="540">query API</text><text class="s" x="404" y="556">alertmanager → hook</text>
-          <rect class="node" x="560" y="500" width="130" height="72" rx="4"/><text class="t" x="574" y="522">P2S</text><text class="s" x="574" y="540">MQTT · FTP</text><text class="s" x="574" y="556">RTSP camera</text>
-          <rect class="node" x="710" y="500" width="120" height="72" rx="4"/><text class="t" x="724" y="522">USB relay</text><text class="s" x="724" y="540">uhubctl</text>
-          <rect class="node" x="850" y="500" width="130" height="72" rx="4"/><text class="t" x="864" y="522">ntfy</text><text class="s" x="864" y="540">push + actions</text>
-
-          <line x1="120" y1="68" x2="120" y2="112" marker-end="url(#a1)"/><text class="e" x="128" y="95">page + SSE</text>
-          <line x1="350" y1="68" x2="350" y2="112" marker-end="url(#a1)"/><text class="e" x="358" y="95">tailnet</text>
-          <line x1="580" y1="68" x2="580" y2="112" marker-end="url(#a1)"/><text class="e" x="588" y="95">kiosk URL</text>
-          <line x1="880" y1="68" x2="880" y2="112" marker-end="url(#a1)"/><text class="e" x="888" y="95">POST /hook/…</text>
-          <line x1="500" y1="152" x2="500" y2="196" marker-end="url(#a1)"/><text class="e" x="508" y="179">reverse_proxy :8787</text>
-          <line x1="254" y1="288" x2="278" y2="288" marker-end="url(#a1)"/>
-          <line x1="494" y1="288" x2="518" y2="288" marker-end="url(#a1)"/>
-          <line class="key" x1="734" y1="288" x2="758" y2="288" marker-end="url(#a1)"/>
-          <line x1="380" y1="322" x2="380" y2="382" marker-end="url(#a1)" marker-start="url(#a1)"/><text class="e" x="388" y="357">events() · status()</text>
-          <line x1="620" y1="322" x2="620" y2="382" marker-end="url(#a1)"/><text class="e" x="628" y="357">verb.run(input)</text>
-          <line x1="95" y1="438" x2="95" y2="500" marker-end="url(#a1)" marker-start="url(#a1)"/>
-          <line class="key" x1="280" y1="438" x2="280" y2="500" marker-end="url(#a1)" marker-start="url(#a1)"/><text class="e" x="288" y="473">ask · source = console</text>
-          <line x1="465" y1="438" x2="465" y2="500" marker-end="url(#a1)" marker-start="url(#a1)"/>
-          <line x1="625" y1="438" x2="625" y2="500" marker-end="url(#a1)" marker-start="url(#a1)"/>
-          <line x1="770" y1="438" x2="770" y2="500" marker-end="url(#a1)"/>
-          <line x1="915" y1="438" x2="915" y2="500" marker-end="url(#a1)"/>
-        </svg>
+    <section>
+      <h3>What Earns a Place on the Page</h3>
+      <p class="lede">The kiosk screens do the glancing, so the console is where you act. The test for anything on it is whether you would touch it.</p>
+      <div class="two">
+        <div>
+          <h4>On the page</h4>
+          <ul class="plain">
+            <li><b>Where Are We.</b> <i>Lost in the Jungle</i> is anything stopped, failed, alerting, or finished and unread. <i>Navigating</i> is the active sessions and the jobs they wait on. Each row carries the same identifying line as a log entry.</li>
+            <li><b>Token Spend.</b> Frontier tokens are the ones you pay for, so that number leads. The bar is how much of today's work local absorbed instead.</li>
+            <li><b>Tools.</b> Seven rectangles and one empty dashed one for whatever comes next.</li>
+            <li><b>The Log.</b> History only, newest first, tagged with who made each call. The three statistics above it are yours to pick.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Not on the page</h4>
+          <ul class="plain">
+            <li><b>Processor, memory, temperature, tokens per second.</b> Screen A and Grafana own these. The header carries the load split and opens the dashboard.</li>
+            <li><b>Up or down.</b> The console is served from PW-1x, so if the box is down this page is not here to tell you.</li>
+            <li><b>The light.</b> It follows the alert rule by itself. The manual override is in these settings, where you will almost never need it.</li>
+            <li><b>The printer, until it needs you.</b> It is not a session, so it is not in <i>Navigating</i>. A failed print shows up in the jungle like anything else that stops.</li>
+          </ul>
+        </div>
       </div>
-      <figcaption><b>One process, four parts, no framework.</b> Caddy terminates TLS and keeps the console on the tailnet; only <code>/hook/&lt;adapter&gt;</code> is reachable from outside, each with its own secret. Inside, <code>http</code> serves one page and the screen routes; the SSE hub merges every adapter's <code>events()</code> into one stream per browser; the verb runner validates input against the verb's JSON schema, resolves any <code>fromResultOf()</code> against the work log, runs the verb and records it. The two heavy outlines are one fact seen twice: the console's own calls to <code>studio-local</code> carry <code>source = console</code>, so what you ask is recorded in the same log as what Claude delegates.</figcaption>
-    </figure>
-  </section>
+    </section>
 
-  <section>
-    <h3>What the sketch decided</h3>
-    <div class="scroll"><table class="t">
-      <thead><tr><th>From the sketch</th><th>How it is built</th></tr></thead>
-      <tbody>
-        <tr><td class="n">Where are we?</td><td>The first thing on the page, left column. <b>Lost in the jungle</b> is anything stopped, failed, alerting, or finished and unread, whatever kind of thing it is. <b>Navigating</b> is the active sessions and the jobs they are waiting on. An empty jungle prints <b>On course</b>.</td></tr>
-        <tr><td class="n">The chevron</td><td>Opens the row in place rather than navigating away: the last three events from that thing's stream, then its actions as buttons. <i>Verb</i> is the word <code>adapters/README.md</code> already uses for an action an adapter can perform, so the buttons under a row are that adapter's verbs. One control shows <code>status()</code>, <code>events()</code> and <code>verbs[]</code> at once, which is why every row is the same component.</td></tr>
-        <tr><td class="n">Log, swapped right</td><td>History, under a reserved block and the day's totals. Every line comes from the joined view over the console's <code>runs</code> table and the door's <code>calls</code> table, so who did it is a filter rather than a guess. It scrolls inside a fixed height so the column ends where the tools do.</td></tr>
-        <tr><td class="n">Percent split, work and server</td><td>PW-1x is two machines in one box, so the header reads <b>61% work · 12% serving</b> under the label <b>PW-1x load</b>, and opens Grafana. It is a labelled readout rather than a gauge: the numbers only mean anything next to the words, which the first attempt left out.</td></tr>
-        <tr><td class="n">Tool section</td><td>Seven bracketed tiles of buttons, and one empty dashed box. A tile groups adapters rather than being one: <b>Bot Land</b> is every session connector, <b>Connections</b> every piece of plumbing. Nothing in a tile carries a status, because a button should say what it does and nothing else. The dashed box is the hook the README promises, and a bare outline is how this page says a thing is unfinished.</td></tr>
-        <tr><td class="n">Studio settings</td><td>The one icon button. Secrets, adapters, screens and the sops file, none of which belong on a page you look at all day.</td></tr>
-      </tbody>
-    </table></div>
-    <p class="note" style="margin-top:14px">One addition to the sketch: the light. It gets its own control because "is anything running" and "is the light on" are the same fact, and the light is the ambient version of this whole page. Auto follows the Prometheus alert; the button holds it on or off.</p>
-  </section>
+    <section>
+      <h3>Routes</h3>
+      <div class="scroll"><table class="t">
+        <thead><tr><th>Route</th><th>Returns</th><th>Auth</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td class="n"><code>GET /</code></td><td>the console</td><td>tailnet</td><td>one HTML file, which then calls the two routes below</td></tr>
+          <tr><td class="n"><code>GET /api/adapters</code></td><td><code>[{ id, kind, status, verbs:[{ name, schema }] }]</code></td><td>tailnet</td><td>the whole page renders from this</td></tr>
+          <tr><td class="n"><code>GET /api/events</code></td><td>SSE, every adapter's events, tagged</td><td>tailnet</td><td><code>Last-Event-ID</code> replays the last 500 from memory</td></tr>
+          <tr><td class="n"><code>POST /api/:adapter/:verb</code></td><td><code>{ run_id, result }</code></td><td>tailnet</td><td>validated against the verb schema; a streaming verb answers on the event stream</td></tr>
+          <tr><td class="n"><code>GET /api/log</code></td><td>the joined log</td><td>tailnet</td><td>console runs and door calls, newest first</td></tr>
+          <tr><td class="n"><code>GET /api/results/:run_id</code></td><td>a stored result</td><td>tailnet</td><td>files come back as paths under <code>/srv/studio/results/</code></td></tr>
+          <tr><td class="n"><code>GET /screens/bench</code><br><code>GET /screens/night</code></td><td>read-only pages with Grafana embedded</td><td>tailnet or LAN</td><td>no verbs rendered: a kiosk never has a button</td></tr>
+          <tr><td class="n"><code>GET /healthz</code></td><td><code>200 ok</code></td><td>none</td><td>what the kiosk script curls every 30 s</td></tr>
+          <tr><td class="n"><code>POST /hook/:adapter</code></td><td><code>204</code></td><td>per-adapter secret</td><td>GitHub, Cloudflare, Alertmanager, the door's job-done, phone actions</td></tr>
+          <tr><td class="n"><code>GET /metrics</code></td><td>Prometheus text</td><td>LAN</td><td>the console's own counters</td></tr>
+        </tbody>
+      </table></div>
+    </section>
 
-  <section>
-    <h3>The stack, kept boring</h3>
-    <div class="scroll"><table class="t">
-      <thead><tr><th>Layer</th><th>Choice</th><th>Why this and not more</th></tr></thead>
-      <tbody>
-        <tr><td class="n">runtime</td><td>Node 22 · TypeScript · one <code>systemd</code> unit in the container slice</td><td>The Remote API and the MCP SDK are both easiest from TypeScript, and the door is TypeScript already. One toolchain.</td></tr>
-        <tr><td class="n">http</td><td>Fastify, or Node's own <code>http</code> if it stays under ten routes · one static page</td><td>Small enough to rewrite in a weekend. No framework: a few hundred lines of DOM code over one JSON list of adapters.</td></tr>
-        <tr><td class="n">streams</td><td>Server-Sent Events · one <code>GET /api/events</code> per browser · <code>Last-Event-ID</code> replay from a ring buffer</td><td>One direction is enough; every action is a POST. Reconnects are free in the browser.</td></tr>
-        <tr><td class="n">store</td><td><code>better-sqlite3</code> · <code>console.sqlite</code> for runs and chains · read-only <code>ATTACH</code> of the door's <code>work_log.sqlite</code></td><td>Two writers, two files, one join for the log. WAL mode, so reading never blocks the door.</td></tr>
-        <tr><td class="n">validation</td><td>JSON Schema with Ajv · one schema per verb, shipped to the browser unchanged</td><td>The same schema draws the form and validates the POST. A verb is a schema and a function.</td></tr>
-        <tr><td class="n">secrets</td><td><code>sops</code> + <code>age</code> · decrypted to <code>/run/studio/secrets.env</code> at boot</td><td>Keys live in the repo encrypted and never in adapter source.</td></tr>
-        <tr><td class="n">front door</td><td>Caddy · <code>pw1x.tail.ts.net</code> · <code>reverse_proxy localhost:8787</code></td><td>Tailscale identity is the login. No user table, no password page.</td></tr>
-      </tbody>
-    </table></div>
-  </section>
-
-  <section>
-    <h3>Routes</h3>
-    <div class="scroll"><table class="t">
-      <thead><tr><th>Route</th><th>Returns</th><th>Auth</th><th>Note</th></tr></thead>
-      <tbody>
-        <tr><td class="n"><code>GET /</code></td><td>the console</td><td>tailnet</td><td>one HTML file, which then calls the two routes below</td></tr>
-        <tr><td class="n"><code>GET /api/adapters</code></td><td><code>[{ id, kind, status, verbs:[{ name, schema }] }]</code></td><td>tailnet</td><td>the whole page renders from this; status is the last cached <code>status()</code></td></tr>
-        <tr><td class="n"><code>GET /api/events</code></td><td>SSE, every adapter's events, tagged</td><td>tailnet</td><td><code>Last-Event-ID</code> replays the last 500 from memory</td></tr>
-        <tr><td class="n"><code>POST /api/:adapter/:verb</code></td><td><code>{ run_id, result }</code> or <code>{ run_id, stream: true }</code></td><td>tailnet</td><td>validated against the verb schema; a streaming verb answers on the event stream under its <code>run_id</code></td></tr>
-        <tr><td class="n"><code>GET /api/log</code></td><td>the joined log · <code>?src=&amp;since=</code></td><td>tailnet</td><td>console runs and door calls, newest first</td></tr>
-        <tr><td class="n"><code>GET /api/results/:run_id</code></td><td>a stored result</td><td>tailnet</td><td>what <code>fromResultOf()</code> resolves to; files are paths under <code>/srv/studio/results/</code></td></tr>
-        <tr><td class="n"><code>GET /screens/bench</code><br><code>GET /screens/night</code></td><td>read-only pages with Grafana embedded</td><td>tailnet or LAN</td><td>no verbs rendered: a kiosk never has a button</td></tr>
-        <tr><td class="n"><code>GET /healthz</code></td><td><code>200 ok</code> when the hub and SQLite answer</td><td>none</td><td>what the kiosk script curls every 30 s</td></tr>
-        <tr><td class="n"><code>POST /hook/:adapter</code></td><td><code>204</code></td><td>per-adapter secret</td><td>GitHub, Cloudflare, Alertmanager, the door's job-done, phone actions</td></tr>
-        <tr><td class="n"><code>GET /metrics</code></td><td>Prometheus text</td><td>LAN</td><td>the console's own counters, so its health shows on Screen A</td></tr>
-      </tbody>
-    </table></div>
-  </section>
-
-  <section>
-    <h3>The shape underneath</h3>
-    <p class="lede">Three types carry all of it. The first is from <code>adapters/README.md</code>; the other two are what the service adds around it.</p>
-    <div class="two">
-      <div>
-        <h4>adapters/_template.ts</h4>
+    <section>
+      <h3>The Shape Underneath</h3>
+      <div class="two">
+        <div>
+          <h4>adapters/_template.ts</h4>
 <pre><b>export interface</b> Adapter {
   id: string;                        <em>// "usb-light"</em>
-  kind: <i>"session" | "call" | "device" | "service" | "outbound"</i>;
-  status(): Promise&lt;Status&gt;;         <em>// cached, polled on the adapter's own interval</em>
+  kind: "session" | "call" | "device" | "service" | "outbound";
+  status(): Promise&lt;Status&gt;;         <em>// cached, polled on its own interval</em>
   events(): AsyncIterable&lt;Event&gt;;    <em>// long-lived; the hub resubscribes on throw</em>
-  verbs: Verb[];
-}
-<b>export interface</b> Verb {
-  name: string;
-  schema: JSONSchema;                <em>// draws the form, validates the POST</em>
-  stream?: boolean;                  <em>// true: the answer arrives as events under run_id</em>
-  run(input: unknown, ctx: Ctx): Promise&lt;Result&gt;;
+  verbs: Verb[];                     <em>// the buttons a row shows when you open it</em>
 }
 <b>export interface</b> Status {
-  state: <i>"lost" | "waiting" | "moving" | "idle"</i>;   <em>// which group the row appears in</em>
+  state: "lost" | "waiting" | "moving" | "idle";  <em>// which group the row appears in</em>
   line: string;                      <em>// the row's sentence</em>
   sub?: string;                      <em>// the grey line under it</em>
   items?: Item[];                    <em>// sessions and jobs: rows with their own verbs</em>
 }</pre>
-        <p class="note" style="margin-top:10px"><code>state</code> is the only thing the page needs in order to sort an adapter into <i>Lost in the jungle</i> or <i>Navigating</i>. Nothing else in the UI knows what a session or a printer is.</p>
-      </div>
-      <div>
-        <h4>the event on the wire, the run in the table</h4>
-<pre><em>// one line per event on GET /api/events</em>
-<b>id:</b> 48113
-<b>event:</b> adapter
-<b>data:</b> { "adapter": "local-models", "ts": "2026-09-14T16:41:03Z",
-        "state": "moving", "text": "job_7c2 · 19/41 summarised",
-        "run_id": "run_41b", "source": "console" }
-
-<em>// a streaming verb answers in chunks under its run_id</em>
-<b>event:</b> chunk
-<b>data:</b> { "run_id": "run_41b", "delta": "Start with tools/spec-check.py, " }
-
-<em>-- console.sqlite</em>
+        </div>
+        <div>
+          <h4>the run in the table</h4>
+<pre><em>-- console.sqlite</em>
 <b>CREATE TABLE</b> runs (
   run_id     TEXT PRIMARY KEY,
   ts         TEXT NOT NULL,
@@ -765,121 +675,65 @@
   SELECT ts, 'you' src, adapter||'.'||verb what, NULL backend, ms FROM runs
   UNION ALL
   SELECT ts, source, tool, backend, latency_ms FROM local.calls;</pre>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h3>A handoff, step by step</h3>
-    <p class="lede">The one thing this console does that nothing else does: a verb whose input is another verb's result, run by you, recorded as a chain.</p>
-    <ol class="n">
-      <li><div><b>You ask local.</b> The browser posts to the runner, which validates against the schema and writes a <code>runs</code> row.<span class="m">POST /api/local-models/ask { model:"auto", text:"…", turns:6 } → run_9f3</span></div></li>
-      <li><div><b>The adapter calls the door.</b> One streaming request to <code>studio-local</code>'s <code>/v1</code> with <code>source: console</code>. Chunks come back as events under the run id, the page appends them, the door logs the call, and the light comes on.<span class="m">the door picks the backend: the desktop when idle, else PW-1x</span></div></li>
-      <li><div><b>The result is stored as a path,</b> not as text in a row. "Hand it on" now offers every adapter with a verb that takes files.<span class="m">/srv/studio/results/run_9f3/brief.md</span></div></li>
-      <li><div><b>You hand it to a session.</b> The form fills <code>files: fromResultOf("run_9f3")</code>; the runner resolves it to paths, sets <code>parent_run</code>, and the adapter calls create.<span class="m">POST /api/claude-code-remote/create → session_digest</span></div></li>
-      <li><div><b>The session streams back</b> through the adapter's <code>events()</code>. If it calls the door itself over MCP mid-task, that is recorded in the same log under <code>source = claude</code>. A bonus, not the mechanism.</div></li>
-      <li><div><b>Overnight, the same shape without you.</b> A routine arms, <code>batch_job</code> returns at once, and when it finishes the door posts to <code>/hook/local-models</code>; the adapter emits done and the routine's watch wakes the session. <code>parent_run</code> still links the chain.<span class="m">POST /hook/local-models { job_id:"job_7c2", status:"done" }</span></div></li>
-    </ol>
-  </section>
-
-  <section>
-    <h3>The screens are the same service</h3>
-    <p class="lede">Read-only routes with the chrome off and Grafana panels embedded. Each Pi checks <code>/healthz</code> every 30 seconds and swaps to a static page on Cloudflare Pages when it fails, so no screen is ever blank.</p>
-    <div class="screens">
-      <div class="scr">
-        <div class="frame" role="img" aria-label="Screen A on the bench: cpu, memory, temperature, the print and the light">
-          <div style="display:flex;justify-content:space-between"><span class="lbl">Bench · /screens/bench</span><span class="lbl">16:41</span></div>
-          <div class="tiles3">
-            <div class="t3"><div class="lbl">cpu</div><div class="v">61%</div><div class="u">llama on 0–23</div></div>
-            <div class="t3"><div class="lbl">ram</div><div class="v">98<span style="font-size:.55em;color:#8C8779">/128</span></div><div class="u">GB</div></div>
-            <div class="t3"><div class="lbl">pkg</div><div class="v">58°</div><div class="u">nvme 41°</div></div>
-          </div>
-          <div><div class="lbl">decode tok/s · 10 min</div>
-            <svg viewBox="0 0 300 34" preserveAspectRatio="none" style="width:100%;height:34px;display:block" aria-hidden="true"><path d="M0,30 L20,28 L40,29 L60,19 L80,17 L100,18 L120,10 L140,11 L160,9 L180,12 L200,8 L220,9 L240,7 L260,8 L280,5 L300,6" stroke="#F3F1EA" stroke-width="1.6" fill="none"/><circle cx="297" cy="6" r="2.6" fill="#F3F1EA"/></svg>
-          </div>
-          <div style="display:grid;gap:4px"><div style="display:flex;justify-content:space-between;font-size:12px"><span>Screen B enclosure</span><span>63% · 1 h 12 m</span></div><div class="track"><i></i></div></div>
-          <div style="display:flex;align-items:center;gap:8px;font-size:12px"><span style="width:10px;height:10px;border-radius:50%;background:#F3F1EA;display:inline-block"></span>Light on · 2 processing</div>
         </div>
-        <div class="cap"><b>Bench.</b> A 7-inch panel on a Pi Zero 2 W, taking USB power and LAN straight from PW-1x's second port, so it survives the router.</div>
       </div>
-      <div class="scr">
-        <div class="frame" role="img" aria-label="Screen B at night: we are on course, and what happened overnight">
-          <div style="display:flex;justify-content:space-between"><span class="lbl">Nightstand · /screens/night</span><span class="lbl">02:14</span></div>
-          <div class="big">On course</div>
-          <div class="rows">
-            <div><span class="t">02:00</span><span>Overnight brief started · 41 files</span></div>
-            <div><span class="t">01:38</span><span>Falsework finished · CI green</span></div>
-            <div><span class="t">00:52</span><span>Print done · 3 h 41 m</span></div>
-            <div><span class="t">23:47</span><span>NVMe ran warm · cleared at 23:59</span></div>
+    </section>
+
+    <section>
+      <h3>A Handoff, Step by Step</h3>
+      <ol class="n">
+        <li><div><b>You ask local.</b> The browser posts to the runner, which validates against the schema and writes a <code>runs</code> row.<span class="m">POST /api/local-models/ask → run_9f3</span></div></li>
+        <li><div><b>The adapter calls the door.</b> One streaming request to <code>studio-local</code>'s <code>/v1</code> with <code>source: console</code>. The door logs the call and the light comes on by itself.</div></li>
+        <li><div><b>The result is stored as a path,</b> not as text in a row.<span class="m">/srv/studio/results/run_9f3/brief.md</span></div></li>
+        <li><div><b>You hand it to a session.</b> The form fills <code>files: fromResultOf("run_9f3")</code>; the runner resolves it to paths and sets <code>parent_run</code>.</div></li>
+        <li><div><b>Overnight, the same shape without you.</b> A routine arms, <code>batch_job</code> returns at once, and the door posts to <code>/hook/local-models</code> when it finishes, which wakes the session.</div></li>
+      </ol>
+    </section>
+
+    <section>
+      <h3>The Screens Are the Same Service</h3>
+      <div class="screens">
+        <div class="scr">
+          <div class="frame" role="img" aria-label="Screen A on the bench: processor, memory, temperature, the print and the light">
+            <div style="display:flex;justify-content:space-between"><span class="lbl">Bench · /screens/bench</span><span class="lbl">16:41</span></div>
+            <div class="tiles3">
+              <div class="t3"><div class="lbl">cpu</div><div class="v">61%</div><div class="u">llama on 0–23</div></div>
+              <div class="t3"><div class="lbl">ram</div><div class="v">98<span style="font-size:.55em;color:#8C8779">/128</span></div><div class="u">GB</div></div>
+              <div class="t3"><div class="lbl">pkg</div><div class="v">58°</div><div class="u">nvme 41°</div></div>
+            </div>
+            <div><div class="lbl">decode tok/s · 10 min</div>
+              <svg viewBox="0 0 300 34" preserveAspectRatio="none" style="width:100%;height:34px;display:block" aria-hidden="true"><path d="M0,30 L20,28 L40,29 L60,19 L80,17 L100,18 L120,10 L140,11 L160,9 L180,12 L200,8 L220,9 L240,7 L260,8 L280,5 L300,6" stroke="#F3F1EA" stroke-width="1.6" fill="none"/><circle cx="297" cy="6" r="2.6" fill="#F3F1EA"/></svg>
+            </div>
+            <div style="display:grid;gap:4px"><div style="display:flex;justify-content:space-between;font-size:12px"><span>Screen B enclosure</span><span>63% · 1 h 12 m</span></div><div class="track"><i></i></div></div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:12px"><span style="width:10px;height:10px;border-radius:50%;background:#F3F1EA;display:inline-block"></span>Light on · 2 processing</div>
           </div>
-          <div class="lbl" style="margin-top:auto">dimmed 22:00 – 07:00</div>
+          <div class="cap"><b>Bench.</b> A 7-inch panel on a Pi Zero 2 W, taking USB power and LAN straight from PW-1x's second port, so it survives the router.</div>
         </div>
-        <div class="cap"><b>Nightstand and the second location.</b> Repurposed iPad panels on a driver board and an SBC. The same question, answered in one line you can read from bed.</div>
-      </div>
-      <div class="scr">
-        <div class="frame down" role="img" aria-label="The static page every kiosk swaps to when PW-1x fails its health check">
-          <div><div class="big">PW-1x is down.</div><div class="lbl" style="margin-top:10px">last seen 02:14 · static, on Cloudflare Pages</div><div class="lbl" style="margin-top:5px">retrying every 30 s</div></div>
+        <div class="scr">
+          <div class="frame" role="img" aria-label="Screen B at night: on course, and what happened overnight">
+            <div style="display:flex;justify-content:space-between"><span class="lbl">Nightstand · /screens/night</span><span class="lbl">02:14</span></div>
+            <div class="big">On course</div>
+            <div class="rows">
+              <div><span class="t">02:00</span><span>Overnight brief started · 41 files</span></div>
+              <div><span class="t">01:38</span><span>Falsework finished · CI green</span></div>
+              <div><span class="t">00:52</span><span>Print done · 3 h 41 m</span></div>
+              <div><span class="t">23:47</span><span>NVMe ran warm · cleared at 23:59</span></div>
+            </div>
+            <div class="lbl" style="margin-top:auto">dimmed 22:00 – 07:00</div>
+          </div>
+          <div class="cap"><b>Nightstand and the second location.</b> Repurposed iPad panels on a driver board and an SBC. The same question, answered in one line you can read from bed.</div>
         </div>
-        <div class="cap"><b>The fallback.</b> Six lines of shell on each Pi. "Down" is a state you can read across a room, never a blank screen.</div>
+        <div class="scr">
+          <div class="frame down" role="img" aria-label="The static page every kiosk swaps to when PW-1x fails its health check">
+            <div><div class="big">PW-1x is down.</div><div class="lbl" style="margin-top:10px">last seen 02:14 · static, on Cloudflare Pages</div></div>
+          </div>
+          <div class="cap"><b>The fallback.</b> Six lines of shell on each Pi. "Down" is a state you can read across a room, never a blank screen.</div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <h3>On disk, and in what order</h3>
-    <div class="two">
-      <div>
-<pre>console/
-  package.json          <em>node 22 · tsx · better-sqlite3 · ajv · fastify</em>
-  src/
-    server.ts           <em>routes · static · healthz · metrics</em>
-    sse.ts              <em>hub · ring buffer · Last-Event-ID replay</em>
-    runner.ts           <em>validate · fromResultOf · runs table</em>
-    log.ts              <em>console.sqlite · ATTACH work_log.sqlite</em>
-    registry.ts         <em>loads adapters · polls status()</em>
-  adapters/
-    _template.ts  index.ts
-    claude-code-remote.ts  local-models.ts
-    pw1x.ts  p2s.ts  usb-light.ts
-    github.ts  cloudflare.ts  phone.ts
-  web/
-    index.html          <em>the console · one file</em>
-    screens.html        <em>bench and night · one file, ?screen=</em>
-    console.js          <em>render(adapters) · subscribe(events) · form(schema)</em>
-    console.css
-  test/
-    adapter-shape.test.ts  <em>every adapter satisfies Adapter, every schema compiles</em>
-    runner.test.ts         <em>fromResultOf resolves · parent_run links</em></pre>
-      </div>
-      <div>
-        <ol class="n">
-          <li><div><b>Skeleton, on the desktop.</b> Server, hub, runner, one fake adapter with a <code>tick</code> verb. One row renders from the shape. Nothing from PW-1x.</div></li>
-          <li><div><b>Bot Land.</b> The <code>claude-code-remote</code> adapter: sessions, create, send, events. Testable today with a key in the sops file.</div></li>
-          <li><div><b>Local models, against Ollama.</b> Ask streams, the log joins the door's table. This is the A0 baseline with an interface on it.</div></li>
-          <li><div><b>The first handoff.</b> <code>fromResultOf()</code> end to end, ask then create, and the chain appears in the log.</div></li>
-          <li><div><b>A5, on PW-1x.</b> The bench adapter from Prometheus, the light from Alertmanager, the screen routes and the kiosk script. Then the printer, GitHub, Cloudflare and the phone, an afternoon each.</div></li>
-        </ol>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h3>Named, and reversible</h3>
-    <div class="scroll"><table class="t">
-      <thead><tr><th>Choice</th><th>Why</th><th>The alternative</th></tr></thead>
-      <tbody>
-        <tr><td class="n">Colour only means state</td><td>Three colours on the whole page: lost, waiting, moving. Nothing else is tinted, so anything coloured is something to look at. Everything else is ink, paper and rules.</td><td>A brand accent, which competes with the one signal the page exists to carry.</td></tr>
-        <tr><td class="n">Questions in serif</td><td>"Where are we?", "Lost in the jungle" and "On course" are your words, so they are set in a serif. The machine answers in sans and mono. The two voices never blur.</td><td>One typeface throughout. Tidier, and it loses the joke.</td></tr>
-        <tr><td class="n">The chevron opens in place</td><td>Detail is three events and the verbs for that thing. No second page, no modal, no lost context.</td><td>A detail route per adapter. More screens to design, and you lose the list while you read one row.</td></tr>
-        <tr><td class="n">One page, no tabs</td><td>The sketch has no tabs. The console is one screen; graphs are Grafana's job and settings sit behind the one icon.</td><td>Tabs for bench, log and tools, which hide the thing you came for behind a click.</td></tr>
-        <tr><td class="n">Results are paths</td><td>Files stay on PW-1x under <code>/srv/studio/results/</code>, so handing a forty-file brief to a session costs nothing.</td><td>Results inline in SQLite. Fine for text, wrong for files.</td></tr>
-        <tr><td class="n">Tailscale is the login</td><td>No user table, no password page. The phone and the screens are on the tailnet already.</td><td>Cloudflare Access in front of everything, which only the second-location screen actually needs.</td></tr>
-      </tbody>
-    </table></div>
-    <p class="note" style="margin-top:14px">None of this edits the Systems Map or the READMEs. It draws what they already say, plus what the sketch decided. When a choice here is confirmed it belongs in <code>console/README.md</code>.</p>
-  </section>
-
-  <footer>Drawn from your two sketches · console/README.md, console/adapters/README.md, mcp/README.md and the Systems Map · Example data as at A5</footer>
+    <footer>Drawn from your sketches and your notes on the mockup · console/README.md, console/adapters/README.md, mcp/README.md and the Systems Map · Example data as at A5</footer>
+  </div>
 </div>
 
 </div>
@@ -890,13 +744,30 @@
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
   var tT; function toast(m) { var e = $('#toast'); e.textContent = m; e.classList.add('on'); clearTimeout(tT); tT = setTimeout(function () { e.classList.remove('on'); }, 2800); }
   function pad(n) { return String(n).padStart(2, '0'); }
   function hm() { var d = new Date(); return pad(d.getHours()) + ':' + pad(d.getMinutes()); }
 
+  /* ---------- settings ---------- */
+  var sbtn = $('#settings-btn'), spanel = $('#settings');
+  function toggleSettings(open) {
+    spanel.hidden = !open;
+    sbtn.setAttribute('aria-expanded', String(open));
+    if (open) spanel.scrollIntoView({ block: 'start', behavior: reduced ? 'auto' : 'smooth' });
+  }
+  sbtn.addEventListener('click', function () { toggleSettings(spanel.hidden); });
+  $('#settings-close').addEventListener('click', function () { toggleSettings(false); sbtn.scrollIntoView({ block: 'center', behavior: reduced ? 'auto' : 'smooth' }); });
+  $$('[data-light]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      $$('[data-light]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+      var m = b.getAttribute('data-light');
+      addLog('you', '<b>You</b> set the light to ' + (m === 'auto' ? 'automatic' : 'hold ' + m), '0.1 s');
+      toast('The light is ' + (m === 'auto' ? 'automatic again' : 'held ' + m) + '.');
+    });
+  });
+
   /* ---------- rows open in place ---------- */
-  $$('.wr').forEach(function (row) {
+  $$('.rowbtn').forEach(function (row) {
     row.addEventListener('click', function () {
       var open = row.getAttribute('aria-expanded') === 'true';
       var det = document.getElementById(row.getAttribute('aria-controls'));
@@ -905,16 +776,15 @@
     });
   });
 
-  /* ---------- mark handled, and the empty state ---------- */
+  /* ---------- mark handled ---------- */
   $$('[data-handled]').forEach(function (b) {
     b.addEventListener('click', function (e) {
       e.stopPropagation();
       var n = b.getAttribute('data-handled');
-      var row = $('.wr[data-row="' + n + '"]');
-      var det = document.getElementById('d' + n);
+      var row = $('.wrow[data-row="' + n + '"]'), det = document.getElementById('d' + n);
       if (row) row.parentNode.removeChild(row);
       if (det) det.parentNode.removeChild(det);
-      var left = $$('#lost-list .wr').length;
+      var left = $$('#lost-list .wrow').length;
       $('#c-lost').textContent = left;
       if (!left) { $('#lost-empty').hidden = false; $('#c-lost').hidden = true; }
       addLog('you', '<b>You</b> cleared one from the jungle', '0.1 s');
@@ -922,84 +792,93 @@
     });
   });
 
-  /* ---------- the light ---------- */
-  var auto = true, active = 2;
-  function paintLamp() {
-    var on = auto ? active > 0 : $('#lamp').classList.contains('on');
-    $('#lamp').classList.toggle('on', on);
-    $('#lamp-txt').textContent = 'Light ' + (on ? 'on' : 'off') + (auto ? '' : ' · held');
-  }
-  $('#lamp').addEventListener('click', function () {
-    if (auto) { auto = false; $('#lamp').classList.remove('on'); }
-    else if (!$('#lamp').classList.contains('on')) { $('#lamp').classList.add('on'); }
-    else { auto = true; }
-    paintLamp();
-    addLog('you', '<b>You</b> set the light to ' + (auto ? 'auto' : ($('#lamp').classList.contains('on') ? 'on' : 'off')), '0.1 s');
+  /* ---------- statistics you pick ---------- */
+  var STATS = [
+    { k: 'calls',    label: 'Calls Today',     v: '137' },
+    { k: 'tin',      label: 'Tokens In',       v: '2.1M' },
+    { k: 'tout',     label: 'Tokens Out',      v: '84k' },
+    { k: 'frontier', label: 'Frontier Tokens', v: '118k' },
+    { k: 'claude',   label: "Claude's Share",  v: '61%' },
+    { k: 'yours',    label: 'Your Share',      v: '27%' },
+    { k: 'clients',  label: "Clients' Share",  v: '12%' },
+    { k: 'a0',       label: 'Against A0',      v: '×1.9' },
+    { k: 'fell',     label: 'Fell Back',       v: '3' },
+    { k: 'latency',  label: 'Median Latency',  v: '4.2 s' },
+    { k: 'saved',    label: 'Spend Avoided',   v: '$4.80' }
+  ];
+  var picked = ['calls', 'claude', 'a0'];
+  try { var raw = localStorage.getItem('pw1x-stats'); if (raw) picked = JSON.parse(raw); } catch (e) {}
+  $$('.stat select').forEach(function (sel, i) {
+    STATS.forEach(function (s) { var o = document.createElement('option'); o.value = s.k; o.textContent = s.label; sel.appendChild(o); });
+    sel.value = picked[i] || STATS[i].k;
+    sel.addEventListener('change', function () {
+      picked[i] = sel.value;
+      try { localStorage.setItem('pw1x-stats', JSON.stringify(picked)); } catch (e) {}
+      paintStats();
+    });
   });
-  $('#settings').addEventListener('click', function () { toast('Studio settings: adapters, secrets, the screens, the sops file.'); });
+  function paintStats() {
+    $$('.stat select').forEach(function (sel, i) {
+      var s = STATS.filter(function (x) { return x.k === sel.value; })[0] || STATS[0];
+      $('[data-v="' + i + '"]').textContent = s.v;
+    });
+  }
+  paintStats();
 
-  /* ---------- the sheet: one form per verb, drawn from its schema ---------- */
+  /* ---------- what a tool opens ---------- */
   var results = ['run_9f3 · brief-2026-09-10.md', 'session_likes · likes-triage.md', 'job_7c2 · when it finishes', 'nothing · type or drop files'];
   var forms = {
-    ask:     { title: 'Ask local', path: 'POST /api/local-models/ask', run: 'Ask', fields: [
+    ask:     { title: 'Ask Local', path: 'POST /api/local-models/ask', run: 'Ask', fields: [
                  { k: 'text', label: 'Question', type: 'text', v: 'Which three files in tools/ would a new contributor read first, and why?' },
                  { k: 'model', label: 'Model', type: 'enum', o: ['Auto · the door picks', 'gpt-oss-120b · PW-1x', 'gpt-oss-20b · desktop', 'Scout · PW-1x'] },
-                 { k: 'turns', label: 'Turns of history', type: 'str', v: '6' } ] },
-    create:  { title: 'New session', path: 'POST /api/claude-code-remote/create', run: 'Create', fields: [
+                 { k: 'turns', label: 'Turns of History', type: 'str', v: '6' } ] },
+    create:  { title: 'New Session', path: 'POST /api/claude-code-remote/create', run: 'Create', fields: [
                  { k: 'prompt', label: 'Prompt', type: 'text', v: 'Rewrite the intro of the digest from the attached brief. Keep the voice.' },
                  { k: 'files', label: 'Files', type: 'files' },
-                 { k: 'title', label: 'Title', type: 'str', v: 'Sheepcliff digest · intro' },
-                 { k: 'tags', label: 'Tags', type: 'str', v: 'writing' } ] },
-    send:    { title: 'Send a message', path: 'POST /api/claude-code-remote/send', run: 'Send', fields: [
+                 { k: 'title', label: 'Title', type: 'str', v: 'Sheepcliff Digest · Intro' } ] },
+    send:    { title: 'Send a Message', path: 'POST /api/claude-code-remote/send', run: 'Send', fields: [
                  { k: 'session', label: 'Session', type: 'enum', o: ['session_falsework', 'session_digest', 'session_likes'] },
                  { k: 'text', label: 'Message', type: 'text', v: '' },
                  { k: 'files', label: 'Files', type: 'files' } ] },
-    handoff: { title: 'Hand a result on', path: 'fromResultOf() → another verb', run: 'Hand it on', fields: [
+    handoff: { title: 'Hand a Result On', path: 'fromResultOf() → another verb', run: 'Hand It On', fields: [
                  { k: 'result', label: 'Result', type: 'files' },
-                 { k: 'to', label: 'Hand to', type: 'enum', o: ['A new session', 'A running session', 'Local · summarise it', 'Your phone'] } ] },
-    batch:   { title: 'Run a batch job', path: 'POST /api/local-models/batch', run: 'Start it', fields: [
-                 { k: 'tool', label: 'Tool', type: 'enum', o: ['summarize', 'classify', 'extract', 'read_and_brief'] },
-                 { k: 'paths', label: 'Paths', type: 'files' },
-                 { k: 'wake', label: 'Then wake', type: 'enum', o: ['session_falsework', 'session_digest', 'nobody'] } ] },
-    watch:   { title: 'Wake it on…', path: 'POST /api/claude-code-remote/watch', run: 'Arm it', fields: [
-                 { k: 'session', label: 'Session', type: 'enum', o: ['session_falsework', 'session_digest', 'session_likes'] },
-                 { k: 'on', label: 'Wake on', type: 'enum', o: ['the batch job finishing', 'a push to GitHub', 'the print finishing'] } ] },
-    notify:  { title: 'Push a note to your phone', path: 'POST /api/phone/notify', run: 'Send it', fields: [
-                 { k: 'text', label: 'Text', type: 'str', v: '' },
-                 { k: 'level', label: 'Level', type: 'enum', o: ['quiet', 'normal', 'urgent'] },
-                 { k: 'action', label: 'Button on it', type: 'enum', o: ['none', 'summarise it locally', 'open in Claude Code', 'pause the printer'] } ] },
-    pr:      { title: 'Open a pull request', path: 'POST /api/github/open-pr', run: 'Open it', fields: [
-                 { k: 'repo', label: 'Repo', type: 'enum', o: ['Falsework', 'Studio-G', 'sheepcliff-digest'] },
-                 { k: 'head', label: 'Branch', type: 'str', v: 'sheepcliff/ci-checker' },
-                 { k: 'title', label: 'Title', type: 'str', v: 'Run the checker in CI' } ] }
+                 { k: 'to', label: 'Hand To', type: 'enum', o: ['A new session', 'A running session', 'Local · summarise it', 'Your phone'] } ] },
+    watch:   { title: 'Wake It On…', path: 'POST /api/claude-code-remote/watch', run: 'Arm It', fields: [
+                 { k: 'session', label: 'Session', type: 'enum', o: ['session_falsework', 'session_domains', 'session_likes'] },
+                 { k: 'on', label: 'Wake On', type: 'enum', o: ['the batch job finishing', 'a push to GitHub', 'the print finishing'] } ] }
   };
-  var says = {
-    sessions: 'Three sessions: Falsework running, the digest stopped, likes triage idle. They are the rows above; this only filters the list.',
-    routines: 'One routine: the overnight brief at 02:00, which runs a batch over the inbox and then wakes Falsework.',
-    hooks: 'Reserved. Another agent product is a session connector with the same verbs; OpenAI or Gemini is a call connector with ask and batch. One file each, one line in the sops file, and never a chat box.',
-    repo: 'Opens the repo: last push, branches, CI. The console only ever shows what a webhook told it.',
-    models: 'gpt-oss-120b is loaded on PW-1x and is the fallback for everything. gpt-oss-20b sits on the desktop 4060 Ti and is tried first while that machine is idle. Once PW-1x has a GPU the two swap on that card rather than coexisting.',
-    dash: 'Opens Grafana. The console deliberately keeps no graphs of its own: processor, memory, temperature and tokens per second live there and on Screen A.',
-    store: 'Opens the disk: what is mounted, what is free, and where results are kept. Handing a result on passes its path, never its bytes.',
-    conn: 'Plumbing. Tailscale carries the private side, the Cloudflare tunnel the public side, and every inbound hook has its own secret.',
-    camera: 'The P2S camera, 1080p30, with the printer in LAN and developer mode.',
-    ams: 'Slot 2 holds PETG black, the enclosure filament.',
-    files: 'Sends a .3mf to the printer over FTP.',
-    pause: 'Pauses the print at the end of the current layer. The printer keeps the chamber warm.',
-    stop: 'Would interrupt the session or cancel the job. In the mockup it stops at the confirmation.'
+  var menus = {
+    bots:     { title: 'Bot Land', items: ['New Session', 'All Sessions · 3', 'Routines · 1 armed', 'Other Bots · reserved'],
+                say: 'Every session connector. Claude Code today; another agent product is one more file with the same verbs and no chat box.' },
+    projects: { title: 'Project Center', items: ['Studio-G · CI green', 'Falsework · 2 ahead', 'sheepcliff-digest · deployed 2 h ago', 'Open a Pull Request'],
+                say: 'GitHub is the only source. The console shows what a webhook told it, nothing more.' },
+    models:   { title: 'Local Models', items: ['Ask Local', 'Run a Batch Job', 'gpt-oss-120b · loaded on PW-1x', 'gpt-oss-20b · idle on the desktop', 'Manage Models'],
+                say: 'One door, studio-local. It picks the backend, logs every call with its source, and meters it.' },
+    dash:     { title: 'Dashboards', items: ['Bench · Screen A', 'Night · Screens B and C', 'Throughput Against A0', 'Model Server'],
+                say: 'Opens Grafana. The console keeps no graphs of its own: processor, memory, temperature and tokens per second live there.' },
+    store:    { title: 'Storage', items: ['/srv/models · 412 GB free', 'Results · 1.2 GB', 'G-DRIVE Archive · attached', 'OCuLink ×2 · free'],
+                say: 'Handing a result on passes its path, never its bytes, which is why a forty-file brief costs nothing to pass along.' },
+    conn:     { title: 'Connections', items: ['Tailscale · 6 devices', 'Cloudflare Tunnel · up', 'GitHub Webhook · ok', 'Phone · ntfy'],
+                say: 'Tailscale carries the private side and the Cloudflare tunnel the public side. Every inbound hook has its own secret.' },
+    printer:  { title: 'Printer', items: ['Camera · 1080p', 'Pause the Print', 'AMS · PETG black', 'Send a File'],
+                say: 'The P2S in LAN and developer mode. A print that fails turns up in the jungle like anything else that stops.' },
+    more:     { title: '+ Tools?', items: [], say: 'Anything with an HTTP or MQTT face becomes one adapter file and one line in the sops file. Nothing else changes.' },
+    stop:     { title: 'Stop', items: [], say: 'Would interrupt the session or cancel the job. In the mockup it stops at the confirmation.' }
   };
+
   var sheet = $('#sheet');
-  function wireClose() { var c = sheet.querySelector('[data-close]'); if (c) c.addEventListener('click', function () { sheet.hidden = true; }); }
+  function closer() { var c = sheet.querySelector('[data-close]'); if (c) c.addEventListener('click', function () { sheet.hidden = true; }); }
   function openSheet(key) {
-    var f = forms[key];
+    var f = forms[key], m = menus[key];
     sheet.innerHTML = '';
-    if (!f) {
-      var name = key.charAt(0).toUpperCase() + key.slice(1);
-      sheet.innerHTML = '<div class="h"><b>' + name + '</b><span class="path">read-only in the mockup</span></div><p class="say">' + (says[key] || ('Opens ' + key + '.')) + '</p><div class="act"><button type="button" class="b" data-close>Close</button></div>';
-      sheet.hidden = false; wireClose();
-      sheet.scrollIntoView({ block: 'nearest', behavior: reduced ? 'auto' : 'smooth' });
-      return;
+    if (!f && m) {
+      var items = m.items.length ? '<ul>' + m.items.map(function (i) { return '<li>' + i + '</li>'; }).join('') + '</ul>' : '';
+      sheet.innerHTML = '<div class="h"><b>' + m.title + '</b><span class="path">read-only in the mockup</span></div>' +
+        items + '<p class="say">' + m.say + '</p>' +
+        '<div class="act"><button type="button" class="b" data-close>Close</button></div>';
+      sheet.hidden = false; closer(); sheet.scrollIntoView({ block: 'nearest', behavior: reduced ? 'auto' : 'smooth' }); return;
     }
+    if (!f) { toast('Opens ' + key + '.'); return; }
     var h = document.createElement('div'); h.className = 'h';
     h.innerHTML = '<b>' + f.title + '</b><span class="path">' + f.path + '</span>';
     sheet.appendChild(h);
@@ -1014,14 +893,13 @@
         (fl.type === 'files' ? results : fl.o).forEach(function (o) {
           var op = document.createElement('option'); op.textContent = (fl.type === 'files' ? 'From the result of · ' : '') + o; ctl.appendChild(op);
         });
-        if (fl.type === 'files') ctl.className = 'from';
       } else { ctl = document.createElement('input'); ctl.type = 'text'; ctl.value = fl.v || ''; }
       ctl.id = id; ctl.name = fl.k; row.appendChild(ctl); sheet.appendChild(row);
     });
     var act = document.createElement('div'); act.className = 'act';
     act.innerHTML = '<button type="button" class="b" data-close>Cancel</button><button type="submit" class="b solid">' + f.run + '</button>';
     sheet.appendChild(act);
-    sheet.setAttribute('data-key', key); sheet.hidden = false; wireClose();
+    sheet.setAttribute('data-key', key); sheet.hidden = false; closer();
     sheet.scrollIntoView({ block: 'nearest', behavior: reduced ? 'auto' : 'smooth' });
     var first = sheet.querySelector('textarea, input, select'); if (first) first.focus({ preventScroll: true });
   }
@@ -1034,24 +912,22 @@
     $$('input, select, textarea', sheet).forEach(function (c) { input[c.name] = c.value; });
     sheet.hidden = true;
     if (key === 'ask') { runAsk(input); return; }
-    var what = { create: '<b>You</b> started a session', send: '<b>You</b> sent a message', handoff: '<b>You</b> handed a result on', batch: '<b>You</b> started a batch job', watch: '<b>You</b> armed a wake', notify: '<b>You</b> pushed a note to your phone', pr: '<b>You</b> opened a pull request' }[key] || ('<b>You</b> ran ' + key);
+    var what = { create: '<b>You</b> started a session', send: '<b>You</b> sent a message', handoff: '<b>You</b> handed a result on', watch: '<b>You</b> armed a wake' }[key] || ('<b>You</b> ran ' + key);
     addLog('you', what, (0.1 + Math.random() * 0.4).toFixed(1) + ' s');
     toast(forms[key].title + ' · run_' + Math.random().toString(16).slice(2, 5));
   });
 
-  /* ---------- ask streams its answer ---------- */
-  var answer = 'Start with tools/spec-check.py: it is the only code in the repo, and its docstring says what the three documents promise each other. Then docs/README.md, which explains why the HTML in docs/ is a mirror rather than the source. Third, the spec-check workflow, so they can see the checker is the gate and not a suggestion. Everything else in tools/ is empty on purpose.';
+  /* ---------- ask streams ---------- */
+  var answer = 'Start with tools/spec-check.py: it is the only code in the repo, and its docstring says what the three documents promise each other. Then docs/README.md, which explains why the HTML in docs/ is a mirror rather than the source. Third, the spec-check workflow, so they can see the checker is the gate and not a suggestion.';
   var busy = false;
   function runAsk(input) {
     if (busy) return; busy = true;
     var model = (input.model || 'Auto').split(' ·')[0];
-    var q = (input.text || '').replace(/[<>]/g, '');
-    sheet.innerHTML = '<div class="h"><b>Ask local</b><span class="path">streaming · source = console</span></div>' +
-      '<p class="say" style="color:var(--muted)">' + q + '</p>' +
+    sheet.innerHTML = '<div class="h"><b>Ask Local</b><span class="path">streaming · source = console</span></div>' +
+      '<p class="say" style="color:var(--muted)">' + (input.text || '').replace(/[<>]/g, '') + '</p>' +
       '<div class="reply"><span class="who" id="who">' + model + ' · answering</span><span id="out"></span></div>' +
       '<div class="act"><button type="button" class="b" data-close>Close</button></div>';
-    sheet.hidden = false; wireClose();
-    active++; paintLamp();
+    sheet.hidden = false; closer();
     var words = answer.split(' '), i = 0, t0 = Date.now(), out = $('#out');
     (function tick() {
       out.textContent += (i ? ' ' : '') + words[i++];
@@ -1059,7 +935,7 @@
       else {
         var s = reduced ? 6.4 : (Date.now() - t0) / 1000;
         $('#who').textContent = model + ' · ' + s.toFixed(1) + ' s · in the log';
-        active--; paintLamp(); busy = false;
+        busy = false;
         addLog('you', '<b>You</b> asked local', (/desktop/.test(input.model || '') ? 'desktop' : 'PW-1x') + ' · 1.1k → ' + (words.length + 12) + ' · ' + s.toFixed(1) + ' s');
       }
     })();
@@ -1076,9 +952,7 @@
     applyFilter();
   }
   var filter = '';
-  function applyFilter() {
-    $$('#log .ent').forEach(function (e) { e.hidden = !!filter && e.getAttribute('data-src') !== filter; });
-  }
+  function applyFilter() { $$('#log .ent').forEach(function (e) { e.hidden = !!filter && e.getAttribute('data-src') !== filter; }); }
   $$('.filters .b').forEach(function (b) {
     b.addEventListener('click', function () {
       filter = b.getAttribute('data-src');
