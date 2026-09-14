@@ -453,15 +453,18 @@
 
       <div id="log">
         <div class="ent" data-src="you"><span class="t">16:41</span><span class="w"><b>You</b> asked local<span class="m">PW-1x · 1.2k → 210 · 6.4 s</span></span></div>
+        <div class="ent" data-src="claude"><span class="t">16:43</span><span class="w"><b>Claude</b> worked the domain gang session<span class="m">frontier · 24k → 1.8k · 38 s</span></span></div>
         <div class="ent" data-src="claude"><span class="t">16:38</span><span class="w"><b>Claude</b> read and briefed tools/<span class="m">PW-1x · 38k → 0.9k · 71 s</span></span></div>
         <div class="ent" data-src="claude"><span class="t">16:31</span><span class="w"><b>Claude</b> classified 40 renewal quotes<span class="m">desktop · 12k → 0.4k · 9 s</span></span></div>
         <div class="ent" data-src="client"><span class="t">16:30</span><span class="w"><b>A client</b> called /v1/chat, <span class="fell">the desktop was busy</span><span class="m">PW-1x · 2.0k → 0.3k · 19 s</span></span></div>
         <div class="ent" data-src="you"><span class="t">16:29</span><span class="w"><b>The digest session</b> stopped on an empty brief<span class="m">session_digest · 9 min run</span></span></div>
+        <div class="ent" data-src="claude"><span class="t">16:26</span><span class="w"><b>Claude</b> worked the digest session<span class="m">frontier · 31k → 2.1k · 44 s</span></span></div>
         <div class="ent" data-src="you"><span class="t">16:22</span><span class="w"><b>You</b> pushed a note to your phone<span class="m">print 63 % · 0.1 s</span></span></div>
         <div class="ent" data-src="you"><span class="t">16:20</span><span class="w"><b>You</b> started the digest session from local's brief<span class="m">session_digest · 0.3 s</span></span></div>
         <div class="ent" data-src="you"><span class="t">16:12</span><span class="w"><b>You</b> started the domain gang session<span class="m">session_domains · 0.3 s</span></span></div>
         <div class="ent" data-src="claude"><span class="t">16:04</span><span class="w"><b>Claude</b> started the batch job<span class="m">job_7c2 · PW-1x</span></span></div>
         <div class="ent" data-src="you"><span class="t">16:00</span><span class="w"><b>You</b> started Falsework<span class="m">session_falsework · 0.3 s</span></span></div>
+        <div class="ent" data-src="claude"><span class="t">16:02</span><span class="w"><b>Claude</b> worked Falsework<span class="m">frontier · 63k → 4.4k · 2 m 10 s</span></span></div>
         <div class="ent" data-src="claude"><span class="t">15:58</span><span class="w"><b>Claude</b> extracted 12 records<span class="m">desktop · 6.1k → 1.1k · 4 s</span></span></div>
         <div class="ent" data-src="you"><span class="t">15:29</span><span class="w"><b>You</b> resumed the printer<span class="m">0.1 s</span></span></div>
         <div class="ent" data-src="client"><span class="t">15:10</span><span class="w"><b>A client</b> called /v1/chat<span class="m">desktop · 0.8k → 0.2k · 2 s</span></span></div>
@@ -738,7 +741,7 @@
     { k: 'calls',    label: 'Calls Today',     v: '137' },
     { k: 'tin',      label: 'Tokens In',       v: '2.1M' },
     { k: 'tout',     label: 'Tokens Out',      v: '84k' },
-    { k: 'frontier', label: 'Frontier Tokens', v: '118k' },
+    { k: 'frontier', label: 'Frontier',        v: '118k' },
     { k: 'claude',   label: "Claude's Share",  v: '61%' },
     { k: 'yours',    label: 'Your Share',      v: '27%' },
     { k: 'clients',  label: "Clients' Share",  v: '12%' },
@@ -747,14 +750,14 @@
     { k: 'latency',  label: 'Median Latency',  v: '4.2 s' },
     { k: 'saved',    label: 'Spend Avoided',   v: '$4.80' }
   ];
-  var picked = ['calls', 'claude', 'a0'];
-  try { var raw = localStorage.getItem('pw1x-stats'); if (raw) picked = JSON.parse(raw); } catch (e) {}
+  var picked = ['calls', 'frontier', 'a0'];
+  try { var raw = localStorage.getItem('pw1x-stats-v2'); if (raw) picked = JSON.parse(raw); } catch (e) {}
   $$('.stat select').forEach(function (sel, i) {
     STATS.forEach(function (s) { var o = document.createElement('option'); o.value = s.k; o.textContent = s.label; sel.appendChild(o); });
     sel.value = picked[i] || STATS[i].k;
     sel.addEventListener('change', function () {
       picked[i] = sel.value;
-      try { localStorage.setItem('pw1x-stats', JSON.stringify(picked)); } catch (e) {}
+      try { localStorage.setItem('pw1x-stats-v2', JSON.stringify(picked)); } catch (e) {}
       paintStats();
     });
   });
