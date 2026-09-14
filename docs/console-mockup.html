@@ -372,7 +372,7 @@
           </div>
 
         </div>
-        <p class="empty" id="lost-empty" hidden>On course</p>
+        <p class="empty" id="lost-empty" hidden>On Course</p>
       </div>
 
       <div class="grp">
@@ -712,7 +712,7 @@
         <div class="scr">
           <div class="frame" role="img" aria-label="Screen B at night: on course, and what happened overnight">
             <div style="display:flex;justify-content:space-between"><span class="lbl">Nightstand · /screens/night</span><span class="lbl">02:14</span></div>
-            <div class="big">On course</div>
+            <div class="big">On Course</div>
             <div class="rows">
               <div><span class="t">02:00</span><span>Overnight brief started · 41 files</span></div>
               <div><span class="t">01:38</span><span>Falsework finished · CI green</span></div>
@@ -788,7 +788,7 @@
       $('#c-lost').textContent = left;
       if (!left) { $('#lost-empty').hidden = false; $('#c-lost').hidden = true; }
       addLog('you', '<b>You</b> cleared one from the jungle', '0.1 s');
-      toast(left ? 'Cleared. ' + left + ' left in the jungle.' : 'Cleared. On course.');
+      toast(left ? 'Cleared. ' + left + ' left in the jungle.' : 'Cleared. On Course.');
     });
   });
 

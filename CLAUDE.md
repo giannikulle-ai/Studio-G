@@ -4,15 +4,17 @@
 
 When a sketch, note or message gives an exact word, label, name or number, use it exactly as given. Do not expand it, soften it, or make it a sentence.
 
-The empty state of *Lost in the jungle* reads **On course**, because the sketch says "if empty, say on course". It is not "Nothing lost. We're on course."
+The empty state of *Lost in the Jungle* reads **On Course**, because the sketch says "if empty, say on course". It is those words and no others: not "Nothing lost", not a sentence about being on course. Title case applies to it, as it does everywhere.
 
 If specified wording seems wrong, say so and ask. Do not improve it in passing.
 
 ## Title case
 
-Headings, labels, buttons and tool names are Title Case. Standard title case, so short words inside a phrase stay lowercase: *Lost in the Jungle*, *Run a Batch Job*, *Where Are We?* Sentences in rows and log lines stay sentences. Small labels are set in title case rather than being force-uppercased by CSS.
+Title case globally, with no exceptions. Headings, labels, buttons, tool names, empty states. Standard title case, so short words inside a phrase stay lowercase: *Lost in the Jungle*, *Run a Batch Job*, *Where Are We?*, *On Course*.
 
-The one string this does not touch is the empty state of *Lost in the Jungle*, which stays **On course** as specified.
+Two things are not labels and stay as they are: sentences that carry content, such as a row's description or a log line, and anything in code or monospace.
+
+Small labels are set in title case rather than being force-uppercased by CSS.
 
 ## Words to avoid
 
@@ -22,7 +24,7 @@ The one string this does not touch is the empty state of *Lost in the Jungle*, w
 
 `console/README.md` and `console/adapters/README.md` hold the design. Two that the mockup added, from the sketches:
 
-- *Lost in the jungle* holds anything stopped, failed, alerting, or finished and unread, whatever kind of thing it is.
+- *Lost in the Jungle* holds anything stopped, failed, alerting, or finished and unread, whatever kind of thing it is.
 - *Navigating* holds active sessions and the jobs they are waiting on. It is not a list of every connected device. Anything still running appears there and not in the log, so nothing shows up twice.
 - The light is automatic, following the alert rule. The manual override lives in settings and nowhere else.
 - The console page carries no build documentation. It sits behind the settings button.
