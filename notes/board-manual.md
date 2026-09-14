@@ -178,3 +178,28 @@ Procedure notes worth having:
 
 Only the **Dr. Debug code table**, and the word "required" next to `ATX12V2`. Both are in
 the full User's Manual; neither blocks assembly.
+
+---
+
+# Cooler: ARCTIC Freezer 4U-M Rev. 2 (ACFRE00133B) — 14 Sep 2026
+
+`support.arctic.de` is blocked by the egress proxy here, so this is from ARCTIC's
+documentation via search, not fetched directly. **The printed sheet in the box is the
+authority for the exact sequence.**
+
+- **The AMD mounting clips are asymmetric and handed.** ARCTIC: *"Line up the Clip A to
+  the outlet airflow arrow, and align the Clip B to the inlet airflow arrow."* Swapping
+  them is why the parts appear not to fit. Confirmed against the 4U-M Rev 2 manual, not
+  only the SP3 model.
+- Consequence for the guide: **airflow direction has to be settled before the clips go
+  on**, since their placement is defined by the arrows.
+- Each clip fastens to the cooler base with two screws; the mounting screws then come in
+  from the underside into the threaded holes surrounding the socket. This vindicates the
+  guide's original "from under the mounting frame" wording, which was wrongly flagged as
+  a guess on 14 Sep.
+- **SP3 needs no backplate** — the socket's own retention frame carries the threaded
+  holes. A plastic backplate in the box belongs to AM4 or Intel.
+
+Careful with product pages: **Freezer 4U SP3 = ACFRE00081A**, a different cooler.
+Ours is **Freezer 4U-M Rev. 2 = ACFRE00133B**, manual at
+`support.arctic.de/en/freezer-4u-mr2`.
