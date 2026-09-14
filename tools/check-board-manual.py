@@ -49,12 +49,15 @@ for name, doc in (("guide", G), ("handoff", H), ("build-sheet", B), ("map", M), 
         if bad in doc: fails.append(f"{name}: STALE {bad!r} ({why})")
 print(f"[stale]     {len(stale)} superseded procedures scanned in 5 files")
 
-# the one deliberate mention of the old order is in the conflict callout only
+if "A → B → C" not in G:
+    fails.append("guide: the A-B-C screw order is not stated")
+if "loosen in reverse" not in G:
+    fails.append("guide: AMD's disagreement on the loosening order is not noted")
 occ = G.count("3-2-1") + G.count("3→2→1")
-if occ != 2:
-    fails.append(f"guide: '3-2-1' appears {occ}x; expected exactly 2, both inside the A/B/C conflict callout")
+if occ:
+    fails.append(f"guide: the retired '3-2-1' order still appears {occ}x")
 else:
-    notes.append("guide: the two '3-2-1' hits are the deliberate AMD-vs-ASRock explanation, not drift")
+    notes.append("guide: A-B-C stated, AMD's reverse-loosening caveat kept, no '3-2-1' left")
 
 # --- 5. sanity against method -------------------------------------------
 # M.2 type codes encode 22mm width + length in mm; the sheet's cm column must agree
@@ -64,9 +67,12 @@ for code, cm in (("2230", 3.0), ("2242", 4.2), ("2260", 6.0), ("2280", 8.0), ("2
         fails.append(f"M.2 {code}: type code says {mm}mm but the table says {cm}cm")
 print("[method]    5 M.2 type codes agree with the sheet's length column (2280 = 80mm = position D)")
 
-# the guide must place the drive at D, and nowhere else
-if "position D" not in G or "M2_1</code> has the same positions minus E" not in G:
-    fails.append("guide: the 2280 standoff position (D) is not stated with its reasoning")
+# the guide must name the standoff position, its length, and the film on the nut
+for need, why in (("position D", "the 2280 standoff position"),
+                  ("8cm nut", "what position D means in millimetres"),
+                  ("yellow film", "the protective film on the nut")):
+    if need not in G:
+        fails.append(f"guide: {why} ({need!r}) is not stated")
 
 # PANEL1 is 8 pins: the figure must draw 8 and label 8
 seg = G[G.index("aria-label=\"The system panel header"):]

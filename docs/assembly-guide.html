@@ -159,190 +159,69 @@
       <span>Board manual: <b>read 14 Sep 2026</b></span>
     </div>
     <h1>PW-1x Assembly Guide</h1>
-    <p class="sub">Every part is bought. This is the order to put them together, what each step should look and feel like, and where to stop and check. Written for a first server build: nothing is assumed, every term is explained the first time it appears, and each risky step has a drawing. The graphics card stays in the desktop; PW-1x runs on its processor alone until a card is bought.</p>
+    <p class="sub">Every part is in hand. This is the order to put them together, what each step should look like when it is right, and where to stop. Written for a first server build, so each risky step has a drawing. The graphics card stays in the desktop; PW-1x runs on its processor alone until a card is bought.</p>
   </header>
 
   <!-- ============================ INVENTORY ============================ -->
   <section id="inventory">
     <p class="eyebrow">Part 1 · Inventory</p>
-    <h2>Do you actually have everything?</h2>
-    <p class="lede">Tick each row as you confirm it. The first table is what the Build Sheet says was bought or owned. The second is what the Build Sheet does not mention because it was never a purchase, and it is where builds usually stall on day one. The third is what to settle before you start, now that everything is here. <strong>All parts were confirmed in hand on 13 September 2026</strong>, which means the memory’s 30-day return window is already running — counted from that date it closes <strong>13 October 2026</strong>, and earlier if the invoice shows an earlier delivery date. The board and the processor are the only parts that cannot be returned at all, so a fault in either is worth finding tonight rather than on assembly night.</p>
+    <h2>Do you have everything?</h2>
+    <p class="lede">All parts were confirmed in hand on 13 September 2026, so the memory’s <strong>30-day</strong> return window is running — it closes <strong>13 October 2026</strong> at the latest. Tick each row as you check it.</p>
 
     <div class="progress" aria-live="polite">
       <span><b id="count-done">0</b> / <b id="count-all">0</b> confirmed</span>
       <span class="bar"><i id="bar"></i></span>
       <span class="sync" id="sync">saved on this device</span>
     </div>
-    <p class="note"><span class="chip ok">Have</span> already on hand &nbsp; <span class="chip warn">Arrived</span> in hand; open the box and check the contents against this row &nbsp; <span class="chip stop">Confirm</span> never bought; check you own one &nbsp; <span class="chip neutral">You decide</span> a choice, not a part</p>
+    <p class="note"><span class="chip ok">Have</span> owned already &nbsp; <span class="chip warn">Arrived</span> check the box contents &nbsp; <span class="chip stop">Confirm</span> never bought — check you own one &nbsp; <span class="chip neutral">You decide</span> a choice, not a part</p>
 
-    <h3>Bought or owned, per the Build Sheet — all delivered</h3>
+    <h3>Bought or owned</h3>
     <div class="scroll">
       <table>
-        <thead><tr><th></th><th>Part</th><th>What should be in the box</th><th>State</th></tr></thead>
+        <thead><tr><th></th><th>Part</th><th>Notes</th><th>State</th></tr></thead>
         <tbody>
-          <tr>
-            <td class="tick"><input type="checkbox" id="i-cpu" aria-label="Confirm EPYC 7452"></td>
-            <td class="name">AMD EPYC 7452<small>32 cores · socket SP3</small></td>
-            <td>The processor, still clipped into its orange or blue plastic <strong>carrier frame</strong>. Do not take it out of the carrier. Underside has thousands of flat gold pads, no pins. If it came loose with no frame, stop and read step 1 twice before touching it.</td>
-            <td><span class="chip ok">Have</span></td>
-          </tr>
-          <tr>
-            <td class="tick"><input type="checkbox" id="i-board" aria-label="Confirm ROMED8-2T"></td>
-            <td class="name">ASRock Rack ROMED8-2T<small>ATX · 8 DIMM · dual 10GbE · IPMI</small></td>
-            <td>The board, its printed manual, an I/O shield (the metal plate for a case; not needed on a bench), and a small bag with M.2 screws and standoffs. Keep the box: it is the work surface.</td>
-            <td><span class="chip ok">Have</span></td>
-          </tr>
-          <tr>
-            <td class="tick"><input type="checkbox" id="i-gdrive" aria-label="Confirm G-DRIVE"></td>
-            <td class="name">G-DRIVE mobile USB-C<small>0G10265 · 1TB HDD</small></td>
-            <td>Stays in its enclosure, plugged in over USB later. It is the model archive, not part of assembly. The board has no SATA ports, so it must never be shucked.</td>
-            <td><span class="chip ok">Have</span></td>
-          </tr>
-          <tr>
-            <td class="tick"><input type="checkbox" id="i-ram" aria-label="Confirm memory kit"></td>
-            <td class="name">A-Tech 128GB kit<small>8 × 16GB DDR4-3200 ECC RDIMM 2Rx8 · $1,315.69</small></td>
-            <td>Eight sticks, all with the same part number on the label. Count them. Photograph every label before they go in. This is the one part with a 30-day clock: the window runs from delivery, so it opened when this kit arrived — 13 September 2026 by the confirmation here, closing 13 October 2026 unless the invoice shows an earlier delivery date. Step 10 has to finish inside it.</td>
-            <td><span class="chip warn">Arrived</span></td>
-          </tr>
-          <tr>
-            <td class="tick"><input type="checkbox" id="i-cooler" aria-label="Confirm cooler"></td>
-            <td class="name">ARCTIC Freezer 4U-M Rev. 2<small>ACFRE00133B · $57.92</small></td>
-            <td>The tower heatsink, two 120mm fans with clips, mounting hardware for several sockets (you want the SP3 / TR4 set), and a 0.8g syringe of MX-6 thermal paste. Check the box for the fan cable: ARCTIC ships either two leads or one lead with a splitter; note which.</td>
-            <td><span class="chip warn">Arrived</span></td>
-          </tr>
-          <tr>
-            <td class="tick"><input type="checkbox" id="i-psu" aria-label="Confirm PSU"></td>
-            <td class="name">MSI MPG A850G PCIE5<small>850W · fully modular · $89.99</small></td>
-            <td>The supply, a bag of modular cables, and an AC power cord. The cables you need: one 24-pin motherboard cable and <strong>two</strong> CPU cables marked EPS or CPU, each ending in an 8-pin plug that splits into 4+4. Confirm the AC cord is in the box; it is the item most often missing.</td>
-            <td><span class="chip warn">Arrived</span></td>
-          </tr>
-          <tr>
-            <td class="tick"><input type="checkbox" id="i-nvme" aria-label="Confirm NVMe"></td>
-            <td class="name">Kingston NV3 1TB<small>SNV3S/1000G · M.2 2280 · $156.99</small></td>
-            <td>A bare stick the size of a piece of gum, chips on one side only. No screw in the box; the board's bag has it.</td>
-            <td><span class="chip warn">Arrived</span></td>
-          </tr>
+<tr><td class="tick"><input type="checkbox" id="i-cpu" aria-label="Confirm EPYC 7452"></td><td class="name">AMD EPYC 7452<small>32 cores · socket SP3</small></td><td>Still clipped into its plastic carrier frame. Do not take it out.</td><td><span class="chip ok">Have</span></td></tr>
+<tr><td class="tick"><input type="checkbox" id="i-board" aria-label="Confirm ROMED8-2T"></td><td class="name">ASRock Rack ROMED8-2T<small>ATX · 8 DIMM · dual 10GbE · IPMI</small></td><td>Board, printed manual, I/O shield, a bag with M.2 screws and standoffs. Keep the box — it is the work surface.</td><td><span class="chip ok">Have</span></td></tr>
+<tr><td class="tick"><input type="checkbox" id="i-gdrive" aria-label="Confirm G-DRIVE"></td><td class="name">G-DRIVE mobile USB-C<small>0G10265 · 1TB HDD</small></td><td>Stays in its enclosure. Not part of assembly, and never shucked: this board has <strong>no SATA</strong> sockets.</td><td><span class="chip ok">Have</span></td></tr>
+<tr><td class="tick"><input type="checkbox" id="i-ram" aria-label="Confirm memory kit"></td><td class="name">A-Tech 128GB kit<small>8 × 16GB DDR4-3200 ECC RDIMM 2Rx8 · $1,315.69</small></td><td>Count eight sticks, same part number on every label. Photograph the labels. <strong>The 30-day return window is running</strong> — step 10 has to finish inside it.</td><td><span class="chip warn">Arrived</span></td></tr>
+<tr><td class="tick"><input type="checkbox" id="i-cooler" aria-label="Confirm cooler"></td><td class="name">ARCTIC Freezer 4U-M Rev. 2<small>ACFRE00133B · $57.92</small></td><td>Heatsink, two 120mm fans with clips, the SP3 / TR4 mounting set, a 0.8g syringe of MX-6. Note whether the fans share one lead or use two.</td><td><span class="chip warn">Arrived</span></td></tr>
+<tr><td class="tick"><input type="checkbox" id="i-psu" aria-label="Confirm PSU"></td><td class="name">MSI MPG A850G PCIE5<small>850W · fully modular · $89.99</small></td><td>Supply, cable bag, AC cord. You need the 24-pin cable and <strong>two</strong> cables marked CPU or EPS. Check the AC cord is there.</td><td><span class="chip warn">Arrived</span></td></tr>
+<tr><td class="tick"><input type="checkbox" id="i-nvme" aria-label="Confirm NVMe"></td><td class="name">Kingston NV3 1TB<small>SNV3S/1000G · M.2 2280 · $156.99</small></td><td>A bare stick, chips on one side. Its screw is in the board’s bag.</td><td><span class="chip warn">Arrived</span></td></tr>
         </tbody>
       </table>
     </div>
 
-    <h3>Not in the Build Sheet, needed to assemble</h3>
-    <p class="note">None of these were purchases, so nobody has checked they exist. Each is small; a missing one costs a day.</p>
+    <h3>Not in the Build Sheet, needed anyway</h3>
     <div class="scroll">
       <table>
-        <thead><tr><th></th><th>Item</th><th>Why</th><th>State</th></tr></thead>
+        <thead><tr><th></th><th>Item</th><th>Notes</th><th>State</th></tr></thead>
         <tbody>
-          <tr>
-            <td class="tick"><input type="checkbox" id="n-t20" aria-label="Confirm T20 Torx driver"></td>
-            <td class="name">T20 Torx driver<small>star-shaped tip, size 20</small></td>
-            <td>The only tool that opens and closes the processor socket. AMD's specification is a torque driver set to 1.58 N·m; a plain T20 works because the socket screws stop turning when they are seated, and you stop when they stop. A Phillips will not fit and will strip the heads. Some cooler and board bundles include a T20 key; check before buying.</td>
-            <td><span class="chip stop">Confirm</span></td>
-          </tr>
-          <tr>
-            <td class="tick"><input type="checkbox" id="n-ph1" aria-label="Confirm PH1 Phillips"></td>
-            <td class="name">PH1 Phillips screwdriver<small>small cross-head</small></td>
-            <td>ARCTIC's manual lists it as the one tool the cooler needs. Also fits the M.2 screw.</td>
-            <td><span class="chip stop">Confirm</span></td>
-          </tr>
-          <tr>
-            <td class="tick"><input type="checkbox" id="n-monitor" aria-label="Confirm VGA monitor"></td>
-            <td class="name">A monitor with a VGA input<small>or a VGA-to-HDMI adapter</small></td>
-            <td>There is no graphics card in this build. The only video output is the blue 15-pin <strong>VGA</strong> port on the board's rear panel, driven by the management chip. A modern monitor may have no VGA input; then you need an active VGA-to-HDMI adapter, not a passive cable. Once the management page works (step 9) you can watch the screen from the desktop instead.</td>
-            <td><span class="chip stop">Confirm</span></td>
-          </tr>
-          <tr>
-            <td class="tick"><input type="checkbox" id="n-kbd" aria-label="Confirm USB keyboard"></td>
-            <td class="name">A USB keyboard<small>wired</small></td>
-            <td>To press Del at the first boot and to drive memtest. Wireless dongles usually work but wired removes a variable.</td>
-            <td><span class="chip stop">Confirm</span></td>
-          </tr>
-          <tr>
-            <td class="tick"><input type="checkbox" id="n-eth" aria-label="Confirm two Ethernet cables"></td>
-            <td class="name">Two Ethernet cables<small>any length that reaches the router</small></td>
-            <td>One for the board's dedicated management port, one for its first 10GbE port, both ending at the router. The management cable can be any old Ethernet cable from a drawer; that link carries a web page. Only the LAN1 cable benefits from Cat 6 or better. The management port is how you power the machine on and off and read its temperatures from the desktop; it is worth the cable.</td>
-            <td><span class="chip stop">Confirm</span></td>
-          </tr>
-          <tr>
-            <td class="tick"><input type="checkbox" id="n-usb" aria-label="Confirm USB stick"></td>
-            <td class="name">A USB stick, 2GB or more<small>it will be erased</small></td>
-            <td>memtest86+ boots from it (step 10). A second stick of 4GB or more, or the same one re-written later, carries the operating-system installer.</td>
-            <td><span class="chip stop">Confirm</span></td>
-          </tr>
-          <tr>
-            <td class="tick"><input type="checkbox" id="n-power" aria-label="Confirm a way to press power"></td>
-            <td class="name">A way to press "power"<small>no case means no button</small></td>
-            <td><strong>Settled 14 Sep 2026 — you do need one of these.</strong> The Quick Installation Guide’s component list is complete (44 numbered headers and jumpers, plus the eight rear-panel items) and there is no power button anywhere on it. The board’s only two buttons are <code>UID1</code> on the rear panel — a unit-identification light, <em>not</em> power — and <code>NMI_BTN1</code>. So: (a) power on from the management web page, which works once step 9 is done; (b) touch a screwdriver tip for one second across the two power-button pins of the system panel header, which this board names <code>PANEL1</code>; (c) a power-switch pigtail, a $5 button on a lead that plugs onto those pins. <em>Which</em> two pins is answered too, on the back of the same sheet: <code>PWRBTN#</code> and the <code>GND</code> beside it on the same row of <code>PANEL1</code>. Step 7 draws the header.</td>
-            <td><span class="chip stop">Confirm</span></td>
-          </tr>
-          <tr>
-            <td class="tick"><input type="checkbox" id="n-surface" aria-label="Confirm work surface"></td>
-            <td class="name">A non-conductive surface<small>the board's own box</small></td>
-            <td>The board sits on its cardboard box, on a table, off carpet, away from pets. Not on the anti-static bag: its outside can conduct.</td>
-            <td><span class="chip stop">Confirm</span></td>
-          </tr>
-          <tr>
-            <td class="tick"><input type="checkbox" id="n-misc" aria-label="Confirm small things"></td>
-            <td class="name">Small things<small>flashlight · zip ties · a phone</small></td>
-            <td>A flashlight for reading tiny header labels; zip ties for the PSU cables once they are routed; the phone to photograph every label and every connector before it is covered.</td>
-            <td><span class="chip stop">Confirm</span></td>
-          </tr>
-          <tr>
-            <td class="tick"><input type="checkbox" id="n-paste" aria-label="Confirm spare thermal paste"></td>
-            <td class="name">A second syringe of thermal paste<small>MX-6 or MX-4, ~$8</small></td>
-            <td>The cooler's 0.8g is exactly one application on a lid this size. If the cooler has to come off once, for any reason, there is no paste for the second mount. Buy one tube now; it is the cheapest insurance on this list.</td>
-            <td><span class="chip stop">Confirm</span></td>
-          </tr>
-          <tr>
-            <td class="tick"><input type="checkbox" id="n-ipa" aria-label="Confirm isopropyl alcohol and cloth"></td>
-            <td class="name">Isopropyl alcohol, 90% or stronger, and a lint-free cloth<small>~$4 · coffee filters work as the cloth</small></td>
-            <td>The processor was bought used, so its metal lid almost certainly carries the previous owner's dried paste. New paste over old paste runs hot, and you would find out on the one cooler mount you have paste for. The lid gets cleaned to bare metal in step 4 before anything else touches it.</td>
-            <td><span class="chip stop">Confirm</span></td>
-          </tr>
-          <tr>
-            <td class="tick"><input type="checkbox" id="n-strap" aria-label="Confirm anti-static wrist strap"></td>
-            <td class="name">An anti-static wrist strap<small>~$6, clips to the supply's shell</small></td>
-            <td><strong>The board’s own manual names it first:</strong> "use a grounded wrist strap or touch a safety grounded object before you handle the components." Touching something grounded works if you remember to, every single time. The strap makes forgetting impossible, for a processor and a board that cannot be returned. Buy it.</td>
-            <td><span class="chip stop">Confirm</span></td>
-          </tr>
+<tr><td class="tick"><input type="checkbox" id="n-t20" aria-label="Confirm T20 Torx driver"></td><td class="name">T20 Torx driver<small>star tip, size 20</small></td><td>The only tool that opens the processor socket. A Phillips will strip the heads.</td><td><span class="chip stop">Confirm</span></td></tr>
+<tr><td class="tick"><input type="checkbox" id="n-ph1" aria-label="Confirm PH1 Phillips"></td><td class="name">PH1 Phillips screwdriver<small>small cross-head</small></td><td>The cooler needs it. Also fits the M.2 screw.</td><td><span class="chip stop">Confirm</span></td></tr>
+<tr><td class="tick"><input type="checkbox" id="n-monitor" aria-label="Confirm VGA monitor"></td><td class="name">A monitor with VGA in<small>or an active VGA→HDMI adapter</small></td><td>There is no graphics card. The board’s only video is the blue VGA port.</td><td><span class="chip stop">Confirm</span></td></tr>
+<tr><td class="tick"><input type="checkbox" id="n-kbd" aria-label="Confirm USB keyboard"></td><td class="name">A USB keyboard<small>wired</small></td><td>To press Del at first boot and to drive memtest.</td><td><span class="chip stop">Confirm</span></td></tr>
+<tr><td class="tick"><input type="checkbox" id="n-eth" aria-label="Confirm two Ethernet cables"></td><td class="name">Two Ethernet cables<small>any length to the router</small></td><td>One to the management port, one to LAN1. The management one can be any old cable; only LAN1 wants Cat 6.</td><td><span class="chip stop">Confirm</span></td></tr>
+<tr><td class="tick"><input type="checkbox" id="n-usb" aria-label="Confirm USB stick"></td><td class="name">A USB stick, 2GB+<small>it gets erased</small></td><td>memtest86+ boots from it. A second one, 4GB+, carries the OS installer later.</td><td><span class="chip stop">Confirm</span></td></tr>
+<tr><td class="tick"><input type="checkbox" id="n-power" aria-label="Confirm a way to press power"></td><td class="name">A way to press power<small>there is no button on this board</small></td><td>Any one of: the management web page; a screwdriver across two pins on <code>PANEL1</code> (step 7); a $5 power-switch pigtail.</td><td><span class="chip stop">Confirm</span></td></tr>
+<tr><td class="tick"><input type="checkbox" id="n-surface" aria-label="Confirm work surface"></td><td class="name">A non-conductive surface<small>the board’s own box</small></td><td>On a table, off carpet, away from pets. Not on the anti-static bag — its outside conducts.</td><td><span class="chip stop">Confirm</span></td></tr>
+<tr><td class="tick"><input type="checkbox" id="n-misc" aria-label="Confirm small things"></td><td class="name">Flashlight, zip ties, your phone</td><td>Reading tiny header labels, tidying cables, photographing every label before it is covered.</td><td><span class="chip stop">Confirm</span></td></tr>
+<tr><td class="tick"><input type="checkbox" id="n-paste" aria-label="Confirm spare thermal paste"></td><td class="name">A second syringe of paste<small>MX-6 or MX-4 · ~$8</small></td><td>The cooler’s 0.8g is exactly one application. If it comes off once, you have none.</td><td><span class="chip stop">Confirm</span></td></tr>
+<tr><td class="tick"><input type="checkbox" id="n-ipa" aria-label="Confirm isopropyl alcohol and cloth"></td><td class="name">Isopropyl 90%+ and a lint-free cloth<small>~$4</small></td><td>The processor is used, so its lid carries old paste. It comes off in step 4.</td><td><span class="chip stop">Confirm</span></td></tr>
+<tr><td class="tick"><input type="checkbox" id="n-strap" aria-label="Confirm anti-static wrist strap"></td><td class="name">An anti-static wrist strap<small>~$6</small></td><td>The board’s manual names it first. Buy it.</td><td><span class="chip stop">Confirm</span></td></tr>
         </tbody>
       </table>
     </div>
 
-    <h3>Do before you start, with everything already here</h3>
+    <h3>Before you start</h3>
     <div class="scroll">
       <table>
-        <thead><tr><th></th><th>Do</th><th>Why now</th><th>State</th></tr></thead>
+        <thead><tr><th></th><th>Do</th><th>Notes</th><th>State</th></tr></thead>
         <tbody>
-          <tr>
-            <td class="tick"><input type="checkbox" id="d-socket" aria-label="Inspect the socket and processor"></td>
-            <td class="name">Inspect the socket and the processor tonight</td>
-            <td>Both were bought earlier and neither is returnable. Open the socket per step 1, hold a flashlight at a low angle across the contact field and look for any bent, flattened or discoloured contact; the field should be a perfectly regular grid with no glint out of line. Close it again, same order, with the plastic cover back in. Then look at the processor's underside through its carrier: every pad present, none scratched. The memory’s 30-day window is already open, so a bad socket found tonight still leaves four weeks to get a replacement board in and the memory tested. Found on assembly night, it eats most of them.</td>
-            <td><span class="chip stop">Do first</span></td>
-          </tr>
-          <tr>
-            <td class="tick"><input type="checkbox" id="d-manual" aria-label="Read the manual for the open items"></td>
-            <td class="name">Download the full User’s Manual for the three items still open</td>
-            <td><strong>Mostly done, 14 Sep 2026.</strong> The printed Quick Installation Guide in the box answered most of what this guide used to defer, and every answer is now written into the steps below: no onboard power button, the header is <code>PANEL1</code>, the fan headers are <code>FAN1</code>–<code>FAN7</code> with no processor-fan header at all, and a <strong>Dr. Debug</strong> two-digit code display replaces guessing at beeps. It also turned up a trap nobody had on the list: the first M.2 socket can be switched off by a jumper (step 3). <strong>Still open, and only in the full User’s Manual</strong> (PDF at asrockrack.com — the quick guide’s first line says so): the <code>PANEL1</code> pinout, so you know which two pins to short; the Dr. Debug code table; and whether the memory slots latch at both ends or one. Fetch it while you have a browser open.</td>
-            <td><span class="chip stop">Do first</span></td>
-          </tr>
-          <tr>
-            <td class="tick"><input type="checkbox" id="d-dryrun" aria-label="Consider seating the processor now"></td>
-            <td class="name">Consider doing step 1 today, unhurried</td>
-            <td>The processor can sit in its closed socket with no cooler on it indefinitely; that is how boards ship from integrators. Doing the one irreversible step on a quiet evening, with the manual open and nothing else waiting, is easier than doing it with four opened boxes on the table. If the socket inspection above was clean, this is the calmest way to take the hardest step. If you would rather do it once, on the day, that is also fine: the inspection is the part that matters.</td>
-            <td><span class="chip neutral">You decide</span></td>
-          </tr>
-          <tr>
-            <td class="tick"><input type="checkbox" id="d-nic" aria-label="Decide desktop NIC"></td>
-            <td class="name">Does the desktop have a 10GbE port?</td>
-            <td><strong>You can now settle this by looking.</strong> Plug the cable in, and <code>LAN1</code>’s speed LED is green only at 10 Gbps — dark means it negotiated 1 Gbps (see step 6). The Systems Map draws a direct 10GbE cable between the desktop and PW-1x. If the desktop's Ethernet is 1GbE or 2.5GbE, the same cable still works, just slower: the link negotiates down. It is fine to start that way; link speed does not change how fast the models run, only how long a 60 GB model file takes to copy. No USB adapter reaches 10GbE; they stop at 1 or 2.5. The real path is a PCIe card, a used Intel X540-T2 or X550-T1 at $30–60, parked until there is a reason.</td>
-            <td><span class="chip neutral">You decide</span></td>
-          </tr>
-          <tr>
-            <td class="tick"><input type="checkbox" id="d-bench" aria-label="Decide where the bench lives"></td>
-            <td class="name">Where the bench lives</td>
-            <td>Near the router (two cables), near a wall outlet, on a table that will not be bumped, with a hand's width of open air on every side of the board. The cooler is 16cm tall and the fans move air front to back; nothing should sit against either end.</td>
-            <td><span class="chip neutral">You decide</span></td>
-          </tr>
+<tr><td class="tick"><input type="checkbox" id="d-socket" aria-label="Inspect the socket and processor"></td><td class="name">Inspect the socket and processor tonight</td><td>Neither is returnable. Open the socket (step 1), look across the contact field at a low angle for a bent or discoloured contact, close it again. Then check the processor’s pads. Finding a fault tonight still leaves four weeks of the memory window.</td><td><span class="chip stop">Do first</span></td></tr>
+<tr><td class="tick"><input type="checkbox" id="d-manual" aria-label="Download the User's Manual"></td><td class="name">Download the full User’s Manual<small>asrockrack.com</small></td><td>One thing left in it: the <strong>Dr. Debug code table</strong>, for if the board will not POST. Everything else is in the steps below.</td><td><span class="chip stop">Do first</span></td></tr>
+<tr><td class="tick"><input type="checkbox" id="d-dryrun" aria-label="Consider seating the processor now"></td><td class="name">Consider doing step 1 tonight</td><td>The processor can sit in a closed socket indefinitely. Doing the irreversible step unhurried, with nothing else waiting, is easier than doing it on assembly night.</td><td><span class="chip neutral">You decide</span></td></tr>
+<tr><td class="tick"><input type="checkbox" id="d-nic" aria-label="Decide desktop NIC"></td><td class="name">Does the desktop have 10GbE?</td><td>You can just look: <code>LAN1</code>’s speed LED is green only at 10 Gbps. A slower link still works — it only changes how long a model file takes to copy. No USB adapter reaches 10GbE; a used Intel X540-T2 or X550-T1 PCIe card at $30–60 is the real path.</td><td><span class="chip neutral">You decide</span></td></tr>
+<tr><td class="tick"><input type="checkbox" id="d-bench" aria-label="Decide where the bench lives"></td><td class="name">Where the bench lives</td><td>Near the router and an outlet, on a table that will not be bumped, a hand’s width of air on every side.</td><td><span class="chip neutral">You decide</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -352,30 +231,23 @@
   <section id="build">
     <p class="eyebrow">Part 2 · The build</p>
     <h2>Twelve steps, in this order</h2>
-    <p class="lede">Each step says what you are doing, what it should look or feel like when it is right, and the one condition where you stop instead of pushing on. Steps 1 to 5 are the board on the bench with no cable between it and the power supply. Step 7 is the first time the supply's switch is turned on. Budget an unhurried two to three hours for steps 0 to 9, then the night for step 10.</p>
+    <p class="lede">Steps 0 to 5 are the board on the bench with no power to it. Step 7 is the first time the supply is switched on. Allow two to three hours to step 9, then the night for step 10.</p>
 
     <ol class="steps">
-
       <li>
         <div class="body">
-          <h3>Before opening anything</h3>
-          <p><strong>Open bench</strong> means the board lies flat on its box with the parts mounted on it and the power supply beside it, no case. Workshop servers run like this for years. What it costs you is that nothing pushes air across the board except the cooler's own fans; step 9 reads the temperatures that tell you whether that matters.</p>
-          <p><strong>Static — the board’s own instructions, which replace what this guide said before.</strong> The printed Quick Installation Guide lists five precautions, and two of them set the procedure: <em>unplug the power cord from the wall socket before touching any components</em>, and <em>never place the server board directly on the carpet or the like; use a grounded wrist strap or touch a safety grounded object before you handle the components</em>. So <strong>the AC cord stays out of the wall until step 7.</strong> Earlier revisions of this guide had you plug it in at step 0 to ground the supply’s shell; the board’s manual says otherwise, and it wins.</p>
-          <p>What to do instead, best first: <strong>clip the wrist strap to the supply’s bare steel shell and wear it for the whole build.</strong> With the cord out, that shell is not earthed — but earthing is not the part that matters. The strap holds you, the supply and the board at the <em>same</em> potential, and a discharge needs a difference. Without a strap, do what the manual’s second precaution says: touch a safety grounded object — a radiator, the metal shell of a plugged-in appliance, the faceplate screw of a grounded outlet — before you pick up any part, and again every time you have walked away and come back. Leave every part in its bag until the step that uses it.</p>
-          <p><strong>Find these on the real board</strong> with the Quick Installation Guide open at its Motherboard Layout panel — section 2, the big drawing with 44 numbered callouts. Every name below is the one printed on that drawing and on the board itself:</p>
+          <h3>Before you start</h3>
+          <p><strong>Open bench</strong> is the board flat on its box, parts mounted on it, the supply beside it, no case. <strong>The AC cord stays out of the wall until step 7</strong> — the board’s manual says to unplug before touching components. Wear the wrist strap clipped to the supply’s shell, or touch grounded metal before you pick anything up. Leave parts bagged until the step that uses them.</p>
+          <p>Find these on the real board, with the sheet’s Motherboard Layout panel open. The names are the ones printed on the board:</p>
           <ul class="tight">
-            <li>The processor socket: a large square with a hinged metal frame and three screws, silkscreened <code>LGA4094 Socket SP3</code>. The board is 24.4 × 30.5 cm (9.6 × 12 in) — full ATX.</li>
-            <li>The eight memory slots, <code>DDR4_A1</code> to <code>DDR4_H1</code>, in two banks of four with the socket between them: A1–D1 on the side away from the power connectors, E1–H1 on the same side as them.</li>
-            <li><strong>Both</strong> M.2 slots — <code>M2_1</code> and <code>M2_2</code>, side by side below the socket. They are not interchangeable here; step 3 says which one to use and why.</li>
-            <li><code>ATXPWR1</code>, the wide 24-pin power connector along one edge.</li>
-            <li><code>ATX12V1</code>, an 8-pin power connector, and <code>ATX12V2</code>, a 4-pin one. Both feed the processor. Both get plugged in.</li>
-            <li><code>PANEL1</code>, the system panel header — the block of small pins a case’s power button would plug into — with <code>AUX_PANEL1</code> beside it and <code>SPEAKER1</code> nearby. Two pins of <code>PANEL1</code> are the power switch; the full User’s Manual says which.</li>
-            <li><strong>The fan headers — and there is no processor fan header.</strong> This board has seven, <code>FAN1</code> through <code>FAN7</code>, and the layout calls every one of them a System Fan Connector. <code>FAN1</code>, <code>FAN2</code> and <code>FAN3</code> are the group nearest the socket; <code>FAN4</code>–<code>FAN7</code> sit further out. The cooler goes on <code>FAN1</code>.</li>
-            <li><strong>Dr. Debug</strong>, a two-digit display near <code>TPM1</code>. It shows a code for whatever stage the board is stuck at, which is worth more than any amount of guessing at step 7.</li>
-            <li>The two selection jumpers <code>PE8_SEL</code> and <code>PE16_SEL</code>, and the <code>CLRMOS1</code> clear-CMOS pad, in the header row along the bottom edge. Do not move the jumpers yet; step 3 explains what they switch.</li>
-            <li>On the rear panel, in the order the quick guide’s I/O Panel drawing gives: a small <code>UID1</code> switch, <code>VGA1</code>, the <code>COM1</code> serial port, two USB 3.2 Gen1 ports, the management network port <code>IPMI_LAN1</code>, then the two 10GbE ports <code>LAN1</code> and <code>LAN2</code>, then a USB-C port. <strong>The small rear button is <code>UID1</code>, an identification light, not a power button.</strong> Pressing it does nothing you want and nothing you cannot undo.</li>
+            <li>Socket <code>LGA4094 Socket SP3</code>; memory slots <code>DDR4_A1</code>–<code>H1</code>, four each side.</li>
+            <li><code>ATXPWR1</code> (24-pin), <code>ATX12V1</code> (8-pin), <code>ATX12V2</code> (4-pin), together along the top edge.</li>
+            <li>Both M.2 sockets, <code>M2_1</code> and <code>M2_2</code>. Step 3 says which.</li>
+            <li><code>PANEL1</code>, and <code>FAN1</code> — one of seven fan headers. <strong>There is no processor fan header on this board.</strong></li>
+            <li><strong>Dr. Debug</strong>, a two-digit display near <code>TPM1</code>. It names whatever the board gets stuck on.</li>
+            <li>Rear: <code>UID1</code>, <code>VGA1</code>, <code>COM1</code>, USB, <code>IPMI_LAN1</code>, <code>LAN1</code>, <code>LAN2</code>, USB-C.</li>
           </ul>
-          <figure>
+<figure>
             <div class="fig">
               <svg class="dg" viewBox="0 0 1000 610" role="img" aria-label="Map of the ROMED8-2T redrawn from its Quick Installation Guide. The board stands upright with the rear ports down its left edge: UID1 switch, VGA1, COM1 serial, two USB, the IPMI_LAN1 management port, then LAN1 and LAN2. Four memory slots H1 to E1 sit above the processor socket and four more A1 to D1 below it. The two 12-volt processor power connectors and the 24-pin connector are on the upper right. Below the socket: seven PCIe slots on the left, the two M.2 sockets M2_2 and M2_1 in the middle, the two Mini-SAS connectors and fan headers on the right. A row of small headers runs along the bottom edge, ending in PANEL1.">
                 <defs><marker id="ar-g1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor" stroke="none"/></marker></defs>
@@ -470,10 +342,9 @@
                 <text class="e" x="484" y="594" text-anchor="middle">CLRMOS1 · PE8_SEL · PE16_SEL · TPM1 · Dr. Debug · BMC_SMB1 · AUX_PANEL1 · SPEAKER1 · PANEL1</text>
               </svg>
             </div>
-            <figcaption><b>Redrawn from the board’s own Quick Installation Guide, 14 Sep 2026.</b> Same orientation as the sheet in the box — rear ports down the left, memory in two banks around the socket — so the two can be read side by side. Every name is printed on the board. Proportions are approximate; relative positions are not. The amber parts are the three this build most often gets wrong: <b>both</b> 12V connectors get a cable, the SSD goes in <b>M2_2</b> and not M2_1, and <b>PANEL1</b> is where you short two pins because there is no power button.</figcaption>
+            <figcaption><b>Redrawn from the board’s own Quick Installation Guide.</b> Same orientation as the sheet in the box, so the two read side by side. Names are printed on the board; proportions are approximate. The amber parts are what this build most often gets wrong: <b>both</b> 12V connectors get a cable, the SSD goes in <b>M2_2</b>, and <b>PANEL1</b> is where you short two pins.</figcaption>
           </figure>
-
-          <figure>
+<figure>
             <div class="fig">
               <svg class="dg" viewBox="0 0 1000 250" role="img" aria-label="The rear port strip in the order the Quick Installation Guide numbers it: the UID1 switch, the VGA port, the COM1 serial port, two USB 3.2 Gen1 ports, the IPMI_LAN1 management network port, the two 10-gigabit ports LAN1 and LAN2, and a USB Type-C port. The management port is highlighted; it takes the first network cable and LAN1 the second.">
                 <rect class="node" x="40" y="50" width="920" height="110" rx="4"/>
@@ -513,36 +384,26 @@
                 <text class="s" x="500" y="238" text-anchor="middle">order and numbering follow the Quick Installation Guide’s I/O Panel panel</text>
               </svg>
             </div>
-            <figcaption><b>Three network ports, and the management one is the odd one out.</b> <code>IPMI_LAN1</code> is item 5 on the board’s own I/O Panel drawing, sitting beside the USB stack and apart from the <code>LAN1</code>/<code>LAN2</code> pair — that separation is how you identify it. Both network cables end at the router. Item 1 is the <code>UID1</code> switch: it toggles an identification light and does nothing else, so do not go looking for a power button here.</figcaption>
+            <figcaption><b>The management port is the network port that is not one of the pair.</b> That separation is how you identify it. Both cables end at the router. Item 1 is <code>UID1</code>, an identification light — there is no power button here.</figcaption>
           </figure>
-          <aside class="term"><b>IPMI / BMC</b>the board has a small computer of its own, the baseboard management controller, that runs whenever the power supply is switched on, even with the machine "off". It serves a web page on the management port where you can power the machine on, watch the screen and read every temperature sensor. It is also what drives the VGA port.</aside>
-          <div class="pair">
-            <div class="look"><b>Looks right when</b><p>You can point to every item on the list above on the real board, with the quick guide closed.</p></div>
-            <div class="stop"><b>Stop if</b><p>A label on the sheet does not match what is silkscreened on the board — the sheet covers both the ROMED8-2T and the ROMED8-NL, and boards have revisions. Trust the print on the board.</p></div>
-          </div>
+          <aside class="term"><b>IPMI / BMC</b>a small computer on the board that runs whenever the supply is on, even with the machine off. It serves a web page for power, screen and temperatures, and it drives the VGA port.</aside>
+          <div class="pair"><div class="look"><b>Looks right when</b><p>You can point to every item above on the real board.</p></div><div class="stop"><b>Stop if</b><p>A label on the sheet does not match the silkscreen. The sheet covers two boards and there are revisions — trust the board.</p></div></div>
+
         </div>
       </li>
-
       <li>
         <div class="body">
           <h3>Processor into the socket</h3>
-          <p class="esd">Ground yourself first: wrist strap on the supply’s shell, or touch a grounded metal object. Again every time you sit back down.</p>
-          <p>This is the one step where force in the wrong place does permanent damage, and it is also simple if you follow the order. The socket’s metal frame is held by <strong>three captive T20 Torx screws</strong> — they loosen but do not come out — and the board’s own Quick Installation Guide (section 5) labels them <strong>A, B, C</strong>. Its instruction is the same in both directions: <strong>unscrew A → B → C, and fasten A → B → C.</strong></p>
-          <div class="callout">
-            <h3>On the order, because two sources disagree</h3>
-            <p>AMD’s own SP3 documentation numbers these screws 1, 2, 3 and says to tighten 1→2→3 but loosen in reverse, 3→2→1. ASRock’s sheet for <em>this board</em> says A→B→C both ways. Revisions of this guide before 14 Sep 2026 followed AMD and told you to open 3-2-1.</p>
-            <p><strong>The two agree on the direction that matters.</strong> Fastening is what seats the processor evenly, and both say ascending — first screw, second, third. Opening only releases spring tension; nothing is being seated, so the order costs much less. Read what is actually stamped on your frame, and follow the sheet that came in the box: <strong>ascending both ways</strong>. If you would rather open in reverse because AMD says so, that is defensible too and breaks nothing.</p>
-          </div>
+          <p class="esd">Ground yourself first: wrist strap on the supply’s shell, or touch a grounded metal object.</p>
+          <p>The one step where force in the wrong place is permanent. Three captive T20 screws, lettered <strong>A, B, C</strong>. The board’s manual gives one order for both directions: <strong>A → B → C</strong>. (AMD’s general SP3 documentation says loosen in reverse; both agree on the fastening order, which is the one that seats it.)</p>
           <ul class="tight">
-            <li>Loosen the first screw, then the second, then the third. Lift the outer <strong>force frame</strong> up on its hinge — ASRock’s sheet calls this "the first retention cover".</li>
-            <li>Under it is a thinner <strong>rail frame</strong>, ASRock’s "second bracket". Lift it up on its hinge too.</li>
-            <li><strong>Take out the internal plastic cover.</strong> A protective plastic insert sits in the rail frame from the factory and has to come out before the processor goes in — ASRock’s step 4, and something earlier revisions of this guide never mentioned. Keep it: it goes back in if the board is ever stored or returned. Now the socket’s gold contacts are exposed. Do not touch them and do not let anything fall on them.</li>
-            <li>Take the processor, still in its plastic carrier. There is a small triangle on one corner of the carrier and a matching triangle on the rail frame. Match them.</li>
-            <li>Slide the carrier into the rail frame's guides from the top until it clicks. It should sit flat in the rail frame with no effort; you are sliding plastic into plastic, not pushing the processor into anything.</li>
-            <li>Lower the rail frame. Lower the force frame over it.</li>
-            <li>Tighten the first screw, then the second, then the third — ascending, which both sources agree on. Each screw turns freely, then stops. That stop is the end of travel: the socket is designed so that seated is seated. If you have a torque driver, 1.58 N·m (AMD’s figure; ASRock’s sheet gives no torque); if not, snug and stop.</li>
+            <li>Loosen A, B, C. Lift the outer <strong>force frame</strong>, then the <strong>rail frame</strong> under it.</li>
+            <li><strong>Take out the internal plastic cover</strong> and keep it. Now the contacts are exposed — do not touch them.</li>
+            <li>Hold the processor by its <strong>carrier frame</strong>; it never comes off. Triangle on the carrier to triangle on the rail frame.</li>
+            <li>Slide the carrier into the rail frame’s guides until it clicks. Plastic into plastic, no effort.</li>
+            <li>Lower the rail frame, lower the force frame, tighten A → B → C. 1.58 N·m if you have a torque driver.</li>
           </ul>
-          <figure>
+<figure>
             <div class="fig">
               <svg class="dg" viewBox="0 0 1000 400" role="img" aria-label="Left: top view of the socket's force frame, hinged on one side, with three captive screws lettered A, B and C; the board's manual says unscrew and fasten in the same order, A to B to C. The processor's carrier slides into the frame with its triangle matched to the frame's triangle. Right: the layers from top to bottom: force frame, rail frame, the internal plastic cover that must be taken out, the carrier holding the processor, and the socket contacts that are never touched.">
                 <defs><marker id="ar-g3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor" stroke="none"/></marker></defs>
@@ -583,28 +444,24 @@
                 <text class="e" x="740" y="312" text-anchor="middle">lift both frames · remove the plastic cover · slide the carrier in · lower both · A → B → C</text>
               </svg>
             </div>
-            <figcaption><b>Three screws in one order, and a carrier that slides in.</b> The letters are ASRock’s; the frame itself is stamped, and the stamps win if they differ. Their positions here follow AMD’s description — one opposite the hinge, two beside it — and are the least certain thing in this drawing. The dashed layer is the <b>internal plastic cover</b>: it ships inside the rail frame, it comes out before the processor goes in, and it is worth keeping. Nothing pushes the processor into anything — the carrier rides in the rail frame, and closing the force frame does the seating.</figcaption>
+            <figcaption><b>Three screws in one order, and a carrier that slides in.</b> The letters are ASRock’s; the frame itself is stamped, and the stamps win. Their positions here are the least certain thing in the drawing. The dashed layer is the <b>internal plastic cover</b> — out before the processor goes in, and worth keeping.</figcaption>
           </figure>
-          <aside class="term"><b>carrier frame</b>the plastic surround the processor ships in. On this socket the processor is never handled bare; the carrier is what you hold, and it stays on the chip inside the socket. ASRock’s sheet puts it twice, in bold and in a warning triangle: <em>install the carrier frame with the CPU, don’t separate them.</em> It also recommends AMD’s CPU installation tool — the plastic handle some EPYC chips ship with — if you have one; the carrier alone is the normal way.</aside>
-          <div class="pair">
-            <div class="look"><b>Feels right when</b><p>The carrier slid in with no resistance and clicked; all three screws turned freely and stopped at the same firmness.</p></div>
-            <div class="stop"><b>Stop if</b><p>A screw resists before it stops, or the frame will not sit flat. Open it again in the same order and check that the plastic cover came out and the carrier is fully in its guides. Never push harder.</p></div>
-          </div>
+          <div class="pair"><div class="look"><b>Looks right when</b><p>The carrier slid in with no resistance and clicked; all three screws turned freely and stopped at the same firmness.</p></div><div class="stop"><b>Stop if</b><p>A screw resists before it stops, or the frame will not sit flat. Open it again and check the plastic cover came out and the carrier is fully in its guides. Never push harder.</p></div></div>
+
         </div>
       </li>
-
       <li>
         <div class="body">
           <h3>Memory, all eight sticks</h3>
-          <p class="esd">Ground yourself first: wrist strap on the supply’s shell, or touch a grounded metal object. Again every time you sit back down.</p>
-          <p>Every slot gets a stick, so there is no choice about which slots to use. The board is <strong>one DIMM per channel</strong>: eight channels, eight slots, and the bandwidth this whole machine is built around only exists with all eight filled.</p>
+          <p class="esd">Ground yourself first: wrist strap on the supply’s shell, or touch a grounded metal object.</p>
+          <p>Every slot gets a stick — eight channels, eight slots, and the bandwidth this machine is built on only exists with all eight filled.</p>
           <ul class="tight">
-            <li>Unlock the slot by pressing its clip outward. <strong>These slots have one clip, not two</strong> — the board’s own sheet (section 7) shows a single clip at one end and a fixed lip at the other. Earlier revisions of this guide said both ends latch; they do not.</li>
-            <li>Look at the gold edge of the stick: the notch is off-centre. Turn the stick until the notch lines up with the ridge in the slot. It only fits one way.</li>
-            <li>Set the stick in the slot, then press straight down on both ends at once, evenly. The clip usually swings up and clicks as it seats — but ASRock makes "lock the clip" a separate third step, so treat the click as a bonus and close the clip deliberately with a fingertip. Seat the fixed end first and the clip end follows.</li>
-            <li>Repeat for all eight. Then run a finger along every clip: each one fully closed and flush, every stick at the same height.</li>
+            <li>Press the clip outward. <strong>One clip per slot</strong>, at one end; the other end is a fixed lip.</li>
+            <li>The notch on the gold edge is off-centre. Match it to the ridge — it only fits one way.</li>
+            <li>Press straight down on both ends evenly, then <strong>lock the clip by hand</strong>. Do not assume it closed itself.</li>
+            <li>All eight. Then run a finger along every clip: flush, and every stick at the same height.</li>
           </ul>
-          <figure>
+<figure>
             <div class="fig">
               <svg class="dg" viewBox="0 0 1000 300" role="img" aria-label="Two memory sticks over slots, end-on. Left, marked wrong: the stick is tilted and its off-centre notch does not line up with the slot's ridge, and the clip is open. Right, marked right: the notch sits on the ridge, the stick is pressed straight down, and the single clip is closed.">
                 <defs><marker id="ar-g4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor" stroke="none"/></marker></defs>
@@ -636,34 +493,27 @@
                 <text class="e" x="750" y="286" text-anchor="middle">one clip per slot · close it yourself</text>
               </svg>
             </div>
-            <figcaption><b>The notch is off-centre, so the stick only fits one way.</b> Line the notch up with the slot’s ridge before pushing. When it is right, firm even pressure on both ends seats it. These slots carry <b>one clip</b>, and the board’s manual makes locking it a step of its own — so close it by hand rather than trusting the click. If it needs real force, it is the wrong way round.</figcaption>
+            <figcaption><b>The notch is off-centre, so the stick only fits one way.</b> Line it up before pushing. One clip per slot, and locking it is a step of its own — close it by hand rather than trusting the click.</figcaption>
           </figure>
-          <aside class="term"><b>ECC RDIMM</b>server memory. ECC means it detects and corrects single-bit errors instead of silently corrupting data; registered (the R) means a buffer chip on each stick lets the board run eight of them at full speed. It is not interchangeable with desktop memory.</aside>
-          <div class="pair">
-            <div class="look"><b>Feels right when</b><p>Each stick took firm, even pressure, sits at the same height as its neighbours, and its clip is locked flush.</p></div>
-            <div class="stop"><b>Stop if</b><p>A stick needs real force. It is turned the wrong way. Take it out and match the notch.</p></div>
-          </div>
+          <aside class="term"><b>ECC RDIMM</b>server memory. ECC corrects single-bit errors instead of silently corrupting data; registered means a buffer chip lets the board run eight of them at full speed. Not interchangeable with desktop memory.</aside>
+          <div class="pair"><div class="look"><b>Looks right when</b><p>Each stick took firm even pressure, sits level with its neighbours, clip locked flush.</p></div><div class="stop"><b>Stop if</b><p>A stick needs real force. It is the wrong way round — check the notch.</p></div></div>
+
         </div>
       </li>
-
       <li>
         <div class="body">
-          <h3>The SSD into the second M.2 slot</h3>
-          <p class="esd">Ground yourself first: wrist strap on the supply’s shell, or touch a grounded metal object. Again every time you sit back down.</p>
-          <p>The Kingston stick is 80mm long, size <strong>2280</strong>. The slot has nut positions at several lengths and the board’s own sheet (section 10) names them. For <code>M2_2</code> they run <strong>A</strong> 3cm (2230), <strong>B</strong> 4.2cm (2242), <strong>C</strong> 6cm (2260), <strong>D</strong> 8cm (2280), <strong>E</strong> 11cm (22110). <strong>Your drive uses position D.</strong> <code>M2_1</code> has the same positions minus E, which is why it stops at 2280.</p>
+          <h3>The SSD into M2_2</h3>
+          <p class="esd">Ground yourself first: wrist strap on the supply’s shell, or touch a grounded metal object.</p>
           <div class="callout stop">
-            <h3>Use <code>M2_2</code>, not <code>M2_1</code></h3>
-            <p>The board has two M.2 sockets and they are not equivalent. The Quick Installation Guide’s jumper table (section 4) shows that <code>M2_1</code> shares its lanes with the <code>PCIE2</code> slot, the second Mini-SAS connector and the two OCuLink ports, and which of them are live is set by the <code>PE8_SEL</code> and <code>PE16_SEL</code> jumpers. In two of the four documented jumper positions — both of the ones where <code>PE16_SEL</code> is on pins 1-2 — <strong><code>M2_1</code> is switched off entirely.</strong> A drive in it would simply not exist: no error, no light, just nothing in the BIOS.</p>
-            <p><code>M2_2</code> does not appear in that table at all, so no jumper can take it away, and it accepts every length up to 22110. The 2280 Kingston fits it. Put the drive there and the trap never comes up. If you ever do want <code>M2_1</code>, <code>PE16_SEL</code> has to be on pins 2-3, and you give up <code>PCIE2</code> running at full x16 to get it.</p>
-            <p class="note">Found on 14 Sep 2026 by reading the board’s own quick guide. Nothing before this had it, including this guide.</p>
+            <h3>Use <code>M2_2</code></h3>
+            <p><code>M2_1</code> shares lanes with <code>PCIE2</code> and the OCuLink ports, and the <code>PE16_SEL</code> jumper switches it off in two of its four documented positions — silently. A drive in it would just not appear. No jumper touches <code>M2_2</code>. Check the silkscreen, not which one is on the left.</p>
           </div>
           <ul class="tight">
-            <li>Find <code>M2_2</code> — of the two side-by-side M.2 slots, it is the one whose silkscreen reads <code>M2_2</code>. Check the print; do not go by which is on the left.</li>
-            <li>Move the standoff to <strong>position D</strong>, the 8cm nut location. <strong>Peel the yellow protective film off the nut first</strong> — it ships with one on, ASRock says so in step 3, and nothing else in this build has a film to remove. Then hand-tighten the standoff; no driver.</li>
-            <li>Hold the stick at about 20 degrees and push its gold edge into the slot until it stops. It will spring up at an angle; that is normal.</li>
-            <li>Press it flat against the standoff and fix it with the small screw. Snug, not tight — ASRock’s step 5 says in as many words not to overtighten. The screw only stops the stick springing back up.</li>
+            <li>Move the standoff to <strong>position D</strong>, the 8cm nut, for this 2280 drive. <strong>Peel the yellow film off the nut first.</strong> Hand-tighten it; no driver.</li>
+            <li>Insert the stick at about 20° until it stops. It springs up — normal.</li>
+            <li>Press flat and fix with the small screw. Snug; the manual says not to overtighten.</li>
           </ul>
-          <figure>
+<figure>
             <div class="fig">
               <svg class="dg" viewBox="0 0 1000 250" role="img" aria-label="Side view of the M.2 slot. The stick goes into the connector at about twenty degrees, then is pressed flat onto a standoff at nut position D, the 80-millimetre mark, and held with one small screw.">
                 <defs><marker id="ar-g5" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor" stroke="none"/></marker></defs>
@@ -683,29 +533,24 @@
                 <line class="accl" x1="560" y1="96" x2="560" y2="164" marker-end="url(#ar-g5)"/>
               </svg>
             </div>
-            <figcaption><b>In at an angle, then flat.</b> The stick springs up after it is inserted; that is normal. The screw only stops it springing back, so snug is enough — the sheet says not to overtighten it. Chips face up. The standoff belongs at nut position <b>D</b>, and its yellow protective film comes off before it goes in.</figcaption>
+            <figcaption><b>In at an angle, then flat.</b> The stick springs up after it goes in; that is normal. The screw only stops it springing back, so snug is enough. Chips face up, standoff at position <b>D</b>, film off the nut first.</figcaption>
           </figure>
-          <aside class="term"><b>M.2 / NVMe</b>a solid-state drive that plugs straight into the board and talks over PCI Express, the same bus a graphics card uses. This one holds the operating system and the two or three models in active use. The board carries no SATA sockets — its eight SATA ports come out of two Mini-SAS HD connectors, silkscreened <code>SATA_0_3</code> and <code>SATA_4_7</code>, and need a breakout cable — which is why the archive drive stays external over USB.</aside>
-          <div class="pair">
-            <div class="look"><b>Looks right when</b><p>The stick lies flat and parallel to the board, screwed down at its far end, chips facing up.</p></div>
-            <div class="stop"><b>Stop if</b><p>The stick will not go in far enough for the screw hole to reach the standoff. The gold edge is not fully in the slot; take it out and re-insert at the angle. And if the drive is missing in the BIOS at step 8, check first that it is in <code>M2_2</code>.</p></div>
-          </div>
+          <div class="pair"><div class="look"><b>Looks right when</b><p>The stick lies flat and parallel to the board, screwed at its far end, chips up, in <code>M2_2</code>.</p></div><div class="stop"><b>Stop if</b><p>It will not go in far enough for the screw to reach. The gold edge is not fully seated — take it out and re-insert at the angle.</p></div></div>
+
         </div>
       </li>
-
       <li>
         <div class="body">
           <h3>The cooler</h3>
-          <p class="esd">Ground yourself first: wrist strap on the supply’s shell, or touch a grounded metal object. Again every time you sit back down.</p>
-          <p>Follow ARCTIC's printed steps for the <strong>SP3 / TR4</strong> socket; they are the same mounting for both. The bracket screws come up from the cooler's mounting frame into the threaded holes that already surround the socket, so there is no backplate to fit. The PH1 Phillips is the tool.</p>
+          <p class="esd">Ground yourself first: wrist strap on the supply’s shell, or touch a grounded metal object.</p>
           <ul class="tight">
-            <li><strong>Clean the lid first.</strong> With the processor seated and the socket closed, wipe its metal lid with the cloth and isopropyl until it is bare, dull metal with no grey residue; a used chip usually has old paste on it. Let it dry for a minute. Nothing drips into the socket because the lid sits above the closed frame.</li>
-            <li><strong>Paste.</strong> The processor's metal lid is enormous compared with a desktop chip. Squeeze the whole 0.8g syringe onto it and spread it thin and even across the entire lid with the spreader in the box, or the edge of a card. A pea-sized dot in the middle, the desktop habit, leaves most of this lid dry. The syringe is one application; there is no second try without more paste.</li>
-            <li><strong>Orientation.</strong> Each fan has an arrow on its frame showing which way air moves. Mount the tower so the arrows point at the rear panel, the edge with the VGA and network ports. On a bench there is no case to dictate this; the direction still matters because the board was designed for air to leave at that edge, past the finned voltage-regulator heatsinks that sit beside the socket. Memory is on both sides of the socket and gets air either way.</li>
-            <li>Set the heatsink down squarely, start all bracket screws by hand, then tighten in a cross pattern a few turns each until they all stop. Do not fully tighten one corner before the others have started.</li>
-            <li>Clip both fans on. Plug the fan lead into <code>FAN1</code>. <strong>This board has no processor fan header</strong> — its seven headers are <code>FAN1</code> to <code>FAN7</code> and the layout calls every one a System Fan Connector, so there is no "CPU fan" socket to find and no CPU-fan alarm to trip. <code>FAN1</code> is simply the nearest. If the box had two separate leads and no splitter, the second goes to <code>FAN2</code>.</li>
+            <li><strong>Clean the lid first.</strong> With the socket closed, wipe the metal lid with isopropyl until it is bare, dull metal. A used processor carries old paste, and new over old runs hot. Let it dry.</li>
+            <li>Fit ARCTIC’s <strong>SP3 / TR4</strong> bracket — PH1 screwdriver, screws up from under the mounting frame into the socket’s own holes.</li>
+            <li>Spread the MX-6 <strong>thin over the whole lid</strong> with the spreader or a card. The lid is far bigger than a desktop chip’s and 0.8g is one application.</li>
+            <li>Seat the tower with its <strong>airflow arrow pointing at the rear ports</strong>. Tighten the nuts a little at a time, crosswise, until they stop.</li>
+            <li>Clip both fans on and plug the lead into <code>FAN1</code>. If there are two leads, the second goes to <code>FAN2</code>.</li>
           </ul>
-          <figure>
+<figure>
             <div class="fig">
               <svg class="dg" viewBox="0 0 1000 320" role="img" aria-label="Left: two processor lids, one with a small central dot of paste marked wrong because most of the lid stays dry, one with a thin layer spread over the whole lid marked right. Right: top view of the cooler on the socket between the memory banks, with its fan arrows pointing toward the rear-port edge of the board.">
                 <defs><marker id="ar-g6" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor" stroke="none"/></marker></defs>
@@ -742,29 +587,23 @@
                 <text class="ta" x="645" y="80" text-anchor="middle">← exhaust</text>
               </svg>
             </div>
-            <figcaption><b>Spread the paste over the whole lid, and point the exhaust at the rear ports.</b> The lid is far bigger than a desktop chip's; a central dot leaves most of it dry. Memory sits on both sides of the socket, so air crosses one bank on the way in and the other on the way out whichever way the tower faces. What the direction sets is where the warm air ends up: at the port edge, past the voltage-regulator heatsinks, which is the direction the board was designed around.</figcaption>
+            <figcaption><b>Spread the paste over the whole lid, and point the exhaust at the rear ports.</b> The lid is far bigger than a desktop chip’s, so a central dot leaves most of it dry. The direction sets where the warm air ends up: at the port edge, past the voltage-regulator heatsinks.</figcaption>
           </figure>
-          <aside class="term"><b>PWM</b>the 4-pin fan connection where the board sets the speed rather than the fan choosing it. Every header here is a system fan header, so speed comes from the board’s fan policy in the BIOS and from the management controller, not from a processor-fan rule. Whichever header you use, confirm at step 9 that it reports a sensible RPM.</aside>
-          <div class="pair">
-            <div class="look"><b>Looks right when</b><p>The tower does not rock when you push its top gently; the arrows point at the ports; the fan lead is in <code>FAN1</code>.</p></div>
-            <div class="stop"><b>Stop if</b><p>The heatsink lands on the memory clips or the cooler cannot sit flat. Check you used the SP3 / TR4 hardware and not another socket's.</p></div>
-          </div>
+          <div class="pair"><div class="look"><b>Looks right when</b><p>The tower does not rock when you push its top; the arrows point at the ports; the lead is in <code>FAN1</code>.</p></div><div class="stop"><b>Stop if</b><p>The heatsink lands on the memory clips or will not sit flat. Check you used the SP3 / TR4 hardware.</p></div></div>
+
         </div>
       </li>
-
       <li>
         <div class="body">
           <h3>Power supply cables</h3>
-          <p class="esd">Ground yourself first: wrist strap on the supply’s shell, or touch a grounded metal object. Again every time you sit back down.</p>
-          <p>The supply is fully modular: nothing is attached until you attach it. Only <strong>three cables</strong> run from it to the board in this build. No graphics card means no graphics-card cable, and the board’s own <code>GFX_12V1</code> auxiliary graphics power connector stays empty too. The AC cord is still out of the wall, per step 0 and the board’s manual; it goes in at step 7. The supply’s switch stays <strong>off</strong> throughout this step.</p>
+          <p class="esd">Ground yourself first: wrist strap on the supply’s shell, or touch a grounded metal object.</p>
+          <p>Fully modular, so only three cables go to the board. No graphics card means no PCIe cable, and the board’s <code>GFX_12V1</code> stays empty. Supply switch stays at <strong>O</strong> and the AC cord stays out.</p>
           <ul class="tight">
-            <li><strong>24-pin</strong> motherboard cable → <code>ATXPWR1</code>. It has a latch; push until it clicks, then tug to confirm.</li>
-            <li><strong>CPU cable #1</strong>, the 8-pin end → <code>ATX12V1</code>, the 8-pin socket. Keep its two 4-pin halves together.</li>
-            <li><strong>CPU cable #2</strong>, split into 4+4 → one 4-pin half into <code>ATX12V2</code>. The other half hangs free; tie it off. <strong>Both</strong> 12V connectors get populated. <strong>Confirmed from the board’s own sheet, 14 Sep 2026:</strong> section 6 draws all three power connectors with their pinouts — a 24-pin, an <strong>8-pin 12V</strong> and a <strong>4-pin 12V</strong> — so the counts this guide quotes are the board’s, not an inference. What the sheet still does not say <em>in words</em> is whether the 4-pin is mandatory; it shows it as part of power installation, and filling both is correct either way.</li>
-            <li><strong>AC cord</strong>: still out of the wall. Check the rocker is on "O". Both go live at step 7.</li>
+            <li><strong>24-pin</strong> → <code>ATXPWR1</code>. Push until the latch clicks, then tug.</li>
+            <li><strong>CPU cable 1</strong>, 8-pin end → <code>ATX12V1</code>.</li>
+            <li><strong>CPU cable 2</strong>, one 4-pin half → <code>ATX12V2</code>. Tie off the other half. <strong>Both 12V connectors get one.</strong></li>
           </ul>
-
-          <figure>
+<figure>
             <div class="fig">
               <svg class="dg" viewBox="0 0 1000 380" role="img" aria-label="The power supply on the left with its switch at O and the wall cord in. Three cables run to the board on the right: the 24-pin to ATXPWR1, the first CPU cable's 8-pin end to ATX12V1, and one 4-pin half of the second CPU cable to ATX12V2, with its other half tied off unused. The two 12-volt runs are highlighted.">
                 <defs><marker id="ar-g7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor" stroke="none"/></marker></defs><defs><marker id="ara-g7" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)" stroke="none"/></marker></defs>
@@ -800,57 +639,36 @@
                 <text class="e" x="596" y="354" text-anchor="start">other half · tied off</text>
               </svg>
             </div>
-            <figcaption><b>Three cables to the board, and both 12-volt connectors get one.</b> The 8-pin socket takes a whole CPU cable end; the 4-pin socket takes one half of the second CPU cable, and the leftover half is tied off. No cable goes to a graphics card because there is none.</figcaption>
+            <figcaption><b>Three cables, and both 12-volt connectors get one.</b> The 8-pin socket takes a whole CPU cable end; the 4-pin takes one half of the second, and the leftover half is tied off. No cable goes to a graphics card because there is none.</figcaption>
           </figure>
-          <p>Every plug is keyed and latched. If one seems to fit backwards, it is the wrong plug or the wrong socket: the 8-pin CPU plug and the 8-pin graphics-card plug on the supply side look similar but are not interchangeable, and the cable labels say which is which.</p>
-          <aside class="term"><b>EPS / ATX12V</b>the 12-volt cables that feed the processor’s voltage regulators directly, separate from the 24-pin that feeds everything else. A 155W server processor with eight memory channels draws more through them than a desktop chip, hence two connectors — one 8-pin and one 4-pin, twelve pins between them, half carrying 12V and half ground.</aside>
-          <div class="pair">
-            <div class="look"><b>Looks right when</b><p>Three cables into the board, all latched, the spare 4-pin half tied off, the supply resting beside the board with its fan facing open air and nothing lying on the memory.</p></div>
-            <div class="stop"><b>Stop if</b><p>A plug needs force or sits proud of its socket. Check the key. Never power on with a half-seated 12V connector.</p></div>
-          </div>
+          <aside class="term"><b>EPS / ATX12V</b>the 12-volt cables feeding the processor’s voltage regulators directly, separate from the 24-pin. A 155W server chip with eight memory channels needs two connectors, an 8-pin and a 4-pin.</aside>
+          <div class="pair"><div class="look"><b>Looks right when</b><p>Three cables in, all latched, spare half tied off, supply beside the board with its fan in open air and nothing lying on the memory.</p></div><div class="stop"><b>Stop if</b><p>A plug needs force or sits proud. Check the key. Never power on with a half-seated 12V connector.</p></div></div>
+
         </div>
       </li>
-
       <li>
         <div class="body">
           <h3>Monitor, keyboard, network</h3>
           <ul class="tight">
-            <li>Monitor cable → the board’s <strong><code>VGA1</code></strong> port on the rear panel (or the adapter, then the monitor). Not <code>COM1</code> beside it — that is a 9-pin serial port and the plug will not fit anyway.</li>
-            <li>Keyboard → any rear USB port.</li>
-            <li>Ethernet cable #1 → the <strong>dedicated management port</strong>, silkscreened <code>IPMI_LAN1</code> and the only network port that is not one of the 10GbE pair; other end into the router.</li>
-            <li>Ethernet cable #2 → <strong>LAN1</strong>, other end into the router.</li>
-            <li>Nothing else. Not the G-DRIVE, not the memtest stick yet.</li>
+            <li>Monitor → <code>VGA1</code>. Not <code>COM1</code> beside it, which is serial.</li>
+            <li>Keyboard → any rear USB.</li>
+            <li>Cable 1 → <code>IPMI_LAN1</code>, the network port that is not one of the 10GbE pair. Cable 2 → <code>LAN1</code>. Both to the router.</li>
+            <li>Nothing else yet.</li>
           </ul>
-          <p>Once the supply is switched on at step 7, the port LEDs tell you what negotiated — which is how you settle the open question about the desktop’s link speed without installing anything. From the board’s sheet, section 8:</p>
-          <div class="scroll">
-            <table>
-              <thead><tr><th>Port</th><th>Speed LED off</th><th>Yellow</th><th>Green</th></tr></thead>
-              <tbody>
-                <tr><td class="name"><code>IPMI_LAN1</code></td><td>10 Mbps, or no link</td><td>100 Mbps</td><td>1 Gbps</td></tr>
-                <tr><td class="name"><code>LAN1</code> / <code>LAN2</code></td><td>100 Mbps or no link — <strong>and also 1 Gbps</strong></td><td>1 Gbps on R3.0X boards only</td><td><strong>10 Gbps</strong></td></tr>
-              </tbody>
-            </table>
-          </div>
-          <p class="note">The odd one is the 10GbE pair: a dark speed LED with a live link means 1 Gbps, not a fault. Only <strong>green means 10 Gbps</strong>. On both ports the other LED is activity — off for no link, on for link, blinking yellow for traffic.</p>
-          <div class="pair">
-            <div class="look"><b>Looks right when</b><p>Two network cables in two different ports, the management one on its own away from the LAN1/LAN2 pair.</p></div>
-            <div class="stop"><b>Stop if</b><p>You cannot tell the management port from the two 10GbE ports. The quick guide’s I/O Panel drawing labels all eight items — <code>IPMI_LAN1</code> is item 5, <code>LAN1</code> and <code>LAN2</code> are 6 and 7. Do not guess: the management page will not appear on the wrong port.</p></div>
-          </div>
+          <p class="note">Once power is on, the speed LEDs tell you what negotiated. <code>IPMI_LAN1</code>: green = 1 Gbps, yellow = 100 Mbps. <code>LAN1</code>/<code>LAN2</code>: <strong>green = 10 Gbps</strong>, and a dark speed LED with a live link means 1 Gbps, not a fault.</p>
+          <div class="pair"><div class="look"><b>Looks right when</b><p>Two network cables in two different ports, the management one away from the pair.</p></div><div class="stop"><b>Stop if</b><p>You cannot tell the management port from the 10GbE pair. The sheet’s I/O Panel drawing numbers them — do not guess.</p></div></div>
+
         </div>
       </li>
-
       <li>
         <div class="body">
           <h3>First power</h3>
-          <p>Two things happen in sequence, and the gap between them is where first builds get abandoned.</p>
           <ul class="tight">
-            <li><strong>Plug the AC cord into the wall now</strong> — this is the first time it goes in — and then <strong>switch the supply on</strong> (the "I" position). Nothing visible should happen except perhaps a status LED on the board and the fans twitching or spinning for a moment. The management controller is now booting on standby power. <strong>Give it two minutes.</strong> The screen stays black. This is normal.</li>
-            <li><strong>Press power</strong>: the management page’s power button, the screwdriver across the two power-button pins for a second, or the pigtail. The fans start.</li>
+            <li><strong>Plug the AC cord into the wall</strong> — first time — and switch the supply to <strong>I</strong>. Fans may twitch. <strong>Wait two minutes</strong> while the management controller boots. Black screen is normal.</li>
+            <li><strong>Press power.</strong> Three ways: the management page; a screwdriver tip for one second across <code>PWRBTN#</code> and the <code>GND</code> beside it on <code>PANEL1</code>; or a pigtail.</li>
+            <li><strong>Wait again.</strong> First boot with 128GB takes <strong>two to four minutes</strong> to train memory before anything appears. Not a failure until five have passed.</li>
           </ul>
-          <div class="callout">
-            <h3>Which two pins — answered, 14 Sep 2026</h3>
-            <p>The board’s Quick Installation Guide prints the <code>PANEL1</code> pinout in section 9. It is eight pins in two rows of four, with pin 1 marked at the lower left:</p>
-            <figure>
+<figure>
               <div class="fig">
                 <svg class="dg" viewBox="0 0 1000 240" role="img" aria-label="The system panel header, eight pins in two rows of four. The upper row reads PLED plus, PLED minus, PWRBTN hash and GND. The lower row reads GND, RESET hash, HDLED minus and HDLED plus, with pin 1 at the lower left. The power button pair, PWRBTN hash and the GND beside it, is highlighted.">
                   <text class="e" x="250" y="42" text-anchor="middle">PLED+</text>
@@ -880,13 +698,9 @@
                   <text class="s" x="612" y="146" text-anchor="start">labels and row order from the sheet’s section 9 · pin 1 as it marks it</text>
                 </svg>
               </div>
-              <figcaption><b><code>PWRBTN#</code> and the <code>GND</code> next to it, on the same row.</b> Touch a screwdriver tip across that pair for about a second and let go, exactly as a case’s power button would. The worst thing a mis-poke on this header does is reset the machine — but <b>do not confuse it with <code>AUX_PANEL1</code> beside it</b>, which carries standby power on some of its pins. Check the silkscreen before you touch anything.</figcaption>
+              <figcaption><b><code>PWRBTN#</code> and the <code>GND</code> next to it, same row.</b> A screwdriver tip across the pair for a second, exactly as a case button would. A mis-poke here at worst resets the machine — but <b>do not confuse it with <code>AUX_PANEL1</code></b> beside it, which carries standby power.</figcaption>
             </figure>
-          </div>
-          <ul class="tight">
-            <li><strong>Wait.</strong> A server processor with 128GB of memory can take <strong>two to four minutes</strong> on its very first boot before anything appears on screen, because the board is measuring every memory channel. A black screen with fans running is not a failure until five full minutes have passed. Then the ASRock Rack splash appears on the VGA monitor.</li>
-          </ul>
-          <figure>
+<figure>
             <div class="fig">
               <svg class="dg" viewBox="0 0 1000 230" role="img" aria-label="A timeline of the first power-on. Switching the supply on starts about two minutes in which the management controller boots and the screen stays black, which is normal. Then the power button is pressed, and up to five minutes pass while memory is trained with fans running and the screen still black, also normal. Then the splash appears. Only after five minutes with no splash is it time to check the connections.">
                 <defs><marker id="ar-g8" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor" stroke="none"/></marker></defs>
@@ -912,115 +726,87 @@
                 <text class="e" x="565" y="76" text-anchor="middle">fans on · screen black · still normal</text>
               </svg>
             </div>
-            <figcaption><b>Two waits, both normal.</b> Nothing on screen for the first two minutes after the switch, and nothing for up to five after pressing power, is the board doing its job. The moment to start checking connectors is five minutes after pressing power with no splash, not before.</figcaption>
+            <figcaption><b>Two waits, both normal.</b> Nothing on screen for two minutes after the switch, and nothing for up to five after pressing power, is the board working. Start checking connectors at five minutes, not before.</figcaption>
           </figure>
-          <aside class="term"><b>POST</b>power-on self-test, the board's own checks before any operating system. The first POST after new memory is installed is slow, and every later one is much faster.</aside>
+          <aside class="term"><b>POST</b>the board’s own checks before any operating system. The first POST after new memory is slow; later ones are much faster.</aside>
           <div class="callout stop">
-            <h3>No splash after five minutes</h3>
-            <p><strong>Read Dr. Debug first.</strong> The two-digit display near <code>TPM1</code> holds the code for the stage the board stopped at, and it turns a blind hunt into one lookup. Photograph it before you change anything, then find it in the full User’s Manual’s code table. There will be no beeps to listen for: the board has a <code>SPEAKER1</code> header but no speaker is part of this build, so the display is the whole signal.</p>
-            <p>Then switch the supply off and check in this order, each one fully: both 12V connectors seated (the usual cause); the 24-pin latched; all eight memory clips locked; the three socket screws snug in order; the monitor on <code>VGA1</code> and switched to that input. Switch on, wait two minutes for the management controller, press power, wait five.</p>
+            <h3>Nothing after five minutes</h3>
+            <p><strong>Read Dr. Debug first</strong> — the two-digit code names the stage it stopped at. Photograph it, then look it up. There will be no beeps; the board has a <code>SPEAKER1</code> header but no speaker was bought.</p>
+            <p>Then switch off and check, each fully: both 12V connectors seated; the 24-pin latched; all eight memory clips locked; the three socket screws snug; the monitor on <code>VGA1</code> and that input selected.</p>
           </div>
         </div>
       </li>
-
       <li>
         <div class="body">
           <h3>First visit to the BIOS</h3>
-          <p>Tap <strong>Del</strong> once a second from the moment the splash appears until the setup screen opens (the splash names the key; on ASRock Rack boards it is Del or F2). This is the BIOS, the board's own settings. Read, change almost nothing.</p>
+          <p>Press <strong>Del</strong> at the splash.</p>
           <ul class="tight">
-            <li><strong>Confirm the processor</strong>: EPYC 7452, 32 cores.</li>
-            <li><strong>Confirm the memory</strong>: 131072 MB (that is 128GB) at 3200 MT/s. If it reads 65536 or 98304 MB, one or more sticks are not seated: power off and check every clip again.</li>
-            <li><strong>Confirm the SSD</strong> appears in the storage or NVMe list.</li>
-            <li><strong>Note the management IP.</strong> Under Server Mgmt → BMC Network Configuration the board shows the address it got from the router. Write it down. If it shows 0.0.0.0, the management cable is in the wrong port or the router has not handed out an address yet.</li>
-            <li><strong>Set boot mode to UEFI</strong> and set the date and time.</li>
-            <li>Leave everything else at defaults for now. The NUMA setting stays at NPS1, SMT stays on.</li>
+            <li><strong>Processor</strong>: EPYC 7452, 32 cores.</li>
+            <li><strong>Memory</strong>: 131072 MB at 3200. If it reads 65536 or 98304, sticks are not seated — power off and check every clip.</li>
+            <li><strong>Storage</strong>: the Kingston listed. If not, check it is in <code>M2_2</code>.</li>
+            <li>Note the management IP under <strong>Server Mgmt → BMC Network</strong>, or read it off the router’s lease table.</li>
+            <li>Set boot to UEFI and set the date. <strong>Change nothing else</strong> — NPS stays 1, SMT on.</li>
           </ul>
-          <aside class="term"><b>UEFI</b>the modern boot method. The operating-system installer and memtest86+ both expect it; the older "legacy" mode is not needed for anything here.</aside>
-          <div class="pair">
-            <div class="look"><b>Looks right when</b><p>32 cores, 131072 MB, one NVMe drive, a management IP that starts like your other home devices' addresses.</p></div>
-            <div class="stop"><b>Stop if</b><p>The memory speed reads 2933 or lower with all eight sticks detected. Look for a memory-speed setting left at "auto" and check the kit is the 3200 part you ordered.</p></div>
-          </div>
         </div>
       </li>
-
       <li>
         <div class="body">
           <h3>Log in to the management page</h3>
-          <p>From the desktop, open a browser at the management IP from step 8, over <code>https</code>. The browser will warn that the connection is not private; that is expected, the board signed its own certificate, and the page is on your home network. Choose the advanced or proceed option to continue. Log in with <strong>admin</strong> / <strong>admin</strong>. The board makes you change the password immediately. Put the new one in the repo's encrypted secrets file (the sops file the plan describes), not in this document and not in a note on the bench.</p>
           <ul class="tight">
-            <li><strong>Sensors</strong>: read and write down the idle temperatures for the processor, the voltage regulators (VRM) and the memory (DIMM). The plan's later thermal check (its step A4) reads the same sensors under a full inference load and decides whether the bench needs a fan; without idle values there is nothing to compare.</li>
-            <li><strong>Remote control / console</strong>: the machine's screen and keyboard, in the browser tab. From now on the VGA monitor and the keyboard on the bench are optional.</li>
-            <li><strong>Power control</strong>: on, off, reset. This is the power button for the rest of the machine's life.</li>
+            <li>From the desktop, browse to the management IP. Default login <code>admin</code> / <code>admin</code>; it forces a change. Put the new password in the sops file, not here.</li>
+            <li>Open <strong>Sensors</strong> and write down idle VRM, DIMM and processor temperatures. This is the page read again under load.</li>
+            <li>Check <code>LAN1</code>’s speed LED while you are here.</li>
           </ul>
-          <div class="pair">
-            <div class="look"><b>Looks right when</b><p>The sensors page shows live readings and the console shows the BIOS screen you were just looking at.</p></div>
-            <div class="stop"><b>Stop if</b><p>The page does not load. Confirm the cable is in the management port, not LAN1; check the router's list of connected devices for a new one; wait two more minutes and retry.</p></div>
-          </div>
+          <p class="note">From now on this page is the power button, the screen and the thermometer — no monitor needed at the bench.</p>
         </div>
       </li>
-
       <li>
         <div class="body">
-          <h3>memtest86+ overnight, inside the return window</h3>
-          <p>This is the step with a deadline. A faulty stick found now is a defective-product return, paid by the vendor. The same stick found in month four is a warranty claim that needs a matched replacement on a board that wants all eight identical. The window is 30 days from delivery: the parts were confirmed in hand on 13 September 2026, which puts the last day at <strong>13 October 2026</strong> — sooner if the invoice shows the kit was delivered before then. Work to the invoice date.</p>
+          <h3>memtest86+ overnight</h3>
+          <p><strong>The step with a deadline: <strong>13 October 2026</strong> at the latest, earlier if the invoice shows an earlier delivery.</strong> A faulty stick found inside the window is a vendor-paid return. Found later it is a warranty claim needing a matched replacement.</p>
           <ul class="tight">
-            <li>On the desktop, download memtest86+ from <a href="https://www.memtest.org/">memtest.org</a> (the same files are on its <a href="https://github.com/memtest86plus/memtest86plus/releases">GitHub releases page</a>). Take the free, open memtest86+, not the similarly named commercial MemTest86; either works, this one costs nothing. On Windows use the "USB installer" download, which writes the stick itself. On Linux or macOS take the <code>.img</code> and write it with <code>dd</code> to the stick's base device, not a partition. Either way the stick is erased.</li>
-            <li>Plug the stick into a rear USB port on the board. Power on (or reset) and press the boot-menu key the splash names (usually F11 on ASRock boards). Choose the USB stick; pick the entry that starts with "UEFI" if two are offered.</li>
-            <li>Let it run <strong>all passes, all night</strong>, with all eight sticks installed. The screen counts passes and errors.</li>
-            <li>In the morning: <strong>zero errors</strong> across at least two completed passes is a pass; with 128GB a single pass takes an hour or more, so a full night gives several. Photograph the screen with the pass count and date visible.</li>
-            <li>Any error at all: power off, leave one stick in <code>DDR4_A1</code> — the quick guide names the slots but not the single-module one, and A1 is the convention; the full User’s Manual confirms it — and test again; rotate through the eight until the failing stick is found. Return that stick under the vendor’s defective-return process, not a warranty claim.</li>
+            <li>Write memtest86+ to the USB stick from <a href="https://www.memtest.org/">memtest.org</a> (or its <a href="https://github.com/memtest86plus/memtest86plus/releases">GitHub releases</a>). Take the free memtest86+, not the commercial MemTest86. Windows: the USB installer. Linux/macOS: <code>dd</code> the <code>.img</code> to the base device, not a partition.</li>
+            <li>Boot it from the board’s boot menu (usually F11); pick the UEFI entry if offered.</li>
+            <li><strong>All passes, all night, all eight sticks.</strong></li>
+            <li>Morning: <strong>zero errors over two or more passes</strong> is a pass. Photograph the screen with the count and date.</li>
+            <li>Any error: test one stick at a time in <code>DDR4_A1</code> until you find it, then a defective return.</li>
           </ul>
-          <div class="pair">
-            <div class="look"><b>Looks right when</b><p>Errors: 0, two or more completed passes, 128GB shown at the top of the memtest screen.</p></div>
-            <div class="stop"><b>Stop if</b><p>memtest shows less than 128GB. A stick is not detected; go back to step 8 before testing further.</p></div>
-          </div>
+          <div class="pair"><div class="look"><b>Looks right when</b><p>Errors 0, two or more passes, 128GB at the top of the screen.</p></div><div class="stop"><b>Stop if</b><p>memtest shows less than 128GB — a stick is not detected. Back to step 8.</p></div></div>
         </div>
       </li>
-
       <li>
         <div class="body">
-          <h3>Record, then hand over to the plan</h3>
-          <p>Everything from this point is software, and it starts from the plan's step A3, the operating-system install. Before that, put five things in the Studio-G repository's <code>notes/</code> directory so they are never re-derived:</p>
-          <ul class="tight">
-            <li>Photos of the finished bench, all connectors visible.</li>
-            <li>The management IP.</li>
-            <li>The idle temperatures from step 9, with the date.</li>
-            <li>The memtest result: passes, errors, date, photo.</li>
-            <li>The Dr. Debug code table, and whether <code>ATX12V2</code> is required or optional — the last two things the printed sheet does not answer. Both 12V connectors were populated either way.</li>
-          </ul>
-          <p>The new management password goes in the encrypted secrets file only, never in <code>notes/</code>.</p>
+          <h3>Record, then hand over</h3>
+          <p>Into <code>notes/</code>: photos of the finished bench; the management IP; idle temperatures; the memtest result and its date. The new IPMI password goes in the sops file. Then the OS install starts, from the plan.</p>
         </div>
       </li>
-
     </ol>
   </section>
 
   <!-- ============================ TROUBLESHOOTING ============================ -->
   <section id="trouble">
     <p class="eyebrow">If something is off</p>
-    <h2>The likely cause, in the likely order</h2>
+    <h2>Likely cause, likely order</h2>
     <div class="scroll">
       <table>
         <thead><tr><th>Symptom</th><th>Most likely</th><th>Do this</th></tr></thead>
         <tbody>
-          <tr><td class="name">Fans spin, screen black</td><td>Still in POST, or the management controller is not up yet</td><td>Wait five minutes from pressing power. Then the checklist in step 7.</td></tr>
-          <tr><td class="name">Fans run flat out</td><td>Normal before the management controller takes control of them</td><td>Wait two minutes. If it persists into the BIOS, check the fan policy for that header there, and confirm the header reports RPM at step 9.</td></tr>
-          <tr><td class="name">No management page</td><td>Cable in LAN1 instead of the management port; router has not issued an address</td><td>Move the cable. Look at the router's device list. Read the IP from the BIOS (step 8).</td></tr>
-          <tr><td class="name">Memory shows 64GB or 96GB</td><td>Two or four sticks not seated</td><td>Power off. Press each stick down again and lock its clip by hand. Every clip, every stick.</td></tr>
-          <tr><td class="name">The NVMe is not in the BIOS</td><td>The drive is in <code>M2_1</code>, which the <code>PE16_SEL</code> jumper can switch off entirely</td><td>Power down and move it to <code>M2_2</code>, which no jumper controls. See step 3.</td></tr>
-          <tr><td class="name">The board will not turn on at all</td><td>Looking for a power button that does not exist</td><td>There is none. Short the two power pins on <code>PANEL1</code>, or use the management web page. The small rear button is <code>UID1</code>, an identification light.</td></tr>
-          <tr><td class="name">A two-digit code on the board</td><td>Dr. Debug naming the stage it stopped at — the board telling you exactly what is wrong</td><td>Photograph it, then look it up in the full User’s Manual’s code table. There will be no beeps: <code>SPEAKER1</code> exists but no speaker was bought.</td></tr>
-          <tr><td class="name">Processor temperature climbs fast at idle</td><td>Cooler not making contact: paste missing, or the bracket screws uneven</td><td>Power off at once. Remove the cooler, inspect the paste print on the lid; it should cover the whole lid. Re-paste (new paste needed) and remount in a cross pattern.</td></tr>
+          <tr><td class="name">Fans spin, screen black</td><td>Still in POST, or the controller is not up yet</td><td>Wait five minutes from pressing power, then the checks in step 7.</td></tr>
+          <tr><td class="name">Fans run flat out</td><td>Normal before the management controller takes over</td><td>Wait two minutes. If it persists into the BIOS, check the fan policy there.</td></tr>
+          <tr><td class="name">Nothing turns on at all</td><td>Looking for a power button that does not exist</td><td>Short <code>PWRBTN#</code> and <code>GND</code> on <code>PANEL1</code>, or use the management page. The rear button is <code>UID1</code>, a light.</td></tr>
+          <tr><td class="name">No management page</td><td>Cable in <code>LAN1</code> instead of <code>IPMI_LAN1</code>, or no address yet</td><td>Move the cable. Check the router’s device list, or read the IP in the BIOS.</td></tr>
+          <tr><td class="name">A two-digit code on the board</td><td>Dr. Debug naming the stage it stopped at</td><td>Photograph it and look it up in the User’s Manual. There are no beeps — no speaker.</td></tr>
+          <tr><td class="name">Memory shows 64GB or 96GB</td><td>Sticks not seated</td><td>Power off, press each down again, lock every clip by hand.</td></tr>
+          <tr><td class="name">The NVMe is missing</td><td>It is in <code>M2_1</code>, which <code>PE16_SEL</code> can disable</td><td>Move it to <code>M2_2</code>.</td></tr>
+          <tr><td class="name">Processor temperature climbs fast at idle</td><td>No contact: paste missing, or uneven bracket screws</td><td>Power off at once. Remove the cooler, check the paste print covers the lid, re-paste and remount crosswise.</td></tr>
         </tbody>
       </table>
     </div>
   </section>
 
   <footer>
-    <p><strong>Read off the board’s own printed Quick Installation Guide, P/N 15G065246001AK V1.3, both sides, on 14 Sep 2026.</strong> Layout: board 24.4 × 30.5 cm; socket silkscreened LGA4094 Socket SP3; memory slots DDR4_A1–H1 in two banks of four; seven fan headers FAN1–FAN7, all System Fan Connectors, <em>no processor fan header</em>; M.2 sockets M2_1 (to 2280) and M2_2 (to 22110), M2_1 multiplexed against PCIE2, SATA_4_7 and OCU1/OCU2 by PE8_SEL and PE16_SEL; SATA as two Mini-SAS HD connectors SATA_0_3 and SATA_4_7; headers PANEL1, AUX_PANEL1, SPEAKER1; a Dr. Debug display; a CLRMOS1 pad; GFX_12V1; the only buttons are rear UID1 and NMI_BTN1 — <em>no onboard power button</em>; rear panel UID1, VGA1, COM1, two USB 3.2 Gen1, IPMI_LAN1, LAN1, LAN2, USB Type-C; the five handling precautions quoted in step 0. Procedures: socket screws lettered A, B, C, <em>unscrewed and fastened in the same order A→B→C</em>, carrier frame never separated from the processor, an internal plastic cover removed before installation, CPU installation tool recommended; power connectors drawn with pinouts as <em>24-pin, 8-pin 12V and 4-pin 12V</em>; memory slots with <em>one clip</em>, unlocked outward, module inserted, clip locked as its own step; PANEL1 pinout — PLED+, PLED−, PWRBTN#, GND over GND, RESET#, HDLED−, HDLED+; M.2 nut positions A–E by length, with <em>a yellow protective film to peel off the nut</em> and an instruction not to overtighten; and the LAN port LED tables in step 6.</p>
-    <p><strong>Verified elsewhere:</strong> socket SP3 uses T20 Torx, torque 1.58 ± 0.1 N·m, and screws loosened in reverse order (AMD via WikiChip and AMD Community — the reverse-order half is what ASRock’s sheet disagrees with). ROMED8-2T: ASPEED AST2500 management controller with VGA output, default login admin/admin with a forced change, management IP under Server Mgmt in the BIOS. ARCTIC Freezer 4U-M Rev. 2: MX-6 0.8g syringe in the box, PH1 Phillips required, two clip-on 120mm PWM fans, SP3 supported. MSI MPG A850G: 24-pin, two EPS 4+4, one 12V-2x6, three PCIe, eight SATA, four peripheral, fully modular. Kingston NV3: single-sided 2280.</p>
-    <p><strong>Still open, after both sides of the sheet:</strong> the <strong>Dr. Debug code table</strong> — the one real reason left to download the full User’s Manual — and whether <code>ATX12V2</code> is strictly required, which the sheet shows but never states. Open too, and answered by the cooler’s box rather than the board’s: whether the two fans share one lead. One thing is <em>contested</em> rather than open: AMD’s SP3 documentation says loosen the socket screws in reverse order, ASRock’s sheet says the same order both ways — see step 1. Nothing in this guide guesses at any of it.</p>
-    <p>Companion to the PW-1x Handoff and Build Sheet. Neither is changed by this guide. Checked mechanically by <code>tools/spec-check.py</code> in the Studio-G repo.</p>
+    <p>Board facts and procedures are read off the ROMED8-2T Quick Installation Guide (P/N 15G065246001AK V1.3), both sides, 14 Sep 2026. Socket torque is AMD’s. Full provenance, the jumper table and what is still open live in <code>notes/board-manual.md</code> in the Studio-G repo.</p>
+    <p>Companion to the PW-1x Handoff and Build Sheet. Checked by <code>tools/spec-check.py</code> and <code>tools/check-board-manual.py</code>.</p>
   </footer>
 
 </div>
