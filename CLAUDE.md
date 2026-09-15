@@ -22,7 +22,7 @@ Small labels are set in title case rather than being force-uppercased by CSS.
 
 ## Do not invent content
 
-Where a thing is not designed yet, draw it undefined rather than filling it in. The page has one way of saying so: a bare dashed outline, as on the icon, the eighth tool, and every tool panel.
+Where a thing is not designed yet, draw it undefined rather than filling it in. The page has one way of saying so: a bare dashed outline, as on the eighth tool.
 
 Lists of items, sample statuses and explanatory blurbs invented to make a mockup look finished are worse than an empty box, because they get mistaken for decisions. A placeholder panel is the same mistake one step removed: if a panel was not asked for, do not draw one and label it undefined. Draw nothing.
 
@@ -45,6 +45,7 @@ Example data is the exception, and only where the shape is already agreed: the r
 - Every section head carries a 90 degree corner marker at its top left, from the sketch.
 - The status marker on a row is a fixed square, top aligned with the row box, so shrinking a row never stretches it.
 - Theme is Light, Dark or System, chosen in settings. System is the default.
+- The app icon is the user's artwork, kept at `console/web/icon.webp` and embedded in the header at 160 px.
 - Subsections are inset under their section head, starting where the head's text starts.
 - The log filters are Everything, Frontier, You and Clients. Frontier selects by where the work ran; You and Clients select by who made the call.
 
