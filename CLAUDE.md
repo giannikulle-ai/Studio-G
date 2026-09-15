@@ -16,6 +16,19 @@ Two things are not labels and stay as they are: sentences that carry content, su
 
 Small labels are set in title case rather than being force-uppercased by CSS.
 
+## Attachments: the transcript is the fallback
+
+An image sent in chat is not always written to disk. Sometimes a path is given and the file is in the uploads folder; sometimes neither happens, and the same file sent three times still never arrives.
+
+The session transcript holds every image either way, base64 encoded inside `~/.claude/projects/<project>/<session>.jsonl` as `{"type":"image","source":{"type":"base64","media_type":...,"data":...}}`. Parse the JSON lines, take the newest matching image, decode it. This works when the uploads folder does not.
+
+Two things that cost three rounds when the icon came in:
+
+- Searching the disk for `*.png` and `*.webp` cannot find bytes that live inside a `.jsonl`. File-type searches prove nothing about whether the data is available.
+- One failed method is not an unavailable file. Ask where the session keeps everything it has received before telling the user to send it again.
+
+Downscale before embedding: a browser canvas via Playwright does it without an image library. 160 px is plenty for an icon and costs about 10 KB.
+
 ## Words to avoid
 
 - **"lands here", "landing spot", "where it lands."** Say what a thing is, or what it connects to.
